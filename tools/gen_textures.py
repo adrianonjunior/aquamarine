@@ -707,7 +707,7 @@ def plate(img, box, rows=None, seed=0, trim_rows=(), gem=None):
     rnd = random.Random(seed)
     for j in range(r0, r1):
         for i in range(w):
-            c = rnd.choices([G[3], G[3], G[4], G[2]], [5, 3, 1, 1])[0]
+            c = rnd.choices([G[3], G[4], G[2]], [10, 5, 1])[0]
             if j == r0:
                 c = G[4]
             if i == 0:

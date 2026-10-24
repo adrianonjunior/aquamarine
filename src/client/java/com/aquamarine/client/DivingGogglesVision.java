@@ -18,8 +18,11 @@ import org.joml.Vector3fc;
  * não toca (só o conjunto de Oricálcio enxerga através dela).
  */
 public final class DivingGogglesVision {
-	/** Quanto o fim da névoa se afasta em relação à água totalmente "acostumada" do vanilla. */
-	private static final float FOG_END_MULTIPLIER = 2.0F;
+	/**
+	 * Quanto o fim da névoa se afasta em relação à água totalmente "acostumada" do vanilla.
+	 * Com 2,0 a água parecia ar (screenshot do teste de cliente); 1,5 mantém o clima.
+	 */
+	private static final float FOG_END_MULTIPLIER = 1.5F;
 	/** Quanto a cor da névoa se aproxima de um verde-água claro (0 = nada, 1 = tudo). */
 	private static final float COLOR_CLEARING = 0.18F;
 	private static final Vector3fc CLEAR_WATER = new Vector3f(0.55F, 0.85F, 0.88F);
@@ -31,7 +34,7 @@ public final class DivingGogglesVision {
 
 	/**
 	 * O vanilla começa a água com 25% do alcance e leva cerca de 30 s para "acostumar" a vista.
-	 * Com os óculos a vista já começa acostumada e enxerga o dobro.
+	 * Com os óculos a vista já começa acostumada e enxerga 50% mais longe.
 	 */
 	public static void applyFog(FogData fog, Camera camera, DeltaTracker deltaTracker) {
 		if (!isActive(camera)) {
