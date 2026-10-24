@@ -63,6 +63,14 @@ ANIMATION_POSES = {
                    "arm_5_segment_0": ((-30, 0, 0), (13.3, 0, 0), (38, 0, 0), (-12, 0, 0))},
 }
 
+ANIMATION_POSITIONS = {
+    "emerge": {"mantle": ((0, 0, 0), (0, -2.8, 0), (0, -8, 0), (0, 0, 0))},
+    "ink": {"mantle": ((0, 0, 0), (0, 0, 0), (3, 0, 0), (0, 0, 0))},
+    "waterJet": {"head": ((0, 0, 0), (0, 1.05, 0), (0, 3, 0), (0, 0, 0))},
+    "roar": {"mantle": ((0, 0, 0), (0, -0.875, 0), (0, -2.5, 0), (0, 0, 0))},
+    "ambush": {"mantle": ((0, 0, 0), (0, 0, 0), (6, 0, 0), (0, 0, 0))},
+}
+
 
 def uid() -> str:
     global UUID_COUNTER
@@ -126,6 +134,11 @@ def create_model() -> None:
         box("mantle_plate", (0, -24, -1), (-10, -5, -12, 20, 8, 24), (0, 0), "mantle"),
         box("mantle_rise", (0, -24, -1), (-8, -9, -9, 16, 5, 18), (0, 34), "mantle"),
         box("mantle_crown", (0, -24, -1), (-5, -12, -6, 10, 4, 12), (48, 34), "mantle"),
+        box("mantle_ridge_left", (-7, -27, -1), (-1, -3, -10, 2, 2, 20), (80, 0), "mantle"),
+        box("mantle_ridge_right", (7, -27, -1), (-1, -3, -10, 2, 2, 20), (80, 22), "mantle"),
+        box("crack_75", (-4, -36, -1), (-.5, -.6, -6, 1, .5, 12), (0, 118), "mantle"),
+        box("crack_50", (2, -36, 0), (-5, -.6, -.5, 10, .5, 1), (16, 118), "mantle"),
+        box("crack_25", (4, -36, -1), (-.5, -.6, -5, 1, .5, 10), (28, 118), "mantle"),
         box("head_shell", (0, -15, 1), (-7, -7, -8, 14, 13, 16), (0, 60), "head"),
         box("jaw", (0, -15, 1), (-5, 2, 7, 10, 3, 5), (60, 60), "head"),
     ])
@@ -170,11 +183,13 @@ def create_model() -> None:
     animations = []
     for name, (length, looping) in ANIMATIONS.items():
         animators = {}
-        for bone, poses in ANIMATION_POSES[name].items():
+        channels = [("rotation", bone, poses) for bone, poses in ANIMATION_POSES[name].items()]
+        channels.extend(("position", bone, poses) for bone, poses in ANIMATION_POSITIONS.get(name, {}).items())
+        for channel, bone, poses in channels:
             animator_id = uid()
             frames = []
             for time, pose in zip((0.0, length * 0.27, length * 0.58, length), poses):
-                frames.append({"channel": "rotation", "data_points": [{"x": str(pose[0]), "y": str(pose[1]), "z": str(pose[2])}],
+                frames.append({"channel": channel, "data_points": [{"x": str(pose[0]), "y": str(pose[1]), "z": str(pose[2])}],
                                "time": time, "interpolation": "catmullrom", "uuid": uid()})
             animators[animator_id] = {"name": bone, "type": "bone", "keyframes": frames}
         animations.append({"name": name, "uuid": uid(), "loop": "loop" if looping else "once",
