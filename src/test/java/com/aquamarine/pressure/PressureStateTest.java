@@ -77,8 +77,8 @@ class PressureStateTest {
 	@Test
 	void empuxoCresceComONivel() {
 		for (int i = 1; i < PressureState.MAX_LEVEL; i++) {
-			org.junit.jupiter.api.Assertions.assertTrue(PressureState.sinkForce(i) < PressureState.sinkForce(i + 1));
+			org.junit.jupiter.api.Assertions.assertTrue(PressureState.gravityBonus(i) < PressureState.gravityBonus(i + 1));
 		}
-		assertEquals(0.0, PressureState.sinkForce(0));
+		assertEquals(0.0, PressureState.gravityBonus(0));
 	}
 }

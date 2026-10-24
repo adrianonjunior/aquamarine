@@ -35,6 +35,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -81,6 +82,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			altar(context, world, server, base);
 			kraken(context, world, server, base);
 			PressureGameTest.run(context, world, server, base);
+			AttackGameTest.run(context, world, server, base);
 			KrakenVisualGameTest.run(context, world, server, base);
 		}
 	}
@@ -194,14 +196,15 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 	/** Kraken: vida e escudo por fase, escala, transição, regeneração do escudo e aggro. */
 	private static void kraken(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos base) {
 		// O teste do altar pode ter deixado um Kraken vivo; kraken(s) pega o primeiro da lista.
-		server.runCommand("kill @e[type=aquamarine:kraken]");
+		// discard, não kill: matar dá a recompensa e gasta a "primeira vitória" que rewards() confere.
+		server.runOnServer(s -> s.overworld().getEntities(ModEntities.KRAKEN, e -> true).forEach(Entity::discard));
 		context.waitTicks(120);
 		BlockPos origin = base.offset(200, 0, 0);
 		server.runOnServer(s -> {
 			ServerLevel level = s.overworld();
 			level.getChunkAt(origin);
 			KrakenCommand.buildArena(level, origin);
-			KrakenSummoning.spawnAt(level, origin.offset(0, 25, 0), origin);
+			KrakenSummoning.spawnAt(level, origin.offset(0, 25, 0), origin).attacks().setEnabled(false);
 		});
 		tp(server, origin.getX() + 0.5, origin.getY() + 27, origin.getZ() + 7.5, 180, 12);
 		world.getConnection().waitForChunksRender();
@@ -302,7 +305,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 	}
 
 	private static void spawnKraken(TestServerContext server, BlockPos origin) {
-		server.runOnServer(s -> KrakenSummoning.spawnAt(s.overworld(), origin.offset(0, 25, 0), origin));
+		server.runOnServer(s -> KrakenSummoning.spawnAt(s.overworld(), origin.offset(0, 25, 0), origin).attacks().setEnabled(false));
 	}
 
 	/** Drops e primeira vitória: Olho, Tinta, Troféu, XP e Coração só na primeira vez; Dourado no modo abissal. */

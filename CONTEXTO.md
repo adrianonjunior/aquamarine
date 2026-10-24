@@ -37,8 +37,18 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| 2D-M (onda 2) | Codex | jogo + Gradle | 24/10/2026 |
+| Animações, partículas e avisos do Kraken (Entrega 2; autorizada pelo Adriano no lugar do Codex) | Claude Opus 5.5 (worktree `aquamarine-opus-kraken`, branch `opus/kraken-anim`) | jogo (runClientGameTest) | 24/10/2026 |
 
 ## Registro de handoff
+
+- 24/10/2026 · Orquestrador · **Estado:** Codex atualizado para 0.164.0 (o 0.163 falhava no IPC do Orca). 2D-C aceita na main (`ec9c4fb`, build verde: 8 tentáculos, Cria, 10 ataques). 2D-M: modelos/views na main (`31f3620`), screenshots pendentes (dispatch `ctx_35368d517fda`, Codex medium, worktree 2D-M); autorizado copiar `uv.png` como textura provisória.
+  **Rodando:** 2D-C.2 (Claude, dispatch `ctx_fb3903c4ff13`, terminal da worktree 2B): entidades implementam as views do Codex (pacote `com.aquamarine.entity`), ovo, renderers reais no lugar de `NoopRenderer`, comandos `/aquamarine kraken tentacle|young|egg`. Depois: Codex fecha 2D-M com screenshots; iniciar 2D-T (texturas), a faixa de tamanho 24 x 16 + rachaduras visíveis (pendência da 2A-T) e a 2Q. 2A-T aceita parcial.
+  Pedido do Adriano: um Opus 5.5 (fora do Orca) pode fazer animações/partículas/avisos do Kraken, só Entrega 2; deve declarar "jogo" e não tocar a lógica de ataques nem `tools/models/spawnlings`. Fase 3 segue bloqueada.
+
+- 24/10/2026 · Claude Sonnet 5.5 (faixa 2D-C) · 8 `TentacleEntity` (60 de vida, cortado volta em 30 s; os 8 cortados expõem o Kraken), `YoungKrakenEntity` (Cria) e os 10 ataques com aviso (partículas, som e a animação do contrato) em `entity/boss/KrakenAttacks` (+ `KrakenAttackType`); sorteio automático por fase/simultâneos `2 + n÷3`; `/aquamarine kraken attack <nome>` e `ai on|off`. Valores adotados em `docs/02-kraken.md`. Ajuste na Pressão: o afundar agora é um modificador do atributo `GRAVITY` (somar velocidade no servidor acumulava sem parar).
+  **Testado:** JUnit `KrakenAttackTypeTest`; `runClientGameTest` (`AttackGameTest`): os 8 tentáculos, o dano de Pancada (12), Agarrão (6/s, cortar solta, Tônico solta em ~2,5 s), Jato (10), Raios (14 fora da água, 0 submerso), Emboscada (10), Agarrão Duplo parcial, Tinta (armadura completa protege), Redemoinho (puxa), Crias (3), Rugido (quebra vidro e derruba a Boia), 8 cortados expõem, IA automática; 3 screenshots (avisos de Pancada e Jato conferidos).
+  **Não testado:** multiplayer (simultâneos > 2, alvo por aggro), difícil abissal, Kraken salvo e recarregado com tentáculos, barcos (Pancada/Rugido), Amuleto da Corrente (item não existe). **Pendente de outras faixas:** os renderers de `TentacleEntity` e `YoungKrakenEntity` são `NoopRenderer` até a 2D-M/2D-T (as entidades são invisíveis; o aviso é só por partículas); animações `slam`/`grab`... já disparam no `KrakenView`. Os testes antigos desligam a IA (`attacks().setEnabled(false)`).
 
 - 24/10/2026 · Orquestrador · **Retomada.** 2A-T entregue **parcial** (textura por `tools/gen_kraken_texture.py` na main, build verde; aceite visual NÃO cumprido: rachaduras `crack_*` não aparecem, Kraken pequeno e escuro; `build_model.py` sobrescreve `kraken.png`, rodar o script da textura depois).
   Fica para o polimento de tamanho 24 x 16 (Codex: rachaduras maiores/emissivas). **2D-C iniciada** (Claude, terminal da worktree 2B, dispatch `ctx_731e88465b7b`).

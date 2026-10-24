@@ -33,6 +33,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 public final class PressureManager {
 	private static final Identifier SLOW_ID = Aquamarine.id("pressure_slow");
 	private static final Identifier ATTACK_ID = Aquamarine.id("pressure_attack");
+	private static final Identifier SINK_ID = Aquamarine.id("pressure_sink");
 	/** Nado lento (nível 2+): tira da eficiência de movimento na água. */
 	private static final double SLOW_SWIM = -0.4;
 	/** Velocidade de ataque perdida no nível 3+. */
@@ -106,11 +107,6 @@ public final class PressureManager {
 		apply(player, entry);
 
 		int lvl = entry.state.level();
-		if (lvl > 0 && player.isInWater()) {
-			// Empuxo para baixo; o jogador é movido pelo cliente, então o servidor reenvia a velocidade.
-			player.addDeltaMovement(new net.minecraft.world.phys.Vec3(0, -PressureState.sinkForce(lvl), 0));
-			player.needsSync = true;
-		}
 		if (lvl >= PressureState.MAX_LEVEL) {
 			if (++entry.damageTimer >= PressureState.DAMAGE_INTERVAL) {
 				entry.damageTimer = 0;
@@ -126,6 +122,14 @@ public final class PressureManager {
 
 	private static void apply(ServerPlayer player, Entry entry) {
 		int lvl = entry.state.level();
+		// Afundar mais depressa: gravidade extra (atributo sincronizado; o cliente move o jogador).
+		AttributeInstance gravity = player.getAttribute(Attributes.GRAVITY);
+		if (gravity != null && entry.lastSent != lvl) {
+			gravity.removeModifier(SINK_ID);
+			if (lvl > 0) {
+				gravity.addTransientModifier(new AttributeModifier(SINK_ID, PressureState.gravityBonus(lvl), AttributeModifier.Operation.ADD_VALUE));
+			}
+		}
 		setModifier(player.getAttribute(Attributes.WATER_MOVEMENT_EFFICIENCY), SLOW_ID, lvl >= 2, SLOW_SWIM,
 			AttributeModifier.Operation.ADD_VALUE);
 		setModifier(player.getAttribute(Attributes.ATTACK_SPEED), ATTACK_ID, lvl >= 3, SLOW_ATTACK,

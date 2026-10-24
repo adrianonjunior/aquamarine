@@ -113,7 +113,7 @@ com.aquamarine
   `SynchedEntityData` ou de packet próprio.
 - **Pressão (implementada, faixa 2B):** `pressure/PressureState` (contas puras, JUnit),
   `PressureManager` (tick no servidor; nível em atributos e empuxo; `PressurePayload` ao
-  próprio jogador), `client/pressure/PressureHud` (vinheta e batimentos), `effect/ModEffects`
+  próprio jogador; o afundar é um modificador do atributo `GRAVITY`), `client/pressure/PressureHud` (vinheta e batimentos), `effect/ModEffects`
   (Tônico), `block/AnchorBuoyBlock` + `item/AnchorBuoyItem` (Boia; `collapse` é o gancho para
   o Kraken destruir a plataforma). Plano original: nível 0 a 4 por jogador, atualizado por
   tick perto do Kraken (regras em [02-kraken.md](02-kraken.md)); ajusta a velocidade
@@ -123,7 +123,7 @@ com.aquamarine
   dano vai para o escudo, multiplicado conforme a fonte (tabela em
   [02-kraken.md](02-kraken.md)). Os Nós de Maré são hitboxes filhas (como as partes do
   Ender Dragon).
-- **Tentáculos:** entidades independentes com referência ao "dono" (Kraken);
+- **Tentáculos (implementados, 2D-C):** `entity/TentacleEntity` e `entity/boss/KrakenAttacks`; entidades independentes com referência ao "dono" (Kraken);
   mais fácil de testar que partes do mesmo bounding box.
 - **Animações e modelos:** Blockbench exportando para o formato nativo do jogo
   (`AnimationDefinition` + `EntityModel`), **sem GeckoLib**, para não depender

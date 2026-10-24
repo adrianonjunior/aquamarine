@@ -52,6 +52,7 @@ final class PressureGameTest {
 			ServerLevel level = s.overworld();
 			KrakenEntity kraken = KrakenSummoning.spawnAt(level, o.offset(8, 8, 8), o);
 			check(kraken != null, "Pressão: o Kraken não surgiu");
+			kraken.attacks().setEnabled(false);
 			ServerPlayer player = player(s);
 			player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 20000));
 			clearArmor(player);

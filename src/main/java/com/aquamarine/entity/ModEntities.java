@@ -27,9 +27,24 @@ public final class ModEntities {
 	public static final EntityType<KrakenEntity> KRAKEN = Registry.register(BuiltInRegistries.ENTITY_TYPE, KRAKEN_KEY,
 		EntityType.Builder.of(KrakenEntity::new, MobCategory.MONSTER).sized(8.0F, 6.0F).fireImmune().clientTrackingRange(16).build(KRAKEN_KEY));
 
+	private static final ResourceKey<EntityType<?>> TENTACLE_KEY =
+		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("tentacle"));
+	private static final ResourceKey<EntityType<?>> YOUNG_KRAKEN_KEY =
+		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("young_kraken"));
+
+	/** Tentáculo do Kraken (60 de vida). Caixa provisória até o modelo da 2D-M. */
+	public static final EntityType<TentacleEntity> TENTACLE = Registry.register(BuiltInRegistries.ENTITY_TYPE, TENTACLE_KEY,
+		EntityType.Builder.of(TentacleEntity::new, MobCategory.MONSTER).sized(1.5F, 6.0F).fireImmune().clientTrackingRange(16).build(TENTACLE_KEY));
+
+	/** Cria de Kraken (8 de vida). Caixa provisória até o modelo da 2D-M. */
+	public static final EntityType<YoungKrakenEntity> YOUNG_KRAKEN = Registry.register(BuiltInRegistries.ENTITY_TYPE, YOUNG_KRAKEN_KEY,
+		EntityType.Builder.of(YoungKrakenEntity::new, MobCategory.MONSTER).sized(0.9F, 0.9F).fireImmune().clientTrackingRange(10).build(YOUNG_KRAKEN_KEY));
+
 	public static void register() {
 		FabricDefaultAttributeRegistry.register(KRAKEN, KrakenEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(BOSS_DUMMY, BossDummy.createAttributes());
+		FabricDefaultAttributeRegistry.register(TENTACLE, TentacleEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(YOUNG_KRAKEN, YoungKrakenEntity.createAttributes());
 	}
 
 	private ModEntities() {}

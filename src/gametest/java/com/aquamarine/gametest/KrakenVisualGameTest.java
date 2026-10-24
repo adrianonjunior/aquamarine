@@ -3,13 +3,13 @@ package com.aquamarine.gametest;
 import com.aquamarine.client.KrakenEffects;
 import com.aquamarine.command.KrakenCommand;
 import com.aquamarine.entity.KrakenEntity;
-import com.aquamarine.entity.ModEntities;
 import com.aquamarine.event.KrakenSummoning;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext;
@@ -21,7 +21,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 
 /**
  * Animações, partículas e rachaduras do Kraken (faixa de animação do Opus). Três Krakens lado a lado,
@@ -32,18 +31,33 @@ import net.minecraft.world.entity.Entity;
 final class KrakenVisualGameTest {
 	/** Distância entre os Krakens da fileira (blocos). */
 	private static final int GAP = 9;
+	/** Os Krakens na ordem em que surgiram (esquerda para a direita); eles se movem, então a ordem fica fixa aqui. */
+	private static final List<UUID> ROW = new ArrayList<>();
 
 	static void run(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos base) {
 		server.runCommand("kill @e[type=aquamarine:kraken]");
+		// O teste anterior pode ter deixado o jogador morto ou sob efeitos: começa vivo, em criativo e curado.
+		if (server.computeOnServer(s -> !player(s).isAlive())) {
+			context.runOnClient(mc -> mc.player.respawn());
+			context.waitTicks(20);
+		}
 		server.runCommand("gamemode creative @a");
-		BlockPos o = base.offset(600, 0, 0);
+		server.runOnServer(s -> {
+			player(s).removeAllEffects();
+			player(s).setHealth(player(s).getMaxHealth());
+		});
+		BlockPos o = base.offset(-600, 0, 0);
 		server.runCommand(String.format(Locale.ROOT, "forceload add %d %d %d %d", o.getX() - 24, o.getZ() - 24, o.getX() + 24, o.getZ() + 24));
 		context.waitTicks(20);
+		ROW.clear();
 		server.runOnServer(s -> {
 			ServerLevel level = s.overworld();
 			KrakenCommand.buildArena(level, o);
 			for (int i = -1; i <= 1; i++) {
-				KrakenSummoning.spawnAt(level, o.offset(i * GAP, 16, 0), o);
+				// Sem a IA de ataques (2D-C): cada Kraken só faz a animação que o teste manda.
+				KrakenEntity kraken = KrakenSummoning.spawnAt(level, o.offset(i * GAP, 16, 0), o);
+				kraken.attacks().setEnabled(false);
+				ROW.add(kraken.getUUID());
 			}
 			ServerPlayer player = player(s);
 			player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 20000));
@@ -115,13 +129,18 @@ final class KrakenVisualGameTest {
 			server.runOnServer(s -> check(row(s).get(slot).playAnimation(name), "Kraken visual: animação desconhecida " + name));
 		}
 		context.waitTicks(longest - elapsed + 1);
+		check(server.computeOnServer(s -> player(s).isAlive()), "Kraken visual: o jogador morreu antes da foto " + shot);
 		shot(context, shot);
 	}
 
-	/** Os Krakens da arena, da esquerda (-x) para a direita (+x). */
+	/** Os Krakens da arena, na ordem em que surgiram (da esquerda para a direita). */
 	private static List<KrakenEntity> row(MinecraftServer s) {
-		List<KrakenEntity> row = new ArrayList<>(s.overworld().getEntities(ModEntities.KRAKEN, e -> true));
-		row.sort(Comparator.comparingDouble(Entity::getX));
+		List<KrakenEntity> row = new ArrayList<>();
+		for (UUID id : ROW) {
+			if (s.overworld().getEntity(id) instanceof KrakenEntity kraken) {
+				row.add(kraken);
+			}
+		}
 		return row;
 	}
 

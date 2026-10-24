@@ -69,13 +69,13 @@ public final class PressureState {
 		return level != before;
 	}
 
-	/** Empuxo extra para baixo por tick de quem está na água, por nível (nível 4: puxado ao fundo). */
-	public static double sinkForce(int level) {
+	/** Gravidade extra (atributo, base 0,08) por nível: 1 afunda 20% mais rápido; 4 é puxado ao fundo. */
+	public static double gravityBonus(int level) {
 		return switch (level) {
-			case 1 -> 0.004;
-			case 2 -> 0.006;
-			case 3 -> 0.02;
-			case 4 -> 0.07;
+			case 1 -> 0.016;
+			case 2 -> 0.024;
+			case 3 -> 0.08;
+			case 4 -> 0.3;
 			default -> 0.0;
 		};
 	}

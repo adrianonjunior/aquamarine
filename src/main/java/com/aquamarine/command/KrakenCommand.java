@@ -2,6 +2,7 @@ package com.aquamarine.command;
 
 import com.aquamarine.entity.KrakenEntity;
 import com.aquamarine.entity.ModEntities;
+import com.aquamarine.entity.boss.KrakenAttackType;
 import com.aquamarine.event.KrakenSummoning;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -15,6 +16,7 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.Blocks;
 
 /**
@@ -41,7 +43,14 @@ public final class KrakenCommand {
 				.then(Commands.literal("anim")
 					.then(Commands.argument("nome", StringArgumentType.word())
 						.suggests((ctx, builder) -> SharedSuggestionProvider.suggest(KrakenEntity.ANIMATION_NAMES, builder))
-						.executes(ctx -> anim(ctx.getSource(), StringArgumentType.getString(ctx, "nome")))))));
+						.executes(ctx -> anim(ctx.getSource(), StringArgumentType.getString(ctx, "nome")))))
+				.then(Commands.literal("attack")
+					.then(Commands.argument("nome", StringArgumentType.word())
+						.suggests((ctx, builder) -> SharedSuggestionProvider.suggest(KrakenAttackType.names(), builder))
+						.executes(ctx -> attack(ctx.getSource(), StringArgumentType.getString(ctx, "nome")))))
+				.then(Commands.literal("ai")
+					.then(Commands.literal("on").executes(ctx -> ai(ctx.getSource(), true)))
+					.then(Commands.literal("off").executes(ctx -> ai(ctx.getSource(), false))))));
 	}
 
 	private static int spawn(CommandSourceStack source) {
@@ -69,6 +78,47 @@ public final class KrakenCommand {
 			return 0;
 		}
 		source.sendSuccess(() -> Component.translatable("commands.aquamarine.kraken.anim", name), false);
+		return 1;
+	}
+
+	private static KrakenEntity nearestKraken(CommandSourceStack source) {
+		return source.getLevel().getEntities(ModEntities.KRAKEN, k -> true).stream()
+			.min(java.util.Comparator.comparingDouble(k -> k.distanceToSqr(source.getPosition()))).orElse(null);
+	}
+
+	/** {@code attack <nome>}: dispara o ataque (aviso e golpe) no jogador que digitou, ou no mais perto do Kraken. */
+	private static int attack(CommandSourceStack source, String name) {
+		KrakenEntity kraken = nearestKraken(source);
+		if (kraken == null) {
+			source.sendFailure(Component.translatable("commands.aquamarine.kraken.none"));
+			return 0;
+		}
+		KrakenAttackType type = KrakenAttackType.byName(name);
+		if (type == null) {
+			source.sendFailure(Component.translatable("commands.aquamarine.kraken.attack_unknown", name));
+			return 0;
+		}
+		ServerPlayer target = source.getPlayer();
+		if (target == null) {
+			target = source.getLevel().getNearestPlayer(kraken, 64.0) instanceof ServerPlayer p ? p : null;
+		}
+		if (target == null || !kraken.attacks().force(source.getLevel(), type, target)) {
+			source.sendFailure(Component.translatable("commands.aquamarine.kraken.attack_failed", name));
+			return 0;
+		}
+		source.sendSuccess(() -> Component.translatable("commands.aquamarine.kraken.attack", name), false);
+		return 1;
+	}
+
+	/** {@code ai on|off}: liga ou desliga o sorteio automático de ataques. */
+	private static int ai(CommandSourceStack source, boolean on) {
+		KrakenEntity kraken = nearestKraken(source);
+		if (kraken == null) {
+			source.sendFailure(Component.translatable("commands.aquamarine.kraken.none"));
+			return 0;
+		}
+		kraken.attacks().setEnabled(on);
+		source.sendSuccess(() -> Component.translatable(on ? "commands.aquamarine.kraken.ai_on" : "commands.aquamarine.kraken.ai_off"), false);
 		return 1;
 	}
 
