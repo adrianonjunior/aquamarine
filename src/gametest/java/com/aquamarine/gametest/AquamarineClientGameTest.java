@@ -2,6 +2,7 @@ package com.aquamarine.gametest;
 
 import com.aquamarine.Aquamarine;
 import com.aquamarine.block.ModBlocks;
+import com.aquamarine.client.compat.jei.AquamarineJeiPlugin;
 import com.aquamarine.client.screen.AbyssalForgeScreen;
 import com.aquamarine.entity.BossDummy;
 import com.aquamarine.entity.ModEntities;
@@ -242,6 +243,19 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			.setSelectedTab(BuiltInRegistries.CREATIVE_MODE_TAB.getValueOrThrow(ModCreativeTab.KEY)));
 		context.waitTicks(5);
 		shot(context, "04_aba_criativa");
+
+		// Tooltip com a descrição (cursor sobre a picareta, 9º item da 1ª linha) e, com o JEI,
+		// os usos da Forja (tecla U sobre ela, 7º item). Posições em pixels da janela 854x480.
+		context.getInput().setCursorPos(265 + 8 * 36, 155);
+		context.waitTicks(3);
+		shot(context, "04b_tooltip");
+		context.getInput().setCursorPos(265 + 6 * 36, 155);
+		context.waitTicks(2);
+		shot(context, "04c_tooltip_forja");
+		context.runOnClient(mc -> AquamarineJeiPlugin.runtime().orElseThrow(() -> new AssertionError("JEI não carregou"))
+			.getRecipesGui().showTypes(List.of(AquamarineJeiPlugin.ABYSSAL_FORGING)));
+		context.waitTicks(10);
+		shot(context, "04d_jei_forja");
 		context.setScreen(() -> null);
 	}
 

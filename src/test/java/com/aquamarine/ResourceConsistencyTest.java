@@ -91,7 +91,7 @@ class ResourceConsistencyTest {
 	}
 
 	@Test
-	void everyItemHasPortugueseAndEnglishName() throws IOException {
+	void everyItemHasNameAndDescriptionInBothLanguages() throws IOException {
 		JsonObject ptBr = read(ASSETS.resolve("lang/pt_br.json"));
 		JsonObject enUs = read(ASSETS.resolve("lang/en_us.json"));
 		assertEquals(new TreeSet<>(ptBr.keySet()), new TreeSet<>(enUs.keySet()), "pt_br e en_us com chaves diferentes");
@@ -105,8 +105,12 @@ class ResourceConsistencyTest {
 			if (!ptBr.has(key)) {
 				missing.add(key);
 			}
+			// descrição curta do tooltip e do JEI (ItemDescriptions)
+			if (!ptBr.has("tooltip.aquamarine." + n)) {
+				missing.add("tooltip.aquamarine." + n);
+			}
 		}
-		assertTrue(missing.isEmpty(), "Sem nome em lang: " + missing);
+		assertTrue(missing.isEmpty(), "Sem nome ou descrição em lang: " + missing);
 	}
 
 	@Test

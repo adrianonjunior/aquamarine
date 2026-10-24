@@ -16,6 +16,9 @@
 		],
 		"client": [
 			"com.aquamarine.client.AquamarineClient"
+		],
+		"jei_mod_plugin": [
+			"com.aquamarine.client.compat.jei.AquamarineJeiPlugin"
 		]
 	},
 	"mixins": [
@@ -30,5 +33,8 @@
 		"minecraft": "~26.3",
 		"java": ">=25",
 		"fabric-api": "*"
+	},
+	"suggests": {
+		"jei": "*"
 	}
 }

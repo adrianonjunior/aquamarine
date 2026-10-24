@@ -57,6 +57,16 @@
   `config/aquamarine.json`; campos novos entram sozinhos no arquivo).
 - **Efeitos de Oricálcio:** `item/OrichalcumEffects` (`armorPieces`,
   `hasFullSet`, `PRESSURE_REDUCTION_PER_PIECE` para a Pressão).
+- **Descrição do item:** `tooltip.aquamarine.<item>` (e `.2`, `.3`) nos dois
+  `lang`; aparece no tooltip e na página de informação do JEI
+  (`client/ItemDescriptions`). O teste do `build` exige a descrição de todo item.
+- **JEI (opcional):** `client/compat/jei/AquamarineJeiPlugin` (entrypoint
+  `jei_mod_plugin`): categoria "Forja Abissal", a Forja como estação também da
+  bancada comum e as descrições. Versão em `gradle.properties` (`jei_version`);
+  o JEI completo só entra no `runClient`/testes (`localRuntime`). As receitas
+  vêm do servidor integrado: em servidor dedicado a categoria fica vazia.
+- **Aba criativa:** abas de mod ficam na página 2 do criativo; por isso
+  `ModCreativeTab` também põe os itens nas abas vanilla.
 - **Invocação:** `event/KrakenSummoning` (`start`, `hasDeepWater`, gancho
   `spawnKraken`) e `block/AbyssalAltarBlock`.
 - **Óculos:** `client/DivingGogglesVision` + `client/mixin/WaterFogEnvironmentMixin`.

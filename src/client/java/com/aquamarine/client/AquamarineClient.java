@@ -17,6 +17,7 @@ public class AquamarineClient implements ClientModInitializer {
 		MenuScreens.register(ModMenus.ABYSSAL_FORGE, AbyssalForgeScreen::new);
 		EntityRendererRegistry.register(ModEntities.BOSS_DUMMY, NoopRenderer::new);
 		AquamarineBossBarHud.register();
+		ItemDescriptions.register();
 		// Renderizadores e HUD do Kraken entram aqui.
 	}
 }
