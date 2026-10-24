@@ -16,6 +16,7 @@ UUID_COUNTER = 0
 SIZE = 128
 JAVA_TEMPLATES = BASE / "java"
 JAVA_ROOT = ROOT / "src/client/java/com/aquamarine/client/entity"
+RESOURCE_TEXTURES = ROOT / "src/main/resources/assets/aquamarine/textures/entity"
 
 
 def uid() -> str:
@@ -75,7 +76,11 @@ def make_model(name, identifier, size, bones, parts, animations):
         x = max(0, min(SIZE - w - 1, x)); y = max(0, min(SIZE - h - 1, y))
         draw.rectangle((x, y, x + w, y + h), fill=palette[n % len(palette)], outline=(225, 208, 146, 255))
         draw.line((x, y, x + w, y + h), fill=(235, 230, 200, 255))
-    uv.save(folder / "uv.png")
+    uv_path = folder / "uv.png"
+    uv.save(uv_path)
+    texture_path = RESOURCE_TEXTURES / identifier / f"{identifier}.png"
+    texture_path.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(uv_path, texture_path)
 
 
 def tentacle():
