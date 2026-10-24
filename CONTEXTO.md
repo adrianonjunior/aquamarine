@@ -18,6 +18,11 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
 
+- 24/10/2026 · Codex Astra (2A-M.2) · Verificação visual do Kraken no `runClientGameTest` em arena aquática, com gabarito UV e câmera acima do chão; `slam` e `grab` dispararam por comando, teste passou. **Pronto:** modelo e poses visíveis; **não testado nesta faixa:** textura final e combate completo; **próximo passo:** 2A-T aplicar a textura definitiva.
+  - `tools/models/kraken/qa/01_kraken_geral.png`: silhueta completa e oito tentáculos aparecem sob a água, com gabarito escuro.
+  - `tools/models/kraken/qa/02_kraken_slam.png`: tentáculo do ataque `slam` aberto à esquerda da imagem.
+  - `tools/models/kraken/qa/03_kraken_grab.png`: tentáculo do ataque `grab` erguido à direita da imagem.
+
 - 24/10/2026 · Codex Astra (2A-M) · `KrakenView`, gabarito UV, `.bbmodel` com 191 cubos e 16 clips, classes do modelo/animações/renderer e registro do modelo; `compileJava compileClientJava` passou, `/aquamarine kraken` criou a entidade e os 16 comandos responderam `Animation <nome> played.`
   **Visual não verificado:** no mundo de QA florestal o Kraken surgiu em y=57 sob o terreno; as 9 capturas autorizadas foram usadas sem obter uma vista do modelo. **Próximo passo:** repetir a vista geral e poses em mundo aquático/câmera acima do chão; deixar 2A-M sem marcar até conferir a silhueta.
 
