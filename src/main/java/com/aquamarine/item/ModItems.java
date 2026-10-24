@@ -71,6 +71,16 @@ public final class ModItems {
 			.setEquipSound(SoundEvents.ARMOR_EQUIP_LEATHER)
 			.build()));
 
+	// Invocação
+	/** Projeto do Chamariz: vem do Cofre do Templo (ainda não existe); por enquanto só criativo. */
+	public static final Item LURE_BLUEPRINT = register("lure_blueprint", Item::new,
+		new Item.Properties().stacksTo(1).rarity(Rarity.RARE));
+	/** Chamariz Abissal: usado no Altar do Abismo, invoca o Kraken e é consumido. */
+	public static final Item ABYSSAL_LURE = register("abyssal_lure", Item::new,
+		new Item.Properties().stacksTo(1).rarity(Rarity.EPIC));
+	/** Altar do Abismo: indestrutível como a Cidade; aqui só para o criativo e testes. */
+	public static final Item ABYSSAL_ALTAR = registerBlock(ModBlocks.ABYSSAL_ALTAR, new Item.Properties().rarity(Rarity.EPIC));
+
 	public static Item register(String name, Function<Item.Properties, Item> factory, Item.Properties properties) {
 		ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Aquamarine.id(name));
 		Item item = factory.apply(properties.setId(key));
