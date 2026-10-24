@@ -53,3 +53,35 @@ mostra os itens com texturas próprias, dá para craftar e vestir a armadura e o
 **Concluída em 24/10/2026** (A, B, C e D). Conferida no jogo pelo teste de cliente
 (`./gradlew runClientGameTest`, screenshots em `build/run/clientGameTest/screenshots/`).
 Pendências e próximos passos: `CONTEXTO.md`, registro de handoff.
+
+## Entrega 2: Kraken v1 jogável (preparada, **NÃO liberada**)
+Só vale depois de o Adriano liberar explicitamente (ver [../AGENTS.md](../AGENTS.md)).
+Objetivo: lutar contra o Kraken inteiro em multiplayer, sem a cidade: o teste
+usa um comando de depuração e uma arena de teste, e a invocação real (Altar)
+já chama o mesmo gancho (`KrakenSummoning.spawnKraken`). Regras da luta:
+[02-kraken.md](02-kraken.md); nada aqui as repete.
+
+Faixas independentes, uma por agente, cada uma em branch própria. A ordem
+abaixo é a de dependência: **2A vem primeiro**; 2B e 2C podem rodar em paralelo
+depois que o 2A fizer merge; 2D e 2E dependem do 2A.
+
+- [ ] **2A. Kraken base:** entidade com vida/escudo por fase, escala por
+  jogadores (`f`), transição de fase, aggro, abandono e fuga; modelo de alta
+  qualidade com animações (Blockbench → `EntityModel` + `AnimationDefinition`,
+  ver [06-tecnico.md](06-tecnico.md)); ligação com a barra de boss que já existe
+  (substitui a entidade de teste); comando de depuração `/aquamarine kraken`
+  (invocar, definir fase, matar) e arena de teste montada por GameTest.
+- [ ] **2B. Pressão e peso:** efeito por jogador (níveis 0-4), Tônico de Pressão,
+  Boia de Âncora, integração com `OrichalcumEffects`, vinheta e som no cliente.
+- [ ] **2C. Escudo:** Carapaça Abissal, Nós de Maré (hitboxes), tabela de dano
+  por fonte, Arpão, Carga de Pulso, Pilar, Quebra-Carapaça, atordoamento.
+- [ ] **2D. Tentáculos e ataques:** os 8 tentáculos e a tabela de ataques com
+  avisos visuais e sonoros, por fase.
+- [ ] **2E. Extras da invocação e recompensas:** gatilho do aviso falso, tremor
+  de tela, silêncio do oceano, drops, troféu e primeira vitória.
+
+**Critério de aceite:** num servidor dedicado de teste (ou `runClient` com
+2 clientes), 2+ jogadores invocam o Kraken, enfrentam as 3 fases e vencem em
+8 a 12 minutos com equipamento do mod; nenhum crash, nenhum desync da barra.
+Pontos que **nenhum agente consegue verificar sozinho** (ritmo, sensação de
+dano) vão para o handoff como "a testar pelo Adriano".
