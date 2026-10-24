@@ -35,6 +35,11 @@ public final class ModBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).instrument(NoteBlockInstrument.BASEDRUM)
 			.requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.DEEPSLATE_BRICKS).lightLevel(state -> 7));
 
+	/** Altar do Abismo: onde o Chamariz Abissal invoca o Kraken. Só na Cidade Perdida (e no criativo). */
+	public static final Block ABYSSAL_ALTAR = register("abyssal_altar", AbyssalAltarBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).instrument(NoteBlockInstrument.BASEDRUM)
+			.strength(-1.0F, 3600000.0F).sound(SoundType.DEEPSLATE_TILES).lightLevel(state -> 6).noOcclusion());
+
 	private static Block register(String name, Function<BlockBehaviour.Properties, Block> factory, BlockBehaviour.Properties properties) {
 		ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Aquamarine.id(name));
 		return Registry.register(BuiltInRegistries.BLOCK, key, factory.apply(properties.setId(key)));

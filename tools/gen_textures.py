@@ -878,6 +878,104 @@ def gui_forge():
     return img
 
 
+# ---------------------------------------------------------------- invocação: Chamariz, Projeto e Altar
+
+LURE = [
+    "................",
+    ".......45.......",
+    "......4..4......",
+    ".......34.......",
+    ".....234432.....",
+    "....3qrssrq2....",
+    "....4rsswsr3....",
+    "....3rssssq2....",
+    "....4qrrrqp3....",
+    "....2pqqqpp1....",
+    ".....213312.....",
+    "......yvvt......",
+    ".......vt.......",
+    ".......t........",
+]
+
+BLUEPRINT = [
+    "................",
+    ".mjjjjjjjjjjjjm.",
+    ".hhhhhhhhhhhhhh.",
+    "..dddddddddddd..",
+    "..dcvvvvvvvvcd..",
+    "..dcvccyyccvcd..",
+    "..dcvcyrryccvd..",
+    "..dcvccyyccvcd..",
+    "..dcvvvvvvvvcd..",
+    "..dccccccccccd..",
+    "..dcuuuucqrrcd..",
+    "..dddddddqqqdd..",
+    ".mjjjjjjjjjjjjm.",
+    ".hhhhhhhhhhhhhh.",
+]
+
+
+def lure():
+    img = render(LURE)
+    img.putpixel((7, 6), hexc("ffffff"))
+    return img
+
+
+def altar_side():
+    img = forge_bricks(51)
+    G, T = RAMPS["G"], RAMPS["T"]
+    for x in range(16):  # tampo (linhas 0..3) e topo da base (linha 12)
+        img.putpixel((x, 0), G[5])
+        img.putpixel((x, 1), G[3])
+        img.putpixel((x, 2), G[3] if x % 4 else T[4])
+        img.putpixel((x, 3), G[1])
+        img.putpixel((x, 12), G[4])
+        img.putpixel((x, 15), RAMPS["B"][0])
+    return img
+
+
+def altar_column():
+    img = Image.new("RGBA", (16, 16))
+    B, G, P = RAMPS["B"], RAMPS["G"], RAMPS["P"]
+    flutes = [B[4], B[3], B[2], B[3]]
+    for y in range(16):
+        for x in range(16):
+            img.putpixel((x, y), flutes[x % 4])
+    for x in range(16):  # anéis de Oricálcio no alto e embaixo da coluna
+        img.putpixel((x, 4), G[4])
+        img.putpixel((x, 5), G[2])
+        img.putpixel((x, 10), G[4])
+        img.putpixel((x, 11), G[2])
+    for y in (7, 8):  # runas roxas acesas
+        for x in (5, 9):
+            img.putpixel((x, y), P[4] if y == 7 else P[3])
+    return img
+
+
+def altar_top():
+    img = Image.new("RGBA", (16, 16))
+    B, G, T, P = RAMPS["B"], RAMPS["G"], RAMPS["T"], RAMPS["P"]
+    noise_fill(img, (0, 0, 16, 16), [B[1], B[2], B[2]], [2, 5, 3], 61)
+    for i in range(1, 15):
+        img.putpixel((i, 1), G[4])
+        img.putpixel((1, i), G[4])
+        img.putpixel((i, 14), G[2])
+        img.putpixel((14, i), G[2])
+    # círculo de runas: anel verde-água com pérola roxa no centro
+    for y in range(16):
+        for x in range(16):
+            d = math.hypot(x - 7.5, y - 7.5)
+            if 4.6 <= d < 5.6:
+                img.putpixel((x, y), T[4] if (x + y) % 3 else T[5])
+            elif d < 2.2:
+                img.putpixel((x, y), P[4] if x + y < 15 else P[3])
+    for x, y in ((7, 7), (6, 6)):
+        img.putpixel((x, y), P[5])
+    for x, y in ((7, 2), (8, 2), (7, 13), (8, 13), (2, 7), (2, 8), (13, 7), (13, 8)):
+        img.putpixel((x, y), T[3])
+    return img
+
+
 # ---------------------------------------------------------------- barra de boss (HUD)
 
 CORAL = [hexc("4a1222"), hexc("8e2a40"), hexc("cf4a60"), hexc("ff8a8a"), hexc("ffc2b8")]
@@ -1057,6 +1155,12 @@ def main():
     out["block/abyssal_forge_front"] = forge_front()
     out["block/abyssal_forge_top"] = forge_top()
     out["block/abyssal_forge_bottom"] = forge_bottom()
+    out["item/abyssal_lure"] = lure()
+    out["item/lure_blueprint"] = render(BLUEPRINT)
+    out["block/abyssal_altar_top"] = altar_top()
+    out["block/abyssal_altar_side"] = altar_side()
+    out["block/abyssal_altar_column"] = altar_column()
+    out["block/abyssal_altar_bottom"] = forge_bricks(71)
     for rel, img in out.items():
         save(img, rel + ".png")
     layers = [

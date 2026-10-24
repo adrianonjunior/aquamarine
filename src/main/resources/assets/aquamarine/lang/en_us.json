@@ -19,5 +19,15 @@
   "item.aquamarine.orichalcum_boots": "Orichalcum Boots",
   "item.aquamarine.diving_goggles": "Diving Goggles",
   "entity.aquamarine.boss_dummy": "Kraken (test)",
+  "item.aquamarine.lure_blueprint": "Lure Blueprint",
+  "item.aquamarine.abyssal_lure": "Abyssal Lure",
+  "block.aquamarine.abyssal_altar": "Altar of the Abyss",
+  "message.aquamarine.summon.calm": "The waters grow strangely calm...",
+  "message.aquamarine.summon.stirs": "Something enormous stirs in the depths...",
+  "message.aquamarine.summon.awakens": "The Kraken has awakened!",
+  "message.aquamarine.summon.silence": "The waters fall silent again...",
+  "message.aquamarine.summon.shallow": "The waters are too shallow...",
+  "message.aquamarine.summon.busy": "The abyss is already being called.",
+  "title.aquamarine.kraken": "THE KRAKEN",
   "bossbar.aquamarine.title": "%s · Phase %s"
 }

@@ -19,5 +19,15 @@
   "item.aquamarine.orichalcum_boots": "Botas de Oricálcio",
   "item.aquamarine.diving_goggles": "Óculos de Mergulho",
   "entity.aquamarine.boss_dummy": "Kraken (teste)",
+  "item.aquamarine.lure_blueprint": "Projeto do Chamariz",
+  "item.aquamarine.abyssal_lure": "Chamariz Abissal",
+  "block.aquamarine.abyssal_altar": "Altar do Abismo",
+  "message.aquamarine.summon.calm": "As águas ficam estranhamente calmas...",
+  "message.aquamarine.summon.stirs": "Algo enorme se move nas profundezas...",
+  "message.aquamarine.summon.awakens": "O Kraken despertou!",
+  "message.aquamarine.summon.silence": "As águas voltam ao silêncio...",
+  "message.aquamarine.summon.shallow": "As águas são rasas demais...",
+  "message.aquamarine.summon.busy": "O abismo já está sendo chamado.",
+  "title.aquamarine.kraken": "O KRAKEN",
   "bossbar.aquamarine.title": "%s · Fase %s"
 }

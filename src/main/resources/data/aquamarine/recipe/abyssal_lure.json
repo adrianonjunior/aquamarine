@@ -1,0 +1,18 @@
+{
+  "type": "aquamarine:abyssal_forging",
+  "category": "misc",
+  "key": {
+    "P": "aquamarine:abyssal_pearl",
+    "C": "aquamarine:tide_crystal",
+    "B": "aquamarine:lure_blueprint",
+    "I": "aquamarine:orichalcum_ingot"
+  },
+  "pattern": [
+    "P P",
+    "CBC",
+    "PIP"
+  ],
+  "result": {
+    "id": "aquamarine:abyssal_lure"
+  }
+}

@@ -25,6 +25,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -36,6 +37,8 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Teste de cliente da Entrega 1: abre um mundo plano, monta cenas e tira screenshots em
@@ -63,7 +66,50 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			forge(context, world, server, base);
 			underwater(context, world, server, base);
 			bossBar(context, world, server, base);
+			altar(context, world, server, base);
 		}
+	}
+
+	private static void useLure(MinecraftServer s, BlockPos altar) {
+		ServerPlayer player = player(s);
+		BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(altar).add(0, 0.5, 0), Direction.UP, altar, false);
+		player.gameMode.useItemOn(player, s.overworld(), player.getMainHandItem(), InteractionHand.MAIN_HAND, hit);
+	}
+
+	/** Altar do Abismo: recusa sem água funda (sem gastar o Chamariz) e invoca com água funda. */
+	private static void altar(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos base) {
+		BlockPos altar = base.offset(6, 0, -6);
+		server.runCommand("gamemode survival @a");
+		server.runOnServer(s -> {
+			s.overworld().setBlockAndUpdate(altar, ModBlocks.ABYSSAL_ALTAR.defaultBlockState());
+			ServerPlayer player = player(s);
+			player.getInventory().setSelectedSlot(0);
+			player.getInventory().setItem(0, new ItemStack(ModItems.ABYSSAL_LURE));
+		});
+		tp(server, altar.getX() + 0.5, altar.getY(), altar.getZ() - 2.5, 0, 25);
+		world.getConnection().waitForChunksRender();
+		context.runOnClient(mc -> mc.gui.hud.getChat().clearMessages(false));
+		server.runOnServer(s -> useLure(s, altar));
+		context.waitTicks(5);
+		check(server.computeOnServer(s -> player(s).getMainHandItem().is(ModItems.ABYSSAL_LURE)), "o Chamariz foi gasto sem água funda");
+		shot(context, "13_altar_aguas_rasas");
+
+		// Coluna de água de 30 blocos ao lado (dentro do raio de 48 e na grade de amostragem).
+		BlockPos pool = altar.offset(8, 0, 0);
+		server.runCommand(String.format("fill %d %d %d %d %d %d minecraft:glass hollow",
+			pool.getX() - 2, pool.getY() - 1, pool.getZ() - 2, pool.getX() + 2, pool.getY() + 30, pool.getZ() + 2));
+		server.runCommand(String.format("fill %d %d %d %d %d %d minecraft:water",
+			pool.getX() - 1, pool.getY(), pool.getZ() - 1, pool.getX() + 1, pool.getY() + 29, pool.getZ() + 1));
+		// sem tampa: a superfície tem que ser água aberta
+		server.runCommand(String.format("fill %d %d %d %d %d %d minecraft:air",
+			pool.getX() - 1, pool.getY() + 30, pool.getZ() - 1, pool.getX() + 1, pool.getY() + 30, pool.getZ() + 1));
+		context.waitTicks(2);
+		server.runOnServer(s -> useLure(s, altar));
+		context.waitTicks(2);
+		check(server.computeOnServer(s -> player(s).getMainHandItem().isEmpty()), "o Chamariz não foi consumido");
+		context.waitTicks(205);
+		shot(context, "14_altar_kraken_despertou");
+		server.runCommand("gamemode creative @a");
 	}
 
 	private static BossDummy dummy(MinecraftServer server) {

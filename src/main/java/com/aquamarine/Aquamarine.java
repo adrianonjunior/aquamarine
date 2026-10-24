@@ -4,6 +4,7 @@ import com.aquamarine.block.ModBlocks;
 import com.aquamarine.config.AquamarineConfig;
 import com.aquamarine.entity.ModEntities;
 import com.aquamarine.entity.boss.AquamarineBossBar;
+import com.aquamarine.event.KrakenSummoning;
 import com.aquamarine.item.ModCreativeTab;
 import com.aquamarine.item.ModItems;
 import com.aquamarine.item.OrichalcumEffects;
@@ -33,6 +34,7 @@ public class Aquamarine implements ModInitializer {
 		ModEntities.register();
 		AquamarineBossBar.registerPayloads();
 		OrichalcumEffects.register();
+		KrakenSummoning.register();
 		LOGGER.info("Aquamarine carregado.");
 	}
 
