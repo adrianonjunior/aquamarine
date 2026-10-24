@@ -39,7 +39,9 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 |---|---|---|---|
 | Animações, partículas e avisos do Kraken (Entrega 2; autorizada pelo Adriano no lugar do Codex) | Claude Opus 5.5 (worktree `aquamarine-opus-kraken`, branch `opus/kraken-anim`) | nenhum agora (pausada; jogo livre) | 24/10/2026 |
 
-## Registro de handoff
+## Registro de handoff
+
+- 24/10/2026 · Orquestrador · **Fechamento da Entrega 2 (pedido do Adriano: terminar a Entrega 2 e então iniciar a Fase 3).** Fase 3 preparada em `25630e7`. **Rodando:** 2P (Claude, dispatch `ctx_ee6ab56345b5`, terminal da worktree 2B): mergeia `opus/kraken-anim` com a main, hitbox/escala 24 x 16 (ou ~32 x 20 se ainda parecer pequeno), aceite da 2A-T, merge na main. **Depois:** Opus 5.5 (sessão `aquamarine-45`) faz o Kraken bem mais vivo (idle/swim procedural, avisos com amplitude, partículas, locomoção no servidor), 2Q (Codex, 2 clientes) e o aceite multiplayer (só o Adriano julga). **Só então** o orquestrador da Fase 3 (`prompts/orquestrador-fase3.md`, checklist em docs/07-roadmap.md). O Adriano pediu o Kraken "maior e se mexendo muito mais" porque estava estático nos testes dele.
 
 - 24/10/2026 · Claude Sonnet 5.5 (2D-T) · Texturas do tentáculo, da Cria e do ovo geradas por `tools/gen_spawnlings_texture.py` sobre os `uv.png` do Codex (paleta mais clara e bioluminescente: ciano/roxo/magenta, contorno escuro, pontos luminosos). Se `tools/models/spawnlings/build_model.py` rodar de novo, ele sobrescreve os PNGs: rode o script depois. **Testado:** `build` e `runClientGameTest` (3 close-ups `23_textura_ovo`, `24_textura_cria`, `25_textura_tentaculo`). **Não conferido bem:** nos prints o Kraken ocupa o centro e as criaturas ficam pequenas/fora de eixo; a leitura das cores está boa, mas falta um enquadramento melhor (afastar o Kraken do teste) para avaliar os detalhes de pixel. Próximo: 2A-T e 2Q.
 
