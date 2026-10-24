@@ -7,6 +7,7 @@ import com.aquamarine.client.screen.AbyssalForgeScreen;
 import com.aquamarine.command.KrakenCommand;
 import com.aquamarine.entity.BossDummy;
 import com.aquamarine.entity.KrakenEntity;
+import com.aquamarine.entity.boss.ShieldDamage;
 import com.aquamarine.event.KrakenSummoning;
 import net.minecraft.world.entity.EntitySpawnReason;
 import com.aquamarine.entity.ModEntities;
@@ -176,7 +177,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 	private static void krakenHit(TestServerContext server, float damage) {
 		server.runOnServer(s -> {
 			ServerLevel level = s.overworld();
-			kraken(s).hurtServer(level, level.damageSources().playerAttack(player(s)), damage);
+			// Mão vazia: o escudo recebe 25% do dano (tabela de 2C); multiplica por 4 para manter os números.
+			float raw = kraken(s).shield() > 0 ? damage * 4.0F : damage;
+			kraken(s).hurtServer(level, level.damageSources().playerAttack(player(s)), raw);
 		});
 	}
 
@@ -227,6 +230,24 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		check(server.computeOnServer(s -> kraken(s).phase() == 3 && near(kraken(s).realHealth(), 500F) && kraken(s).shield() == 800F),
 			"Kraken: fase 3 com 800 de escudo");
 		shot(context, "15_kraken_fase3");
+
+		// 2C: tabela de dano por fonte, Nós de Maré e exposição (escudo cheio de 800 na fase 3).
+		check(server.computeOnServer(s -> kraken(s).nodeCount() == 4 && kraken(s).nodeCenters().stream().allMatch(c -> c.y < kraken(s).getY())),
+			"Kraken: 4 Nós de Maré sob o corpo na fase 3");
+		server.runOnServer(s -> {
+			ServerLevel level = s.overworld();
+			KrakenEntity k = kraken(s);
+			ServerPlayer p = player(s);
+			k.hitShield(level, ShieldDamage.Source.COMMON, 40, p, false, 0);
+			check(k.shield() == 790F, "Kraken: arma comum causa 25% no escudo");
+			k.hitShield(level, ShieldDamage.Source.HARPOON, 10, p, true, 0);
+			check(k.shield() == 730F, "Kraken: arpão (3x) em nó (2x) causa 60");
+			k.hitShield(level, ShieldDamage.Source.PULSE, 0, p, true, 0);
+			check(k.shield() == 630F, "Kraken: Carga de Pulso tira 100 fixos");
+			k.expose(20);
+			k.hitShield(level, ShieldDamage.Source.PULSE, 0, p, false, 0);
+			check(k.shield() == 505F, "Kraken: exposto leva +25%");
+		});
 
 		server.runOnServer(s -> {
 			KrakenEntity big = ModEntities.KRAKEN.create(s.overworld(), EntitySpawnReason.COMMAND);

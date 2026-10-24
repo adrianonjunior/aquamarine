@@ -1,15 +1,21 @@
 package com.aquamarine.entity;
 
+import com.aquamarine.Aquamarine;
+import com.aquamarine.ModTags;
 import com.aquamarine.config.AquamarineConfig;
 import com.aquamarine.entity.boss.AggroTracker;
 import com.aquamarine.entity.boss.AquamarineBossBar;
 import com.aquamarine.entity.boss.KrakenStats;
 import com.aquamarine.entity.boss.KrakenView;
+import com.aquamarine.entity.boss.ShieldDamage;
+import com.aquamarine.entity.boss.TideNodes;
 
 import java.util.List;
 import java.util.UUID;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -23,6 +29,13 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -42,6 +55,8 @@ public class KrakenEntity extends Mob implements KrakenView {
 	/** Vida máxima do atributo do jogo (a escala interna; a vida real é {@link #realHealth()}). */
 	public static final float HEALTH_UNITS = 1000.0F;
 	public static final int ARENA_RADIUS = 32;
+	/** Alcance (em blocos) do olhar do atacante ao testar acerto num Nó de Maré. */
+	public static final double NODE_REACH = 8.0;
 	public static final int MESSAGE_RADIUS = 128;
 	/** Invulnerabilidade na troca de fase (3 s). */
 	public static final int TRANSITION_TICKS = 60;
@@ -62,6 +77,8 @@ public class KrakenEntity extends Mob implements KrakenView {
 	private static final EntityDataAccessor<Float> DATA_MAX_SHIELD = SynchedEntityData.defineId(KrakenEntity.class, EntityDataSerializers.FLOAT);
 	private static final EntityDataAccessor<Integer> DATA_PHASE = SynchedEntityData.defineId(KrakenEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> DATA_TRANSITION = SynchedEntityData.defineId(KrakenEntity.class, EntityDataSerializers.INT);
+	/** Quantos Nós de Maré existem (0 com a opção desligada); o cliente os posiciona por fase e rotação. */
+	private static final EntityDataAccessor<Integer> DATA_NODES = SynchedEntityData.defineId(KrakenEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> DATA_STUN = SynchedEntityData.defineId(KrakenEntity.class, EntityDataSerializers.INT);
 
 	/** O atributo de vida máxima do jogo é limitado a 1024; a vida real do Kraken passa disso e fica aqui. */
@@ -99,6 +116,8 @@ public class KrakenEntity extends Mob implements KrakenView {
 	private int absentTicks;
 	private boolean fled;
 	private UUID target;
+	/** Ticks restantes com os 8 tentáculos cortados: escudo sem regenerar e +25% de dano (2D). */
+	private int exposedTicks;
 
 	public KrakenEntity(EntityType<? extends KrakenEntity> type, Level level) {
 		super(type, level);
@@ -124,6 +143,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 		builder.define(DATA_PHASE, 1);
 		builder.define(DATA_TRANSITION, 0);
 		builder.define(DATA_STUN, 0);
+		builder.define(DATA_NODES, 0);
 	}
 
 	// --- KrakenView: o cliente liga e desliga as animações conforme o estado sincronizado ---
@@ -296,6 +316,39 @@ public class KrakenEntity extends Mob implements KrakenView {
 		return entityData.get(DATA_STUN) > 0;
 	}
 
+	/** Atordoado ou em transição de fase: não ataca nem muda de posição (as faixas de ataque consultam isto). */
+	public boolean canAct() {
+		return !isStunned() && !isTransitioning();
+	}
+
+	public boolean isExposed() {
+		return exposedTicks > 0;
+	}
+
+	/** Deixa o Kraken exposto por {@code ticks} (todos os tentáculos cortados). */
+	public void expose(int ticks) {
+		exposedTicks = Math.max(exposedTicks, ticks);
+	}
+
+	public int nodeCount() {
+		return entityData.get(DATA_NODES);
+	}
+
+	/** Centros dos Nós de Maré no mundo (a fase e a rotação do corpo definem onde estão). */
+	public List<Vec3> nodeCenters() {
+		int count = nodeCount();
+		List<Vec3> centers = new java.util.ArrayList<>(count);
+		for (int i = 0; i < count; i++) {
+			TideNodes.Offset o = TideNodes.rotate(TideNodes.offset(phase(), i, count), getYRot());
+			centers.add(position().add(o.x(), o.y(), o.z()));
+		}
+		return centers;
+	}
+
+	private void setNodes(int players) {
+		entityData.set(DATA_NODES, AquamarineConfig.get().weakPoints ? TideNodes.count(players) : 0);
+	}
+
 	/** Fator de escala {@code f} em vigor (só diminui entre fases). */
 	public float scaleFactor() {
 		return scale;
@@ -314,6 +367,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 		this.scale = KrakenStats.scale(players, AquamarineConfig.get().scalingCap);
 		applyMaxHealth(true);
 		setShieldFull(1);
+		setNodes(players);
 		entityData.set(DATA_PHASE, 1);
 		this.initialized = true;
 	}
@@ -355,16 +409,9 @@ public class KrakenEntity extends Mob implements KrakenView {
 			return false;
 		}
 		Entity attacker = source.getEntity();
-		float shield = shield();
-		if (shield > 0) {
-			float absorbed = Math.min(shield, damage);
-			recordAggro(attacker, absorbed, level);
-			entityData.set(DATA_SHIELD, shield - absorbed);
-			sinceShieldDamage = 0;
-			shieldRegenerating = false;
-			if (shield - absorbed <= 0) {
-				breakShield(level);
-			}
+		if (shield() > 0) {
+			ItemStack weapon = source.getWeaponItem();
+			hitShield(level, classify(weapon), damage, attacker, isNodeHit(source), shatterLevel(level, weapon));
 			return true;
 		}
 		recordAggro(attacker, damage, level);
@@ -379,6 +426,73 @@ public class KrakenEntity extends Mob implements KrakenView {
 			return true;
 		}
 		return super.hurtServer(level, source, damage * unit);
+	}
+
+	/** Fonte do golpe pela arma usada (itens especiais entram por tag, ver docs/02-kraken.md). */
+	static ShieldDamage.Source classify(ItemStack weapon) {
+		if (weapon != null && weapon.is(ModTags.Items.HARPOONS)) {
+			return ShieldDamage.Source.HARPOON;
+		}
+		if (weapon != null && weapon.is(ModTags.Items.SHIELD_BREAKERS)) {
+			return ShieldDamage.Source.ORICHALCUM;
+		}
+		return ShieldDamage.Source.COMMON;
+	}
+
+	private static final ResourceKey<Enchantment> SHELL_BREAKER = ResourceKey.create(Registries.ENCHANTMENT, Aquamarine.id("shell_breaker"));
+
+	private static int shatterLevel(ServerLevel level, ItemStack weapon) {
+		if (weapon == null || weapon.isEmpty()) {
+			return 0;
+		}
+		return level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(SHELL_BREAKER)
+			.map(holder -> EnchantmentHelper.getItemEnchantmentLevel(holder, weapon)).orElse(0);
+	}
+
+	/**
+	 * O golpe acertou um Nó de Maré? Projétil: a caixa dele toca o nó. Corpo a corpo: o olhar do
+	 * atacante atravessa a caixa do nó dentro do alcance.
+	 */
+	private boolean isNodeHit(DamageSource source) {
+		if (nodeCount() == 0) {
+			return false;
+		}
+		Entity direct = source.getDirectEntity();
+		for (Vec3 center : nodeCenters()) {
+			AABB box = AABB.ofSize(center, TideNodes.SIZE, TideNodes.SIZE, TideNodes.SIZE);
+			if (direct instanceof Projectile) {
+				if (direct.getBoundingBox().inflate(0.5).intersects(box)) {
+					return true;
+				}
+			} else if (direct instanceof LivingEntity living) {
+				Vec3 from = living.getEyePosition();
+				if (box.clip(from, from.add(living.getLookAngle().scale(NODE_REACH))).isPresent()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Aplica dano ao escudo pela tabela ({@link ShieldDamage}) e trata a quebra. As fontes sem
+	 * arma (Carga de Pulso, Pilar Ressonante) chamam isto direto. Devolve o que o escudo absorveu.
+	 */
+	public float hitShield(ServerLevel level, ShieldDamage.Source source, float damage, Entity attacker, boolean node, int shatterLevel) {
+		float shield = shield();
+		if (shield <= 0 || isTransitioning()) {
+			return 0.0F;
+		}
+		float amount = ShieldDamage.amount(source, damage, maxShield(), shatterLevel, node, isExposed());
+		float absorbed = Math.min(shield, amount);
+		recordAggro(attacker, absorbed, level);
+		entityData.set(DATA_SHIELD, shield - absorbed);
+		sinceShieldDamage = 0;
+		shieldRegenerating = false;
+		if (shield - absorbed <= 0) {
+			breakShield(level);
+		}
+		return absorbed;
 	}
 
 	private void recordAggro(Entity attacker, float amount, ServerLevel level) {
@@ -399,6 +513,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 		int n = playersInArena(level).size();
 		scale = Math.min(scale, KrakenStats.scale(n, AquamarineConfig.get().scalingCap));
 		applyMaxHealth(false);
+		setNodes(n);
 		entityData.set(DATA_PHASE, phase);
 		setShieldFull(phase);
 		entityData.set(DATA_STUN, 0);
@@ -441,6 +556,9 @@ public class KrakenEntity extends Mob implements KrakenView {
 		if (transition > 0) {
 			entityData.set(DATA_TRANSITION, transition - 1);
 		}
+		if (exposedTicks > 0) {
+			exposedTicks--;
+		}
 		int stun = entityData.get(DATA_STUN);
 		if (stun > 0) {
 			entityData.set(DATA_STUN, stun - 1);
@@ -456,7 +574,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 			shieldRegenerating = false;
 			return;
 		}
-		if (isTransitioning() || isStunned()) {
+		if (isTransitioning() || isStunned() || isExposed()) {
 			return;
 		}
 		sinceShieldDamage++;

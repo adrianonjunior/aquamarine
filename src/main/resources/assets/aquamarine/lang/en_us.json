@@ -70,6 +70,7 @@
   "tooltip.aquamarine.abyssal_lure.2": "Needs open water 30 blocks deep nearby.",
   "tooltip.aquamarine.abyssal_altar": "Altar in the Lost City's Central Plaza.",
   "tooltip.aquamarine.abyssal_altar.2": "Use the Abyssal Lure on it to call the Kraken.",
+  "enchantment.aquamarine.shell_breaker": "Shell Breaker",
   "entity.aquamarine.kraken": "Kraken",
   "message.aquamarine.kraken.shield_broken": "The Kraken's carapace shatters!",
   "message.aquamarine.kraken.phase2": "The Kraken is enraged!",
