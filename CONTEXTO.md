@@ -38,7 +38,12 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 
-## Registro de handoff
+## Registro de handoff
+
+- 24/10/2026 · Orquestrador · **Retomada.** 2A-T entregue **parcial** (textura por `tools/gen_kraken_texture.py` na main, build verde; aceite visual NÃO cumprido: rachaduras `crack_*` não aparecem, Kraken pequeno e escuro; `build_model.py` sobrescreve `kraken.png`, rodar o script da textura depois).
+  Fica para o polimento de tamanho 24 x 16 (Codex: rachaduras maiores/emissivas). **2D-C iniciada** (Claude, terminal da worktree 2B, dispatch `ctx_731e88465b7b`).
+  **2D-M (Codex) BLOQUEADA:** o Codex 0.163 falha com erro de IPC do Orca (`unknown field result_buffered_for_ns`) e não consegue chamar o `orca`; precisa atualizar o Codex (`npm install -g @openai/codex`, decisão do Adriano) e reenviar a tarefa no terminal `term_cca07849...` (worktree 2D-M, task `task_c82174f95651`).
+  Bloqueia também 2D-T, o polimento de tamanho (parte do modelo) e a 2Q. Revisado o commit `e3dd518` do Codex (só docs; Fase 3 bloqueada, sem contradição).
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
 
 - 24/10/2026 · Codex (organização documental) · Reconciliou marcos da Entrega 1 e das faixas 2B/2E com o histórico da `main`; corrigiu textos de liberação e da 2A-T, incorporou a documentação planejada da Fase 3 e deixou o aviso "Atualização para todos os agentes" acima. **Sem executar agentes ou build.** Permanecem pendentes as faixas desmarcadas no roadmap e o aceite multiplayer da Entrega 2; a Fase 3 segue bloqueada.
