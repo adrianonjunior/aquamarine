@@ -14,10 +14,12 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| 2A-M · KrakenView, gabarito UV, modelo e animações | Codex Astra | jogo (na QA visual) | 24/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+
+- 24/10/2026 · Codex Astra (2A-M) · `KrakenView`, gabarito UV, `.bbmodel` com 191 cubos e 16 clips, classes do modelo/animações/renderer e registro do modelo; `compileJava compileClientJava` passou, `/aquamarine kraken` criou a entidade e os 16 comandos responderam `Animation <nome> played.`
+  **Visual não verificado:** no mundo de QA florestal o Kraken surgiu em y=57 sob o terreno; as 9 capturas autorizadas foram usadas sem obter uma vista do modelo. **Próximo passo:** repetir a vista geral e poses em mundo aquático/câmera acima do chão; deixar 2A-M sem marcar até conferir a silhueta.
 
 - 24/10/2026 · Claude Sonnet 5.5 (2A-C.2) · `/aquamarine kraken anim <nome>` dispara as 16 animações do contrato no Kraken mais próximo (sincronizado por dados da entidade); testado no teste de cliente (estado no servidor), **não** conferido visualmente.
 
