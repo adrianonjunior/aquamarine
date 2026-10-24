@@ -80,5 +80,22 @@
   "commands.aquamarine.kraken.arena": "Arena de teste criada; Kraken no centro.",
   "commands.aquamarine.kraken.none": "Nenhum Kraken perto.",
   "commands.aquamarine.kraken.anim": "Animação %s disparada.",
-  "commands.aquamarine.kraken.anim_unknown": "Animação desconhecida: %s."
+  "commands.aquamarine.kraken.anim_unknown": "Animação desconhecida: %s.",
+  "item.aquamarine.kraken_eye": "Olho do Kraken",
+  "item.aquamarine.abyssal_ink": "Tinta Abissal",
+  "item.aquamarine.kraken_heart": "Coração do Kraken",
+  "block.aquamarine.kraken_trophy": "Troféu do Kraken",
+  "block.aquamarine.golden_abyss_trophy": "Troféu Dourado do Abismo",
+  "tooltip.aquamarine.kraken_eye": "Olho enorme que ainda parece vigiar você.",
+  "tooltip.aquamarine.kraken_eye.2": "Recompensa do Kraken; ingrediente dos itens pós-boss.",
+  "tooltip.aquamarine.abyssal_ink": "Tinta negra com brilho roxo.",
+  "tooltip.aquamarine.abyssal_ink.2": "Recompensa do Kraken; ingrediente dos itens pós-boss.",
+  "tooltip.aquamarine.kraken_heart": "Ainda pulsa, bem devagar.",
+  "tooltip.aquamarine.kraken_heart.2": "Dado na primeira vitória de cada jogador; libera os itens pós-boss.",
+  "tooltip.aquamarine.kraken_trophy": "A cabeça do Kraken sobre um pedestal.",
+  "tooltip.aquamarine.kraken_trophy.2": "Bloco decorativo; recompensa do Kraken.",
+  "tooltip.aquamarine.golden_abyss_trophy": "Troféu de ouro do Abismo.",
+  "tooltip.aquamarine.golden_abyss_trophy.2": "Bloco decorativo; só no modo abissal.",
+  "message.aquamarine.kraken.defeated": "O Kraken foi derrotado!",
+  "message.aquamarine.kraken.heart": "O Kraken deixou seu Coração para você."
 }

@@ -80,5 +80,22 @@
   "commands.aquamarine.kraken.arena": "Test arena built; Kraken at the center.",
   "commands.aquamarine.kraken.none": "No Kraken nearby.",
   "commands.aquamarine.kraken.anim": "Animation %s played.",
-  "commands.aquamarine.kraken.anim_unknown": "Unknown animation: %s."
+  "commands.aquamarine.kraken.anim_unknown": "Unknown animation: %s.",
+  "item.aquamarine.kraken_eye": "Eye of the Kraken",
+  "item.aquamarine.abyssal_ink": "Abyssal Ink",
+  "item.aquamarine.kraken_heart": "Heart of the Kraken",
+  "block.aquamarine.kraken_trophy": "Kraken Trophy",
+  "block.aquamarine.golden_abyss_trophy": "Golden Abyss Trophy",
+  "tooltip.aquamarine.kraken_eye": "A huge eye that still seems to watch you.",
+  "tooltip.aquamarine.kraken_eye.2": "Kraken reward; ingredient of the post-boss items.",
+  "tooltip.aquamarine.abyssal_ink": "Black ink with a purple glow.",
+  "tooltip.aquamarine.abyssal_ink.2": "Kraken reward; ingredient of the post-boss items.",
+  "tooltip.aquamarine.kraken_heart": "It still beats, very slowly.",
+  "tooltip.aquamarine.kraken_heart.2": "Given on each player's first victory; unlocks the post-boss items.",
+  "tooltip.aquamarine.kraken_trophy": "The Kraken's head on a pedestal.",
+  "tooltip.aquamarine.kraken_trophy.2": "Decorative block; Kraken reward.",
+  "tooltip.aquamarine.golden_abyss_trophy": "A golden trophy of the Abyss.",
+  "tooltip.aquamarine.golden_abyss_trophy.2": "Decorative block; abyssal mode only.",
+  "message.aquamarine.kraken.defeated": "The Kraken has been defeated!",
+  "message.aquamarine.kraken.heart": "The Kraken left its Heart for you."
 }

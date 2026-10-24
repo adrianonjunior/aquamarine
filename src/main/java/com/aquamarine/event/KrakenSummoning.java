@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -45,12 +46,16 @@ public final class KrakenSummoning {
 	private static final List<Sequence> ACTIVE = new ArrayList<>();
 
 	public static void register() {
+		SummonEffectPayload.register();
 		ServerTickEvents.END_SERVER_TICK.register(KrakenSummoning::tick);
+		ServerTickEvents.END_SERVER_TICK.register(FalseWarning::tick);
 	}
 
 	/** Começa a sequência em {@code pos}. {@code fake} = aviso falso (o Kraken não vem). */
 	public static void start(ServerLevel level, BlockPos pos, boolean fake) {
 		ACTIVE.add(new Sequence(level, pos.immutable(), fake));
+		// 0 s: os sons do oceano param até o despertar.
+		sendEffect(level, pos, SummonEffectPayload.SILENCE, AWAKENS_TICK);
 		broadcast(level, pos, Component.translatable("message.aquamarine.summon.calm").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC),
 			SoundEvents.CONDUIT_DEACTIVATE, 0.6F);
 	}
@@ -95,6 +100,15 @@ public final class KrakenSummoning {
 
 	private static void tick(MinecraftServer server) {
 		ACTIVE.removeIf(Sequence::tick);
+	}
+
+	/** Manda um efeito de tela aos jogadores a até {@link #MESSAGE_RADIUS} blocos de {@code pos}. */
+	public static void sendEffect(ServerLevel level, BlockPos pos, int effect, int ticks) {
+		for (ServerPlayer player : level.players()) {
+			if (player.blockPosition().closerThan(pos, MESSAGE_RADIUS)) {
+				ServerPlayNetworking.send(player, new SummonEffectPayload(effect, ticks));
+			}
+		}
 	}
 
 	private static void broadcast(ServerLevel level, BlockPos pos, Component message, SoundEvent sound, float pitch) {
@@ -149,6 +163,7 @@ public final class KrakenSummoning {
 			if (ticks == STIRS_TICK) {
 				broadcast(level, pos, Component.translatable("message.aquamarine.summon.stirs").withStyle(ChatFormatting.BLUE),
 					SoundEvents.ELDER_GUARDIAN_AMBIENT, 0.5F);
+				sendEffect(level, pos, SummonEffectPayload.SHAKE, AWAKENS_TICK - STIRS_TICK);
 			}
 			if (ticks >= STIRS_TICK && ticks < AWAKENS_TICK && ticks % 5 == 0) {
 				level.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5,
@@ -156,6 +171,9 @@ public final class KrakenSummoning {
 			}
 			if (ticks == AWAKENS_TICK) {
 				awaken();
+				if (fake) {
+					sendEffect(level, pos, SummonEffectPayload.DARKEN, FALSE_SILENCE_TICK - AWAKENS_TICK);
+				}
 				if (!fake) {
 					spawnKraken(level, pos);
 					return true;

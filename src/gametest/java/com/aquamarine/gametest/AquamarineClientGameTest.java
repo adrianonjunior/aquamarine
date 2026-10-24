@@ -255,8 +255,118 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			big.setUp(s.overworld(), 5);
 			check(big.realMaxHealth() == 1500F * 2.2F && big.maxShield() == 400F * 2.2F && big.scaleFactor() == 2.2F, "Kraken: escala f com 5 jogadores");
 		});
+		rewards(context, world, server, origin);
+		falseWarning(context, world, server, origin);
 		server.runCommand("kill @e[type=aquamarine:kraken]");
 		tp(server, base.getX() + 0.5, base.getY(), base.getZ() + 0.5, 0, 0);
+	}
+
+	private static int count(MinecraftServer s, Item item) {
+		var inventory = player(s).getInventory();
+		int total = 0;
+		for (int i = 0; i < inventory.getContainerSize(); i++) {
+			if (inventory.getItem(i).is(item)) {
+				total += inventory.getItem(i).getCount();
+			}
+		}
+		return total;
+	}
+
+	private static void killKraken(ClientGameTestContext context, TestServerContext server, BlockPos origin) {
+		server.runOnServer(s -> kraken(s).kill(s.overworld()));
+		context.waitTicks(25);
+		server.runOnServer(s -> check(s.overworld().getEntities(ModEntities.KRAKEN, e -> true).isEmpty(), "Kraken: devia ter sumido após a morte"));
+	}
+
+	private static void spawnKraken(TestServerContext server, BlockPos origin) {
+		server.runOnServer(s -> KrakenSummoning.spawnAt(s.overworld(), origin.offset(0, 25, 0), origin));
+	}
+
+	/** Drops e primeira vitória: Olho, Tinta, Troféu, XP e Coração só na primeira vez; Dourado no modo abissal. */
+	private static void rewards(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos origin) {
+		server.runCommand("gamemode survival @a");
+		server.runOnServer(s -> {
+			player(s).getInventory().clearContent();
+			player(s).experienceLevel = 0;
+			player(s).totalExperience = 0;
+		});
+		killKraken(context, server, origin);
+		check(server.computeOnServer(s -> count(s, ModItems.KRAKEN_EYE) == 1 && count(s, ModItems.KRAKEN_TROPHY) == 1
+			&& count(s, ModItems.KRAKEN_HEART) == 1 && count(s, ModItems.GOLDEN_ABYSS_TROPHY) == 0), "Recompensas: Olho, Troféu e Coração na primeira vitória");
+		check(server.computeOnServer(s -> count(s, ModItems.ABYSSAL_INK) >= 2 && count(s, ModItems.ABYSSAL_INK) <= 4), "Recompensas: 2 a 4 de Tinta Abissal");
+		check(server.computeOnServer(s -> player(s).totalExperience >= 1000), "Recompensas: 1.000 de XP");
+
+		spawnKraken(server, origin);
+		context.waitTicks(2);
+		killKraken(context, server, origin);
+		check(server.computeOnServer(s -> count(s, ModItems.KRAKEN_HEART) == 1 && count(s, ModItems.KRAKEN_EYE) == 2
+			&& count(s, ModItems.KRAKEN_TROPHY) == 2), "Recompensas: o Coração só vem na primeira vitória");
+
+		com.aquamarine.config.AquamarineConfig.get().difficulty = "abissal";
+		spawnKraken(server, origin);
+		context.waitTicks(2);
+		killKraken(context, server, origin);
+		com.aquamarine.config.AquamarineConfig.get().difficulty = "normal";
+		check(server.computeOnServer(s -> count(s, ModItems.GOLDEN_ABYSS_TROPHY) == 1 && count(s, ModItems.KRAKEN_TROPHY) == 2),
+			"Recompensas: Troféu Dourado só no modo abissal");
+
+		// Troféu no mundo (modelo e textura).
+		BlockPos spot = origin.offset(0, 28, 10);
+		server.runOnServer(s -> {
+			s.overworld().setBlockAndUpdate(spot, ModBlocks.KRAKEN_TROPHY.defaultBlockState());
+			s.overworld().setBlockAndUpdate(spot.east(2), ModBlocks.GOLDEN_ABYSS_TROPHY.defaultBlockState());
+		});
+		tp(server, spot.getX() + 1.0, spot.getY() + 1.2, spot.getZ() + 3.5, 0, 15);
+		context.waitTicks(10);
+		shot(context, "16_trofeus");
+		server.runCommand("gamemode creative @a");
+	}
+
+	/** Aviso falso: gatilho (tempestade à noite, 8%, 1 a cada 3 dias), sem Kraken, silêncio, tremor e escurecer no cliente. */
+	private static void falseWarning(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos origin) {
+		server.runCommand("weather clear");
+		server.runOnServer(s -> check(com.aquamarine.event.FalseWarning.check(s.overworld(), p -> true, () -> 0.0)
+			== com.aquamarine.event.FalseWarning.Outcome.NOT_ELIGIBLE, "Aviso falso: sem tempestade não dispara"));
+		server.runCommand("time set midnight");
+		server.runCommand("weather thunder");
+		context.waitTicks(120);
+		server.runOnServer(s -> check(com.aquamarine.event.FalseWarning.check(s.overworld(), p -> false, () -> 0.0)
+			== com.aquamarine.event.FalseWarning.Outcome.NOT_ELIGIBLE, "Aviso falso: sem jogador em oceano profundo não dispara"));
+		server.runOnServer(s -> check(com.aquamarine.event.FalseWarning.check(s.overworld(), p -> true, () -> 0.5)
+			== com.aquamarine.event.FalseWarning.Outcome.MISSED, "Aviso falso: sorte alta perde"));
+		server.runOnServer(s -> check(com.aquamarine.event.FalseWarning.check(s.overworld(), p -> true, () -> 0.0)
+			== com.aquamarine.event.FalseWarning.Outcome.NOT_ELIGIBLE, "Aviso falso: só uma sorte por noite"));
+		server.runCommand("time add 1d");
+		server.runOnServer(s -> check(com.aquamarine.event.FalseWarning.check(s.overworld(), p -> true, () -> 0.0)
+			== com.aquamarine.event.FalseWarning.Outcome.TRIGGERED, "Aviso falso: devia disparar na noite sorteada com sorte"));
+		check(server.computeOnServer(s -> com.aquamarine.event.KrakenSummoning.isActiveNear(s.overworld(), player(s).blockPosition())),
+			"Aviso falso: a sequência devia estar rodando");
+		check(context.computeOnClient(mc -> com.aquamarine.client.SummonEffects.silenced()), "Aviso falso: oceano devia silenciar em 0 s");
+		context.waitTicks(105);
+		check(context.computeOnClient(mc -> com.aquamarine.client.SummonEffects.shaking()), "Aviso falso: tela devia tremer aos 5 s");
+		context.waitTicks(100);
+		check(context.computeOnClient(mc -> com.aquamarine.client.SummonEffects.darkening()), "Aviso falso: o céu devia escurecer");
+		context.waitTicks(40);
+		shot(context, "17_aviso_falso_escuro");
+		check(server.computeOnServer(s -> s.overworld().getEntities(ModEntities.KRAKEN, e -> true).isEmpty()), "Aviso falso: não pode surgir Kraken");
+		context.waitTicks(370);
+		check(server.computeOnServer(s -> !com.aquamarine.event.KrakenSummoning.isActiveNear(s.overworld(), player(s).blockPosition())),
+			"Aviso falso: a sequência devia ter terminado");
+
+		server.runCommand("time add 1d");
+		server.runOnServer(s -> check(com.aquamarine.event.FalseWarning.check(s.overworld(), p -> true, () -> 0.0)
+			== com.aquamarine.event.FalseWarning.Outcome.COOLDOWN, "Aviso falso: 1 dia depois ainda esfria"));
+		server.runCommand("time add 3d");
+		server.runOnServer(s -> check(com.aquamarine.event.FalseWarning.check(s.overworld(), p -> true, () -> 0.0)
+			== com.aquamarine.event.FalseWarning.Outcome.TRIGGERED, "Aviso falso: depois de 3 dias dispara de novo"));
+		com.aquamarine.config.AquamarineConfig.get().falseWarning = false;
+		server.runCommand("time add 4d");
+		server.runOnServer(s -> check(com.aquamarine.event.FalseWarning.check(s.overworld(), p -> true, () -> 0.0)
+			== com.aquamarine.event.FalseWarning.Outcome.NOT_ELIGIBLE, "Aviso falso: desligado na config não dispara"));
+		com.aquamarine.config.AquamarineConfig.get().falseWarning = true;
+		context.waitTicks(610);
+		server.runCommand("weather clear");
+		server.runCommand("time set noon");
 	}
 
 	/** Screenshot sem os avisos de "receita desbloqueada" cobrindo o canto da tela. */

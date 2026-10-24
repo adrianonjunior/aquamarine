@@ -5,12 +5,15 @@ import com.aquamarine.ModTags;
 import com.aquamarine.config.AquamarineConfig;
 import com.aquamarine.entity.boss.AggroTracker;
 import com.aquamarine.entity.boss.AquamarineBossBar;
+import com.aquamarine.entity.boss.KrakenRewards;
 import com.aquamarine.entity.boss.KrakenStats;
 import com.aquamarine.entity.boss.KrakenView;
 import com.aquamarine.entity.boss.ShieldDamage;
 import com.aquamarine.entity.boss.TideNodes;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import net.minecraft.ChatFormatting;
@@ -108,6 +111,8 @@ public class KrakenEntity extends Mob implements KrakenView {
 
 	private final AquamarineBossBar bossBar = new AquamarineBossBar(this.getDisplayName());
 	private final AggroTracker aggro = new AggroTracker();
+	/** Quem causou dano nesta luta (recebe as recompensas se estiver por perto na vitória). */
+	private final Set<UUID> damagers = new HashSet<>();
 	private float scale = 1.0F;
 	private boolean initialized;
 	private int sinceShieldDamage;
@@ -498,6 +503,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 	private void recordAggro(Entity attacker, float amount, ServerLevel level) {
 		if (attacker instanceof Player player) {
 			aggro.record(player.getUUID(), amount, level.getGameTime());
+			damagers.add(player.getUUID());
 		}
 	}
 
@@ -529,6 +535,28 @@ public class KrakenEntity extends Mob implements KrakenView {
 				player.sendSystemMessage(message);
 			}
 		}
+	}
+
+	// --- Vitória ---
+
+	@Override
+	public void die(DamageSource source) {
+		if (level() instanceof ServerLevel level && !isRemoved() && !dead) {
+			broadcast(level, Component.translatable("message.aquamarine.kraken.defeated").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
+			KrakenRewards.grant(level, participants(level));
+		}
+		super.die(source);
+	}
+
+	/** Jogadores que recebem as recompensas: quem está na arena ou causou dano e está a até 128 blocos. */
+	public List<ServerPlayer> participants(ServerLevel level) {
+		Set<ServerPlayer> set = new java.util.LinkedHashSet<>(playersInArena(level));
+		for (ServerPlayer player : level.players()) {
+			if (damagers.contains(player.getUUID()) && !player.isSpectator() && player.distanceToSqr(this) <= (double) MESSAGE_RADIUS * MESSAGE_RADIUS) {
+				set.add(player);
+			}
+		}
+		return List.copyOf(set);
 	}
 
 	// --- Tick do servidor ---
