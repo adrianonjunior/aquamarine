@@ -2,7 +2,9 @@
 	"required": true,
 	"package": "com.aquamarine.client.mixin",
 	"compatibilityLevel": "JAVA_25",
-	"client": [],
+	"client": [
+		"WaterFogEnvironmentMixin"
+	],
 	"injectors": {
 		"defaultRequire": 1
 	},

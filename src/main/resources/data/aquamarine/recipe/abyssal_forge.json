@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "aquamarine:orichalcum_block",
+    "F": "minecraft:furnace",
+    "S": "aquamarine:ancient_scale",
+    "O": "minecraft:obsidian"
+  },
+  "pattern": [
+    "BFB",
+    "SOS"
+  ],
+  "result": {
+    "id": "aquamarine:abyssal_forge"
+  }
+}
