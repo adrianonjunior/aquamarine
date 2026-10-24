@@ -28,4 +28,5 @@ O plano oficial acima pode estar desatualizado: em conflito, vale
 | docs/04-cidade-perdida.md | Estrutura, bioma, criaturas (incluindo o Walker) |
 | docs/05-itens.md | Materiais e itens (incluindo o Óculos de Mergulho) |
 | docs/06-tecnico.md | Implementação, ambiente, build e convenções |
-| docs/07-roadmap.md | Ordem dos marcos e progresso |
+| docs/07-roadmap.md | Ordem dos marcos, progresso e especificação da Entrega 1 |
+| prompts/estruturador.md | Prompt para o agente que inicia a implementação |
