@@ -37,9 +37,11 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| Animações, partículas e avisos do Kraken (Entrega 2; autorizada pelo Adriano no lugar do Codex) | Claude Opus 5.5 (worktree `aquamarine-opus-kraken`, branch `opus/kraken-anim`) | nenhum agora (pausada; jogo livre) | 24/10/2026 |
 
-## Registro de handoff
+## Registro de handoff
+
+- 24/10/2026 · Claude Sonnet 5.5 (2P) · Fecha o Kraken: mergeei a branch do Opus (16 animações, partículas/sons por animação em `KrakenEffects`, rachaduras e brilho, `KrakenVisualGameTest`) com a main. Tamanho final **32 x 20** (Adriano pediu maior que 24 x 16): hitbox em `ModEntities.KRAKEN`, `clientTrackingRange` 48, `MODEL_SCALE` 4, Nós de Maré ×4 (`TideNodes.WORLD_SCALE`), anel de tentáculos 18, nasce 24 abaixo da superfície, arena de teste 129 x 64, e o Kraken não empurra mais jogadores (`doPush` vazio). Regras e dano intactos (raios de Tinta/Redemoinho/Rugido são do centro do Kraken e não foram mexidos). **Testado:** `build` e a suíte inteira do `runClientGameTest` (inclui o teste visual; a IA do `AttackGameTest` usa vida alta para o jogador sobreviver); 2A-T aceita (foto `26_kraken_rachaduras_fases_1_2_3` com as 3 fases e rachaduras visíveis). **Não testado:** multiplayer; spawn real no mar com o novo tamanho (mede 20 de altura, água funda exigida é 30); calibragem de Rugido/Tinta/Redemoinho para o corpo maior. **Próximo:** locomoção/movimento do corpo (Opus) e a 2Q.
+
 
 - 24/10/2026 · Orquestrador · **Fechamento da Entrega 2 (pedido do Adriano: terminar a Entrega 2 e então iniciar a Fase 3).** Fase 3 preparada em `25630e7`. **Rodando:** 2P (Claude, dispatch `ctx_ee6ab56345b5`, terminal da worktree 2B): mergeia `opus/kraken-anim` com a main, hitbox/escala 24 x 16 (ou ~32 x 20 se ainda parecer pequeno), aceite da 2A-T, merge na main. **Depois:** Opus 5.5 (sessão `aquamarine-45`) faz o Kraken bem mais vivo (idle/swim procedural, avisos com amplitude, partículas, locomoção no servidor), 2Q (Codex, 2 clientes) e o aceite multiplayer (só o Adriano julga). **Só então** o orquestrador da Fase 3 (`prompts/orquestrador-fase3.md`, checklist em docs/07-roadmap.md). O Adriano pediu o Kraken "maior e se mexendo muito mais" porque estava estático nos testes dele.
 
