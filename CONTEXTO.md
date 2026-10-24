@@ -15,6 +15,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 | 2A-M · KrakenView, gabarito UV, modelo e animações | Codex Astra | jogo (na QA visual) | 24/10/2026 |
+| 2A-C: `KrakenEntity` (fases, escudo, escala, aggro, fuga), `spawnKraken`, `/aquamarine kraken`, arena de teste. Estimativa 3 h / 3 screenshots | Claude (worker 2A-C) | Gradle da worktree 2A-C; "jogo" só no teste final | 24/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.

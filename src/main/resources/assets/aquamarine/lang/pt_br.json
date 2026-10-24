@@ -69,5 +69,13 @@
   "tooltip.aquamarine.abyssal_lure": "Use no Altar do Abismo para chamar o Kraken.",
   "tooltip.aquamarine.abyssal_lure.2": "Precisa de água aberta com 30 blocos de fundo por perto.",
   "tooltip.aquamarine.abyssal_altar": "Altar da Praça Central da Cidade Perdida.",
-  "tooltip.aquamarine.abyssal_altar.2": "Use o Chamariz Abissal nele para chamar o Kraken."
+  "tooltip.aquamarine.abyssal_altar.2": "Use o Chamariz Abissal nele para chamar o Kraken.",
+  "entity.aquamarine.kraken": "Kraken",
+  "message.aquamarine.kraken.shield_broken": "A carapaça do Kraken se parte!",
+  "message.aquamarine.kraken.phase2": "O Kraken se enfurece!",
+  "message.aquamarine.kraken.phase3": "O abismo se abre...",
+  "message.aquamarine.kraken.retreats": "O Kraken retorna às profundezas...",
+  "commands.aquamarine.kraken.spawned": "Kraken surgiu em %s, %s, %s.",
+  "commands.aquamarine.kraken.arena": "Arena de teste criada; Kraken no centro.",
+  "commands.aquamarine.kraken.none": "Nenhum Kraken perto."
 }

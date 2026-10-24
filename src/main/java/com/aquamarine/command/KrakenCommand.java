@@ -1,0 +1,77 @@
+package com.aquamarine.command;
+
+import com.aquamarine.entity.KrakenEntity;
+import com.aquamarine.entity.ModEntities;
+import com.aquamarine.event.KrakenSummoning;
+
+import com.mojang.brigadier.CommandDispatcher;
+
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Blocks;
+
+/**
+ * Comandos de teste do Kraken (só operadores):
+ * {@code /aquamarine kraken} faz o Kraken surgir 10 blocos abaixo de quem digita (precisa de água);
+ * {@code /aquamarine kraken arena} constrói uma piscina de vidro de teste e põe o Kraken no centro.
+ */
+public final class KrakenCommand {
+	/** Arena de teste: piscina de vidro 45 x 40 x 45, grande o bastante para a arena de 32 blocos. */
+	public static final int ARENA_HALF = 22;
+	public static final int ARENA_DEPTH = 40;
+
+	public static void register() {
+		CommandRegistrationCallback.EVENT.register((dispatcher, buildContext, environment) -> register(dispatcher));
+	}
+
+	private static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+		dispatcher.register(Commands.literal("aquamarine")
+			.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+			.then(Commands.literal("kraken")
+				.executes(ctx -> spawn(ctx.getSource()))
+				.then(Commands.literal("arena").executes(ctx -> arena(ctx.getSource())))));
+	}
+
+	private static int spawn(CommandSourceStack source) {
+		ServerLevel level = source.getLevel();
+		BlockPos pos = BlockPos.containing(source.getPosition()).below(10);
+		KrakenEntity kraken = KrakenSummoning.spawnAt(level, pos, BlockPos.containing(source.getPosition()));
+		if (kraken == null) {
+			source.sendFailure(Component.translatable("commands.aquamarine.kraken.none"));
+			return 0;
+		}
+		source.sendSuccess(() -> Component.translatable("commands.aquamarine.kraken.spawned", pos.getX(), pos.getY(), pos.getZ()), true);
+		return 1;
+	}
+
+	private static int arena(CommandSourceStack source) {
+		ServerLevel level = source.getLevel();
+		BlockPos origin = BlockPos.containing(source.getPosition());
+		buildArena(level, origin);
+		BlockPos center = origin.offset(0, ARENA_DEPTH - 15, 0);
+		KrakenSummoning.spawnAt(level, center, origin);
+		source.sendSuccess(() -> Component.translatable("commands.aquamarine.kraken.arena"), true);
+		return 1;
+	}
+
+	/** Casca de vidro cheia de água; {@code origin} é o centro do chão. */
+	public static void buildArena(ServerLevel level, BlockPos origin) {
+		BlockPos.MutableBlockPos p = new BlockPos.MutableBlockPos();
+		for (int dx = -ARENA_HALF; dx <= ARENA_HALF; dx++) {
+			for (int dz = -ARENA_HALF; dz <= ARENA_HALF; dz++) {
+				for (int dy = 0; dy <= ARENA_DEPTH; dy++) {
+					boolean wall = Math.abs(dx) == ARENA_HALF || Math.abs(dz) == ARENA_HALF || dy == 0;
+					p.set(origin.getX() + dx, origin.getY() + dy, origin.getZ() + dz);
+					level.setBlock(p, wall ? Blocks.GLASS.defaultBlockState() : dy == ARENA_DEPTH ? Blocks.AIR.defaultBlockState() : Blocks.WATER.defaultBlockState(), 2);
+				}
+			}
+		}
+	}
+
+	private KrakenCommand() {}
+}

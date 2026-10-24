@@ -20,7 +20,15 @@ public final class ModEntities {
 	public static final EntityType<BossDummy> BOSS_DUMMY = Registry.register(BuiltInRegistries.ENTITY_TYPE, BOSS_DUMMY_KEY,
 		EntityType.Builder.of(BossDummy::new, MobCategory.MISC).sized(2.0F, 2.0F).fireImmune().build(BOSS_DUMMY_KEY));
 
+	private static final ResourceKey<EntityType<?>> KRAKEN_KEY =
+		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("kraken"));
+
+	/** O Kraken (docs/02-kraken.md). Caixa provisória; o tamanho final vem com o modelo. */
+	public static final EntityType<KrakenEntity> KRAKEN = Registry.register(BuiltInRegistries.ENTITY_TYPE, KRAKEN_KEY,
+		EntityType.Builder.of(KrakenEntity::new, MobCategory.MONSTER).sized(8.0F, 6.0F).fireImmune().clientTrackingRange(16).build(KRAKEN_KEY));
+
 	public static void register() {
+		FabricDefaultAttributeRegistry.register(KRAKEN, KrakenEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(BOSS_DUMMY, BossDummy.createAttributes());
 	}
 

@@ -1,6 +1,7 @@
 package com.aquamarine;
 
 import com.aquamarine.block.ModBlocks;
+import com.aquamarine.command.KrakenCommand;
 import com.aquamarine.config.AquamarineConfig;
 import com.aquamarine.entity.ModEntities;
 import com.aquamarine.entity.boss.AquamarineBossBar;
@@ -35,6 +36,7 @@ public class Aquamarine implements ModInitializer {
 		AquamarineBossBar.registerPayloads();
 		OrichalcumEffects.register();
 		KrakenSummoning.register();
+		KrakenCommand.register();
 		LOGGER.info("Aquamarine carregado.");
 	}
 

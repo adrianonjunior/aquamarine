@@ -1,6 +1,8 @@
 package com.aquamarine.event;
 
 import com.aquamarine.Aquamarine;
+import com.aquamarine.entity.KrakenEntity;
+import com.aquamarine.entity.ModEntities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 /**
@@ -32,6 +35,8 @@ public final class KrakenSummoning {
 	/** Água aberta exigida pelo Chamariz (docs/02-kraken.md, "Arena"). */
 	public static final int REQUIRED_DEPTH = 30;
 	public static final int DEEP_WATER_RADIUS = 48;
+	/** Quantos blocos abaixo da superfície o Kraken surge. */
+	private static final int KRAKEN_SUBMERGED_DEPTH = 10;
 
 	private static final int STIRS_TICK = 100;
 	private static final int AWAKENS_TICK = 200;
@@ -55,14 +60,23 @@ public final class KrakenSummoning {
 		return ACTIVE.stream().anyMatch(s -> s.level == level && s.pos.closerThan(pos, MESSAGE_RADIUS));
 	}
 
-	/**
-	 * Há uma coluna de água aberta com pelo menos {@link #REQUIRED_DEPTH} blocos de profundidade
-	 * a até {@link #DEEP_WATER_RADIUS} blocos de {@code pos} (amostra a cada 4 blocos).
-	 */
+	/** Há água funda (ver {@link #findDeepWater}) perto de {@code pos}. */
 	public static boolean hasDeepWater(ServerLevel level, BlockPos pos) {
+		return findDeepWater(level, pos) != null;
+	}
+
+	/**
+	 * Superfície da coluna de água aberta com pelo menos {@link #REQUIRED_DEPTH} blocos de
+	 * profundidade mais próxima de {@code pos}, a até {@link #DEEP_WATER_RADIUS} blocos
+	 * (amostra a cada 4 blocos), ou {@code null}.
+	 */
+	public static BlockPos findDeepWater(ServerLevel level, BlockPos pos) {
+		BlockPos best = null;
+		double bestDist = Double.MAX_VALUE;
 		for (int dx = -DEEP_WATER_RADIUS; dx <= DEEP_WATER_RADIUS; dx += 4) {
 			for (int dz = -DEEP_WATER_RADIUS; dz <= DEEP_WATER_RADIUS; dz += 4) {
-				if (dx * dx + dz * dz > DEEP_WATER_RADIUS * DEEP_WATER_RADIUS) {
+				double dist = dx * dx + dz * dz;
+				if (dist > DEEP_WATER_RADIUS * DEEP_WATER_RADIUS || dist >= bestDist) {
 					continue;
 				}
 				int x = pos.getX() + dx;
@@ -71,11 +85,12 @@ public final class KrakenSummoning {
 				int floor = level.getHeight(Heightmap.Types.OCEAN_FLOOR, x, z);
 				if (surface - floor + 1 >= REQUIRED_DEPTH
 					&& level.getFluidState(new BlockPos(x, surface, z)).is(FluidTags.WATER)) {
-					return true;
+					best = new BlockPos(x, surface, z);
+					bestDist = dist;
 				}
 			}
 		}
-		return false;
+		return best;
 	}
 
 	private static void tick(MinecraftServer server) {
@@ -91,12 +106,29 @@ public final class KrakenSummoning {
 		}
 	}
 
-	/**
-	 * Ponto onde o Kraken entra na luta. O Kraken ainda não existe (fora da Entrega 1):
-	 * quem implementá-lo troca este corpo pelo surgimento dele na água funda mais próxima.
-	 */
+	/** Kraken surge submerso na água funda mais próxima do altar (fase 1: só os tentáculos saem). */
 	private static void spawnKraken(ServerLevel level, BlockPos altar) {
-		Aquamarine.LOGGER.info("Invocação do Kraken concluída em {} (o Kraken ainda não foi implementado).", altar);
+		BlockPos surface = findDeepWater(level, altar);
+		if (surface == null) {
+			Aquamarine.LOGGER.warn("Invocação do Kraken em {} sem água funda; o Kraken não surgiu.", altar);
+			return;
+		}
+		spawnAt(level, surface.below(KRAKEN_SUBMERGED_DEPTH), altar);
+	}
+
+	/** Cria o Kraken em {@code pos}; a escala conta os jogadores a até a arena do ponto dado. */
+	public static KrakenEntity spawnAt(ServerLevel level, BlockPos pos, BlockPos nearPlayersOf) {
+		KrakenEntity kraken = ModEntities.KRAKEN.create(level, EntitySpawnReason.EVENT);
+		if (kraken == null) {
+			return null;
+		}
+		kraken.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+		int players = (int) level.players().stream()
+			.filter(p -> p.isAlive() && !p.isSpectator() && p.blockPosition().closerThan(nearPlayersOf, KrakenEntity.ARENA_RADIUS))
+			.count();
+		kraken.setUp(level, players);
+		level.addFreshEntity(kraken);
+		return kraken;
 	}
 
 	private static final class Sequence {
