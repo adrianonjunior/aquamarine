@@ -37,8 +37,9 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| Animações, partículas e avisos do Kraken (Entrega 2; autorizada pelo Adriano no lugar do Codex) | Claude Opus 5.5 (worktree `aquamarine-opus-kraken`, branch `opus/kraken-anim`) | jogo (runClientGameTest) | 24/10/2026 |
 
-## Registro de handoff
+## Registro de handoff
 
 - 24/10/2026 · Orquestrador · **Retomada.** 2A-T entregue **parcial** (textura por `tools/gen_kraken_texture.py` na main, build verde; aceite visual NÃO cumprido: rachaduras `crack_*` não aparecem, Kraken pequeno e escuro; `build_model.py` sobrescreve `kraken.png`, rodar o script da textura depois).
   Fica para o polimento de tamanho 24 x 16 (Codex: rachaduras maiores/emissivas). **2D-C iniciada** (Claude, terminal da worktree 2B, dispatch `ctx_731e88465b7b`).
