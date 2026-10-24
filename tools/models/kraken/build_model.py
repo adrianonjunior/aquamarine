@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[3]
 MODEL_DIR = Path(__file__).resolve().parent
 TEMPLATE_DIR = MODEL_DIR / "java"
 JAVA_DIR = ROOT / "src/client/java/com/aquamarine/client/entity/kraken"
+GAME_TEXTURE = ROOT / "src/main/resources/assets/aquamarine/textures/entity/kraken/kraken.png"
 JAVA_FILES = ("KrakenModel.java", "KrakenAnimations.java", "KrakenRenderState.java", "KrakenRenderer.java")
 SIZE = 128
 UUID_COUNTER = 0
@@ -103,6 +104,8 @@ def generate_uv() -> None:
             draw.rectangle((rect[0] + 1, rect[1] + 1, rect[2] - 1, rect[3] - 1), fill=(30, 62, 77, 255))
         draw.rectangle(rect, outline=(191, 219, 226, 255), width=1)
     im.save(MODEL_DIR / "uv.png", optimize=True)
+    GAME_TEXTURE.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(MODEL_DIR / "uv.png", GAME_TEXTURE)
 
 
 def create_model() -> None:
