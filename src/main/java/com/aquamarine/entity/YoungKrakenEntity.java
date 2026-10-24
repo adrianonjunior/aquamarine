@@ -2,7 +2,16 @@ package com.aquamarine.entity;
 
 import com.aquamarine.entity.boss.KrakenAttackType;
 
+import com.aquamarine.entity.boss.AnimationSync;
+
 import java.util.EnumSet;
+import java.util.List;
+
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AnimationState;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
@@ -20,7 +29,13 @@ import net.minecraft.world.phys.Vec3;
  * Cria de Kraken (docs/02-kraken.md): 8 de vida, 4 de dano, nada direto até o jogador. O modelo
  * vem da faixa 2D-M (por enquanto o renderer é provisório).
  */
-public class YoungKrakenEntity extends Monster {
+public class YoungKrakenEntity extends Monster implements YoungKrakenView {
+	/** Nomes das animações do contrato ({@link YoungKrakenView}). */
+	public static final List<String> ANIMATION_NAMES = List.of("idle", "swim", "stunned", "hatch", "attack", "death");
+	private static final EntityDataAccessor<Integer> DATA_ANIM = SynchedEntityData.defineId(YoungKrakenEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> DATA_ANIM_SEQ = SynchedEntityData.defineId(YoungKrakenEntity.class, EntityDataSerializers.INT);
+
+	private final AnimationSync animations = new AnimationSync(ANIMATION_NAMES);
 	private static final int ATTACK_COOLDOWN = 20;
 
 	private int attackCooldown;
@@ -37,6 +52,79 @@ public class YoungKrakenEntity extends Monster {
 			.add(Attributes.ATTACK_DAMAGE, KrakenAttackType.YOUNG_DAMAGE)
 			.add(Attributes.MOVEMENT_SPEED, 0.3)
 			.add(Attributes.FOLLOW_RANGE, 40.0);
+	}
+
+	@Override
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_ANIM, 0);
+		builder.define(DATA_ANIM_SEQ, 0);
+	}
+
+	/** Dispara uma animação pelo nome do contrato (servidor; o cliente recebe pelos dados sincronizados). */
+	public boolean playAnimation(String name) {
+		int index = animations.indexOf(name);
+		if (index < 0) {
+			return false;
+		}
+		entityData.set(DATA_ANIM, index);
+		entityData.set(DATA_ANIM_SEQ, entityData.get(DATA_ANIM_SEQ) + 1);
+		return true;
+	}
+
+	@Override
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+		super.onSyncedDataUpdated(key);
+		if (key.equals(DATA_ANIM_SEQ) && level().isClientSide() && entityData.get(DATA_ANIM_SEQ) > 0) {
+			animations.start(entityData.get(DATA_ANIM), tickCount, 0);
+		}
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+		if (level().isClientSide()) {
+			animations.state("idle").startIfStopped(tickCount);
+			animations.state("swim").animateWhen(getDeltaMovement().horizontalDistanceSqr() > 1.0E-3, tickCount);
+		} else if (tickCount == 1) {
+			playAnimation("hatch");
+		}
+	}
+
+	@Override
+	public void die(DamageSource source) {
+		playAnimation("death");
+		super.die(source);
+	}
+
+	@Override
+	public AnimationState idleAnimation() {
+		return animations.state("idle");
+	}
+
+	@Override
+	public AnimationState swimAnimation() {
+		return animations.state("swim");
+	}
+
+	@Override
+	public AnimationState stunnedAnimation() {
+		return animations.state("stunned");
+	}
+
+	@Override
+	public AnimationState hatchAnimation() {
+		return animations.state("hatch");
+	}
+
+	@Override
+	public AnimationState attackAnimation() {
+		return animations.state("attack");
+	}
+
+	@Override
+	public AnimationState deathAnimation() {
+		return animations.state("death");
 	}
 
 	@Override
@@ -72,6 +160,7 @@ public class YoungKrakenEntity extends Monster {
 			if (attackCooldown > 0) {
 				attackCooldown--;
 			} else if (distanceToSqr(target) < 2.5 * 2.5 && level() instanceof ServerLevel level) {
+				playAnimation("attack");
 				doHurtTarget(level, target);
 				attackCooldown = ATTACK_COOLDOWN;
 			}

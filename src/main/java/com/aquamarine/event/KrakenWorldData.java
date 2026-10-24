@@ -57,6 +57,13 @@ public class KrakenWorldData extends SavedData {
 		return added;
 	}
 
+	/** Só para testes: devolve ao jogador a primeira vitória. */
+	public void forgetHeart(UUID player) {
+		if (heartReceived.remove(player)) {
+			setDirty();
+		}
+	}
+
 	public long lastCheckedNight() {
 		return lastCheckedNight;
 	}

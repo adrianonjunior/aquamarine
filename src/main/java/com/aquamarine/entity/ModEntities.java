@@ -40,6 +40,13 @@ public final class ModEntities {
 	public static final EntityType<YoungKrakenEntity> YOUNG_KRAKEN = Registry.register(BuiltInRegistries.ENTITY_TYPE, YOUNG_KRAKEN_KEY,
 		EntityType.Builder.of(YoungKrakenEntity::new, MobCategory.MONSTER).sized(0.9F, 0.9F).fireImmune().clientTrackingRange(10).build(YOUNG_KRAKEN_KEY));
 
+	private static final ResourceKey<EntityType<?>> KRAKEN_EGG_KEY =
+		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("kraken_egg"));
+
+	/** Ovo do Kraken (aviso do ataque Crias). */
+	public static final EntityType<KrakenEggEntity> KRAKEN_EGG = Registry.register(BuiltInRegistries.ENTITY_TYPE, KRAKEN_EGG_KEY,
+		EntityType.Builder.of(KrakenEggEntity::new, MobCategory.MISC).sized(0.8F, 1.0F).fireImmune().clientTrackingRange(10).build(KRAKEN_EGG_KEY));
+
 	public static void register() {
 		FabricDefaultAttributeRegistry.register(KRAKEN, KrakenEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(BOSS_DUMMY, BossDummy.createAttributes());

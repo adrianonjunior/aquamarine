@@ -205,6 +205,41 @@ final class AttackGameTest {
 		context.waitTicks(620);
 		check(server.computeOnServer(s -> kraken(s).attacks().aliveTentacles(s.overworld())) == 8, "Tentáculos: devem voltar em 30 s");
 
+		// Criaturas do Codex (2D-M) por comando: tentáculo, Cria e ovo com seus renderers e animações.
+		reset(server);
+		server.runOnServer(s -> kraken(s).attacks().setEnabled(false));
+		int tentacles = server.computeOnServer(s -> s.overworld().getEntities(ModEntities.TENTACLE, e -> true).size());
+		server.runCommand("execute as @p at @p rotated ~ 0 positioned ^-3 ^ ^6 run aquamarine kraken egg");
+		server.runCommand("execute as @p at @p rotated ~ 0 positioned ^ ^ ^6 run aquamarine kraken young");
+		server.runCommand("execute as @p at @p rotated ~ 0 positioned ^3 ^ ^6 run aquamarine kraken tentacle");
+		context.waitTicks(5);
+		check(server.computeOnServer(s -> s.overworld().getEntities(ModEntities.TENTACLE, e -> true).size()) == tentacles + 1, "Comando: tentáculo");
+		check(server.computeOnServer(s -> s.overworld().getEntities(ModEntities.YOUNG_KRAKEN, e -> true).size()) == 1, "Comando: Cria");
+		check(server.computeOnServer(s -> s.overworld().getEntities(ModEntities.KRAKEN_EGG, e -> true).size()) == 1, "Comando: ovo");
+		server.runCommand("aquamarine kraken tentacle anim rise");
+		server.runCommand("aquamarine kraken young anim attack");
+		context.waitTicks(10);
+		shot(context, "21_criaturas_comando");
+		server.runCommand("aquamarine kraken tentacle anim slam");
+		server.runCommand("aquamarine kraken egg anim hatch");
+		context.waitTicks(6);
+		// Texturas (2D-T): uma criatura de cada vez, de perto.
+		String[][] close = {{"egg", "^ ^ ^3", "23_textura_ovo"}, {"young", "^ ^ ^3.5", "24_textura_cria"}, {"tentacle", "^ ^ ^7", "25_textura_tentaculo"}};
+		for (String[] c : close) {
+			server.runCommand("kill @e[type=aquamarine:young_kraken]");
+			server.runOnServer(s -> {
+				s.overworld().getEntities(ModEntities.KRAKEN_EGG, e -> true).forEach(e -> e.discard());
+				s.overworld().getEntities(ModEntities.TENTACLE, t -> t.owner() == null).forEach(t -> t.discard());
+			});
+			reset(server);
+			server.runCommand("execute as @p at @p rotated ~ 0 positioned " + c[1] + " run aquamarine kraken " + c[0]);
+			context.waitTicks(8);
+			shot(context, c[2]);
+		}
+		server.runCommand("kill @e[type=aquamarine:young_kraken]");
+		server.runOnServer(s -> s.overworld().getEntities(ModEntities.KRAKEN_EGG, e -> true).forEach(e -> e.discard()));
+		server.runOnServer(s -> s.overworld().getEntities(ModEntities.TENTACLE, t -> t.owner() == null).forEach(t -> t.discard()));
+
 		// Sorteio automático: com a IA ligada, o Kraken ataca sozinho dentro do limite de simultâneos.
 		reset(server);
 		server.runOnServer(s -> kraken(s).attacks().setEnabled(true));

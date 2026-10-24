@@ -79,20 +79,22 @@ validado das faixas listadas. Orçamento = tempo / screenshots (ver economia).
 | 3 | **2E** | Claude | 2A-C | Aviso falso, tremor de tela, silêncio do oceano, drops, troféu, primeira vitória. Aceite: GameTest dos drops e do gatilho | 2 h / 2 |
 | 4 | **2Q** | Codex (`medium`) | todas | QA visual com 2 clientes: invocar, 3 fases, 1 screenshot por ataque. Aceite: relatório de bugs por prioridade; não corrige código, abre Task para o dono | 2 h / 12 (até 6 por ciclo) |
 
-- [x] 2A-M · [x] 2A-C · [ ] 2A-T · [x] 2B · [x] 2C · [ ] 2D-M · [x] 2D-C · [ ] 2D-T · [x] 2E · [ ] 2Q
+- [x] 2A-M · [x] 2A-C · [ ] 2A-T · [x] 2B · [x] 2C · [x] 2D-M · [x] 2D-C · [x] 2D-T · [x] 2E · [ ] 2Q
 
 **Aceite da Entrega 2:** 2 ou mais jogadores invocam o Kraken e vencem as 3
 fases em 8 a 12 minutos com equipamento do mod, sem crash e sem desync da barra.
 Ritmo e sensação de dano só o Adriano julga: vão ao relatório como "a testar pelo Adriano".
 
 
-## Fase 3: fauna, equipamentos de mergulho e Vila (**BLOQUEADA**)
-**Nenhum agente inicia Tasks, worktrees ou implementação desta seção** antes de (1) a Entrega 2 estar
-completa (todas as faixas acima marcadas, aceite cumprido) e (2) o Adriano liberar a
-Fase 3 explicitamente. Especificação: [08-fase3.md](08-fase3.md). Papéis, contrato de
-arquivos e economia: [06-tecnico.md](06-tecnico.md) e [../AGENTS.md](../AGENTS.md); o
-orquestrador monta a Run como na Entrega 2. Cada linha é uma Task; "Dep." = só depois
-do merge validado.
+## Fase 3: fauna, equipamentos de mergulho e Vila (**PREPARADA; execução bloqueada**)
+**Preparação liberada em 24/10/2026; execução bloqueada.** Nenhum agente inicia Tasks,
+worktrees ou implementação desta seção antes de (1) a Entrega 2 estar completa (todas as
+faixas acima marcadas, aceite cumprido) e (2) o Adriano liberar a Fase 3 enviando o
+[prompt do orquestrador](../prompts/orquestrador-fase3.md). Especificação:
+[08-fase3.md](08-fase3.md). Contrato de arquivos: [06-tecnico.md](06-tecnico.md), "Contrato
+de modelos e entidades (Fase 3)". Corpos das Tasks: [fase3-claude.md](../prompts/fase3-claude.md)
+e [fase3-modelagem.md](../prompts/fase3-modelagem.md). Economia: [../AGENTS.md](../AGENTS.md).
+Cada linha é uma Task; "Dep." = só depois do merge validado.
 
 | Onda | Faixa | Agente | Dep. | Entrega e aceite observável | Orçamento |
 |---|---|---|---|---|---|
@@ -108,3 +110,11 @@ do merge validado.
 | 5 | **3Q** | Codex (`medium`) | todas | QA com 3 clientes seguindo o aceite de [08-fase3.md](08-fase3.md). Relatório de bugs; não corrige código | 2 h / 12 (até 6 por ciclo) |
 
 - [ ] 3A · [ ] 3B-M1 · [ ] 3B-M2 · [ ] 3B-C · [ ] 3B-W · [ ] 3B-T · [ ] 3C · [ ] 3D · [ ] 3E · [ ] 3Q
+
+**Checklist de liberação (o orquestrador confere antes de criar a Run; nada aqui é feito antes):**
+- [ ] Entrega 2 completa: todas as faixas marcadas (inclui 2A-T com rachaduras visíveis e 2Q) e o aceite multiplayer cumprido.
+- [ ] Faixa de tamanho do Kraken (24 x 16, ver [00-decisoes.md](00-decisoes.md)) aplicada.
+- [ ] `main` limpa, `./gradlew build` e `runClientGameTest` verdes, "Em andamento" do `CONTEXTO.md` vazio.
+- [ ] Codex atualizado e conseguindo chamar o `orca` (o 0.163 falhava no IPC); disco C: com pelo menos 10 GB livres.
+- [ ] Terminais Claude e Codex aceitos no Orca (Bypass Permissions e trust), para os workers não pararem nos avisos.
+- [ ] Adriano enviou o prompt do orquestrador da Fase 3 (a liberação explícita).

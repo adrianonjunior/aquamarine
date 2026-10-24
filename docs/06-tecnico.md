@@ -191,3 +191,28 @@ sobre o UV), classes Java no pacote do cliente acima. O renderer do Codex começ
 **sem textura final**: usa o gabarito até a faixa de textura terminar.
 
 **Mudança de contrato:** só com aval do Adriano; o novo valor entra aqui, antes do código.
+
+## Contrato de modelos e entidades (Fase 3)
+Dono desta regra: aqui. Vale a mesma divisão e o mesmo método da Entrega 2 (seção acima:
+script gera o modelo, Codex nos arquivos de modelo, Claude na lógica e nas texturas);
+só os nomes novos e as lições abaixo são específicos. **Ainda não é executável**: a Fase 3
+está bloqueada ([07-roadmap.md](07-roadmap.md)).
+
+| Criatura | Faixa do modelo | View (código comum) | Animações (`AnimationState`) | Pasta e pacote |
+|---|---|---|---|---|
+| Moréia Tempestuosa | 3B-M1 | `com.aquamarine.entity.MorayView` | `idle`, `swim`, `strike` (Bote), `chain` (Descarga em Cadeia), `coil` (Enrolar), `stunned`, `death`; `float chargeFraction()` para as faíscas | `tools/models/moray/`, `com.aquamarine.client.entity.moray` |
+| Baleia-de-Nereia | 3B-M2 | `com.aquamarine.entity.WhaleView` | `idle`, `swim`, `sing`, `surface`, `death`; `boolean saddled()` para a Sela | `tools/models/whale/`, `com.aquamarine.client.entity.whale` |
+| Cachalote | 3B-M2 | `com.aquamarine.entity.SpermWhaleView` | `idle`, `swim`, `sonic` (onda sonora), `death` | `tools/models/sperm_whale/`, `com.aquamarine.client.entity.sperm_whale` |
+
+- **Pacote das views:** `com.aquamarine.entity` (plano), como as do tentáculo, da Cria e do
+  ovo. A `KrakenView` ficou em `entity.boss` por história; não mova.
+- **Hitbox segmentada da Moréia** (técnica do Ender Dragon, como os Nós de Maré): o modelo
+  é do Codex; as partes de colisão (cabeça, corpo, rabo com 30 de vida) são do Claude.
+- Textura final: `assets/aquamarine/textures/entity/<criatura>/<criatura>.png`, pintada pelo
+  Claude (3B-T) sobre o `uv.png`; o Codex copia o `uv.png` como placeholder só com aval do orquestrador.
+- **Lições da Entrega 2 (todas as faixas):** (1) o `build_model.py` sobrescreve os PNGs, então
+  o script de textura roda **depois** dele; (2) quem cria a entidade implementa a view e troca
+  o `NoopRenderer` pelo renderer do Codex, na mesma faixa de lógica; (3) criaturas pequenas e
+  escuras sob a água não leem: pense em cores claras/bioluminescentes e em enquadramento dos
+  screenshots; (4) o `runClientGameTest` precisa de câmera acima do chão e de arena aquática;
+  (5) o recurso "jogo" é exclusivo, e o disco C: precisa de espaço livre para builds.

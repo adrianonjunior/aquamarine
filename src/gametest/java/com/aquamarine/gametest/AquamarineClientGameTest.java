@@ -312,6 +312,8 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 	private static void rewards(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos origin) {
 		server.runCommand("gamemode survival @a");
 		server.runOnServer(s -> {
+			// o Kraken do teste do Altar pode ter dado o Coração antes, com o jogador por perto
+			com.aquamarine.event.KrakenWorldData.get(s).forgetHeart(player(s).getUUID());
 			player(s).getInventory().clearContent();
 			player(s).experienceLevel = 0;
 			player(s).totalExperience = 0;
