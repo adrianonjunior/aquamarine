@@ -14,6 +14,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| JEI 31.16.0.90 (só no ambiente de dev) + plugin da Forja e descrições dos itens (pedido do Adriano). Branch `estruturador/jei-descricoes`, worktree `../aquamarine-estruturador-entrega-1`. | Estruturador (Claude Opus 5.5) | jogo, Gradle | 24/10/2026 13:50 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
