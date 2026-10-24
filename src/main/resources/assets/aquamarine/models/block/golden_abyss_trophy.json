@@ -1,0 +1,29 @@
+{
+  "textures": {
+    "all": "aquamarine:block/golden_abyss_trophy",
+    "particle": "aquamarine:block/golden_abyss_trophy"
+  },
+  "elements": [
+    {
+      "from": [2, 0, 2], "to": [14, 4, 14],
+      "faces": {
+        "north": {"uv": [2, 12, 14, 16], "texture": "#all"},
+        "south": {"uv": [2, 12, 14, 16], "texture": "#all"},
+        "east": {"uv": [2, 12, 14, 16], "texture": "#all"},
+        "west": {"uv": [2, 12, 14, 16], "texture": "#all"},
+        "up": {"uv": [2, 2, 14, 14], "texture": "#all"},
+        "down": {"uv": [2, 2, 14, 14], "texture": "#all"}
+      }
+    },
+    {
+      "from": [3, 4, 3], "to": [13, 14, 13],
+      "faces": {
+        "north": {"uv": [3, 3, 13, 13], "texture": "#all"},
+        "south": {"uv": [3, 3, 13, 13], "texture": "#all"},
+        "east": {"uv": [3, 3, 13, 13], "texture": "#all"},
+        "west": {"uv": [3, 3, 13, 13], "texture": "#all"},
+        "up": {"uv": [3, 3, 13, 13], "texture": "#all"}
+      }
+    }
+  ]
+}

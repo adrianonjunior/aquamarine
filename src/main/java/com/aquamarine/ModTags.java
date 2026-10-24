@@ -9,6 +9,8 @@ public final class ModTags {
 	public static final class Items {
 		/** Itens que causam 60% de dano no escudo do Kraken (ferramentas de Oricálcio). */
 		public static final TagKey<Item> SHIELD_BREAKERS = create("shield_breakers");
+		/** Arpões (dano triplo no escudo do Kraken); o Arpão de Oricálcio entra aqui. */
+		public static final TagKey<Item> HARPOONS = create("harpoons");
 		/** Armaduras de metal: a Enguia Elétrica causa 1,5x de dano em quem as usa. */
 		public static final TagKey<Item> METAL_ARMOR = create("metal_armor");
 		/** Material de reparo das ferramentas de Oricálcio. */

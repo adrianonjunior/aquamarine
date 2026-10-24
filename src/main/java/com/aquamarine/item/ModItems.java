@@ -99,6 +99,13 @@ public final class ModItems {
 	/** Altar do Abismo: indestrutível como a Cidade; aqui só para o criativo e testes. */
 	public static final Item ABYSSAL_ALTAR = registerBlock(ModBlocks.ABYSSAL_ALTAR, new Item.Properties().rarity(Rarity.EPIC));
 
+	// Recompensas do Kraken (entram nas mãos de quem lutou; docs/02-kraken.md, "Recompensas")
+	public static final Item KRAKEN_EYE = register("kraken_eye", Item::new, new Item.Properties().rarity(Rarity.RARE));
+	public static final Item ABYSSAL_INK = register("abyssal_ink", Item::new, new Item.Properties().rarity(Rarity.UNCOMMON));
+	public static final Item KRAKEN_HEART = register("kraken_heart", Item::new, new Item.Properties().rarity(Rarity.EPIC));
+	public static final Item KRAKEN_TROPHY = registerBlock(ModBlocks.KRAKEN_TROPHY, new Item.Properties().rarity(Rarity.EPIC));
+	public static final Item GOLDEN_ABYSS_TROPHY = registerBlock(ModBlocks.GOLDEN_ABYSS_TROPHY, new Item.Properties().rarity(Rarity.EPIC));
+
 	public static Item register(String name, Function<Item.Properties, Item> factory, Item.Properties properties) {
 		ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Aquamarine.id(name));
 		Item item = factory.apply(properties.setId(key));

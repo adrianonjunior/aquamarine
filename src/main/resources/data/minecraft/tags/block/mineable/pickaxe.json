@@ -3,6 +3,8 @@
   "values": [
     "aquamarine:orichalcum_ore",
     "aquamarine:orichalcum_block",
-    "aquamarine:abyssal_forge"
+    "aquamarine:abyssal_forge",
+    "aquamarine:kraken_trophy",
+    "aquamarine:golden_abyss_trophy"
   ]
 }

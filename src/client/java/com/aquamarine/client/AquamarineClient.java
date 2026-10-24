@@ -24,6 +24,7 @@ public class AquamarineClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ModEntities.KRAKEN, KrakenRenderer::new);
 		AquamarineBossBarHud.register();
 		PressureHud.register();
+		SummonEffects.register();
 		ItemDescriptions.register();
 		// Renderizadores e HUD do Kraken entram aqui.
 	}

@@ -44,6 +44,15 @@ public final class ModBlocks {
 	public static final Block ANCHOR_BUOY = register("anchor_buoy", AnchorBuoyBlock::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).instrument(NoteBlockInstrument.BASS)
 			.strength(0.5F, 3600000.0F).sound(SoundType.WOOD).noLootTable());
+	/** Troféu do Kraken: decorativo, cabeça do Kraken sobre um pedestal. */
+	public static final Block KRAKEN_TROPHY = register("kraken_trophy", Block::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).instrument(NoteBlockInstrument.BASEDRUM)
+			.requiresCorrectToolForDrops().strength(3.0F, 1200.0F).sound(SoundType.DEEPSLATE_TILES).lightLevel(state -> 4).noOcclusion());
+
+	/** Troféu Dourado do Abismo: recompensa exclusiva do modo abissal. */
+	public static final Block GOLDEN_ABYSS_TROPHY = register("golden_abyss_trophy", Block::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).instrument(NoteBlockInstrument.BELL)
+			.requiresCorrectToolForDrops().strength(3.0F, 1200.0F).sound(SoundType.METAL).lightLevel(state -> 8).noOcclusion());
 
 	private static Block register(String name, Function<BlockBehaviour.Properties, Block> factory, BlockBehaviour.Properties properties) {
 		ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Aquamarine.id(name));

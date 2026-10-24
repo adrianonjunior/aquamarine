@@ -1197,6 +1197,103 @@ def pressure_tonic_icon():
                 img.putpixel((x, y), RAMPS["T"][2])
     img.putpixel((8, 7), RAMPS["T"][5])
     img.putpixel((8, 8), RAMPS["T"][5])
+# ---------------------------------------------------------------- recompensas do Kraken (2E)
+
+def kraken_eye():
+    """Olho do Kraken: globo azul-profundo com íris roxa e pupila em fenda."""
+    img = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    B, P, T = RAMPS["B"], RAMPS["P"], RAMPS["T"]
+    cx, cy = 7.5, 7.5
+    for y in range(16):
+        for x in range(16):
+            dx, dy = x - cx, y - cy
+            d = math.hypot(dx, dy)
+            if d > 6.4:
+                continue
+            lum = (-dx - dy) / 9.0
+            c = B[3] if lum > 0.15 else B[2] if lum > -0.3 else B[1]
+            if d < 4.4:
+                c = P[4] if lum > 0.1 else P[3] if lum > -0.3 else P[2]
+            if d < 4.4 and abs(dx + 0.5) < 1.0 and abs(dy) < 3.6:
+                c = hexc("0a0614")
+            if d > 5.4:
+                c = T[2] if lum < 0 else T[3]
+            img.putpixel((x, y), c)
+    for x, y in ((5, 4), (6, 4), (5, 5)):
+        img.putpixel((x, y), hexc("ffffff"))
+    img.putpixel((9, 10), T[5])
+    return outline_alpha(img, B[0])
+
+
+def abyssal_ink():
+    """Tinta Abissal: frasco de vidro escuro com tinta roxa e brilho verde-água."""
+    img = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    B, P, T, H = RAMPS["B"], RAMPS["P"], RAMPS["T"], RAMPS["H"]
+    for y in range(6, 14):  # corpo
+        half = 5 if 8 <= y <= 12 else 4
+        for x in range(8 - half, 8 + half):
+            edge = x in (8 - half, 7 + half)
+            img.putpixel((x, y), B[4] if edge and x < 8 else B[2] if edge else (P[2] if y < 9 else P[1]))
+    for y in range(3, 6):  # gargalo
+        for x in (6, 7, 8, 9):
+            img.putpixel((x, y), B[3] if x < 8 else B[2])
+    for x in (6, 7, 8, 9):  # rolha
+        img.putpixel((x, 2), H[4])
+        img.putpixel((x, 3), H[3])
+    for x, y in ((4, 8), (4, 9), (5, 7)):
+        img.putpixel((x, y), T[4])
+    for x, y in ((9, 10), (10, 11)):
+        img.putpixel((x, y), P[3])
+    img.putpixel((6, 10), P[4])
+    return outline_alpha(img, B[0])
+
+
+HEART = [
+    "................",
+    "....kk....kk....",
+    "...kPPk..kPPk...",
+    "..kPPPPkkPPPPk..",
+    "..kPPPPPPPPPPk..",
+    "..kPPPPPPPPPPk..",
+    "..kPPrPPPPPPPk..",
+    "...kPPPPPPPPk...",
+    "....kPPPPPPk....",
+    ".....kPPPPk.....",
+    "......kPPk......",
+    ".......kk.......",
+]
+
+
+def kraken_heart():
+    img = render(HEART)
+    G, T = RAMPS["G"], RAMPS["T"]
+    for x, y, c in ((5, 5, T[4]), (6, 6, T[4]), (7, 7, T[3]), (8, 8, T[4]), (9, 8, T[3]),
+                    (10, 5, G[4]), (9, 6, G[4]), (8, 5, G[3]), (6, 3, G[4]), (11, 4, T[3])):
+        img.putpixel((x, y), c)
+    img.putpixel((4, 3), hexc("e6d8ff"))
+    return img
+
+
+def kraken_trophy(golden):
+    """Textura do troféu: pedra do Abismo com relevo de olho; dourada no modo abissal."""
+    img = Image.new("RGBA", (16, 16))
+    B, G, P, T = RAMPS["B"], RAMPS["G"], RAMPS["P"], RAMPS["T"]
+    ramp = G if golden else B
+    noise_fill(img, (0, 0, 16, 16), [ramp[2], ramp[3], ramp[3], ramp[4]], [3, 5, 5, 1], 91 if golden else 90)
+    for i in range(16):
+        img.putpixel((i, 0), ramp[5] if golden else G[4])
+        img.putpixel((i, 15), ramp[1])
+        img.putpixel((0, i), ramp[4])
+        img.putpixel((15, i), ramp[1])
+    for y in range(16):
+        for x in range(16):
+            dx, dy = x - 7.5, y - 7.5
+            d = math.hypot(dx, dy)
+            if 3.3 <= d < 4.6:
+                img.putpixel((x, y), G[4] if not golden else B[3])
+            elif d < 3.3:
+                img.putpixel((x, y), P[4] if abs(dx + 0.5) >= 0.9 else hexc("0a0614"))
+    img.putpixel((6, 6), hexc("ffffff"))
     return img
 
 
@@ -1230,6 +1327,11 @@ def main():
     out["block/abyssal_altar_bottom"] = forge_bricks(71)
     out["item/pressure_tonic"] = tonic()
     out["block/anchor_buoy"] = anchor_buoy_block()
+    out["item/kraken_eye"] = kraken_eye()
+    out["item/abyssal_ink"] = abyssal_ink()
+    out["item/kraken_heart"] = kraken_heart()
+    out["block/kraken_trophy"] = kraken_trophy(False)
+    out["block/golden_abyss_trophy"] = kraken_trophy(True)
     for rel, img in out.items():
         save(img, rel + ".png")
     layers = [

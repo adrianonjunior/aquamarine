@@ -15,12 +15,37 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 
-## Registro de handoff
-Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+## Registro de handoff
 
 - 24/10/2026 · Claude Sonnet 5.5 (faixa 2B) · Pressão 0-4 (`pressure/PressureState` puro + `PressureManager` no servidor, nível enviado por `PressurePayload`), `PressureHud` (vinheta azul no 2, escura e pulsante no 4, batimentos do 3), Tônico de Pressão (item de beber + efeito `ModEffects.PRESSURE_TONIC`, devolve o frasco), Boia de Âncora (`AnchorBuoyItem`/`AnchorBuoyBlock`: 3x3 por 90 s, recarga de 30 s, `AnchorBuoyBlock.collapse` para o Kraken destruir), `OrichalcumEffects.pressureReduction`, texturas por script, receitas e lang pt/en.
   **Testado:** `./gradlew build` (JUnit `PressureStateTest`) e `runClientGameTest` (`PressureGameTest`: níveis 1-4 por tempo, nado lento, ataque lento, dano do nível 4, nível no cliente, Boia, armadura completa, Tônico; 2 screenshots, vinheta do nível 4 conferida).
   **Não testado:** multiplayer, fase 3 em jogo (6 s, só no JUnit), Tônico dado por poção de água real na receita (aceita qualquer `minecraft:potion`), Kraken a destruir a Boia. **Para a 2D-C:** soltura de agarrões 50% mais rápida usa `ModEffects.hasTonic(jogador)`; o Kraken derruba a Boia com `AnchorBuoyBlock.collapse(level, pos)`. Som é o batimento vanilla (`WARDEN_HEARTBEAT`), sem som abafado nem bolhas.
+
+- 24/10/2026 · Orquestrador (Claude Sonnet 5.5) · **Entrega 2 em andamento** (Run `run_a6bda8ca6927`, Orca;
+  liberação em `e1d894b`). **Aceitas e validadas na main (build verde):** 2A-M (modelo, UV, 16 animações,
+  renderer; QA visual em arena aquática), 2A-C (`KrakenEntity`, `ModEntities.KRAKEN`, `/aquamarine kraken [arena|anim <nome>]`),
+  2C (tabela de dano do escudo, Nós de Maré, atordoamento). **Rodando:** 2B, 2E (Claude, worktrees `2B`/`2E`),
+  2A-T (Claude, reaproveitou o terminal da worktree `2A-C`), 2D-M (Codex medium, worktree `2D-M`;
+  tarefa reenviada por `terminal send` com preâmbulo, pois a original se perdeu). **Pendentes:** 2D-C (dep. 2A-C, 2B, 2C),
+  2D-T (dep. 2D-M), 2Q (todas) e a faixa de polimento do tamanho (Kraken final 24 x 16 blocos, ver docs/00-decisoes.md).
+  **Abertos da 2C:** itens Arpão, Carga de Pulso e Pilar (só existem os ganchos), visual dos nós (`nodeCenters()`),
+  acerto em nó por raio do olhar não testado no jogo. **Lições do Orca:** Claude novo em worktree nova para no aviso
+  Bypass Permissions e o Codex no aviso de trust/atualização: o Adriano aceita; depois reenviar a spec com
+  `dispatch --dry-run --return-preamble` (trocar `ctx_dryrun` pelo dispatch real) + `terminal send --enter`.
+  Terminais ociosos reaproveitáveis: Claude `term_5882b258...` (2A-C), Codex `term_4019b92f...` (2A-M);
+  dispatches retidos (`worker-release` deu `retained`). A árvore principal tem edições de outro agente
+  (README, docs/00-decisoes, docs/07-roadmap, docs/08-fase3.md): não mexer; validar em worktree temporária.
+  **Próximo:** esperar `worker_done` de 2B, 2E, 2A-T e 2D-M (`check --wait`), validar cada um, liberar 2D-C quando 2B e 2C
+  estiverem mergeadas, depois 2D-T, 2Q e o relatório final.
+Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+
+- 24/10/2026 · Claude Sonnet 5.5 (faixa 2E) · Aviso falso, efeitos de tela, drops, troféus e primeira vitória. `FalseWarning` (gatilho: tempestade à noite, jogador em oceano profundo, 8% por noite, 3 dias entre avisos; checa a cada 5 s) e `KrakenWorldData` (`SavedData`: quem já tem o Coração + controle do aviso); `SummonEffectPayload` leva ao cliente o silêncio do oceano (0 s), o tremor (5 s, `CameraMixin`) e o escurecer (20 s finais do aviso falso, véu no HUD); `KrakenRewards` entrega, a cada jogador da luta, Olho, 2 a 4 Tinta, 1.000 de XP, Troféu (Dourado no `abissal`) e Coração só na primeira vitória; itens `kraken_eye`, `abyssal_ink`, `kraken_heart`, blocos `kraken_trophy` e `golden_abyss_trophy` (texturas por `tools/gen_textures.py`). **Testado:** `./gradlew build` (JUnit do gatilho) e `runClientGameTest` (3 mortes: primeira vitória, segunda sem Coração, abissal com Dourado; XP; gatilho com sorte, noite repetida, 3 dias de espera, config desligada; sem Kraken no aviso falso; silêncio, tremor e escurecer no cliente; 2 screenshots). **Não testado:** o aspecto dos troféus no mundo (o screenshot pegou só água; modelo conferido só por JUnit de recursos), o som real do silêncio (só o estado), o aviso falso disparando sozinho em oceano profundo real e multiplayer. **Falta:** sons próprios; alvo da recompensa por jogador pode ganhar regra de distribuição se o Adriano preferir loot compartilhado.
+
+- 24/10/2026 · Codex Astra (2A-M.2) · Verificação visual do Kraken no `runClientGameTest` em arena aquática, com gabarito UV e câmera acima do chão; `slam` e `grab` dispararam por comando, teste passou. **Pronto:** modelo e poses visíveis; **não testado nesta faixa:** textura final e combate completo; **próximo passo:** 2A-T aplicar a textura definitiva.
+  - `tools/models/kraken/qa/01_kraken_geral.png`: silhueta completa e oito tentáculos aparecem sob a água, com gabarito escuro.
+  - `tools/models/kraken/qa/02_kraken_slam.png`: tentáculo do ataque `slam` aberto à esquerda da imagem.
+  - `tools/models/kraken/qa/03_kraken_grab.png`: tentáculo do ataque `grab` erguido à direita da imagem.
+- 24/10/2026 · Claude Sonnet 5.5 (2C) · Escudo: tabela de dano por fonte (`ShieldDamage`, JUnit), Nós de Maré (`TideNodes`, 4 a 8, por fase, opção `weakPoints`), `KrakenEntity.hitShield(...)` para Pulso/Pilar, `expose(ticks)` (+25%, sem regenerar), `canAct()`, tags `shield_breakers`/`harpoons` e encantamento `shell_breaker`; teste de cliente confere absorve, quebra, regenera e a tabela (verde). **Não feito:** itens Arpão, Carga de Pulso e Pilar (só os ganchos), visual dos nós (usar `nodeCenters()`), acerto em nó por raio do olhar não testado no jogo. **Próximo passo:** 2D-C chama `canAct()`/`expose()`; itens chamam `hitShield`.
 
 - 24/10/2026 · Codex Astra (2A-M) · `KrakenView`, gabarito UV, `.bbmodel` com 191 cubos e 16 clips, classes do modelo/animações/renderer e registro do modelo; `compileJava compileClientJava` passou, `/aquamarine kraken` criou a entidade e os 16 comandos responderam `Animation <nome> played.`
   **Visual não verificado:** no mundo de QA florestal o Kraken surgiu em y=57 sob o terreno; as 9 capturas autorizadas foram usadas sem obter uma vista do modelo. **Próximo passo:** repetir a vista geral e poses em mundo aquático/câmera acima do chão; deixar 2A-M sem marcar até conferir a silhueta.
