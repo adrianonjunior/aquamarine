@@ -3,6 +3,8 @@ package com.aquamarine.gametest;
 import com.aquamarine.Aquamarine;
 import com.aquamarine.block.ModBlocks;
 import com.aquamarine.client.screen.AbyssalForgeScreen;
+import com.aquamarine.entity.BossDummy;
+import com.aquamarine.entity.ModEntities;
 import com.aquamarine.item.ModCreativeTab;
 import com.aquamarine.item.ModItems;
 import com.aquamarine.menu.AbyssalForgeMenu;
@@ -60,7 +62,56 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			creativeTab(context, world);
 			forge(context, world, server, base);
 			underwater(context, world, server, base);
+			bossBar(context, world, server, base);
 		}
+	}
+
+	private static BossDummy dummy(MinecraftServer server) {
+		return server.overworld().getEntities(ModEntities.BOSS_DUMMY, e -> true).getFirst();
+	}
+
+	/** Barra de vida customizada com a entidade de teste: cheia, escudo rachado, quebrando, fases. */
+	private static void bossBar(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos base) {
+		server.runOnServer(s -> {
+			ServerPlayer player = player(s);
+			player.getAbilities().flying = false;
+			player.onUpdateAbilities();
+		});
+		tp(server, base.getX() + 0.5, base.getY(), base.getZ() - 2.5, 180, 0);
+		server.runCommand(String.format("summon aquamarine:boss_dummy %d %d %d", base.getX(), base.getY(), base.getZ() - 8));
+		world.getConnection().waitForChunksRender();
+		context.waitTicks(20);
+		shot(context, "08_barra_cheia");
+
+		String hit = "damage @e[type=aquamarine:boss_dummy,limit=1] ";
+		server.runCommand(hit + "70");
+		context.waitTicks(4);
+		check(server.computeOnServer(s -> dummy(s).getHealth() == BossDummy.MAX_HEALTH), "o escudo deixou dano passar para a vida");
+		shot(context, "09_escudo_rachado");
+
+		server.runCommand(hit + "60");
+		context.waitTicks(2);
+		check(server.computeOnServer(s -> dummy(s).shield() == 0), "o escudo não quebrou");
+		shot(context, "10_escudo_quebrando");
+
+		context.waitTicks(15);
+		server.runCommand(hit + "120");
+		// O pacote leva alguns ticks para chegar ao cliente; a barra fantasma segura 14 ticks.
+		context.waitTicks(8);
+		check(server.computeOnServer(s -> dummy(s).phase() == 2), "a entidade de teste não foi para a fase 2");
+		shot(context, "11_fase2_dano_recente");
+
+		server.runOnServer(s -> dummy(s).setHealth(60));
+		context.waitTicks(30);
+		shot(context, "12_fase3_pulso");
+		server.runCommand("kill @e[type=aquamarine:boss_dummy]");
+	}
+
+	/** Screenshot sem os avisos de "receita desbloqueada" cobrindo o canto da tela. */
+	private static void shot(ClientGameTestContext context, String name) {
+		context.runOnClient(mc -> mc.gui.toastManager().clear());
+		context.waitTick();
+		context.takeScreenshot(name);
 	}
 
 	private static ServerPlayer player(MinecraftServer server) {
@@ -104,20 +155,20 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		tp(server, base.getX() + 0.5, base.getY(), base.getZ() + 0.5, 0, 20);
 		world.getConnection().waitForChunksRender();
 		context.waitTicks(10);
-		context.takeScreenshot("01_vitrine");
+		shot(context, "01_vitrine");
 
 		// Jogador vestindo a armadura completa, câmera de frente, vitrine ao fundo.
 		server.runOnServer(s -> setArmor(player(s), ModItems.ORICHALCUM_HELMET));
 		tp(server, base.getX() + 0.5, base.getY(), base.getZ() - 1.5, 180, 10);
 		context.runOnClient(mc -> mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT));
 		context.waitTicks(25);
-		context.takeScreenshot("02_jogador_armadura");
+		shot(context, "02_jogador_armadura");
 		check(server.computeOnServer(s -> player(s).getAttribute(Attributes.WATER_MOVEMENT_EFFICIENCY)
 			.hasModifier(Aquamarine.id("orichalcum_set_swim"))), "bônus de nado do conjunto completo não aplicado");
 
 		server.runOnServer(s -> setArmor(player(s), ModItems.DIVING_GOGGLES));
 		context.waitTicks(25);
-		context.takeScreenshot("03_jogador_oculos");
+		shot(context, "03_jogador_oculos");
 		check(!server.computeOnServer(s -> player(s).getAttribute(Attributes.WATER_MOVEMENT_EFFICIENCY)
 			.hasModifier(Aquamarine.id("orichalcum_set_swim"))), "bônus de nado continuou sem o capacete");
 		context.runOnClient(mc -> mc.options.setCameraType(CameraType.FIRST_PERSON));
@@ -144,7 +195,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		context.runOnClient(mc -> ((FabricCreativeModeInventoryScreen) mc.gui.screen())
 			.setSelectedTab(BuiltInRegistries.CREATIVE_MODE_TAB.getValueOrThrow(ModCreativeTab.KEY)));
 		context.waitTicks(5);
-		context.takeScreenshot("04_aba_criativa");
+		shot(context, "04_aba_criativa");
 		context.setScreen(() -> null);
 	}
 
@@ -172,7 +223,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		});
 		context.waitForScreen(AbyssalForgeScreen.class);
 		context.waitTicks(5);
-		context.takeScreenshot("05_forja");
+		shot(context, "05_forja");
 
 		server.runOnServer(s -> {
 			ServerPlayer player = player(s);
@@ -206,10 +257,10 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		tp(server, x + 0.5, y + 5, z + 2.5, 0, 5);
 		world.getConnection().waitForChunksRender();
 		context.waitTicks(40);
-		context.takeScreenshot("06_agua_sem_oculos");
+		shot(context, "06_agua_sem_oculos");
 
 		server.runOnServer(s -> player(s).setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.DIVING_GOGGLES)));
 		context.waitTicks(10);
-		context.takeScreenshot("07_agua_com_oculos");
+		shot(context, "07_agua_com_oculos");
 	}
 }

@@ -878,6 +878,161 @@ def gui_forge():
     return img
 
 
+# ---------------------------------------------------------------- barra de boss (HUD)
+
+CORAL = [hexc("4a1222"), hexc("8e2a40"), hexc("cf4a60"), hexc("ff8a8a"), hexc("ffc2b8")]
+
+# ponta de coral (lado esquerdo; o direito é espelhado). '1'..'4' = CORAL[1..4]
+CORAL_CAP = [
+    "..........",
+    "..2.......",
+    ".232......",
+    "..2..3....",
+    "..22.32...",
+    "...2222...",
+    ".3..22....",
+    ".22.2.....",
+    "..2222....",
+    "...222....",
+    "...222....",
+    "..2222....",
+    ".22.2.....",
+    ".3..22....",
+    "...2222...",
+    "..22.32...",
+    "..2..3....",
+    ".232......",
+    "..2.......",
+    "..........",
+    "..........",
+    "..........",
+]
+
+
+def boss_bar():
+    """Atlas 256x96 da barra de boss. Posições usadas por AquamarineBossBarHud."""
+    img = Image.new("RGBA", (256, 96), (0, 0, 0, 0))
+    G, B, T, P = RAMPS["G"], RAMPS["B"], RAMPS["T"], RAMPS["P"]
+    px = img.putpixel
+    W, H = 220, 22
+    x0, y0, x1, y1 = 4, 2, 215, 19  # corpo da moldura
+    hole = hexc("050a14")
+    # corpo
+    for y in range(y0, y1 + 1):
+        for x in range(x0, x1 + 1):
+            px((x, y), G[3])
+    for x in range(x0 + 1, x1):
+        px((x, y0), G[0])
+        px((x, y1), G[0])
+        px((x, y0 + 1), G[5])
+        px((x, y1 - 1), G[1])
+    for y in range(y0 + 1, y1):
+        px((x0, y), G[0])
+        px((x1, y), G[0])
+        px((x0 + 1, y), G[4])
+        px((x1 - 1, y), G[2])
+    # metal batido no corpo
+    rnd = random.Random(5)
+    for _ in range(140):
+        x, y = rnd.randrange(x0 + 2, x1 - 1), rnd.randrange(y0 + 2, y1 - 1)
+        px((x, y), rnd.choice([G[4], G[2]]))
+    # janelas do escudo e da vida (rebaixadas)
+    for (wy, wh) in ((4, 4), (9, 8)):
+        for y in range(wy - 1, wy + wh + 1):
+            for x in range(9, 211):
+                edge_top = y == wy - 1 or x == 9
+                edge_bot = y == wy + wh or x == 210
+                if edge_top and not edge_bot:
+                    px((x, y), G[1])
+                elif edge_bot and not edge_top:
+                    px((x, y), G[5])
+                elif not edge_top and not edge_bot:
+                    px((x, y), hole)
+    # pilares laterais com gema verde-água
+    for gx in (5, 211):
+        for y, ch in ((9, 4), (10, 5), (11, 4), (12, 3)):
+            px((gx + 1, y), T[ch])
+            px((gx + 2, y), T[ch - 1])
+        px((gx + 1, 9), T[5])
+    # crista central com pérola roxa
+    for x in range(102, 118):
+        px((x, 1), G[0])
+        px((x, 2), G[4] if x % 3 else G[5])
+    for x, y in ((101, 2), (118, 2)):
+        px((x, y), G[0])
+    for x in range(107, 113):
+        px((x, 0), G[0])
+        px((x, 1), G[4])
+    for x, y, c in ((109, 1, P[4]), (110, 1, P[3]), (109, 2, P[3]), (110, 2, P[2])):
+        px((x, y), c)
+    # pontas de coral
+    for j, row in enumerate(CORAL_CAP):
+        for i, ch in enumerate(row):
+            if ch == ".":
+                continue
+            c = CORAL[int(ch)]
+            px((i, j), c)
+            px((W - 1 - i, j), c)
+    # contorno escuro do coral
+    snap = img.copy()
+    for j in range(H):
+        for i in list(range(0, 12)) + list(range(W - 12, W)):
+            if snap.getpixel((i, j))[3]:
+                continue
+            for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0)):
+                nx, ny = i + dx, j + dy
+                if 0 <= nx < W and 0 <= ny < H and snap.getpixel((nx, ny)) in CORAL[1:]:
+                    px((i, j), CORAL[0])
+                    break
+
+    # vida (200x8 em v=22): azul profundo com brilho verde-água
+    rows = [T[4], B[5], B[4], B[4], B[3], B[3], B[2], B[1]]
+    for x in range(200):
+        for y, c in enumerate(rows):
+            px((x, 22 + y), c)
+        k = x % 16
+        if k in (3, 4):
+            px((x, 22 + 2), T[3])
+        if k in (4, 5):
+            px((x, 22 + 3), T[2])
+        if k == 11:
+            px((x, 22 + 5), B[5])
+    # fantasma (200x8 em v=30)
+    for x in range(200):
+        for y in range(8):
+            px((x, 30 + y), hexc("eaf6ff") if y < 5 else hexc("b9d4ea"))
+    # escudo (200x4 em v=38): cristal
+    srows = [hexc("e6fbff"), hexc("9fe6ff"), hexc("5cbcf0"), hexc("2f80c8")]
+    for x in range(200):
+        for y, c in enumerate(srows):
+            px((x, 38 + y), c)
+        if x % 10 == 0:
+            px((x, 38 + 1), hexc("ffffff"))
+        if x % 10 == 1:
+            px((x, 38 + 2), hexc("9fe6ff"))
+    # rachaduras (3 camadas 200x4 em v=42, 46, 50)
+    cracks = [
+        [(150, [0, 1, 1, 2, 3]), (151, [2])],
+        [(96, [0, 1, 2, 2, 3]), (97, [1]), (58, [0, 1, 2, 3]), (57, [3])],
+        [(28, [0, 1, 2, 3]), (29, [1, 2]), (124, [0, 1, 2, 3]), (123, [2]), (178, [0, 1, 2, 3]), (179, [0])],
+    ]
+    for layer, segs in enumerate(cracks):
+        v = 42 + layer * 4
+        for cx, ys in segs:
+            for n, cy in enumerate(ys):
+                xx = cx + (n % 2)
+                px((xx, v + cy), hexc("0a2038"))
+                if xx + 1 < 200:
+                    px((xx + 1, v + cy), hexc("ffffff"))
+    # brilho do pulso (220x22 em v=56): aro da moldura em branco, tingido de roxo no jogo
+    for y in range(H):
+        for x in range(W):
+            c = img.getpixel((x, y))
+            if c[3] and (c in (G[0], G[5], G[4], CORAL[0]) or y in (y0, y1) or x in (x0, x1)):
+                px((x, 56 + y), (255, 255, 255, 200))
+    return img
+
+
 # ---------------------------------------------------------------- principal
 
 def main():
@@ -910,6 +1065,7 @@ def main():
         save(goggles_layer(), "entity/equipment/humanoid/diving_goggles.png"),
     ]
     gui = save(gui_forge(), "gui/container/abyssal_forge.png")
+    save(boss_bar(), "gui/boss_bar.png")
     # ícone do mod (128x128) a partir da pérola
     save(pearl().resize((128, 128), Image.NEAREST), os.path.join("..", "icon.png"))
 

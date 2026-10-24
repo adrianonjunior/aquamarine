@@ -17,5 +17,7 @@
   "item.aquamarine.orichalcum_chestplate": "Peitoral de Oricálcio",
   "item.aquamarine.orichalcum_leggings": "Calças de Oricálcio",
   "item.aquamarine.orichalcum_boots": "Botas de Oricálcio",
-  "item.aquamarine.diving_goggles": "Óculos de Mergulho"
+  "item.aquamarine.diving_goggles": "Óculos de Mergulho",
+  "entity.aquamarine.boss_dummy": "Kraken (teste)",
+  "bossbar.aquamarine.title": "%s · Fase %s"
 }

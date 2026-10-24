@@ -3,6 +3,7 @@
 	"package": "com.aquamarine.client.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
+		"BossHealthOverlayMixin",
 		"WaterFogEnvironmentMixin"
 	],
 	"injectors": {
