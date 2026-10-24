@@ -79,7 +79,7 @@ validado das faixas listadas. Orçamento = tempo / screenshots (ver economia).
 | 3 | **2E** | Claude | 2A-C | Aviso falso, tremor de tela, silêncio do oceano, drops, troféu, primeira vitória. Aceite: GameTest dos drops e do gatilho | 2 h / 2 |
 | 4 | **2Q** | Codex (`medium`) | todas | QA visual com 2 clientes: invocar, 3 fases, 1 screenshot por ataque. Aceite: relatório de bugs por prioridade; não corrige código, abre Task para o dono | 2 h / 12 |
 
-- [ ] 2A-M · [ ] 2A-C · [ ] 2A-T · [ ] 2B · [ ] 2C · [ ] 2D-M · [ ] 2D-C · [ ] 2D-T · [ ] 2E · [ ] 2Q
+- [ ] 2A-M · [x] 2A-C · [ ] 2A-T · [ ] 2B · [ ] 2C · [ ] 2D-M · [ ] 2D-C · [ ] 2D-T · [ ] 2E · [ ] 2Q
 
 **Aceite da Entrega 2:** 2 ou mais jogadores invocam o Kraken e vencem as 3
 fases em 8 a 12 minutos com equipamento do mod, sem crash e sem desync da barra.

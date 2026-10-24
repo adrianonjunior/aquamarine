@@ -15,10 +15,24 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 | 2A-M · KrakenView, gabarito UV, modelo e animações | Codex Astra | jogo (na QA visual) | 24/10/2026 |
-| 2A-C: `KrakenEntity` (fases, escudo, escala, aggro, fuga), `spawnKraken`, `/aquamarine kraken`, arena de teste. Estimativa 3 h / 3 screenshots | Claude (worker 2A-C) | Gradle da worktree 2A-C; "jogo" só no teste final | 24/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+
+- 24/10/2026 · Claude Sonnet 5.5 (faixa 2A-C) · `KrakenEntity` (`entity/`),
+  `KrakenStats` e `AggroTracker` (`entity/boss/`, contas puras com JUnit), `KrakenCommand`
+  (`/aquamarine kraken` e `/aquamarine kraken arena`, nível 2), `KrakenSummoning.spawnKraken`
+  (surge 10 blocos abaixo da água funda mais próxima) e renderer provisório (`NoopRenderer`).
+  Pronto: vida/escudo por fase, escala `f`, transição de 3 s, quebra do escudo com atordoamento de 8 s,
+  regeneração (20 s sem dano, 10%/s; fase 3 a cada 45 s), aggro de 10 s, fuga (30 s, +10%) e
+  abandono (3 min), barra com a vida real. **Detalhe:** o atributo de vida do jogo para em 1024,
+  então a vida do Kraken usa o atributo como régua de 0 a 1000; use `realHealth()`/`realMaxHealth()`
+  e dê dano por `hurtServer`. `setNoAi(true)` impede `customServerAiStep`: o Kraken não usa.
+  **Testado:** `./gradlew build` (JUnit) e `runClientGameTest` (fases, escudo, transição,
+  regeneração, aggro, escala com 5 jogadores, 3 screenshots; o modelo ainda é invisível).
+  **Não testado:** multiplayer, fuga/abandono (só no código), difícil `abissal`, Kraken salvo e recarregado.
+  **Falta:** `implements KrakenView` quando o 2A-M chegar na `main` (a entidade já tem `phase()` e
+  `shieldFraction()`); multiplicadores de dano por fonte (2C), ataques (2D), movimento.
 
 - 24/10/2026 14:15 · Estruturador (Claude Opus 5.5) · A pedido do Adriano:
   biomas do mod achados com `/locate biome #aquamarine_<bioma>` (tag

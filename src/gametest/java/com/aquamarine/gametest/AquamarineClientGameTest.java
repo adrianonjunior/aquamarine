@@ -4,7 +4,11 @@ import com.aquamarine.Aquamarine;
 import com.aquamarine.block.ModBlocks;
 import com.aquamarine.client.compat.jei.AquamarineJeiPlugin;
 import com.aquamarine.client.screen.AbyssalForgeScreen;
+import com.aquamarine.command.KrakenCommand;
 import com.aquamarine.entity.BossDummy;
+import com.aquamarine.entity.KrakenEntity;
+import com.aquamarine.event.KrakenSummoning;
+import net.minecraft.world.entity.EntitySpawnReason;
 import com.aquamarine.entity.ModEntities;
 import com.aquamarine.item.ModCreativeTab;
 import com.aquamarine.item.ModItems;
@@ -74,6 +78,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			underwater(context, world, server, base);
 			bossBar(context, world, server, base);
 			altar(context, world, server, base);
+			kraken(context, world, server, base);
 		}
 	}
 
@@ -158,6 +163,74 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		context.waitTicks(30);
 		shot(context, "12_fase3_pulso");
 		server.runCommand("kill @e[type=aquamarine:boss_dummy]");
+	}
+
+	private static KrakenEntity kraken(MinecraftServer server) {
+		return server.overworld().getEntities(ModEntities.KRAKEN, e -> true).getFirst();
+	}
+
+	private static boolean near(float a, float b) {
+		return Math.abs(a - b) < 0.5F;
+	}
+
+	private static void krakenHit(TestServerContext server, float damage) {
+		server.runOnServer(s -> {
+			ServerLevel level = s.overworld();
+			kraken(s).hurtServer(level, level.damageSources().playerAttack(player(s)), damage);
+		});
+	}
+
+	/** Kraken: vida e escudo por fase, escala, transição, regeneração do escudo e aggro. */
+	private static void kraken(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos base) {
+		BlockPos origin = base.offset(200, 0, 0);
+		server.runOnServer(s -> {
+			ServerLevel level = s.overworld();
+			level.getChunkAt(origin);
+			KrakenCommand.buildArena(level, origin);
+			KrakenSummoning.spawnAt(level, origin.offset(0, 25, 0), origin);
+		});
+		tp(server, origin.getX() + 0.5, origin.getY() + 28, origin.getZ() + 14.5, 0, 0);
+		world.getConnection().waitForChunksRender();
+		context.waitTicks(20);
+		check(server.computeOnServer(s -> kraken(s).realMaxHealth() == 1500F && kraken(s).shield() == 400F
+			&& kraken(s).phase() == 1 && kraken(s).scaleFactor() == 1F), "Kraken: valores da fase 1 com 1 jogador");
+		check(server.computeOnServer(s -> near(kraken(s).realHealth(), 1500F)), "Kraken: vida inicial");
+		shot(context, "13_kraken_fase1");
+
+		krakenHit(server, 500);
+		context.waitTicks(2);
+		check(server.computeOnServer(s -> kraken(s).shield() == 0 && kraken(s).isStunned() && near(kraken(s).realHealth(), 1500F)),
+			"Kraken: o escudo deve absorver e atordoar sem tirar vida");
+		check(server.computeOnServer(s -> player(s).getUUID().equals(kraken(s).aggroTarget())), "Kraken: aggro no jogador que bateu");
+
+		krakenHit(server, 700);
+		context.waitTicks(2);
+		check(server.computeOnServer(s -> kraken(s).phase() == 2 && near(kraken(s).realHealth(), 1000F) && kraken(s).shield() == 600F
+			&& kraken(s).isTransitioning()), "Kraken: o golpe deve parar na fronteira da fase 2 com escudo cheio");
+		krakenHit(server, 50);
+		check(server.computeOnServer(s -> near(kraken(s).realHealth(), 1000F) && kraken(s).shield() == 600F), "Kraken: invulnerável na transição");
+		shot(context, "14_kraken_fase2");
+
+		context.waitTicks(70);
+		check(server.computeOnServer(s -> !kraken(s).isTransitioning()), "Kraken: a transição devia ter acabado");
+		krakenHit(server, 150);
+		context.waitTicks(450);
+		check(server.computeOnServer(s -> kraken(s).shield() == 600F), "Kraken: o escudo devia regenerar após 20 s sem dano");
+
+		krakenHit(server, 600);
+		krakenHit(server, 600);
+		context.waitTicks(2);
+		check(server.computeOnServer(s -> kraken(s).phase() == 3 && near(kraken(s).realHealth(), 500F) && kraken(s).shield() == 800F),
+			"Kraken: fase 3 com 800 de escudo");
+		shot(context, "15_kraken_fase3");
+
+		server.runOnServer(s -> {
+			KrakenEntity big = ModEntities.KRAKEN.create(s.overworld(), EntitySpawnReason.COMMAND);
+			big.setUp(s.overworld(), 5);
+			check(big.realMaxHealth() == 1500F * 2.2F && big.maxShield() == 400F * 2.2F && big.scaleFactor() == 2.2F, "Kraken: escala f com 5 jogadores");
+		});
+		server.runCommand("kill @e[type=aquamarine:kraken]");
+		tp(server, base.getX() + 0.5, base.getY(), base.getZ() + 0.5, 0, 0);
 	}
 
 	/** Screenshot sem os avisos de "receita desbloqueada" cobrindo o canto da tela. */

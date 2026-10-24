@@ -37,6 +37,8 @@ import net.minecraft.world.level.storage.ValueOutput;
  * barra ({@link AquamarineBossBar}).
  */
 public class KrakenEntity extends Mob {
+	/** Vida máxima do atributo do jogo (a escala interna; a vida real é {@link #realHealth()}). */
+	public static final float HEALTH_UNITS = 1000.0F;
 	public static final int ARENA_RADIUS = 32;
 	public static final int MESSAGE_RADIUS = 128;
 	/** Invulnerabilidade na troca de fase (3 s). */
@@ -60,6 +62,9 @@ public class KrakenEntity extends Mob {
 	private static final EntityDataAccessor<Integer> DATA_TRANSITION = SynchedEntityData.defineId(KrakenEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> DATA_STUN = SynchedEntityData.defineId(KrakenEntity.class, EntityDataSerializers.INT);
 
+	/** O atributo de vida máxima do jogo é limitado a 1024; a vida real do Kraken passa disso e fica aqui. */
+	private static final EntityDataAccessor<Float> DATA_MAX_HEALTH = SynchedEntityData.defineId(KrakenEntity.class, EntityDataSerializers.FLOAT);
+
 	private final AquamarineBossBar bossBar = new AquamarineBossBar(this.getDisplayName());
 	private final AggroTracker aggro = new AggroTracker();
 	private float scale = 1.0F;
@@ -73,25 +78,40 @@ public class KrakenEntity extends Mob {
 
 	public KrakenEntity(EntityType<? extends KrakenEntity> type, Level level) {
 		super(type, level);
-		this.setNoAi(true);
+		// Sem setNoAi: com ele o jogo não chama customServerAiStep. Sem goals ele não se move.
 		this.setNoGravity(true);
 		this.setPersistenceRequired();
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
 		return Mob.createMobAttributes()
-			.add(Attributes.MAX_HEALTH, KrakenStats.maxHealth(1.0F, "normal"))
+			.add(Attributes.MAX_HEALTH, HEALTH_UNITS)
 			.add(Attributes.KNOCKBACK_RESISTANCE, 1.0);
 	}
 
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
+		builder.define(DATA_MAX_HEALTH, KrakenStats.maxHealth(1.0F, "normal"));
 		builder.define(DATA_SHIELD, 0.0F);
 		builder.define(DATA_MAX_SHIELD, 0.0F);
 		builder.define(DATA_PHASE, 1);
 		builder.define(DATA_TRANSITION, 0);
 		builder.define(DATA_STUN, 0);
+	}
+
+	/** Vida máxima de verdade (já com a escala {@code f}); o atributo do jogo é só a régua de 0 a {@link #HEALTH_UNITS}. */
+	public float realMaxHealth() {
+		return entityData.get(DATA_MAX_HEALTH);
+	}
+
+	/** Vida de verdade, em pontos de vida do Kraken. */
+	public float realHealth() {
+		return getHealth() / getMaxHealth() * realMaxHealth();
+	}
+
+	private void setRealHealth(float real) {
+		setHealth(Math.max(0.0F, real) / realMaxHealth() * getMaxHealth());
 	}
 
 	// --- Estado visível (o KrakenView do Codex lê daqui) ---
@@ -150,9 +170,8 @@ public class KrakenEntity extends Mob {
 	/** Recalcula a vida máxima por {@code scale}; {@code fill} enche, senão mantém a fração. */
 	private void applyMaxHealth(boolean fill) {
 		float fraction = fill ? 1.0F : getHealth() / getMaxHealth();
-		float max = KrakenStats.maxHealth(scale, difficulty());
-		getAttribute(Attributes.MAX_HEALTH).setBaseValue(max);
-		setHealth(max * fraction);
+		entityData.set(DATA_MAX_HEALTH, KrakenStats.maxHealth(scale, difficulty()));
+		setHealth(getMaxHealth() * fraction);
 	}
 
 	private void setShieldFull(int phase) {
@@ -195,18 +214,16 @@ public class KrakenEntity extends Mob {
 		}
 		recordAggro(attacker, damage, level);
 		int phase = phase();
-		float floor = getMaxHealth() * KrakenStats.phaseFloorFraction(phase);
-		float allowed = getHealth() - floor;
+		float unit = getMaxHealth() / realMaxHealth();
+		float floor = realMaxHealth() * KrakenStats.phaseFloorFraction(phase);
+		float allowed = realHealth() - floor;
 		if (phase < KrakenStats.PHASES && damage >= allowed) {
 			// O golpe que cruza o limite para na fronteira da fase; o excesso se perde.
-			super.hurtServer(level, source, Math.max(allowed, 0.0F));
-			if (isAlive()) {
-				setHealth(Math.max(floor, 0.01F));
-				startPhase(level, phase + 1);
-			}
+			setRealHealth(floor);
+			startPhase(level, phase + 1);
 			return true;
 		}
-		return super.hurtServer(level, source, damage);
+		return super.hurtServer(level, source, damage * unit);
 	}
 
 	private void recordAggro(Entity attacker, float amount, ServerLevel level) {
@@ -260,7 +277,7 @@ public class KrakenEntity extends Mob {
 		faceTarget(level, inArena);
 		tickAbsence(level, inArena);
 		if (isAlive()) {
-			bossBar.update(getHealth(), getMaxHealth(), shield(), maxShield(), phase, shieldRegenerating);
+			bossBar.update(realHealth(), realMaxHealth(), shield(), maxShield(), phase, shieldRegenerating);
 		}
 	}
 
@@ -364,6 +381,7 @@ public class KrakenEntity extends Mob {
 	@Override
 	protected void addAdditionalSaveData(ValueOutput output) {
 		super.addAdditionalSaveData(output);
+		output.putFloat("KrakenMaxHealth", realMaxHealth());
 		output.putFloat("Shield", shield());
 		output.putFloat("MaxShield", maxShield());
 		output.putInt("Phase", phase());
@@ -373,6 +391,7 @@ public class KrakenEntity extends Mob {
 
 	@Override
 	protected void readAdditionalSaveData(ValueInput input) {
+		entityData.set(DATA_MAX_HEALTH, input.getFloatOr("KrakenMaxHealth", KrakenStats.maxHealth(1.0F, "normal")));
 		super.readAdditionalSaveData(input);
 		scale = input.getFloatOr("Scale", 1.0F);
 		entityData.set(DATA_PHASE, input.getIntOr("Phase", 1));
