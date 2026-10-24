@@ -31,8 +31,9 @@ Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou ·
   **Testado:** `./gradlew build` (JUnit) e `runClientGameTest` (fases, escudo, transição,
   regeneração, aggro, escala com 5 jogadores, 3 screenshots; o modelo ainda é invisível).
   **Não testado:** multiplayer, fuga/abandono (só no código), difícil `abissal`, Kraken salvo e recarregado.
-  **Falta:** `implements KrakenView` quando o 2A-M chegar na `main` (a entidade já tem `phase()` e
-  `shieldFraction()`); multiplicadores de dano por fonte (2C), ataques (2D), movimento.
+  **Falta:** `KrakenEntity` já implementa `KrakenView` (idle, stunned e phaseChange ligados no cliente;
+  os ataques ficam para a 2D-C; troque o `NoopRenderer` pelo renderer do Codex na 2A-T); multiplicadores
+  de dano por fonte (2C), ataques (2D), movimento.
 
 - 24/10/2026 14:15 · Estruturador (Claude Opus 5.5) · A pedido do Adriano:
   biomas do mod achados com `/locate biome #aquamarine_<bioma>` (tag

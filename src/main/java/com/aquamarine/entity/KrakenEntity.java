@@ -4,6 +4,7 @@ import com.aquamarine.config.AquamarineConfig;
 import com.aquamarine.entity.boss.AggroTracker;
 import com.aquamarine.entity.boss.AquamarineBossBar;
 import com.aquamarine.entity.boss.KrakenStats;
+import com.aquamarine.entity.boss.KrakenView;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +20,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -36,7 +38,7 @@ import net.minecraft.world.level.storage.ValueOutput;
  * Tudo roda no servidor; o cliente recebe fase e escudo por {@link SynchedEntityData} e pela
  * barra ({@link AquamarineBossBar}).
  */
-public class KrakenEntity extends Mob {
+public class KrakenEntity extends Mob implements KrakenView {
 	/** Vida máxima do atributo do jogo (a escala interna; a vida real é {@link #realHealth()}). */
 	public static final float HEALTH_UNITS = 1000.0F;
 	public static final int ARENA_RADIUS = 32;
@@ -65,6 +67,22 @@ public class KrakenEntity extends Mob {
 	/** O atributo de vida máxima do jogo é limitado a 1024; a vida real do Kraken passa disso e fica aqui. */
 	private static final EntityDataAccessor<Float> DATA_MAX_HEALTH = SynchedEntityData.defineId(KrakenEntity.class, EntityDataSerializers.FLOAT);
 
+	private final AnimationState idleAnimation = new AnimationState();
+	private final AnimationState swimAnimation = new AnimationState();
+	private final AnimationState emergeAnimation = new AnimationState();
+	private final AnimationState stunnedAnimation = new AnimationState();
+	private final AnimationState phaseChangeAnimation = new AnimationState();
+	private final AnimationState deathAnimation = new AnimationState();
+	private final AnimationState slamAnimation = new AnimationState();
+	private final AnimationState grabAnimation = new AnimationState();
+	private final AnimationState inkAnimation = new AnimationState();
+	private final AnimationState whirlpoolAnimation = new AnimationState();
+	private final AnimationState spawnYoungAnimation = new AnimationState();
+	private final AnimationState waterJetAnimation = new AnimationState();
+	private final AnimationState roarAnimation = new AnimationState();
+	private final AnimationState boltsAnimation = new AnimationState();
+	private final AnimationState ambushAnimation = new AnimationState();
+	private final AnimationState doubleGrabAnimation = new AnimationState();
 	private final AquamarineBossBar bossBar = new AquamarineBossBar(this.getDisplayName());
 	private final AggroTracker aggro = new AggroTracker();
 	private float scale = 1.0F;
@@ -98,6 +116,98 @@ public class KrakenEntity extends Mob {
 		builder.define(DATA_PHASE, 1);
 		builder.define(DATA_TRANSITION, 0);
 		builder.define(DATA_STUN, 0);
+	}
+
+	// --- KrakenView: o cliente liga e desliga as animações conforme o estado sincronizado ---
+
+	@Override
+	public AnimationState idleAnimation() {
+		return idleAnimation;
+	}
+
+	@Override
+	public AnimationState swimAnimation() {
+		return swimAnimation;
+	}
+
+	@Override
+	public AnimationState emergeAnimation() {
+		return emergeAnimation;
+	}
+
+	@Override
+	public AnimationState stunnedAnimation() {
+		return stunnedAnimation;
+	}
+
+	@Override
+	public AnimationState phaseChangeAnimation() {
+		return phaseChangeAnimation;
+	}
+
+	@Override
+	public AnimationState deathAnimation() {
+		return deathAnimation;
+	}
+
+	@Override
+	public AnimationState slamAnimation() {
+		return slamAnimation;
+	}
+
+	@Override
+	public AnimationState grabAnimation() {
+		return grabAnimation;
+	}
+
+	@Override
+	public AnimationState inkAnimation() {
+		return inkAnimation;
+	}
+
+	@Override
+	public AnimationState whirlpoolAnimation() {
+		return whirlpoolAnimation;
+	}
+
+	@Override
+	public AnimationState spawnYoungAnimation() {
+		return spawnYoungAnimation;
+	}
+
+	@Override
+	public AnimationState waterJetAnimation() {
+		return waterJetAnimation;
+	}
+
+	@Override
+	public AnimationState roarAnimation() {
+		return roarAnimation;
+	}
+
+	@Override
+	public AnimationState boltsAnimation() {
+		return boltsAnimation;
+	}
+
+	@Override
+	public AnimationState ambushAnimation() {
+		return ambushAnimation;
+	}
+
+	@Override
+	public AnimationState doubleGrabAnimation() {
+		return doubleGrabAnimation;
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+		if (level().isClientSide()) {
+			idleAnimation.startIfStopped(tickCount);
+			stunnedAnimation.animateWhen(isStunned(), tickCount);
+			phaseChangeAnimation.animateWhen(isTransitioning(), tickCount);
+		}
 	}
 
 	/** Vida máxima de verdade (já com a escala {@code f}); o atributo do jogo é só a régua de 0 a {@link #HEALTH_UNITS}. */
