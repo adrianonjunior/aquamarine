@@ -185,8 +185,17 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		});
 	}
 
+	/** A água leva o jogador para baixo; reposiciona de frente para o Kraken antes de cada foto. */
+	private static void aimAtKraken(ClientGameTestContext context, TestServerContext server, BlockPos origin) {
+		tp(server, origin.getX() + 0.5, origin.getY() + 36, origin.getZ() + 9.0, 180, 42);
+		context.waitTicks(3);
+	}
+
 	/** Kraken: vida e escudo por fase, escala, transição, regeneração do escudo e aggro. */
 	private static void kraken(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos base) {
+		// O teste do altar pode ter deixado um Kraken vivo; kraken(s) pega o primeiro da lista.
+		server.runCommand("kill @e[type=aquamarine:kraken]");
+		context.waitTicks(120);
 		BlockPos origin = base.offset(200, 0, 0);
 		server.runOnServer(s -> {
 			ServerLevel level = s.overworld();
@@ -194,19 +203,24 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			KrakenCommand.buildArena(level, origin);
 			KrakenSummoning.spawnAt(level, origin.offset(0, 25, 0), origin).attacks().setEnabled(false);
 		});
-		tp(server, origin.getX() + 0.5, origin.getY() + 28, origin.getZ() + 14.5, 0, 0);
+		tp(server, origin.getX() + 0.5, origin.getY() + 27, origin.getZ() + 7.5, 180, 12);
 		world.getConnection().waitForChunksRender();
 		context.waitTicks(20);
 		check(server.computeOnServer(s -> kraken(s).realMaxHealth() == 1500F && kraken(s).shield() == 400F
 			&& kraken(s).phase() == 1 && kraken(s).scaleFactor() == 1F), "Kraken: valores da fase 1 com 1 jogador");
 		check(server.computeOnServer(s -> near(kraken(s).realHealth(), 1500F)), "Kraken: vida inicial");
-		shot(context, "13_kraken_fase1");
+		aimAtKraken(context, server, origin);
+		shot(context, "13_kraken_fase1_sem_rachaduras");
 		for (String name : KrakenEntity.ANIMATION_NAMES) {
 			server.runCommand("aquamarine kraken anim " + name);
 			check(server.computeOnServer(s -> KrakenEntity.ANIMATION_NAMES.get(kraken(s).lastAnimation()).equals(name)), "Kraken: animação " + name);
 		}
 
-		krakenHit(server, 500);
+		krakenHit(server, 250);
+		context.waitTicks(6);
+		aimAtKraken(context, server, origin);
+		shot(context, "14_kraken_fase1_rachaduras");
+		krakenHit(server, 250);
 		context.waitTicks(2);
 		check(server.computeOnServer(s -> kraken(s).shield() == 0 && kraken(s).isStunned() && near(kraken(s).realHealth(), 1500F)),
 			"Kraken: o escudo deve absorver e atordoar sem tirar vida");
@@ -218,12 +232,16 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			&& kraken(s).isTransitioning()), "Kraken: o golpe deve parar na fronteira da fase 2 com escudo cheio");
 		krakenHit(server, 50);
 		check(server.computeOnServer(s -> near(kraken(s).realHealth(), 1000F) && kraken(s).shield() == 600F), "Kraken: invulnerável na transição");
-		shot(context, "14_kraken_fase2");
+		aimAtKraken(context, server, origin);
+		shot(context, "15_kraken_fase2_escudo_cheio");
 
 		context.waitTicks(70);
 		check(server.computeOnServer(s -> !kraken(s).isTransitioning()), "Kraken: a transição devia ter acabado");
-		krakenHit(server, 150);
-		context.waitTicks(450);
+		krakenHit(server, 450);
+		context.waitTicks(6);
+		aimAtKraken(context, server, origin);
+		shot(context, "16_kraken_fase2_rachaduras");
+		context.waitTicks(620);
 		check(server.computeOnServer(s -> kraken(s).shield() == 600F), "Kraken: o escudo devia regenerar após 20 s sem dano");
 
 		krakenHit(server, 600);
@@ -231,7 +249,10 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		context.waitTicks(2);
 		check(server.computeOnServer(s -> kraken(s).phase() == 3 && near(kraken(s).realHealth(), 500F) && kraken(s).shield() == 800F),
 			"Kraken: fase 3 com 800 de escudo");
-		shot(context, "15_kraken_fase3");
+		krakenHit(server, 700);
+		context.waitTicks(6);
+		aimAtKraken(context, server, origin);
+		shot(context, "17_kraken_fase3_rachaduras");
 
 		context.waitTicks(70);
 		// 2C: tabela de dano por fonte, Nós de Maré e exposição (escudo cheio de 800 na fase 3).

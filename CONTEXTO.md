@@ -37,13 +37,20 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| 2D-M (onda 2) | Codex | jogo + Gradle | 24/10/2026 |
+| Animações, partículas e avisos do Kraken (Entrega 2; autorizada pelo Adriano no lugar do Codex) | Claude Opus 5.5 (worktree `aquamarine-opus-kraken`, branch `opus/kraken-anim`) | jogo (runClientGameTest) | 24/10/2026 |
 
 ## Registro de handoff
-Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+
 - 24/10/2026 · Claude Sonnet 5.5 (faixa 2D-C) · 8 `TentacleEntity` (60 de vida, cortado volta em 30 s; os 8 cortados expõem o Kraken), `YoungKrakenEntity` (Cria) e os 10 ataques com aviso (partículas, som e a animação do contrato) em `entity/boss/KrakenAttacks` (+ `KrakenAttackType`); sorteio automático por fase/simultâneos `2 + n÷3`; `/aquamarine kraken attack <nome>` e `ai on|off`. Valores adotados em `docs/02-kraken.md`. Ajuste na Pressão: o afundar agora é um modificador do atributo `GRAVITY` (somar velocidade no servidor acumulava sem parar).
   **Testado:** JUnit `KrakenAttackTypeTest`; `runClientGameTest` (`AttackGameTest`): os 8 tentáculos, o dano de Pancada (12), Agarrão (6/s, cortar solta, Tônico solta em ~2,5 s), Jato (10), Raios (14 fora da água, 0 submerso), Emboscada (10), Agarrão Duplo parcial, Tinta (armadura completa protege), Redemoinho (puxa), Crias (3), Rugido (quebra vidro e derruba a Boia), 8 cortados expõem, IA automática; 3 screenshots (avisos de Pancada e Jato conferidos).
   **Não testado:** multiplayer (simultâneos > 2, alvo por aggro), difícil abissal, Kraken salvo e recarregado com tentáculos, barcos (Pancada/Rugido), Amuleto da Corrente (item não existe). **Pendente de outras faixas:** os renderers de `TentacleEntity` e `YoungKrakenEntity` são `NoopRenderer` até a 2D-M/2D-T (as entidades são invisíveis; o aviso é só por partículas); animações `slam`/`grab`... já disparam no `KrakenView`. Os testes antigos desligam a IA (`attacks().setEnabled(false)`).
 
+- 24/10/2026 · Orquestrador · **Retomada.** 2A-T entregue **parcial** (textura por `tools/gen_kraken_texture.py` na main, build verde; aceite visual NÃO cumprido: rachaduras `crack_*` não aparecem, Kraken pequeno e escuro; `build_model.py` sobrescreve `kraken.png`, rodar o script da textura depois).
+  Fica para o polimento de tamanho 24 x 16 (Codex: rachaduras maiores/emissivas). **2D-C iniciada** (Claude, terminal da worktree 2B, dispatch `ctx_731e88465b7b`).
+  **2D-M (Codex) BLOQUEADA:** o Codex 0.163 falha com erro de IPC do Orca (`unknown field result_buffered_for_ns`) e não consegue chamar o `orca`; precisa atualizar o Codex (`npm install -g @openai/codex`, decisão do Adriano) e reenviar a tarefa no terminal `term_cca07849...` (worktree 2D-M, task `task_c82174f95651`).
+  Bloqueia também 2D-T, o polimento de tamanho (parte do modelo) e a 2Q. Revisado o commit `e3dd518` do Codex (só docs; Fase 3 bloqueada, sem contradição).
+Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
 
 - 24/10/2026 · Codex (organização documental) · Reconciliou marcos da Entrega 1 e das faixas 2B/2E com o histórico da `main`; corrigiu textos de liberação e da 2A-T, incorporou a documentação planejada da Fase 3 e deixou o aviso "Atualização para todos os agentes" acima. **Sem executar agentes ou build.** Permanecem pendentes as faixas desmarcadas no roadmap e o aceite multiplayer da Entrega 2; a Fase 3 segue bloqueada.
 
@@ -84,6 +91,72 @@ Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou ·
 
 - 24/10/2026 · Codex Astra (2A-M) · `KrakenView`, gabarito UV, `.bbmodel` com 191 cubos e 16 clips, classes do modelo/animações/renderer e registro do modelo; `compileJava compileClientJava` passou, `/aquamarine kraken` criou a entidade e os 16 comandos responderam `Animation <nome> played.`
   **Visual não verificado:** no mundo de QA florestal o Kraken surgiu em y=57 sob o terreno; as 9 capturas autorizadas foram usadas sem obter uma vista do modelo. **Próximo passo:** repetir a vista geral e poses em mundo aquático/câmera acima do chão; deixar 2A-M sem marcar até conferir a silhueta.
+
+- 24/10/2026 · Claude Sonnet 5.5 (2A-C.2) · `/aquamarine kraken anim <nome>` dispara as 16 animações do contrato no Kraken mais próximo (sincronizado por dados da entidade); testado no teste de cliente (estado no servidor), **não** conferido visualmente.
+
+- 24/10/2026 · Claude Sonnet 5.5 (faixa 2A-C) · `KrakenEntity` (`entity/`),
+  `KrakenStats` e `AggroTracker` (`entity/boss/`, contas puras com JUnit), `KrakenCommand`
+  (`/aquamarine kraken` e `/aquamarine kraken arena`, nível 2), `KrakenSummoning.spawnKraken`
+  (surge 10 blocos abaixo da água funda mais próxima) e renderer provisório (`NoopRenderer`).
+  Pronto: vida/escudo por fase, escala `f`, transição de 3 s, quebra do escudo com atordoamento de 8 s,
+  regeneração (20 s sem dano, 10%/s; fase 3 a cada 45 s), aggro de 10 s, fuga (30 s, +10%) e
+  abandono (3 min), barra com a vida real. **Detalhe:** o atributo de vida do jogo para em 1024,
+  então a vida do Kraken usa o atributo como régua de 0 a 1000; use `realHealth()`/`realMaxHealth()`
+  e dê dano por `hurtServer`. `setNoAi(true)` impede `customServerAiStep`: o Kraken não usa.
+  **Testado:** `./gradlew build` (JUnit) e `runClientGameTest` (fases, escudo, transição,
+  regeneração, aggro, escala com 5 jogadores, 3 screenshots; o modelo ainda é invisível).
+  **Não testado:** multiplayer, fuga/abandono (só no código), difícil `abissal`, Kraken salvo e recarregado.
+  **Falta:** `KrakenEntity` já implementa `KrakenView` (idle, stunned e phaseChange ligados no cliente;
+  os ataques ficam para a 2D-C; troque o `NoopRenderer` pelo renderer do Codex na 2A-T); multiplicadores
+  de dano por fonte (2C), ataques (2D), movimento.
+
+- 24/10/2026 14:15 · Estruturador (Claude Opus 5.5) · A pedido do Adriano:
+  biomas do mod achados com `/locate biome #aquamarine_<bioma>` (tag
+  `minecraft:aquamarine_<bioma>`, exigida pelo teste). Só existe
+  `#aquamarine_fossa_de_nereia`, provisória (oceanos profundos). **Falta:** quem
+  criar o bioma Fossa de Nereia troca o valor da tag por `aquamarine:fossa_de_nereia`.
+
+- 24/10/2026 14:05 · Estruturador (Claude Opus 5.5) · A pedido do Adriano: JEI
+  31.16.0.90 no ambiente de dev, plugin com a categoria "Forja Abissal" e
+  descrição curta de cada item (tooltip + informação do JEI), itens também nas
+  abas vanilla (a aba "Aquamarine" fica na página 2 do criativo). Testado no
+  teste de cliente (screenshots do tooltip e da categoria). **Falta:** quando a
+  Pressão e a Nuvem de Tinta existirem, acrescentar esses efeitos às descrições
+  da armadura e dos óculos; receitas da Forja no JEI em servidor dedicado.
+
+- 24/10/2026 13:20 · Estruturador (Claude Opus 5.5) · **Entrega 1 concluída e
+  mergeada na `main`** (A, B, C e D; CI verde). Pronto: registros, aba
+  "Aquamarine", config, tags, lang pt/en; Oricálcio (minério, lingote, bloco,
+  5 ferramentas com Maré, armadura com bônus de nado), Pérola, Cristal, Escama;
+  Forja Abissal (tipo de receita próprio + tela); Óculos de Mergulho (névoa 1,5x,
+  água mais clara); barra de boss customizada + entidade de teste
+  `aquamarine:boss_dummy`; Projeto do Chamariz, Chamariz Abissal, Altar do Abismo
+  e mensagens de invocação; 30 texturas por `tools/gen_textures.py`.
+  **Testado:** `./gradlew build` (7 testes JUnit) e `./gradlew runClientGameTest`
+  (abre o jogo sozinho, confere Forja, receita exclusiva, bônus de conjunto,
+  escudo da barra e altar, e grava 14 screenshots que foram revisados).
+  **Não testado:** multiplayer/servidor dedicado; velocidade real de nado do
+  bônus (+0,33 de `water_movement_efficiency`, calibrar); Maré minerando
+  debaixo d'água; armadura em bebês (sem camada `humanoid_baby`).
+  **Falta (fora do escopo):** gatilho do aviso falso, tremor de tela e silêncio
+  do oceano na invocação (ver docs/03), o Kraken em si (`KrakenSummoning.spawnKraken`
+  é o gancho), Nuvem de Tinta e Pressão (usar `OrichalcumEffects`).
+  **Próximo passo:** o Adriano abrir o jogo (`./gradlew runClient`, aba
+  "Aquamarine") e liberar o próximo marco; o cliente antigo aberto desde 12:00
+  pela pasta principal não tem este código.
+
+- 24/10/2026 12:55 · Estruturador · Checkpoint na branch `estruturador/entrega-1`
+  (build verde, 7 testes JUnit): blocos A, B e C escritos (registros, config, aba,
+  tags, lang, Oricálcio completo, Forja Abissal, Óculos, texturas por
+  `tools/gen_textures.py`). Falta: testar no jogo, docs e merge na `main`.
+
+- 24/10/2026 · Claude · Repositório criado, docs organizados, JDK 25 instalado,
+  AGENTS.md e CONTEXTO.md criados. Um óculos foi implementado por engano e
+  removido a pedido. Falta: decidir o que sai do planejamento primeiro.
+- 24/10/2026 · Codex Astra (2A-M) · `KrakenView`, gabarito UV, `.bbmodel` com 191 cubos e 16 clips, classes do modelo/animações/renderer e registro do modelo; `compileJava compileClientJava` passou, `/aquamarine kraken` criou a entidade e os 16 comandos responderam `Animation <nome> played.`
+  **Visual não verificado:** no mundo de QA florestal o Kraken surgiu em y=57 sob o terreno; as 9 capturas autorizadas foram usadas sem obter uma vista do modelo. **Próximo passo:** repetir a vista geral e poses em mundo aquático/câmera acima do chão; deixar 2A-M sem marcar até conferir a silhueta.
+
+- 24/10/2026 · Claude Sonnet 5.5 (2A-T) · Textura do Kraken por `tools/gen_kraken_texture.py` (box UV do `KrakenModel`, 128x128), sem mudar o renderer; teste de cliente fotografa as 3 fases. **Atenção:** `build_model.py` do Codex sobrescreve `kraken.png` com o uv.png; rode o meu script depois. **Não aceito ainda:** as rachaduras (geometria `crack_*` de 1 px do Codex) não aparecem nos prints, o Kraken é pequeno (~2 blocos) e escuro na água; deve melhorar com o tamanho final 24x16 e/ou rachaduras maiores/emissivas (pedir ao Codex).
 
 - 24/10/2026 · Claude Sonnet 5.5 (2A-C.2) · `/aquamarine kraken anim <nome>` dispara as 16 animações do contrato no Kraken mais próximo (sincronizado por dados da entidade); testado no teste de cliente (estado no servidor), **não** conferido visualmente.
 
