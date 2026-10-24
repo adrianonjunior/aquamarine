@@ -3,6 +3,10 @@
 Projeto: mod Fabric **Aquamarine** (Minecraft Java 26.3). Contexto, decisões e
 estado atual: [CONTEXTO.md](CONTEXTO.md). Decisões de design: [docs/00-decisoes.md](docs/00-decisoes.md).
 
+> **FASE ATUAL: PLANEJAMENTO.** Só documente e planeje. Não escreva código,
+> texturas ou modelos do mod até o Adriano liberar explicitamente (ver
+> CONTEXTO.md). Na dúvida, pergunte antes de implementar.
+
 ## ⚠️ Vários agentes rodam ao mesmo tempo
 O Adriano mantém **diversos agentes simultâneos** (Claude, Codex Astra, outros)
 neste mesmo projeto. Trabalhe assumindo que outro agente está editando arquivos

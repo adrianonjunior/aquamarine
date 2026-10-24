@@ -13,8 +13,6 @@ public class Aquamarine implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		com.aquamarine.item.ModItems.register();
-		com.aquamarine.event.DivingGogglesHandler.register();
 		LOGGER.info("Aquamarine carregado.");
 	}
 

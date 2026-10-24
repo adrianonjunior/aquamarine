@@ -41,3 +41,15 @@ Tridente do Kraken, Manto de Tinta, Farol Abissal (todos com o Coração).
 ## Regra que eu sugiro
 Todo item novo tem que responder "o que ele faz na luta ou na exploração?".
 Se for só decorativo, fica para o fim (polimento).
+
+## Óculos de Mergulho — planejado (ideia do Adriano)
+- **Função:** dá visão melhor quando o jogador está dentro da água.
+- **Como (proposta):** item equipável na cabeça; só age enquanto o jogador está
+  submerso. Opções de efeito, a decidir: visão noturna discreta, redução da
+  névoa da água (parte cliente), ou os dois.
+- **Receita (proposta):** couro + painel de vidro + cobre; mais tarde pode
+  passar a usar Oricálcio.
+- **Visual:** pixel art estilo mods de Minecraft. Armação de latão envelhecido
+  (dourado gasto), lentes verde-água com brilho, tira azul de couro; ícone
+  16x16 e camada de cabeça usada.
+- Ainda não implementado.
