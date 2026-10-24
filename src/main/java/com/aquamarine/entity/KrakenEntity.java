@@ -366,7 +366,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 		List<Vec3> centers = new java.util.ArrayList<>(count);
 		for (int i = 0; i < count; i++) {
 			TideNodes.Offset o = TideNodes.rotate(TideNodes.offset(phase(), i, count), getYRot());
-			centers.add(position().add(o.x(), o.y(), o.z()));
+			centers.add(position().add(o.x() * TideNodes.WORLD_SCALE, o.y() * TideNodes.WORLD_SCALE, o.z() * TideNodes.WORLD_SCALE));
 		}
 		return centers;
 	}
@@ -738,6 +738,10 @@ public class KrakenEntity extends Mob implements KrakenView {
 	public boolean isPushable() {
 		return false;
 	}
+
+	/** Com a hitbox de 32 x 20, empurrar jogadores para fora do corpo os jogaria para longe da luta. */
+	@Override
+	protected void doPush(net.minecraft.world.entity.Entity entity) {}
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {

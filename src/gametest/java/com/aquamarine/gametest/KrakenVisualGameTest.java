@@ -30,7 +30,7 @@ import net.minecraft.world.effect.MobEffects;
  */
 final class KrakenVisualGameTest {
 	/** Distância entre os Krakens da fileira (blocos). */
-	private static final int GAP = 9;
+	private static final int GAP = 36;
 	/** Os Krakens na ordem em que surgiram (esquerda para a direita); eles se movem, então a ordem fica fixa aqui. */
 	private static final List<UUID> ROW = new ArrayList<>();
 
@@ -38,8 +38,14 @@ final class KrakenVisualGameTest {
 		server.runCommand("kill @e[type=aquamarine:kraken]");
 		// O teste anterior pode ter deixado o jogador morto ou sob efeitos: começa vivo, em criativo e curado.
 		if (server.computeOnServer(s -> !player(s).isAlive())) {
-			context.runOnClient(mc -> mc.player.respawn());
-			context.waitTicks(20);
+			for (int i = 0; i < 5 && server.computeOnServer(s -> !player(s).isAlive()); i++) {
+				context.runOnClient(mc -> {
+					if (mc.player != null) {
+						mc.player.respawn();
+					}
+				});
+				context.waitTicks(30);
+			}
 		}
 		server.runCommand("gamemode creative @a");
 		server.runOnServer(s -> {
@@ -47,15 +53,15 @@ final class KrakenVisualGameTest {
 			player(s).setHealth(player(s).getMaxHealth());
 		});
 		BlockPos o = base.offset(-600, 0, 0);
-		server.runCommand(String.format(Locale.ROOT, "forceload add %d %d %d %d", o.getX() - 24, o.getZ() - 24, o.getX() + 24, o.getZ() + 24));
+		server.runCommand(String.format(Locale.ROOT, "forceload add %d %d %d %d", o.getX() - 80, o.getZ() - 80, o.getX() + 80, o.getZ() + 80));
 		context.waitTicks(20);
 		ROW.clear();
 		server.runOnServer(s -> {
 			ServerLevel level = s.overworld();
-			KrakenCommand.buildArena(level, o);
+			KrakenCommand.buildArena(level, o, 64, 64);
 			for (int i = -1; i <= 1; i++) {
 				// Sem a IA de ataques (2D-C): cada Kraken só faz a animação que o teste manda.
-				KrakenEntity kraken = KrakenSummoning.spawnAt(level, o.offset(i * GAP, 16, 0), o);
+				KrakenEntity kraken = KrakenSummoning.spawnAt(level, o.offset(i * GAP, 24, 0), o);
 				kraken.attacks().setEnabled(false);
 				ROW.add(kraken.getUUID());
 			}
@@ -177,7 +183,7 @@ final class KrakenVisualGameTest {
 
 	/** Câmera na água, à frente da fileira e um pouco acima, olhando para os três. */
 	private static void aim(ClientGameTestContext context, TestServerContext server, BlockPos o) {
-		server.runCommand(String.format(Locale.ROOT, "tp @p %.2f %.2f %.2f 180 12", o.getX() + 0.5, o.getY() + 21.0, o.getZ() + 15.5));
+		server.runCommand(String.format(Locale.ROOT, "tp @p %.2f %.2f %.2f 180 -22", o.getX() + 0.5, o.getY() + 26.0, o.getZ() + 34.5));
 		context.waitTicks(3);
 	}
 

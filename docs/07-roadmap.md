@@ -79,7 +79,7 @@ validado das faixas listadas. Orçamento = tempo / screenshots (ver economia).
 | 3 | **2E** | Claude | 2A-C | Aviso falso, tremor de tela, silêncio do oceano, drops, troféu, primeira vitória. Aceite: GameTest dos drops e do gatilho | 2 h / 2 |
 | 4 | **2Q** | Codex (`medium`) | todas | QA visual com 2 clientes: invocar, 3 fases, 1 screenshot por ataque. Aceite: relatório de bugs por prioridade; não corrige código, abre Task para o dono | 2 h / 12 (até 6 por ciclo) |
 
-- [x] 2A-M · [x] 2A-C · [ ] 2A-T · [x] 2B · [x] 2C · [x] 2D-M · [x] 2D-C · [x] 2D-T · [x] 2E · [ ] 2Q
+- [x] 2A-M · [x] 2A-C · [x] 2A-T · [x] 2B · [x] 2C · [x] 2D-M · [x] 2D-C · [x] 2D-T · [x] 2E · [ ] 2Q
 
 **Aceite da Entrega 2:** 2 ou mais jogadores invocam o Kraken e vencem as 3
 fases em 8 a 12 minutos com equipamento do mod, sem crash e sem desync da barra.
@@ -113,7 +113,7 @@ Cada linha é uma Task; "Dep." = só depois do merge validado.
 
 **Checklist de liberação (o orquestrador confere antes de criar a Run; nada aqui é feito antes):**
 - [ ] Entrega 2 completa: todas as faixas marcadas (inclui 2A-T com rachaduras visíveis e 2Q) e o aceite multiplayer cumprido.
-- [ ] Faixa de tamanho do Kraken (24 x 16, ver [00-decisoes.md](00-decisoes.md)) aplicada.
+- [x] Faixa de tamanho do Kraken (32 x 20, a pedido do Adriano; ver [00-decisoes.md](00-decisoes.md)) aplicada.
 - [ ] `main` limpa, `./gradlew build` e `runClientGameTest` verdes, "Em andamento" do `CONTEXTO.md` vazio.
 - [ ] Codex atualizado e conseguindo chamar o `orca` (o 0.163 falhava no IPC); disco C: com pelo menos 10 GB livres.
 - [ ] Terminais Claude e Codex aceitos no Orca (Bypass Permissions e trust), para os workers não pararem nos avisos.

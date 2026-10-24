@@ -25,7 +25,7 @@ public final class ModEntities {
 
 	/** O Kraken (docs/02-kraken.md). Caixa provisória; o tamanho final vem com o modelo. */
 	public static final EntityType<KrakenEntity> KRAKEN = Registry.register(BuiltInRegistries.ENTITY_TYPE, KRAKEN_KEY,
-		EntityType.Builder.of(KrakenEntity::new, MobCategory.MONSTER).sized(8.0F, 6.0F).fireImmune().clientTrackingRange(16).build(KRAKEN_KEY));
+		EntityType.Builder.of(KrakenEntity::new, MobCategory.MONSTER).sized(32.0F, 20.0F).fireImmune().clientTrackingRange(48).build(KRAKEN_KEY));
 
 	private static final ResourceKey<EntityType<?>> TENTACLE_KEY =
 		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("tentacle"));

@@ -64,7 +64,7 @@ final class PressureGameTest {
 
 		// Níveis por tempo (10 s cada) e efeitos de cada nível.
 		context.waitTicks(215);
-		check(level(server) == 1, "Pressão: nível 1 após ~10 s, era " + level(server));
+		check(level(server) == 1, "Pressão: nível 1 após ~10 s, era " + level(server) + " " + server.computeOnServer(s -> player(s).position() + " water=" + player(s).isUnderWater() + " krakens=" + s.overworld().getEntities(com.aquamarine.entity.ModEntities.KRAKEN, e -> true).stream().map(k -> k.position() + "/" + k.isAlive()).toList() + " hp=" + player(s).getHealth()));
 		context.waitTicks(200);
 		check(level(server) == 2, "Pressão: nível 2 após ~20 s, era " + level(server));
 		check(server.computeOnServer(s -> player(s).getAttributeValue(Attributes.WATER_MOVEMENT_EFFICIENCY) < 0.1), "Pressão 2: nado lento");

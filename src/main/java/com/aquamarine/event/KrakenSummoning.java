@@ -37,7 +37,7 @@ public final class KrakenSummoning {
 	public static final int REQUIRED_DEPTH = 30;
 	public static final int DEEP_WATER_RADIUS = 48;
 	/** Quantos blocos abaixo da superfície o Kraken surge. */
-	private static final int KRAKEN_SUBMERGED_DEPTH = 10;
+	private static final int KRAKEN_SUBMERGED_DEPTH = 24;
 
 	private static final int STIRS_TICK = 100;
 	private static final int AWAKENS_TICK = 200;

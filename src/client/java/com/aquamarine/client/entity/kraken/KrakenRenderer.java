@@ -29,7 +29,7 @@ public final class KrakenRenderer<T extends Mob> extends MobRenderer<T, KrakenRe
 	 * Escala do modelo sobre a escala da entidade. O polimento de tamanho (24 x 16 blocos) muda só isto;
 	 * as partículas do Kraken (KrakenEffects) usam o mesmo valor e acompanham sozinhas.
 	 */
-	public static final float MODEL_SCALE = 1.0F;
+	public static final float MODEL_SCALE = 4.0F;
 	private static final int FULL_BRIGHT = 0xF000F0;
 	/** Luz mínima de bloco no corpo (0 a 15). */
 	private static final int MIN_LIGHT = 9;

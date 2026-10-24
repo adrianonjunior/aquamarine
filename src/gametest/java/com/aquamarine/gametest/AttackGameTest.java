@@ -168,7 +168,7 @@ final class AttackGameTest {
 		context.waitTicks(45);
 		check(health(server) == 20.0F, "Raios: submerso não deve levar dano, vida " + health(server));
 		reset(server);
-		tp(server, origin.getX() + 0.5, origin.getY() + 41.0, origin.getZ() + 12.5, 180.0F, 0.0F);
+		tp(server, origin.getX() + 0.5, origin.getY() + 65.0, origin.getZ() + 12.5, 180.0F, 0.0F);
 		server.runOnServer(s -> {
 			player(s).setNoGravity(true);
 			player(s).setDeltaMovement(0, 0, 0);
@@ -242,10 +242,15 @@ final class AttackGameTest {
 
 		// Sorteio automático: com a IA ligada, o Kraken ataca sozinho dentro do limite de simultâneos.
 		reset(server);
-		server.runOnServer(s -> kraken(s).attacks().setEnabled(true));
+		// Vida alta: o Kraken final (24 x 16) cobre a arena e mataria o jogador antes dos 20 s.
+		server.runOnServer(s -> {
+			player(s).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(2000.0);
+			player(s).setHealth(2000.0F);
+			kraken(s).attacks().setEnabled(true);
+		});
 		context.waitTicks(400);
 		check(server.computeOnServer(s -> kraken(s).attacks().activeCount() <= KrakenAttackType.maxSimultaneous(1)), "IA: simultâneos acima do limite");
-		check(server.computeOnServer(s -> player(s).getHealth() < 20.0F || player(s).hasEffect(MobEffects.BLINDNESS)
+		check(server.computeOnServer(s -> player(s).getHealth() < 2000.0F || player(s).hasEffect(MobEffects.BLINDNESS)
 			|| kraken(s).attacks().youngCount(s.overworld()) > 0 || kraken(s).attacks().grabbedCount() > 0
 			|| kraken(s).attacks().isWhirlpoolActive() || !player(s).isAlive()), "IA: nenhum ataque automático em 20 s");
 
@@ -257,6 +262,7 @@ final class AttackGameTest {
 		server.runOnServer(s -> {
 			ServerPlayer p = player(s);
 			p.removeAllEffects();
+			p.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(20.0);
 			p.setHealth(20.0F);
 			p.snapTo(base.getX() + 0.5, base.getY(), base.getZ() + 0.5);
 		});

@@ -37,9 +37,10 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| Animações, partículas e avisos do Kraken (Entrega 2; autorizada pelo Adriano no lugar do Codex) | Claude Opus 5.5 (worktree `aquamarine-opus-kraken`, branch `opus/kraken-anim`) | nenhum agora (pausada; jogo livre) | 24/10/2026 |
 
 ## Registro de handoff
+
+- 24/10/2026 · Claude Sonnet 5.5 (2P) · Fecha o Kraken: mergeei a branch do Opus (16 animações, partículas/sons por animação em `KrakenEffects`, rachaduras e brilho, `KrakenVisualGameTest`) com a main. Tamanho final **32 x 20** (Adriano pediu maior que 24 x 16): hitbox em `ModEntities.KRAKEN`, `clientTrackingRange` 48, `MODEL_SCALE` 4, Nós de Maré ×4 (`TideNodes.WORLD_SCALE`), anel de tentáculos 18, nasce 24 abaixo da superfície, arena de teste 129 x 64, e o Kraken não empurra mais jogadores (`doPush` vazio). Regras e dano intactos (raios de Tinta/Redemoinho/Rugido são do centro do Kraken e não foram mexidos). **Testado:** `build` e a suíte inteira do `runClientGameTest` (inclui o teste visual; IA do `AttackGameTest` com vida alta para o jogador sobreviver); 2A-T aceita (foto `26_kraken_rachaduras_fases_1_2_3` com as 3 fases, rachaduras visíveis). **Não testado:** multiplayer, spawn real no mar com o novo tamanho (o Kraken mede 20 de altura e nasce 24 abaixo da superfície; água funda exigida é 30), Rugido/Tinta/Redemoinho calibrados para o corpo maior. **Próximo:** locomoção/movimento do corpo (Opus) e a 2Q.
 
 - 24/10/2026 · Claude Sonnet 5.5 (2D-T) · Texturas do tentáculo, da Cria e do ovo geradas por `tools/gen_spawnlings_texture.py` sobre os `uv.png` do Codex (paleta mais clara e bioluminescente: ciano/roxo/magenta, contorno escuro, pontos luminosos). Se `tools/models/spawnlings/build_model.py` rodar de novo, ele sobrescreve os PNGs: rode o script depois. **Testado:** `build` e `runClientGameTest` (3 close-ups `23_textura_ovo`, `24_textura_cria`, `25_textura_tentaculo`). **Não conferido bem:** nos prints o Kraken ocupa o centro e as criaturas ficam pequenas/fora de eixo; a leitura das cores está boa, mas falta um enquadramento melhor (afastar o Kraken do teste) para avaliar os detalhes de pixel. Próximo: 2A-T e 2Q.
 

@@ -36,8 +36,8 @@ import net.minecraft.world.level.block.Blocks;
  */
 public final class KrakenCommand {
 	/** Arena de teste: piscina de vidro 45 x 40 x 45, grande o bastante para a arena de 32 blocos. */
-	public static final int ARENA_HALF = 22;
-	public static final int ARENA_DEPTH = 40;
+	public static final int ARENA_HALF = 32;
+	public static final int ARENA_DEPTH = 64;
 
 	public static void register() {
 		CommandRegistrationCallback.EVENT.register((dispatcher, buildContext, environment) -> register(dispatcher));
@@ -185,13 +185,18 @@ public final class KrakenCommand {
 
 	/** Casca de vidro cheia de água; {@code origin} é o centro do chão. */
 	public static void buildArena(ServerLevel level, BlockPos origin) {
+		buildArena(level, origin, ARENA_HALF, ARENA_DEPTH);
+	}
+
+	/** Como {@link #buildArena(ServerLevel, BlockPos)}, com meia-largura e profundidade à escolha. */
+	public static void buildArena(ServerLevel level, BlockPos origin, int arenaHalf, int arenaDepth) {
 		BlockPos.MutableBlockPos p = new BlockPos.MutableBlockPos();
-		for (int dx = -ARENA_HALF; dx <= ARENA_HALF; dx++) {
-			for (int dz = -ARENA_HALF; dz <= ARENA_HALF; dz++) {
-				for (int dy = 0; dy <= ARENA_DEPTH; dy++) {
-					boolean wall = Math.abs(dx) == ARENA_HALF || Math.abs(dz) == ARENA_HALF || dy == 0;
+		for (int dx = -arenaHalf; dx <= arenaHalf; dx++) {
+			for (int dz = -arenaHalf; dz <= arenaHalf; dz++) {
+				for (int dy = 0; dy <= arenaDepth; dy++) {
+					boolean wall = Math.abs(dx) == arenaHalf || Math.abs(dz) == arenaHalf || dy == 0;
 					p.set(origin.getX() + dx, origin.getY() + dy, origin.getZ() + dz);
-					level.setBlock(p, wall ? Blocks.GLASS.defaultBlockState() : dy == ARENA_DEPTH ? Blocks.AIR.defaultBlockState() : Blocks.WATER.defaultBlockState(), 2);
+					level.setBlock(p, wall ? Blocks.GLASS.defaultBlockState() : dy == arenaDepth ? Blocks.AIR.defaultBlockState() : Blocks.WATER.defaultBlockState(), 2);
 				}
 			}
 		}
