@@ -23,3 +23,9 @@ Se outro arquivo contradisser este, **este vale**. Decisões do Adriano em 24/10
 ## Resolvido
 - Repositório: `adrianonjunior/aquamarine` (privado).
 - Engolir: cortado, não implementar.
+
+## Decisões de produção (24/10/2026)
+- **Texturas:** todas feitas pelo Claude em pixel art estilo mods de Minecraft. O Adriano não fará nenhuma, mas pode trocar depois.
+- **Modelagem:** inicial de altíssima qualidade; nada de protótipo de cubos.
+- **Óculos de mergulho:** item que melhora a visão dentro da água.
+- **Agentes:** vários rodam em paralelo (regras em AGENTS.md). Codex Astra cuida das tarefas de controle do PC (jogo, screenshots, Blockbench).

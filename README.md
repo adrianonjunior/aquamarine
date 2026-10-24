@@ -6,6 +6,9 @@ prioridade).
 
 Plano oficial: https://claude.ai/artifact/M68jvjvKRddKZMxq3yEQjT
 
+## Agentes
+Leia [AGENTS.md](AGENTS.md) (regras, vários agentes em paralelo) e [CONTEXTO.md](CONTEXTO.md) (estado atual e quadro de tarefas).
+
 ## Como ler a documentação
 1. **Comece por [docs/00-decisoes.md](docs/00-decisoes.md)**: é a fonte da
    verdade. Se algo contradisser, ele vale.
