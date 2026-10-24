@@ -24,7 +24,11 @@ Decisões do Adriano, 24/10/2026.
 | Walker | Mob aceito: zumbi pacífico, só à noite, nas profundezas, que troca itens (detalhes em [04-cidade-perdida.md](04-cidade-perdida.md)). |
 | Óculos de Mergulho | Item aceito: melhora a visão dentro da água (detalhes em [05-itens.md](05-itens.md)). |
 | Agentes | Vários em paralelo (regras em [../AGENTS.md](../AGENTS.md)). Codex Astra cuida das tarefas de controle do PC (jogo, screenshots, Blockbench). |
-| Fase do projeto | **Planejamento.** Nada é implementado até o Adriano liberar. |
+| Fase do projeto | **Planejamento.** Nada é implementado até o Adriano liberar explicitamente com palavras suas (não vale deduzir de outra instrução). |
+| Escopo da v1 | **Núcleo + cidade completa:** materiais, Kraken completo (barra customizada, Pressão, invocação), Cidade Perdida com bioma, criaturas e Walker já bem acabados. |
+| Como se joga | Servidor dedicado Fabric com **5 ou mais jogadores**. Kraken com mais vida, mais tentáculos simultâneos e escala dinâmica de dificuldade pelo número de jogadores. |
+| Decisões criativas | Delegadas ao Claude. Só perguntar ao Adriano o que muda escopo, prazo ou direção geral. |
+| Plano oficial (claude.ai) | Deve ser mantido atualizado a partir deste arquivo. |
 
 ## Em aberto
 - **Walker:** o que vende e aceita; o que acontece com ele de dia.
