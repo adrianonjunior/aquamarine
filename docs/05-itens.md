@@ -1,59 +1,82 @@
 # Itens
 
-> **Status:** tabelas "do plano" = decidido. "Ideias novas" = **ideias**; só entram se responderem "o que fazem na luta ou na exploração?".
+> **Dono de:** lista final de materiais, itens, receitas e estatísticas. Tudo
+> **decidido**; números são valores iniciais a testar (ajustar aqui). Nenhum
+> item está implementado ainda (fase de planejamento). Regra: todo item
+> responde "o que faz na luta ou na exploração?". Decisões gerais em
+> [00-decisoes.md](00-decisoes.md).
 
-## Materiais (do plano)
-| Material | Origem | Uso |
+## Materiais
+| Material | Origem | Usado em |
 |---|---|---|
-| Oricálcio | minério nas Minas | ferramentas, armadura, arpão |
-| Pérola Abissal | Sentinelas | Chamariz, amuletos |
-| Cristal de Maré | Fossa de Nereia | Cargas de Pulso, Pilar Ressonante |
-| Escama Antiga | baús da cidade | armadura, Amuleto da Corrente |
-| Chave de Nereia | Cofre do Templo | abre o cofre do Chamariz |
+| Minério de Oricálcio | Minas de Oricálcio (só na cidade) | Lingote de Oricálcio |
+| Lingote de Oricálcio | Fundir o minério | Ferramentas, armadura, Arpão, Pilar, Forja |
+| Pérola Abissal | Sentinelas Afundadas (1 a 2, afetada por Saque); também Walker | Chamariz, Amuleto, Bússola |
+| Cristal de Maré | Cristais na Fossa de Nereia (minerar com picareta) | Cargas de Pulso, Pilar, Tônico, Arpão |
+| Escama Antiga | Baús da cidade | Armadura, Amuleto da Corrente |
+| Casco de Prismarinho | Caranguejo Ermitão | Amuleto da Corrente |
+| Chave de Nereia | Cofre do Templo (uma por jogador e mundo) | Abre o cofre do Projeto do Chamariz |
+| Projeto do Chamariz | Cofre do Templo | Montar o Chamariz Abissal |
+| Tentáculo de Cria | Crias de Kraken | Sopa de Tentáculo |
+| Olho do Kraken, Tinta Abissal | Recompensa do Kraken | Itens pós-boss |
+| Coração do Kraken | Recompensa do Kraken (primeira vitória de cada jogador) | Itens pós-boss |
 
-Nenhum item está implementado ainda (fase de planejamento).
+## Bancada: Forja Abissal
+Receitas de Oricálcio e de itens da luta usam a **Forja Abissal**. Existem
+algumas prontas na cidade e ela também pode ser feita: 2 Blocos de Oricálcio +
+2 Escamas Antigas + 1 fornalha + 1 bloco de obsidiana.
 
-## Itens contra o Kraken (do plano)
-Chamariz Abissal, Arpão de Oricálcio, Carga de Pulso, Pilar Ressonante,
-Armadura de Oricálcio, Amuleto da Corrente, Tônico de Pressão.
+## Itens da luta e da exploração
+Todas as receitas abaixo são na Forja Abissal, exceto quando indicado.
 
-## Pós-boss (do plano)
-Tridente do Kraken, Manto de Tinta, Farol Abissal (todos com o Coração).
+| Item | Receita | Efeito |
+|---|---|---|
+| Chamariz Abissal | Projeto do Chamariz + 4 Pérolas + 2 Cristais + 1 Lingote (montado no Altar do Abismo) | Invoca o Kraken; consumido ao invocar |
+| Arpão de Oricálcio | 3 Lingotes + 1 Cristal + 1 vareta | Arremessável; dano triplo no escudo; prende o tentáculo por 3 s; volta com Lealdade ou é recolhido |
+| Carga de Pulso | 1 Cristal + 1 pólvora + 1 Pérola (rende 2) | Granada submarina; 100 de dano fixo no escudo em área de 4 blocos |
+| Pilar Ressonante | 4 Cristais + 2 Lingotes + 1 bloco de prismarinho | Bloco; perto da arena, a cada 15 s tira 5% do escudo; até 3 ativos |
+| Amuleto da Corrente | 3 Escamas + 2 Cascos + 1 Pérola | Na mão secundária: imunidade ao puxão do Redemoinho |
+| Tônico de Pressão | 1 garrafa d'água + 1 Cristal + 2 algas (bancada comum) | 5 min: máximo da Pressão −2 e solta de agarrões 50% mais rápido |
+| Boia de Âncora | 1 barril + 2 lingotes de cobre + 1 cristal de prismarinho (bancada comum) | Bloco que forma uma plataforma 3x3 por 90 s na superfície; zera a Pressão de quem pisa; o Kraken pode destruí-la; recarga de 30 s por jogador |
+| Bússola de Maré | 1 bússola + 1 Pérola + 1 Cristal (bancada comum) | Aponta para a Cidade Perdida mais próxima |
+| Mapa de Nereia | Cartógrafo (nível 3, por esmeraldas e uma bússola), naufrágios ou Walker | Marca a Cidade Perdida mais próxima |
+| Lanterna de Coral | 1 lanterna + 2 corais + 1 Cristal (bancada comum) | Luz 15 debaixo d'água; afasta a Nuvem de Tinta num raio de 4 blocos |
+| Arco de Coral | 3 corais + 3 linhas + 1 Pérola (bancada comum) | Atira normalmente debaixo d'água, sem perda de velocidade |
+| Sopa de Tentáculo | 2 Tentáculos + 1 tigela + 1 alga (bancada comum) | Respiração Aquática por 60 s |
+| Óculos de Mergulho | Couro + painel de vidro + cobre (bancada comum), ver abaixo | Menos névoa debaixo d'água |
+| Encantamento Quebra-Carapaça | Só em livros de baús da Biblioteca e do Templo (níveis 1 a 3) | +10% de dano em escudos de boss por nível |
 
-## Ideias novas
-- **Lanterna de Coral:** fonte de luz que funciona embaixo d'água e afasta
-  a tinta do Kraken num raio pequeno.
-- **Boia de Âncora:** bloco que cria uma plataforma de 3x3 temporária na
-  superfície. Ajuda na fase 1 sem virar uma torre segura (o Kraken pode
-  destruir).
-- **Bússola de Maré:** aponta para a Cidade Perdida mais próxima. Alternativa
-  ao mapa.
-- **Arco de Coral:** arco que atira normalmente embaixo d'água (flechas
-  vanilla são péssimas na água).
-- **Ferramentas de Oricálcio com efeito "Maré":** minerar mais rápido
-  embaixo d'água, sem precisar de Afinidade Aquática.
-- **Encantamento "Quebra-Carapaça":** mais dano em escudos de boss. Pode
-  funcionar com outros mods de boss também.
-- **Troféu do Kraken:** bloco decorativo, cabeça do Kraken na parede.
-- **Comida:** Sopa de Tentáculo (dá Respiração Aquática curta).
+## Armadura e ferramentas de Oricálcio
+- **Armadura** (levemente abaixo da netherite): capacete 5 Lingotes + 1 Escama;
+  peitoral 8 + 2; calças 7 + 2; botas 4 + 1. Defesa 3/7/5/3, resistência 2,
+  durabilidade 35 (multiplicador).
+- **Bônus do conjunto completo:** nado 25% mais rápido, enxerga através da
+  Nuvem de Tinta e a Pressão sobe 60% mais devagar (15% por peça).
+- **Ferramentas e arma** (picareta, machado, pá, enxada, espada): nível um pouco
+  abaixo da netherite, espada com 7 de dano; minerar debaixo d'água sem a
+  penalidade da água ("Maré"). Todas na tag `aquamarine:shield_breakers`
+  (60% de dano no escudo).
+- Capacete de Oricálcio e Óculos de Mergulho disputam o slot da cabeça.
 
-## Regra que eu sugiro
-Todo item novo tem que responder "o que ele faz na luta ou na exploração?".
-Se for só decorativo, fica para o fim (polimento).
+## Óculos de Mergulho
+- Efeito só **visual e de cliente**: aumenta bastante o alcance de visão debaixo
+  d'água e deixa a água mais clara enquanto equipados. Sem visão noturna.
+- Não enxergam através da **Nuvem de Tinta**: só o conjunto de Oricálcio.
+- Visual: armação de latão envelhecido, lentes verde-água, tira azul de couro.
 
-## Óculos de Mergulho — Decidido (a testar)
-- **Função:** melhora a visão quando o jogador está submerso.
-- **Efeito:** só **visual e cliente**, sem efeito de poção: aumenta bastante o
-  alcance de visão debaixo d'água (menos névoa) e deixa a água mais clara
-  enquanto estiverem equipados. **Não** dá visão noturna.
-- **Limite proposital:** não enxerga através da **Maré Negra** (tinta do
-  Kraken); só a armadura de Oricálcio completa enxerga ali. Assim os óculos
-  ajudam a explorar sem tornar a luta mais fácil.
-- **Equipamento:** vai no slot da cabeça. Quem usa capacete não os usa junto;
-  é uma escolha de exploração versus proteção.
-- **Receita inicial:** couro + painel de vidro + cobre (disponível cedo, para
-  explorar a cidade). Sem melhoria futura planejada.
-- **Visual:** pixel art estilo mods de Minecraft: armação de latão envelhecido
-  (dourado gasto), lentes verde-água com brilho, tira azul de couro. Ícone
-  16x16 e camada de cabeça própria.
-- Ainda não implementado.
+## Itens pós-boss (feitos com o Coração do Kraken)
+| Item | Receita | Efeito |
+|---|---|---|
+| Tridente do Kraken | Tridente + Coração + 2 Olhos + 4 Lingotes | Arremessado, lança tentáculos que puxam inimigos; 11 de dano corpo a corpo |
+| Manto de Tinta | Coração + 6 Tintas + 2 Escamas + 1 couro | No peito: nadar como elytra debaixo d'água, com impulso de tinta (recarga de 4 s) |
+| Farol Abissal | Coração + 3 Pérolas + 4 cristais de prismarinho + 1 Olho | Bloco tipo conduto: alcance de 96 blocos, dá Respiração Aquática, visão clara, nado rápido e imunidade à Pressão |
+| Troféu do Kraken | Recompensa | Bloco decorativo, cabeça do Kraken na parede |
+| Troféu Dourado do Abismo | Recompensa do modo `abissal` | Bloco decorativo exclusivo |
+
+## Nomes e texto
+Todos os itens em português no jogo, com tradução em inglês; nada de texto fixo
+no código.
+
+## Descartado
+- Ferramentas de Oricálcio como "só efeito Maré sem dano de escudo" (agora têm 60%).
+- Itens puramente decorativos além dos troféus (ficam para depois do lançamento).

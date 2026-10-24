@@ -1,6 +1,6 @@
 # Notas técnicas
 
-> **Status:** rascunho de implementação. Barra de boss customizada e efeito de Pressão = **decididos**; o resto = abordagem sugerida.
+> **Dono de:** ambiente, build, convenções e as decisões técnicas de implementação. Tudo **decidido**; nada implementado ainda.
 
 ## Base
 - Minecraft Java 26.3 "Wilderness Bound" (15/09/2026), Fabric Loader +
@@ -44,29 +44,41 @@ com.aquamarine
   worldgen        Cidade Perdida, depois o bioma
 ```
 
-## Como fazer cada parte (rascunho)
-- **Barra de boss:** customizada (decisão do Adriano). O servidor continua
-  usando `ServerBossEvent` para controlar quem vê o boss; o cliente cancela a
-  barra vanilla desse evento (mixin no renderer de boss bar ou callback da
-  Fabric API de HUD) e desenha a barra própria com `GuiGraphics`. Escudo,
-  fase e dano recente vêm de `SynchedEntityData`/packet próprio.
-- **Pressão (peso):** efeito de status próprio aplicado por tick perto do
-  Kraken; ajusta a velocidade vertical do jogador e o nível sobe com o tempo.
-- **Escudo:** campo no Kraken (`shield`, `maxShield`), sincronizado com
-  `SynchedEntityData`. Interceptar o dano em `hurtServer`: se escudo > 0,
-  o dano vai para o escudo (multiplicado conforme a arma).
-- **Tentáculos:** entidades filhas ligadas ao Kraken (como as partes do
-  Ender Dragon, ou entidades independentes com referência ao "dono").
-  Começar com entidades independentes, é mais fácil de testar.
-- **Animações:** GeckoLib + Blockbench, se houver versão para 26.3. Se não,
-  modelo vanilla (`EntityModel`) com animação simples primeiro.
-- **Tags de arma:** uma tag de item `aquamarine:shield_breakers` para dizer
-  quais itens dão dano cheio no escudo. Fácil de ajustar e de outros mods
-  usarem.
-- **Config:** um arquivo simples (ex.: JSON próprio ou biblioteca de config
-  quando definirmos) para aparição natural, aviso falso, dificuldade.
-- **Dados do mundo:** `SavedData` para "Kraken já derrotado" e "jogador já
-  entrou na cidade".
+## Como fazer cada parte (decidido)
+- **Barra de boss:** customizada. O servidor continua usando `ServerBossEvent`
+  para controlar quem vê o boss; o cliente cancela a barra vanilla desse evento
+  (mixin no renderer da barra de boss ou callback da Fabric API de HUD) e
+  desenha a barra própria com `GuiGraphics`. Escudo, fase e dano recente vêm de
+  `SynchedEntityData` ou de packet próprio.
+- **Pressão:** efeito de status próprio, nível 0 a 4 por jogador, atualizado por
+  tick perto do Kraken (regras em [02-kraken.md](02-kraken.md)); ajusta a velocidade
+  vertical e aplica os efeitos de cada nível.
+- **Escudo:** campos `shield` e `maxShield` no Kraken, sincronizados com
+  `SynchedEntityData`. O dano é interceptado em `hurtServer`: com escudo > 0, o
+  dano vai para o escudo, multiplicado conforme a fonte (tabela em
+  [02-kraken.md](02-kraken.md)). Os Nós de Maré são hitboxes filhas (como as partes do
+  Ender Dragon).
+- **Tentáculos:** entidades independentes com referência ao "dono" (Kraken);
+  mais fácil de testar que partes do mesmo bounding box.
+- **Animações e modelos:** Blockbench exportando para o formato nativo do jogo
+  (`AnimationDefinition` + `EntityModel`), **sem GeckoLib**, para não depender
+  de biblioteca extra. Modelos de alta qualidade desde a primeira versão.
+- **Tags de item:** `aquamarine:shield_breakers` (60% de dano no escudo) e
+  `aquamarine:metal_armor` (Enguia Elétrica causa 1,5x). Ajustáveis por outros mods.
+- **Bioma:** primeiro tentar **Biolith**; se não houver versão para 26.3,
+  **TerraBlender**; se nenhuma existir, a Cidade e a Cratera ganham água e névoa
+  próprias dentro do volume da estrutura (sem bioma de verdade), e o bioma
+  entra quando houver biblioteca.
+- **Configuração** (arquivo JSON próprio, `config/aquamarine.json`):
+  `falseWarning` (aviso falso, padrão ligado), `weakPoints` (Nós de Maré, padrão
+  ligado), `difficulty` (`normal` ou `abissal`), `scalingCap` (máximo de
+  jogadores no cálculo, padrão 12), `naturalWalkers` (liga ou desliga o Walker).
+- **Dados do mundo:** `SavedData` para "Kraken derrotado", "jogador já recebeu a
+  Chave" e "jogador já recebeu o Coração".
+- **Multiplayer:** todo cálculo de luta no servidor (aggro, Pressão, escala por
+  jogadores); o cliente só renderiza e mostra HUD.
+- **Desempenho:** 8 tentáculos + Crias + partículas + tempestade; testar cedo,
+  já com os modelos finais.
 
 ## Ferramentas
 - IntelliJ IDEA Community com o plugin Minecraft Development.
@@ -74,5 +86,5 @@ com.aquamarine
 - Git + GitHub: repositório privado `adrianonjunior/aquamarine` (conta `adrianonjunior`).
 - Testes no jogo: `runClient` do Loom; comandos `/summon aquamarine:kraken`
   e `/kill` para iterar rápido.
-- Testes automáticos: Fabric tem GameTests; dá para testar coisas simples
-  (escudo absorve dano, quebra no zero).
+- Testes automáticos: Fabric GameTests para o escudo (absorve o dano e quebra
+  no zero), a escala por jogadores e a Pressão.

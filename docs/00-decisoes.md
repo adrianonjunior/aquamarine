@@ -28,10 +28,11 @@ Decisões do Adriano, 24/10/2026.
 | Decisões criativas | Delegadas ao Claude. Só perguntar ao Adriano o que muda escopo, prazo ou direção geral. |
 | Plano oficial (claude.ai) | Deve ser mantido atualizado a partir deste arquivo. |
 | Walker | Pacífico, só à noite no oceano profundo; troca Pérola Abissal e Escama Antiga por suprimentos (Tônico, Boia, Bússola, Lanterna, Mapa), **nunca** por itens da cidade; some ao amanhecer (detalhes em [04-cidade-perdida.md](04-cidade-perdida.md)). |
-| Óculos de Mergulho | Efeito só visual (menos névoa debaixo d'água), sem visão noturna; não enxergam através da Maré Negra; ocupam o slot da cabeça (detalhes em [05-itens.md](05-itens.md)). |
+| Óculos de Mergulho | Efeito só visual (menos névoa debaixo d'água), sem visão noturna; não enxergam através da Nuvem de Tinta; ocupam o slot da cabeça (detalhes em [05-itens.md](05-itens.md)). |
 | Pontos fracos do escudo | Sim, 4 "Nós de Maré" com dano 2x, que mudam de lugar por fase e aumentam com o número de jogadores (detalhes em [02-kraken.md](02-kraken.md)). |
-| Dano dos itens no escudo | Sem item especial 25%; Oricálcio 60%; Arpão 100%; Carga de Pulso e Pilar com dano fixo (tabela em [02-kraken.md](02-kraken.md)). |
-| Escala por jogadores | Vida e escudo × `1 + 0,3 × (n − 1)`, máximo em 12 jogadores; dano do Kraken não escala (fórmula em [02-kraken.md](02-kraken.md)). |
+| Dano dos itens no escudo | Sem item especial 25%; ferramentas de Oricálcio 60%; Arpão dano triplo; Carga de Pulso 100 fixo; Pilar 5% a cada 15 s (tabela em [02-kraken.md](02-kraken.md)). |
+| Escala por jogadores | Vida e escudo × `1 + 0,3 × (n − 1)`, máximo em 12 jogadores; dano do Kraken não escala. Substitui a regra antiga "+50% por jogador extra" (fórmula em [02-kraken.md](02-kraken.md)). |
+| Design da v1 | **Fechado em 24/10/2026** em todos os arquivos de `docs/` (Kraken, invocação, cidade, itens, técnico). Falta só a liberação do Adriano para implementar. |
 
 Os números das linhas acima são valores iniciais a testar no jogo; ajustes de
 balanceamento não precisam de nova decisão, só de atualização em `02-kraken.md`.
