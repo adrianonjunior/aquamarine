@@ -1,7 +1,10 @@
 package com.aquamarine.command;
 
 import com.aquamarine.entity.KrakenEntity;
+import com.aquamarine.entity.KrakenEggEntity;
 import com.aquamarine.entity.ModEntities;
+import com.aquamarine.entity.TentacleEntity;
+import com.aquamarine.entity.YoungKrakenEntity;
 import com.aquamarine.entity.boss.KrakenAttackType;
 import com.aquamarine.event.KrakenSummoning;
 
@@ -15,7 +18,13 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import java.util.List;
+
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.Blocks;
 
@@ -48,6 +57,9 @@ public final class KrakenCommand {
 					.then(Commands.argument("nome", StringArgumentType.word())
 						.suggests((ctx, builder) -> SharedSuggestionProvider.suggest(KrakenAttackType.names(), builder))
 						.executes(ctx -> attack(ctx.getSource(), StringArgumentType.getString(ctx, "nome")))))
+				.then(creature("tentacle", ModEntities.TENTACLE, TentacleEntity.ANIMATION_NAMES))
+				.then(creature("young", ModEntities.YOUNG_KRAKEN, YoungKrakenEntity.ANIMATION_NAMES))
+				.then(creature("egg", ModEntities.KRAKEN_EGG, KrakenEggEntity.ANIMATION_NAMES))
 				.then(Commands.literal("ai")
 					.then(Commands.literal("on").executes(ctx -> ai(ctx.getSource(), true)))
 					.then(Commands.literal("off").executes(ctx -> ai(ctx.getSource(), false))))));
@@ -79,6 +91,45 @@ public final class KrakenCommand {
 		}
 		source.sendSuccess(() -> Component.translatable("commands.aquamarine.kraken.anim", name), false);
 		return 1;
+	}
+
+	/** {@code <nome>} cria a criatura 6 blocos à frente; {@code <nome> anim <animação>} dispara na mais próxima. */
+	private static <T extends Entity> com.mojang.brigadier.builder.LiteralArgumentBuilder<CommandSourceStack> creature(
+		String name, EntityType<T> type, List<String> animations) {
+		return Commands.literal(name)
+			.executes(ctx -> spawnCreature(ctx.getSource(), type, name))
+			.then(Commands.literal("anim")
+				.then(Commands.argument("nome", StringArgumentType.word())
+					.suggests((ctx, builder) -> SharedSuggestionProvider.suggest(animations, builder))
+					.executes(ctx -> creatureAnim(ctx.getSource(), type, StringArgumentType.getString(ctx, "nome"), animations))));
+	}
+
+	private static <T extends Entity> int spawnCreature(CommandSourceStack source, EntityType<T> type, String name) {
+		ServerLevel level = source.getLevel();
+		Entity entity = type.create(level, EntitySpawnReason.COMMAND);
+		if (entity == null) {
+			return 0;
+		}
+		Vec3 look = source.getEntity() != null ? source.getEntity().getLookAngle().multiply(1, 0, 1).normalize() : new Vec3(0, 0, 1);
+		Vec3 pos = source.getPosition().add(look.scale(6.0));
+		entity.snapTo(pos.x, pos.y, pos.z, source.getRotation().y + 180.0F, 0.0F);
+		level.addFreshEntity(entity);
+		source.sendSuccess(() -> Component.translatable("commands.aquamarine.kraken.creature", name), true);
+		return 1;
+	}
+
+	private static <T extends Entity> int creatureAnim(CommandSourceStack source, EntityType<T> type, String animation, List<String> names) {
+		T entity = source.getLevel().getEntities(type, e -> true).stream()
+			.min(java.util.Comparator.comparingDouble(e -> e.distanceToSqr(source.getPosition()))).orElse(null);
+		if (entity == null || !names.contains(animation)) {
+			source.sendFailure(Component.translatable("commands.aquamarine.kraken.anim_unknown", animation));
+			return 0;
+		}
+		boolean ok = entity instanceof TentacleEntity t ? t.playAnimation(animation)
+			: entity instanceof YoungKrakenEntity y ? y.playAnimation(animation)
+			: entity instanceof KrakenEggEntity e && e.playAnimation(animation);
+		source.sendSuccess(() -> Component.translatable("commands.aquamarine.kraken.anim", animation), false);
+		return ok ? 1 : 0;
 	}
 
 	private static KrakenEntity nearestKraken(CommandSourceStack source) {

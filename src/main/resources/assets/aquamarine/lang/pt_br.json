@@ -111,5 +111,7 @@
   "commands.aquamarine.kraken.ai_on": "Ataques automáticos do Kraken ligados.",
   "commands.aquamarine.kraken.ai_off": "Ataques automáticos do Kraken desligados.",
   "entity.aquamarine.tentacle": "Tentáculo do Kraken",
-  "entity.aquamarine.young_kraken": "Cria de Kraken"
+  "entity.aquamarine.young_kraken": "Cria de Kraken",
+  "commands.aquamarine.kraken.creature": "Criatura %s criada.",
+  "entity.aquamarine.kraken_egg": "Ovo de Kraken"
 }

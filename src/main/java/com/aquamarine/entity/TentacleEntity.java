@@ -2,7 +2,15 @@ package com.aquamarine.entity;
 
 import com.aquamarine.entity.boss.KrakenAttackType;
 
+import com.aquamarine.entity.boss.AnimationSync;
+
+import java.util.List;
 import java.util.UUID;
+
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.AnimationState;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -19,7 +27,13 @@ import net.minecraft.world.level.storage.ValueOutput;
  * referência ao dono. Quem decide o que ele faz é o {@link com.aquamarine.entity.boss.KrakenAttacks}
  * do Kraken; aqui só há o estado. O modelo vem da faixa 2D-M (por enquanto o renderer é provisório).
  */
-public class TentacleEntity extends Mob {
+public class TentacleEntity extends Mob implements TentacleView {
+	/** Nomes das animações do contrato ({@link TentacleView}). */
+	public static final List<String> ANIMATION_NAMES = List.of("idle", "rise", "slam", "grab", "release");
+	private static final EntityDataAccessor<Integer> DATA_ANIM = SynchedEntityData.defineId(TentacleEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> DATA_ANIM_SEQ = SynchedEntityData.defineId(TentacleEntity.class, EntityDataSerializers.INT);
+
+	private final AnimationSync animations = new AnimationSync(ANIMATION_NAMES);
 	private UUID owner;
 	private int slot;
 	/** Em um ataque (não pode ser escolhido para outro). */
@@ -37,6 +51,65 @@ public class TentacleEntity extends Mob {
 			.add(Attributes.MAX_HEALTH, KrakenAttackType.TENTACLE_HEALTH)
 			.add(Attributes.KNOCKBACK_RESISTANCE, 1.0)
 			.add(Attributes.MOVEMENT_SPEED, 0.0);
+	}
+
+	@Override
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_ANIM, 0);
+		builder.define(DATA_ANIM_SEQ, 0);
+	}
+
+	/** Dispara uma animação pelo nome do contrato (servidor; o cliente recebe pelos dados sincronizados). */
+	public boolean playAnimation(String name) {
+		int index = animations.indexOf(name);
+		if (index < 0) {
+			return false;
+		}
+		entityData.set(DATA_ANIM, index);
+		entityData.set(DATA_ANIM_SEQ, entityData.get(DATA_ANIM_SEQ) + 1);
+		return true;
+	}
+
+	@Override
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+		super.onSyncedDataUpdated(key);
+		if (key.equals(DATA_ANIM_SEQ) && level().isClientSide() && entityData.get(DATA_ANIM_SEQ) > 0) {
+			animations.start(entityData.get(DATA_ANIM), tickCount, 0);
+		}
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+		if (level().isClientSide()) {
+			animations.state("idle").startIfStopped(tickCount);
+		}
+	}
+
+	@Override
+	public AnimationState idleAnimation() {
+		return animations.state("idle");
+	}
+
+	@Override
+	public AnimationState riseAnimation() {
+		return animations.state("rise");
+	}
+
+	@Override
+	public AnimationState slamAnimation() {
+		return animations.state("slam");
+	}
+
+	@Override
+	public AnimationState grabAnimation() {
+		return animations.state("grab");
+	}
+
+	@Override
+	public AnimationState releaseAnimation() {
+		return animations.state("release");
 	}
 
 	public void bind(UUID owner, int slot) {
@@ -63,7 +136,7 @@ public class TentacleEntity extends Mob {
 	@Override
 	protected void customServerAiStep(ServerLevel level) {
 		super.customServerAiStep(level);
-		if (owner == null || !(level.getEntity(owner) instanceof KrakenEntity kraken) || !kraken.isAlive()) {
+		if (owner != null && (!(level.getEntity(owner) instanceof KrakenEntity kraken) || !kraken.isAlive())) {
 			discard();
 		}
 	}

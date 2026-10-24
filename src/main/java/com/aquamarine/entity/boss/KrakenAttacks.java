@@ -5,6 +5,7 @@ import com.aquamarine.block.AnchorBuoyBlock;
 import com.aquamarine.block.ModBlocks;
 import com.aquamarine.config.AquamarineConfig;
 import com.aquamarine.effect.ModEffects;
+import com.aquamarine.entity.KrakenEggEntity;
 import com.aquamarine.entity.KrakenEntity;
 import com.aquamarine.entity.ModEntities;
 import com.aquamarine.entity.TentacleEntity;
@@ -59,6 +60,7 @@ public final class KrakenAttacks {
 		List<UUID> targets = new ArrayList<>();
 		int[] slots = new int[0];
 		List<Vec3> eggs = new ArrayList<>();
+		List<UUID> eggEntities = new ArrayList<>();
 
 		Active(KrakenAttackType type) {
 			this.type = type;
@@ -184,6 +186,7 @@ public final class KrakenAttacks {
 	public void cancelAll(ServerLevel level) {
 		for (Active a : active) {
 			freeSlots(level, a.slots);
+			discardEggs(level, a, false);
 		}
 		active.clear();
 		for (Grab g : new ArrayList<>(grabs)) {
@@ -194,6 +197,9 @@ public final class KrakenAttacks {
 
 	/** O Kraken saiu do mundo: leva tentáculos e crias junto. */
 	public void cleanup(ServerLevel level) {
+		for (Active a : active) {
+			discardEggs(level, a, false);
+		}
 		for (UUID id : tentacles) {
 			if (id != null && level.getEntity(id) != null) {
 				level.getEntity(id).discard();
@@ -301,6 +307,7 @@ public final class KrakenAttacks {
 			TentacleEntity t = tentacle(level, slot);
 			if (t != null) {
 				t.setBusy(false);
+				t.playAnimation("release");
 				Vec3 h = home(slot);
 				t.snapTo(h.x, h.y, h.z, t.getYRot(), 0.0F);
 			}
@@ -363,6 +370,7 @@ public final class KrakenAttacks {
 				Vec3 spot = a.point.add(n == 0 ? 0 : 1.2, -1.0, 0);
 				TentacleEntity t = tentacle(level, a.slots[n]);
 				t.snapTo(spot.x, spot.y, spot.z, t.getYRot(), 0.0F);
+				t.playAnimation("rise");
 			}
 		}
 		a.targets.add(target.getUUID());
@@ -377,7 +385,14 @@ public final class KrakenAttacks {
 				for (int n = 0; n < count; n++) {
 					double angle = random.nextDouble() * Math.PI * 2;
 					double r = 3.0 + random.nextDouble() * 5.0;
-					a.eggs.add(kraken.position().add(Math.cos(angle) * r, 0.2, Math.sin(angle) * r));
+					Vec3 spot = kraken.position().add(Math.cos(angle) * r, 0.2, Math.sin(angle) * r);
+					a.eggs.add(spot);
+					KrakenEggEntity egg = ModEntities.KRAKEN_EGG.create(level, EntitySpawnReason.EVENT);
+					if (egg != null) {
+						egg.snapTo(spot.x, spot.y, spot.z, random.nextFloat() * 360.0F, 0.0F);
+						level.addFreshEntity(egg);
+						a.eggEntities.add(egg.getUUID());
+					}
 				}
 			}
 			case BOLTS -> {
@@ -519,6 +534,12 @@ public final class KrakenAttacks {
 	}
 
 	private void strikeSlam(ServerLevel level, Active a) {
+		for (int slot : a.slots) {
+			TentacleEntity t = tentacle(level, slot);
+			if (t != null) {
+				t.playAnimation("slam");
+			}
+		}
 		AABB zone = new AABB(a.point, a.point).inflate(KrakenAttackType.SLAM_RADIUS, 4.0, KrakenAttackType.SLAM_RADIUS);
 		for (Player p : level.getEntitiesOfClass(Player.class, zone, p -> p.isAlive() && !p.isSpectator())) {
 			if (p.position().subtract(a.point).horizontalDistanceSqr() <= KrakenAttackType.SLAM_RADIUS * KrakenAttackType.SLAM_RADIUS) {
@@ -540,6 +561,12 @@ public final class KrakenAttacks {
 		for (ServerPlayer p : kraken.playersInArena(level)) {
 			if (p.position().subtract(a.point).horizontalDistanceSqr() <= 16.0 && !p.isCreative() && !isGrabbed(p)) {
 				grabs.add(new Grab(p.getUUID(), a.slots, a.point));
+				for (int slot : a.slots) {
+					TentacleEntity t = tentacle(level, slot);
+					if (t != null) {
+						t.playAnimation("grab");
+					}
+				}
 				any = true;
 				break;
 			}
@@ -568,7 +595,22 @@ public final class KrakenAttacks {
 		particles(level, ParticleTypes.SQUID_INK, kraken.position().add(0, 2.0, 0), 200, 8.0, 0.05);
 	}
 
+	/** Choca (ou some com) os ovos do aviso de um ataque. */
+	private static void discardEggs(ServerLevel level, Active a, boolean hatch) {
+		for (UUID id : a.eggEntities) {
+			if (level.getEntity(id) instanceof KrakenEggEntity egg) {
+				if (hatch) {
+					egg.hatch();
+				} else {
+					egg.discard();
+				}
+			}
+		}
+		a.eggEntities.clear();
+	}
+
 	private void strikeSpawnYoung(ServerLevel level, Active a) {
+		discardEggs(level, a, true);
 		for (Vec3 egg : a.eggs) {
 			if (youngCount(level) >= KrakenAttackType.MAX_YOUNG) {
 				break;
