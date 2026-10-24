@@ -79,15 +79,25 @@ public final class KrakenAnimations {
 		motion("arm_0_segment_0", ROT, 1.3F, 28.0F, 0.0F, 0.0F, -52.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
 		motion("arm_0_segment_1", ROT, 1.3F, 10.0F, 0.0F, 0.0F, -34.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH));
 	public static final AnimationDefinition DOUBLE_GRAB = clip(1.7F, false,
-		motion("arm_1_segment_0", ROT, 1.7F, -30.0F, 0.0F, 0.0F, 38.0F, 0.0F, 0.0F, -12.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_1_segment_1", ROT, 1.7F, 0.0F, 0.0F, 0.0F, 24.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_5_segment_0", ROT, 1.7F, -30.0F, 0.0F, 0.0F, 38.0F, 0.0F, 0.0F, -12.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_5_segment_1", ROT, 1.7F, 0.0F, 0.0F, 0.0F, 24.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH));
+		arc("arm_1_segment_0", 1.7F, -30.0F, 38.0F),
+		arc("arm_1_segment_1", 1.7F, -12.0F, 24.0F),
+		arc("arm_5_segment_0", 1.7F, -30.0F, 38.0F),
+		arc("arm_5_segment_1", 1.7F, -12.0F, 24.0F));
 
 	private static AnimationDefinition strike(String first, String second, float duration, float windUp, float impact) {
 		return clip(duration, false,
-			motion(first, ROT, duration, windUp, 0.0F, 0.0F, impact, 0.0F, 0.0F, -windUp * 0.15F, 0.0F, 0.0F, SMOOTH),
-			motion(second, ROT, duration, windUp * 0.35F, 0.0F, 0.0F, impact * 0.55F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH));
+			arc(first, duration, windUp, impact),
+			arc(second, duration, windUp * 0.35F, impact * 0.55F));
+	}
+
+	private static AnimationChannel arc(String part, float duration, float windUp, float impact) {
+		AnimationChannel channel = new AnimationChannel(ROT,
+			key(ROT, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
+			key(ROT, duration * 0.28F, windUp, 0.0F, 0.0F, SMOOTH),
+			key(ROT, duration * 0.54F, impact, 0.0F, 0.0F, SMOOTH),
+			key(ROT, duration, 0.0F, 0.0F, 0.0F, SMOOTH));
+		ChannelParts.put(channel, part);
+		return channel;
 	}
 
 	private static AnimationDefinition clip(float length, boolean looping, AnimationChannel... channels) {
