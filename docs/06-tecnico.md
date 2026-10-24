@@ -67,6 +67,13 @@
   vêm do servidor integrado: em servidor dedicado a categoria fica vazia.
 - **Aba criativa:** abas de mod ficam na página 2 do criativo; por isso
   `ModCreativeTab` também põe os itens nas abas vanilla.
+- **Bioma novo:** além do JSON em `data/aquamarine/worldgen/biome/<nome>.json`,
+  crie a tag `data/minecraft/tags/worldgen/biome/aquamarine_<nome>.json` com
+  `aquamarine:<nome>`; assim `/locate biome #aquamarine_<nome>` funciona (sem
+  namespace o jogo usa `minecraft`). O teste do `build` exige a tag.
+  Hoje existe só `#aquamarine_fossa_de_nereia`, provisória: aponta para
+  `#minecraft:is_deep_ocean` até o bioma Fossa de Nereia existir; quem criar o
+  bioma troca o valor por `aquamarine:fossa_de_nereia`.
 - **Invocação:** `event/KrakenSummoning` (`start`, `hasDeepWater`, gancho
   `spawnKraken`) e `block/AbyssalAltarBlock`.
 - **Óculos:** `client/DivingGogglesVision` + `client/mixin/WaterFogEnvironmentMixin`.

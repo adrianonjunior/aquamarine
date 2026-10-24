@@ -32,6 +32,7 @@ Decisões do Adriano, 24/10/2026.
 | Pontos fracos do escudo | Sim, 4 "Nós de Maré" com dano 2x, que mudam de lugar por fase e aumentam com o número de jogadores (detalhes em [02-kraken.md](02-kraken.md)). |
 | Dano dos itens no escudo | Sem item especial 25%; ferramentas de Oricálcio 60%; Arpão dano triplo; Carga de Pulso 100 fixo; Pilar 5% a cada 15 s (tabela em [02-kraken.md](02-kraken.md)). |
 | Escala por jogadores | Vida e escudo × `1 + 0,3 × (n − 1)`, máximo em 12 jogadores; dano do Kraken não escala. Substitui a regra antiga "+50% por jogador extra" (fórmula em [02-kraken.md](02-kraken.md)). |
+| Achar biomas | Todo bioma do mod é achado com `/locate biome #aquamarine_<bioma>` (pedido do Adriano, 24/10/2026). Como fazer em [06-tecnico.md](06-tecnico.md). |
 | Design da v1 | **Fechado em 24/10/2026** em todos os arquivos de `docs/` (Kraken, invocação, cidade, itens, técnico). Falta só a liberação do Adriano para implementar. |
 
 Os números das linhas acima são valores iniciais a testar no jogo; ajustes de
