@@ -14,10 +14,17 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| JEI 31.16.0.90 (só no ambiente de dev) + plugin da Forja e descrições dos itens (pedido do Adriano). Branch `estruturador/jei-descricoes`, worktree `../aquamarine-estruturador-entrega-1`. | Estruturador (Claude Opus 5.5) | jogo, Gradle | 24/10/2026 13:50 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+
+- 24/10/2026 14:05 · Estruturador (Claude Opus 5.5) · A pedido do Adriano: JEI
+  31.16.0.90 no ambiente de dev, plugin com a categoria "Forja Abissal" e
+  descrição curta de cada item (tooltip + informação do JEI), itens também nas
+  abas vanilla (a aba "Aquamarine" fica na página 2 do criativo). Testado no
+  teste de cliente (screenshots do tooltip e da categoria). **Falta:** quando a
+  Pressão e a Nuvem de Tinta existirem, acrescentar esses efeitos às descrições
+  da armadura e dos óculos; receitas da Forja no JEI em servidor dedicado.
 
 - 24/10/2026 13:20 · Estruturador (Claude Opus 5.5) · **Entrega 1 concluída e
   mergeada na `main`** (A, B, C e D; CI verde). Pronto: registros, aba
