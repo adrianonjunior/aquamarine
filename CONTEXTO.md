@@ -18,6 +18,12 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
 
+- 24/10/2026 14:15 · Estruturador (Claude Opus 5.5) · A pedido do Adriano:
+  biomas do mod achados com `/locate biome #aquamarine_<bioma>` (tag
+  `minecraft:aquamarine_<bioma>`, exigida pelo teste). Só existe
+  `#aquamarine_fossa_de_nereia`, provisória (oceanos profundos). **Falta:** quem
+  criar o bioma Fossa de Nereia troca o valor da tag por `aquamarine:fossa_de_nereia`.
+
 - 24/10/2026 14:05 · Estruturador (Claude Opus 5.5) · A pedido do Adriano: JEI
   31.16.0.90 no ambiente de dev, plugin com a categoria "Forja Abissal" e
   descrição curta de cada item (tooltip + informação do JEI), itens também nas
