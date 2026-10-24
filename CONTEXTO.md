@@ -37,6 +37,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| 2D-M (onda 2) | Codex | jogo + Gradle | 24/10/2026 |
 | Animações, partículas e avisos do Kraken (Entrega 2; autorizada pelo Adriano no lugar do Codex) | Claude Opus 5.5 (worktree `aquamarine-opus-kraken`, branch `opus/kraken-anim`) | jogo (runClientGameTest) | 24/10/2026 |
 
 ## Registro de handoff
