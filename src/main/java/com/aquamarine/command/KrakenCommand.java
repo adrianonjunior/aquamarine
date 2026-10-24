@@ -5,11 +5,13 @@ import com.aquamarine.entity.ModEntities;
 import com.aquamarine.event.KrakenSummoning;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -18,6 +20,7 @@ import net.minecraft.world.level.block.Blocks;
 /**
  * Comandos de teste do Kraken (só operadores):
  * {@code /aquamarine kraken} faz o Kraken surgir 10 blocos abaixo de quem digita (precisa de água);
+ * {@code /aquamarine kraken anim <nome>} dispara uma animação do contrato no Kraken mais próximo;
  * {@code /aquamarine kraken arena} constrói uma piscina de vidro de teste e põe o Kraken no centro.
  */
 public final class KrakenCommand {
@@ -34,7 +37,11 @@ public final class KrakenCommand {
 			.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 			.then(Commands.literal("kraken")
 				.executes(ctx -> spawn(ctx.getSource()))
-				.then(Commands.literal("arena").executes(ctx -> arena(ctx.getSource())))));
+				.then(Commands.literal("arena").executes(ctx -> arena(ctx.getSource())))
+				.then(Commands.literal("anim")
+					.then(Commands.argument("nome", StringArgumentType.word())
+						.suggests((ctx, builder) -> SharedSuggestionProvider.suggest(KrakenEntity.ANIMATION_NAMES, builder))
+						.executes(ctx -> anim(ctx.getSource(), StringArgumentType.getString(ctx, "nome")))))));
 	}
 
 	private static int spawn(CommandSourceStack source) {
@@ -46,6 +53,22 @@ public final class KrakenCommand {
 			return 0;
 		}
 		source.sendSuccess(() -> Component.translatable("commands.aquamarine.kraken.spawned", pos.getX(), pos.getY(), pos.getZ()), true);
+		return 1;
+	}
+
+	private static int anim(CommandSourceStack source, String name) {
+		ServerLevel level = source.getLevel();
+		KrakenEntity kraken = level.getEntities(ModEntities.KRAKEN, k -> true).stream()
+			.min(java.util.Comparator.comparingDouble(k -> k.distanceToSqr(source.getPosition()))).orElse(null);
+		if (kraken == null) {
+			source.sendFailure(Component.translatable("commands.aquamarine.kraken.none"));
+			return 0;
+		}
+		if (!kraken.playAnimation(name)) {
+			source.sendFailure(Component.translatable("commands.aquamarine.kraken.anim_unknown", name));
+			return 0;
+		}
+		source.sendSuccess(() -> Component.translatable("commands.aquamarine.kraken.anim", name), false);
 		return 1;
 	}
 

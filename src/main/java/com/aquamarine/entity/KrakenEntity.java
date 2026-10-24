@@ -83,6 +83,12 @@ public class KrakenEntity extends Mob implements KrakenView {
 	private final AnimationState boltsAnimation = new AnimationState();
 	private final AnimationState ambushAnimation = new AnimationState();
 	private final AnimationState doubleGrabAnimation = new AnimationState();
+	/** Nomes das animações do contrato (docs/06-tecnico.md), na ordem de {@link #animationStates()}. */
+	public static final List<String> ANIMATION_NAMES = List.of("idle", "swim", "emerge", "stunned", "phaseChange", "death",
+		"slam", "grab", "ink", "whirlpool", "spawnYoung", "waterJet", "roar", "bolts", "ambush", "doubleGrab");
+	private static final EntityDataAccessor<Integer> DATA_ANIM = SynchedEntityData.defineId(KrakenEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> DATA_ANIM_SEQ = SynchedEntityData.defineId(KrakenEntity.class, EntityDataSerializers.INT);
+
 	private final AquamarineBossBar bossBar = new AquamarineBossBar(this.getDisplayName());
 	private final AggroTracker aggro = new AggroTracker();
 	private float scale = 1.0F;
@@ -111,6 +117,8 @@ public class KrakenEntity extends Mob implements KrakenView {
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 		builder.define(DATA_MAX_HEALTH, KrakenStats.maxHealth(1.0F, "normal"));
+		builder.define(DATA_ANIM, 0);
+		builder.define(DATA_ANIM_SEQ, 0);
 		builder.define(DATA_SHIELD, 0.0F);
 		builder.define(DATA_MAX_SHIELD, 0.0F);
 		builder.define(DATA_PHASE, 1);
@@ -198,6 +206,43 @@ public class KrakenEntity extends Mob implements KrakenView {
 	@Override
 	public AnimationState doubleGrabAnimation() {
 		return doubleGrabAnimation;
+	}
+
+	private AnimationState[] animationStates() {
+		return new AnimationState[] {idleAnimation, swimAnimation, emergeAnimation, stunnedAnimation, phaseChangeAnimation, deathAnimation,
+			slamAnimation, grabAnimation, inkAnimation, whirlpoolAnimation, spawnYoungAnimation, waterJetAnimation, roarAnimation,
+			boltsAnimation, ambushAnimation, doubleGrabAnimation};
+	}
+
+	/** Dispara uma animação pelo nome do contrato (servidor; o cliente recebe por dados sincronizados). */
+	public boolean playAnimation(String name) {
+		int index = ANIMATION_NAMES.indexOf(name);
+		if (index < 0) {
+			return false;
+		}
+		entityData.set(DATA_ANIM, index);
+		entityData.set(DATA_ANIM_SEQ, entityData.get(DATA_ANIM_SEQ) + 1);
+		return true;
+	}
+
+	/** Índice da última animação disparada por {@link #playAnimation}. */
+	public int lastAnimation() {
+		return entityData.get(DATA_ANIM);
+	}
+
+	@Override
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+		super.onSyncedDataUpdated(key);
+		if (key.equals(DATA_ANIM_SEQ) && level().isClientSide() && entityData.get(DATA_ANIM_SEQ) > 0) {
+			AnimationState[] states = animationStates();
+			int index = entityData.get(DATA_ANIM);
+			for (int i = 1; i < states.length; i++) {
+				if (i != index) {
+					states[i].stop();
+				}
+			}
+			states[index].start(tickCount);
+		}
 	}
 
 	@Override

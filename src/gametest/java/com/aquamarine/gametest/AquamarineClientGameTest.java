@@ -196,6 +196,10 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			&& kraken(s).phase() == 1 && kraken(s).scaleFactor() == 1F), "Kraken: valores da fase 1 com 1 jogador");
 		check(server.computeOnServer(s -> near(kraken(s).realHealth(), 1500F)), "Kraken: vida inicial");
 		shot(context, "13_kraken_fase1");
+		for (String name : KrakenEntity.ANIMATION_NAMES) {
+			server.runCommand("aquamarine kraken anim " + name);
+			check(server.computeOnServer(s -> KrakenEntity.ANIMATION_NAMES.get(kraken(s).lastAnimation()).equals(name)), "Kraken: animação " + name);
+		}
 
 		krakenHit(server, 500);
 		context.waitTicks(2);

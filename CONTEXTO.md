@@ -19,6 +19,8 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
 
+- 24/10/2026 · Claude Sonnet 5.5 (2A-C.2) · `/aquamarine kraken anim <nome>` dispara as 16 animações do contrato no Kraken mais próximo (sincronizado por dados da entidade); testado no teste de cliente (estado no servidor), **não** conferido visualmente.
+
 - 24/10/2026 · Claude Sonnet 5.5 (faixa 2A-C) · `KrakenEntity` (`entity/`),
   `KrakenStats` e `AggroTracker` (`entity/boss/`, contas puras com JUnit), `KrakenCommand`
   (`/aquamarine kraken` e `/aquamarine kraken arena`, nível 2), `KrakenSummoning.spawnKraken`

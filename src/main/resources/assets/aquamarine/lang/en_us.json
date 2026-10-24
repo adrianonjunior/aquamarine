@@ -77,5 +77,7 @@
   "message.aquamarine.kraken.retreats": "The Kraken returns to the depths...",
   "commands.aquamarine.kraken.spawned": "Kraken spawned at %s, %s, %s.",
   "commands.aquamarine.kraken.arena": "Test arena built; Kraken at the center.",
-  "commands.aquamarine.kraken.none": "No Kraken nearby."
+  "commands.aquamarine.kraken.none": "No Kraken nearby.",
+  "commands.aquamarine.kraken.anim": "Animation %s played.",
+  "commands.aquamarine.kraken.anim_unknown": "Unknown animation: %s."
 }
