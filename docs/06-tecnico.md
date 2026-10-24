@@ -7,13 +7,32 @@
   Fabric API, Java 25, Gradle 9.x, plugin `net.fabricmc.fabric-loom`.
 - Desde o 26.1 o jogo não é ofuscado: nomes oficiais da Mojang, Yarn não é
   mais usado. Dependências com `implementation`, mod depende de `fabric-api`.
-- **Pendente:** instalar JDK 25 e rodar `gradlew build` / `gradlew runClient`
-  pela primeira vez.
 - Esqueleto criado a partir do `fabric-example-mod` oficial (mod id
-  `aquamarine`, pacote `com.aquamarine`), já no repositório privado
-  `adrianonjunior/aquamarine`. Versões: loader 0.20.1, Fabric API
-  0.165.0+26.3, Loom 1.19-SNAPSHOT, Gradle 9.8.2.
-- **JDK 25 obrigatório** (a máquina tinha só o 21 em 24/10/2026).
+  `aquamarine`, pacote `com.aquamarine`). Versões: loader 0.20.1, Fabric API
+  0.165.0+26.3, Loom 1.19.x, Gradle 9.8.2.
+- Código atual: só o esqueleto (`Aquamarine`, `AquamarineClient`).
+
+## Ambiente local (validado em 24/10/2026)
+- **JDK 25 obrigatório**: Microsoft OpenJDK 25.0.4 instalado em
+  `C:\Program Files\Microsoft\jdk-25.0.4.101-hotspot` (usar como `JAVA_HOME`;
+  o JDK 21 também está na máquina e não serve).
+- `./gradlew build` e `./gradlew runClient` funcionam. Mundo de teste em `run/saves`.
+- `genSources` falha com o jogo aberto (jar travado); rodar com o jogo fechado.
+- **Python:** `C:\Python314\python` com Pillow (o alias `python3` do Windows
+  Store não funciona). Não usar `-I`: ele esconde o Pillow.
+- Screenshots do jogo (F2): `run/screenshots/`; qualquer agente pode ler os PNGs.
+- API do Minecraft 26.3 usa nomes oficiais da Mojang; consulte com `javap` nos
+  jars de `~/.gradle/caches/fabric-loom/minecraftMaven/` ou com `genSources`.
+
+## Convenções de código e arte
+- `src/main` = comum/servidor; `src/client` = só cliente (HUD, renderers).
+- Nada de texto fixo: tudo em `Component.translatable` + `lang/pt_br.json` e
+  `en_us.json`; nomes em português no jogo.
+- Texturas: pixel art estilo mods de Minecraft, 16x16 para itens e blocos,
+  paleta do mod (ver [01-visao-e-riscos.md](01-visao-e-riscos.md)), geradas por
+  script em `tools/` para poderem ser regeradas.
+- Modelos de alta qualidade desde a primeira versão (ver [00-decisoes.md](00-decisoes.md)).
+- Todo item novo responde "o que faz na luta ou na exploração?" (ver [05-itens.md](05-itens.md)).
 
 ## Estrutura de pacotes planejada
 ```
@@ -52,7 +71,7 @@ com.aquamarine
 ## Ferramentas
 - IntelliJ IDEA Community com o plugin Minecraft Development.
 - Blockbench para modelos e texturas.
-- Git + GitHub (quando o repositório estiver pronto).
+- Git + GitHub: repositório privado `adrianonjunior/aquamarine` (conta `adrianonjunior`).
 - Testes no jogo: `runClient` do Loom; comandos `/summon aquamarine:kraken`
   e `/kill` para iterar rápido.
 - Testes automáticos: Fabric tem GameTests; dá para testar coisas simples

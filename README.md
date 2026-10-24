@@ -6,29 +6,26 @@ prioridade).
 
 Plano oficial: https://claude.ai/artifact/M68jvjvKRddKZMxq3yEQjT
 
-## Agentes
-Leia [AGENTS.md](AGENTS.md) (regras, vários agentes em paralelo) e [CONTEXTO.md](CONTEXTO.md) (estado atual e quadro de tarefas).
+O plano oficial acima pode estar desatualizado: em conflito, vale
+[docs/00-decisoes.md](docs/00-decisoes.md).
 
-## Como ler a documentação
-1. **Comece por [docs/00-decisoes.md](docs/00-decisoes.md)**: é a fonte da
-   verdade. Se algo contradisser, ele vale.
-2. Os outros arquivos misturam coisas decididas e **ideias**. Cada um tem um
-   aviso de status no topo e seções marcadas.
-3. Estado do trabalho: [docs/07-roadmap.md](docs/07-roadmap.md).
+## Por onde começar
+- **Agentes:** [AGENTS.md](AGENTS.md) (regras, vários agentes em paralelo),
+  depois [CONTEXTO.md](CONTEXTO.md) (quem faz o quê agora).
+- **Todos:** [docs/00-decisoes.md](docs/00-decisoes.md) é a fonte da verdade.
+  Os demais arquivos de `docs/` detalham um assunto cada e trazem um aviso de
+  status; seções de **ideia** não são decisão.
 
+## Índice (cada arquivo é dono do seu assunto)
 | Arquivo | Assunto |
 |---|---|
-| docs/00-decisoes.md | Decisões tomadas e perguntas ainda abertas |
-| docs/01-visao-e-riscos.md | Visão do mod, o que o faz bom, riscos, tom |
+| AGENTS.md | Regras de comportamento e coordenação entre agentes |
+| CONTEXTO.md | Tarefas em andamento e registro de entregas |
+| docs/00-decisoes.md | Decisões tomadas e perguntas em aberto |
+| docs/01-visao-e-riscos.md | Visão do mod, riscos, tom e paleta |
 | docs/02-kraken.md | Luta, escudo, Pressão, barra de vida, IA, balanceamento |
 | docs/03-invocacao-e-chat.md | Anúncio estilo Terraria, aviso falso |
-| docs/04-cidade-perdida.md | Estrutura, bioma, criaturas |
-| docs/05-itens.md | Materiais, itens e ideias extras |
-| docs/06-tecnico.md | Implementação no Fabric 26.3, versões, ferramentas |
-| docs/07-roadmap.md | Ordem de trabalho e progresso |
-
-## Código
-`src/main` (servidor/comum) e `src/client` (HUD, renderers), pacote
-`com.aquamarine`. Requer **JDK 25**. Rodar: `gradlew runClient`.
-
-Última atualização: 24/10/2026.
+| docs/04-cidade-perdida.md | Estrutura, bioma, criaturas (incluindo o Walker) |
+| docs/05-itens.md | Materiais e itens (incluindo o Óculos de Mergulho) |
+| docs/06-tecnico.md | Implementação, ambiente, build e convenções |
+| docs/07-roadmap.md | Ordem dos marcos e progresso |

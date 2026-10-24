@@ -31,9 +31,10 @@ e enfrenta o Kraken.
    quebra blocos frágeis e recupera vida se você fugir). Também vale: escudo
    imune a projéteis comuns além de certa distância.
 3. **Desempenho.** 8 tentáculos como entidades separadas + crias + partículas
-   + tempestade pode pesar. Precisamos testar cedo com o modelo provisório.
+   + tempestade pode pesar. Precisamos testar o desempenho cedo, já com o modelo de alta qualidade.
 4. **Escopo.** A lista de coisas é grande. O mais importante é chegar no
-   "Kraken v1 jogável" rápido, mesmo feio, e iterar.
+   "Kraken v1 jogável" rápido e iterar a luta, sem perder a qualidade visual
+   decidida (ver [00-decisoes.md](00-decisoes.md)).
 
 ## Tom e estética
 - Paleta: azul profundo, verde-água, roxo bioluminescente, dourado gasto do

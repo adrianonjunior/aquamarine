@@ -11,8 +11,7 @@
 | Escama Antiga | baús da cidade | armadura, Amuleto da Corrente |
 | Chave de Nereia | Cofre do Templo | abre o cofre do Chamariz |
 
-Já registrados no esqueleto: Lingote de Oricálcio, Pérola Abissal, Cristal
-de Maré (sem textura ainda).
+Nenhum item está implementado ainda (fase de planejamento).
 
 ## Itens contra o Kraken (do plano)
 Chamariz Abissal, Arpão de Oricálcio, Carga de Pulso, Pilar Ressonante,

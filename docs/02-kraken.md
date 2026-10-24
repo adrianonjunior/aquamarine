@@ -14,7 +14,7 @@ escudo "Carapaça Abissal" (400 / 600 / 800), 8 tentáculos de 60 de vida.
   que ser *muito* satisfatório, é o "pico" da luta.
 - **Pontos fracos no escudo:** em vez de dano em qualquer lugar, talvez 3 a 4
   "nós" brilhantes no escudo que levam dano extra. Dá alvo ao jogador e
-  recompensa mira. (Pergunta aberta: vale a complexidade?)
+  recompensa mira. (Em aberto, ver [00-decisoes.md](00-decisoes.md).)
 - **Regeneração:** 20 s sem dano → regenera. Na fase 3, regenera sozinho a
   cada 45 s. Mostrar a regeneração com brilho subindo na barra.
 
@@ -43,8 +43,7 @@ escudo "Carapaça Abissal" (400 / 600 / 800), 8 tentáculos de 60 de vida.
 ## Dificuldade — Decidido: um pouco acima do Warden
 - `normal`: um pouco acima do Warden (decisão do Adriano).
 - `abissal` (modo mestre): mais vida, escudo regenera mais rápido, drop
-  exclusivo (ex.: troféu dourado ou cosmético). *Engolir foi cortado.*
-
+  exclusivo (ex.: troféu dourado ou cosmético).
 ## Peso do abismo — Decidido (superfície + fundo)
 - Fase 1 na superfície; fases 2-3 puxam a luta para o fundo.
 - Efeito **Pressão**: nível que sobe com o tempo perto do Kraken. Cada nível
