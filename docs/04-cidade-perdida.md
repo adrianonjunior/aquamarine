@@ -43,3 +43,14 @@ Abissal, Biblioteca em ruínas, Minas de Oricálcio.
 ## Técnico
 - Estrutura jigsaw (template pools + NBT de estruturas) primeiro, sem bioma.
 - Bioma depois com Biolith ou TerraBlender quando tiver versão para 26.3.
+
+## Walker — ideia do Adriano (aceita, detalhes em aberto)
+- Zumbi **pacífico** que aparece **só à noite**, nas profundezas do oceano
+  (Fossa de Nereia / arredores da cidade).
+- **Troca itens interessantes** (comércio, à la aldeão/piglin). O que ele
+  vende e aceita ainda não foi definido.
+- Ideias para decidir: aceita Pérola Abissal ou Escama Antiga em troca de
+  itens úteis contra o Kraken (Tônico de Pressão, Boia de Âncora, mapa/Bússola
+  de Maré); some ao amanhecer ou afunda; não reage a dano ou foge; som e
+  visual próprios (zumbi afogado, bioluminescente, com lanterna de coral).
+- Reforça a exploração do fundo e dá um motivo para ir à noite.
