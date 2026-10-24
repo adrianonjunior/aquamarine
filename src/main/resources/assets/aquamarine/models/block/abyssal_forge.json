@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "top": "aquamarine:block/abyssal_forge_top",
+    "bottom": "aquamarine:block/abyssal_forge_bottom",
+    "side": "aquamarine:block/abyssal_forge_side",
+    "front": "aquamarine:block/abyssal_forge_front"
+  }
+}

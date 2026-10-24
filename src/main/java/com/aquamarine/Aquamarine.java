@@ -1,5 +1,13 @@
 package com.aquamarine;
 
+import com.aquamarine.block.ModBlocks;
+import com.aquamarine.config.AquamarineConfig;
+import com.aquamarine.item.ModCreativeTab;
+import com.aquamarine.item.ModItems;
+import com.aquamarine.item.OrichalcumEffects;
+import com.aquamarine.menu.ModMenus;
+import com.aquamarine.recipe.ModRecipes;
+
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.resources.Identifier;
@@ -13,6 +21,14 @@ public class Aquamarine implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		AquamarineConfig.load();
+		// Ordem importa: blocos antes dos itens de bloco.
+		ModBlocks.register();
+		ModItems.register();
+		ModRecipes.register();
+		ModMenus.register();
+		ModCreativeTab.register();
+		OrichalcumEffects.register();
 		LOGGER.info("Aquamarine carregado.");
 	}
 

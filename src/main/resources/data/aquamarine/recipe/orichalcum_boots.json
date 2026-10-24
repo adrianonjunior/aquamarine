@@ -1,0 +1,15 @@
+{
+  "type": "aquamarine:abyssal_forging",
+  "category": "equipment",
+  "key": {
+    "I": "aquamarine:orichalcum_ingot",
+    "S": "aquamarine:ancient_scale"
+  },
+  "pattern": [
+    "ISI",
+    "I I"
+  ],
+  "result": {
+    "id": "aquamarine:orichalcum_boots"
+  }
+}
