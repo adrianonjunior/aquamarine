@@ -57,6 +57,8 @@
   `config/aquamarine.json`; campos novos entram sozinhos no arquivo).
 - **Efeitos de Oricálcio:** `item/OrichalcumEffects` (`armorPieces`,
   `hasFullSet`, `PRESSURE_REDUCTION_PER_PIECE` para a Pressão).
+- **Invocação:** `event/KrakenSummoning` (`start`, `hasDeepWater`, gancho
+  `spawnKraken`) e `block/AbyssalAltarBlock`.
 - **Óculos:** `client/DivingGogglesVision` + `client/mixin/WaterFogEnvironmentMixin`.
 - **Barra de boss:** o boss cria um `entity/boss/AquamarineBossBar`, chama
   `addPlayer`/`removePlayer` em `startSeenByPlayer`/`stopSeenByPlayer` e
