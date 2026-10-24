@@ -37,10 +37,10 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| 2D-M (onda 2) | Codex | jogo + Gradle | 24/10/2026 |
 | Animações, partículas e avisos do Kraken (Entrega 2; autorizada pelo Adriano no lugar do Codex) | Claude Opus 5.5 (worktree `aquamarine-opus-kraken`, branch `opus/kraken-anim`) | jogo (runClientGameTest) | 24/10/2026 |
 
 ## Registro de handoff
+- 24/10/2026 · Codex Astra · **2D-M entregue** nos commits `31f3620` (modelos/views/renderers) e `26f6fa5` (UVs como placeholders provisórios) na `main`. Tentáculo, Cria e ovo aparecem pelos comandos; `compileJava`/`compileClientJava` e `runClientGameTest` concluídos, com comandos de spawn e animação executados. Conferi as capturas `21_criaturas_comando` e `22_criaturas_anim`: a cena aquática mostra os modelos a distância, com leitura discreta sob a água; a 2D-T deve substituir os placeholders e melhorar o contraste. Próximo: 2D-T aplicar as texturas finais.
 
 - 24/10/2026 · Claude Sonnet 5.5 (2D-C.2) · `TentacleEntity` e `YoungKrakenEntity` implementam `TentacleView`/`YoungKrakenView` (animações sincronizadas por `AnimationSync`; os ataques disparam `rise`/`slam`/`grab`/`release`, a Cria dispara `hatch`/`attack`/`death`), novo `KrakenEggEntity` (`KrakenEggView`: pulsa no aviso das Crias e choca no golpe), renderers do Codex registrados no lugar dos `NoopRenderer`, comandos `/aquamarine kraken tentacle|young|egg` (cria à frente) e `... anim <nome>`. **Testado:** `build` e `runClientGameTest` (contagens por comando e 2 screenshots: as três criaturas aparecem). **Não conferido:** a aparência/animações do ponto de vista do Codex (2D-M faz os screenshots); tentáculo criado por comando não tem dono (não some com o Kraken). Também: `KrakenWorldData.forgetHeart` (só testes) para o teste de recompensas da 2E não depender do Kraken do Altar.
 
