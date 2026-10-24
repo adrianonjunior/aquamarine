@@ -652,8 +652,7 @@ public final class KrakenAttacks {
 		for (Player p : level.getEntitiesOfClass(Player.class, new AABB(a.point, a.point).inflate(r, 8.0, r), p -> p.isAlive() && !p.isSpectator())) {
 			if (p.position().subtract(a.point).horizontalDistanceSqr() <= r * r) {
 				hurt(level, p, KrakenAttackType.AMBUSH_DAMAGE);
-				p.setDeltaMovement(p.getDeltaMovement().add(0, 0.9, 0));
-				p.needsSync = true;
+				push((ServerPlayer) p, new Vec3(0, 0.9, 0));
 			}
 		}
 		particles(level, ParticleTypes.POOF, a.point.add(0, 0.5, 0), 40, r * 0.5, 0.2);
@@ -695,8 +694,7 @@ public final class KrakenAttacks {
 			int rate = (ModEffects.hasTonic(p) ? 2 : 1) * (partial ? 2 : 1);
 			g.ticksLeft -= rate;
 			Vec3 pull = g.anchor.subtract(p.position());
-			p.setDeltaMovement(pull.x * 0.1, partial ? -0.15 : -0.35, pull.z * 0.1);
-			p.needsSync = true;
+			push(p, new Vec3(pull.x * 0.1, partial ? -0.15 : -0.35, pull.z * 0.1));
 			particles(level, ParticleTypes.WITCH, p.position().add(0, 1.0, 0), 2, 0.4, 0.02);
 			if (++g.sinceDamage >= 20) {
 				g.sinceDamage = 0;
@@ -706,6 +704,12 @@ public final class KrakenAttacks {
 				release(level, g);
 			}
 		}
+	}
+
+	/** Define a velocidade do jogador e a envia na hora (o cliente é quem move o jogador). */
+	private static void push(ServerPlayer p, Vec3 velocity) {
+		p.setDeltaMovement(velocity);
+		p.connection.send(new net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket(p));
 	}
 
 	private void release(ServerLevel level, Grab g) {
@@ -730,8 +734,8 @@ public final class KrakenAttacks {
 			}
 			Vec3 pull = whirlpoolCenter.subtract(p.position());
 			if (pull.lengthSqr() > 4.0) {
-				p.setDeltaMovement(p.getDeltaMovement().add(pull.normalize().scale(0.12)));
-				p.needsSync = true;
+				// O servidor não simula o jogador: somar acumularia sem parar, então a velocidade é definida.
+				push(p, pull.normalize().scale(0.1));
 			}
 		}
 	}

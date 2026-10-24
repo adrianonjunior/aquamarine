@@ -81,6 +81,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			altar(context, world, server, base);
 			kraken(context, world, server, base);
 			PressureGameTest.run(context, world, server, base);
+			AttackGameTest.run(context, world, server, base);
 		}
 	}
 
@@ -191,7 +192,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			ServerLevel level = s.overworld();
 			level.getChunkAt(origin);
 			KrakenCommand.buildArena(level, origin);
-			KrakenSummoning.spawnAt(level, origin.offset(0, 25, 0), origin);
+			KrakenSummoning.spawnAt(level, origin.offset(0, 25, 0), origin).attacks().setEnabled(false);
 		});
 		tp(server, origin.getX() + 0.5, origin.getY() + 28, origin.getZ() + 14.5, 0, 0);
 		world.getConnection().waitForChunksRender();
@@ -280,7 +281,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 	}
 
 	private static void spawnKraken(TestServerContext server, BlockPos origin) {
-		server.runOnServer(s -> KrakenSummoning.spawnAt(s.overworld(), origin.offset(0, 25, 0), origin));
+		server.runOnServer(s -> KrakenSummoning.spawnAt(s.overworld(), origin.offset(0, 25, 0), origin).attacks().setEnabled(false));
 	}
 
 	/** Drops e primeira vitória: Olho, Tinta, Troféu, XP e Coração só na primeira vez; Dourado no modo abissal. */

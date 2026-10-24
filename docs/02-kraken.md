@@ -97,6 +97,24 @@ clareza). Dano base com netherite: 4 a 5 golpes até curar.
 | Emboscada por Baixo | 3 | Bolhas no fundo por 2 s | Tentáculos emergem do chão em área de 6 blocos | Sair da área |
 | Agarrão Duplo | 3 | Dois tentáculos brilham juntos | Prende com dois, 10 de dano por segundo | Cortar um para soltar parcialmente |
 
+### Implementação dos ataques (2D-C, valores adotados)
+Código: `entity/boss/KrakenAttackType` (dados e contas, JUnit), `KrakenAttacks` (tentáculos e ataques no
+servidor), `TentacleEntity`, `YoungKrakenEntity`. Teste: `/aquamarine kraken attack <nome>` (`slam`, `grab`,
+`ink`, `whirlpool`, `spawnYoung`, `waterJet`, `roar`, `bolts`, `ambush`, `doubleGrab`) no jogador que digita, e
+`/aquamarine kraken ai on|off` para o sorteio automático. Valores que a tabela não fixava:
+- **Intervalo** entre ataques novos: 80 ticks na fase 1, 60 na 2, 45 na 3 (abissal ×0,75).
+- **Pancada:** círculo de 3 blocos; a onda vira barcos e derruba Boias num raio de 6.
+- **Agarrão:** 5 s (100 ticks), 6 de dano por segundo; o Tônico dobra a soltura; cortar o tentáculo solta. Agarrão
+  Duplo: 10 de dano por segundo; com um tentáculo cortado fica pela metade e solta o dobro mais rápido.
+- **Tinta:** raio de 16 do Kraken, cegueira de 12 s; a armadura de Oricálcio completa protege.
+- **Redemoinho:** puxa por 5 s num raio de 16, velocidade 0,1 por tick (dá para nadar para fora); o Amuleto da
+  Corrente (Entrega 3) protege se existir o item `aquamarine:current_amulet`.
+- **Jato:** linha de 24 blocos, o alvo é travado ao fim do aviso começar. **Rugido:** quebra blocos de dureza até
+  0,5 num raio de 12 (no máximo 500 por golpe) e derruba as Boias; quem estiver em barco leva 6 e cai.
+- **Raios:** 1 + n÷3 jogadores marcados; 14 de dano só em quem está fora da água. **Emboscada:** 10 de dano em
+  6 blocos e arremesso para cima. **Crias:** no máximo 16 vivas.
+- Atordoamento e troca de fase cancelam avisos e soltam quem estava preso.
+
 ## IA
 - **Escolha do ataque:** peso aleatório entre os ataques liberados na fase, sem
   repetir o mesmo ataque duas vezes seguidas; ataques do tipo "área" têm

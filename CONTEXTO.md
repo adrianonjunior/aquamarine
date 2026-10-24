@@ -37,10 +37,13 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| 2D-C: tentáculos e 10 ataques com avisos (~3 h) | Claude Sonnet 5.5 | Gradle da worktree 2B; jogo (runClientGameTest) | 24/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+- 24/10/2026 · Claude Sonnet 5.5 (faixa 2D-C) · 8 `TentacleEntity` (60 de vida, cortado volta em 30 s; os 8 cortados expõem o Kraken), `YoungKrakenEntity` (Cria) e os 10 ataques com aviso (partículas, som e a animação do contrato) em `entity/boss/KrakenAttacks` (+ `KrakenAttackType`); sorteio automático por fase/simultâneos `2 + n÷3`; `/aquamarine kraken attack <nome>` e `ai on|off`. Valores adotados em `docs/02-kraken.md`. Ajuste na Pressão: o afundar agora é um modificador do atributo `GRAVITY` (somar velocidade no servidor acumulava sem parar).
+  **Testado:** JUnit `KrakenAttackTypeTest`; `runClientGameTest` (`AttackGameTest`): os 8 tentáculos, o dano de Pancada (12), Agarrão (6/s, cortar solta, Tônico solta em ~2,5 s), Jato (10), Raios (14 fora da água, 0 submerso), Emboscada (10), Agarrão Duplo parcial, Tinta (armadura completa protege), Redemoinho (puxa), Crias (3), Rugido (quebra vidro e derruba a Boia), 8 cortados expõem, IA automática; 3 screenshots (avisos de Pancada e Jato conferidos).
+  **Não testado:** multiplayer (simultâneos > 2, alvo por aggro), difícil abissal, Kraken salvo e recarregado com tentáculos, barcos (Pancada/Rugido), Amuleto da Corrente (item não existe). **Pendente de outras faixas:** os renderers de `TentacleEntity` e `YoungKrakenEntity` são `NoopRenderer` até a 2D-M/2D-T (as entidades são invisíveis; o aviso é só por partículas); animações `slam`/`grab`... já disparam no `KrakenView`. Os testes antigos desligam a IA (`attacks().setEnabled(false)`).
+
 
 - 24/10/2026 · Codex (organização documental) · Reconciliou marcos da Entrega 1 e das faixas 2B/2E com o histórico da `main`; corrigiu textos de liberação e da 2A-T, incorporou a documentação planejada da Fase 3 e deixou o aviso "Atualização para todos os agentes" acima. **Sem executar agentes ou build.** Permanecem pendentes as faixas desmarcadas no roadmap e o aceite multiplayer da Entrega 2; a Fase 3 segue bloqueada.
 
