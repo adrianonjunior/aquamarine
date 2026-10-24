@@ -15,7 +15,13 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 
-## Registro de handoff
+## Registro de handoff
+
+- 24/10/2026 · Orquestrador · **Atualização (limite de uso atingido):** 2B e 2E aceitas e validadas na main (build verde, 473adaf).
+  **Ainda rodando:** 2A-T (Claude, terminal da worktree 2A-C, dispatch `ctx_bb7771a97cfe`) e 2D-M (Codex, dispatch `ctx_2776644f41a3`).
+  **Próximo orquestrador:** `check --wait`; iniciar a **2D-C** (deps 2A-C, 2B, 2C já mergeadas; reaproveitar o terminal Claude ocioso
+  `term_a1116273...` da worktree 2B; usar ModEffects.hasTonic e AnchorBuoyBlock.collapse); depois 2D-T (dep. 2D-M), faixa de tamanho 24 x 16 e 2Q.
+  Itens pendentes de 2B/2E: multiplayer, som abafado, troféus no jogo, itens Arpão/Carga de Pulso/Pilar (2C).
 
 - 24/10/2026 · Claude Sonnet 5.5 (faixa 2B) · Pressão 0-4 (`pressure/PressureState` puro + `PressureManager` no servidor, nível enviado por `PressurePayload`), `PressureHud` (vinheta azul no 2, escura e pulsante no 4, batimentos do 3), Tônico de Pressão (item de beber + efeito `ModEffects.PRESSURE_TONIC`, devolve o frasco), Boia de Âncora (`AnchorBuoyItem`/`AnchorBuoyBlock`: 3x3 por 90 s, recarga de 30 s, `AnchorBuoyBlock.collapse` para o Kraken destruir), `OrichalcumEffects.pressureReduction`, texturas por script, receitas e lang pt/en.
   **Testado:** `./gradlew build` (JUnit `PressureStateTest`) e `runClientGameTest` (`PressureGameTest`: níveis 1-4 por tempo, nado lento, ataque lento, dano do nível 4, nível no cliente, Boia, armadura completa, Tônico; 2 screenshots, vinheta do nível 4 conferida).
