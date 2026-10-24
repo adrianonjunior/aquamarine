@@ -5,8 +5,8 @@
 > marcos (ver [docs/07-roadmap.md](docs/07-roadmap.md)) nem ambiente técnico
 > (ver [docs/06-tecnico.md](docs/06-tecnico.md)). Regras: [AGENTS.md](AGENTS.md).
 
-> **FASE ATUAL: IMPLEMENTAÇÃO LIBERADA SOMENTE PARA A "ENTREGA 1" (Estruturador).** Fora dela, não implemente nada (código, texturas,
-> modelos) até o Adriano liberar explicitamente.
+> **FASE ATUAL: ENTREGA 1 CONCLUÍDA (24/10/2026).** Nada além dela está liberado: não implemente
+> nada (código, texturas, modelos) até o Adriano liberar explicitamente o próximo passo.
 
 ## Em andamento
 Registre aqui antes de começar e apague a linha ao terminar. "Recurso" = o que
@@ -14,10 +14,30 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| Entrega 1 (ver docs/07-roadmap.md). Branch `estruturador/entrega-1`, worktree `../aquamarine-estruturador-entrega-1`. Plano (início 12:30): leitura e plano 15 min (até 12:45) · A estrutura 60 min (até 13:45) · B materiais e Forja 90 min (até 15:15) · C óculos 60 min (até 16:15) · D extras 45 min (até 17:00) · reserva build/correção/handoff 30 min (até 17:30). Bloco que estourar o dobro: corta escopo e segue. | Estruturador (Claude Opus 5.5) | jogo, Gradle (na worktree) | 24/10/2026 12:30 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+
+- 24/10/2026 13:20 · Estruturador (Claude Opus 5.5) · **Entrega 1 concluída e
+  mergeada na `main`** (A, B, C e D; CI verde). Pronto: registros, aba
+  "Aquamarine", config, tags, lang pt/en; Oricálcio (minério, lingote, bloco,
+  5 ferramentas com Maré, armadura com bônus de nado), Pérola, Cristal, Escama;
+  Forja Abissal (tipo de receita próprio + tela); Óculos de Mergulho (névoa 1,5x,
+  água mais clara); barra de boss customizada + entidade de teste
+  `aquamarine:boss_dummy`; Projeto do Chamariz, Chamariz Abissal, Altar do Abismo
+  e mensagens de invocação; 30 texturas por `tools/gen_textures.py`.
+  **Testado:** `./gradlew build` (7 testes JUnit) e `./gradlew runClientGameTest`
+  (abre o jogo sozinho, confere Forja, receita exclusiva, bônus de conjunto,
+  escudo da barra e altar, e grava 14 screenshots que foram revisados).
+  **Não testado:** multiplayer/servidor dedicado; velocidade real de nado do
+  bônus (+0,33 de `water_movement_efficiency`, calibrar); Maré minerando
+  debaixo d'água; armadura em bebês (sem camada `humanoid_baby`).
+  **Falta (fora do escopo):** gatilho do aviso falso, tremor de tela e silêncio
+  do oceano na invocação (ver docs/03), o Kraken em si (`KrakenSummoning.spawnKraken`
+  é o gancho), Nuvem de Tinta e Pressão (usar `OrichalcumEffects`).
+  **Próximo passo:** o Adriano abrir o jogo (`./gradlew runClient`, aba
+  "Aquamarine") e liberar o próximo marco; o cliente antigo aberto desde 12:00
+  pela pasta principal não tem este código.
 
 - 24/10/2026 12:55 · Estruturador · Checkpoint na branch `estruturador/entrega-1`
   (build verde, 7 testes JUnit): blocos A, B e C escritos (registros, config, aba,
