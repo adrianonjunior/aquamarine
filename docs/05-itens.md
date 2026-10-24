@@ -1,8 +1,10 @@
 # Itens
 
 > **Dono de:** lista final de materiais, itens, receitas e estatísticas. Tudo
-> **decidido**; números são valores iniciais a testar (ajustar aqui). Nenhum
-> item está implementado ainda (fase de planejamento). Regra: todo item
+> **decidido**; números são valores iniciais a testar (ajustar aqui).
+> **Implementados (Entrega 1):** Oricálcio (minério, lingote, bloco, ferramentas,
+> armadura), Pérola Abissal, Cristal de Maré e Escama Antiga como itens, Forja
+> Abissal e Óculos de Mergulho. O resto ainda é planejamento. Regra: todo item
 > responde "o que faz na luta ou na exploração?". Decisões gerais em
 > [00-decisoes.md](00-decisoes.md).
 
@@ -24,7 +26,9 @@
 ## Bancada: Forja Abissal
 Receitas de Oricálcio e de itens da luta usam a **Forja Abissal**. Existem
 algumas prontas na cidade e ela também pode ser feita: 2 Blocos de Oricálcio +
-2 Escamas Antigas + 1 fornalha + 1 bloco de obsidiana.
+2 Escamas Antigas + 1 fornalha + 1 bloco de obsidiana (bancada comum).
+A Forja tem grade 3x3 e também aceita as receitas da bancada comum; as receitas
+dela usam o tipo `aquamarine:abyssal_forging` (JSON igual ao `crafting_shaped`).
 
 ## Itens da luta e da exploração
 Todas as receitas abaixo são na Forja Abissal, exceto quando indicado.
@@ -48,12 +52,16 @@ Todas as receitas abaixo são na Forja Abissal, exceto quando indicado.
 
 ## Armadura e ferramentas de Oricálcio
 - **Armadura** (levemente abaixo da netherite): capacete 5 Lingotes + 1 Escama;
-  peitoral 8 + 2; calças 7 + 2; botas 4 + 1. Defesa 3/7/5/3, resistência 2,
-  durabilidade 35 (multiplicador).
-- **Bônus do conjunto completo:** nado 25% mais rápido, enxerga através da
-  Nuvem de Tinta e a Pressão sobe 60% mais devagar (15% por peça).
+  peitoral 7 + 2 (8 + 2 não cabe na grade 3x3); calças 7 + 2; botas 4 + 1.
+  Defesa 3/7/5/3, resistência 2, durabilidade 35 (multiplicador), resistência a
+  repulsão 0,05.
+- **Bônus do conjunto completo:** nado 25% mais rápido (atributo
+  `water_movement_efficiency` +0,33, a calibrar no jogo), enxerga através da
+  Nuvem de Tinta e a Pressão sobe 60% mais devagar (15% por peça; a Nuvem e a
+  Pressão leem `OrichalcumEffects` quando existirem).
 - **Ferramentas e arma** (picareta, machado, pá, enxada, espada): nível um pouco
-  abaixo da netherite, espada com 7 de dano; minerar debaixo d'água sem a
+  abaixo da netherite (durabilidade 1800, velocidade 8,5, minera o mesmo que
+  diamante), espada com 7 de dano; minerar debaixo d'água sem a
   penalidade da água ("Maré"). Todas na tag `aquamarine:shield_breakers`
   (60% de dano no escudo).
 - Capacete de Oricálcio e Óculos de Mergulho disputam o slot da cabeça.

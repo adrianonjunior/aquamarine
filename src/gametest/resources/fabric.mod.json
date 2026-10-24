@@ -1,0 +1,15 @@
+{
+	"schemaVersion": 1,
+	"id": "aquamarine-gametest",
+	"version": "${version}",
+	"name": "Aquamarine (testes de jogo)",
+	"environment": "*",
+	"entrypoints": {
+		"fabric-client-gametest": [
+			"com.aquamarine.gametest.AquamarineClientGameTest"
+		]
+	},
+	"depends": {
+		"aquamarine": "*"
+	}
+}

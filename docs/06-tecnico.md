@@ -1,6 +1,6 @@
 # Notas técnicas
 
-> **Dono de:** ambiente, build, convenções e as decisões técnicas de implementação. Tudo **decidido**; nada implementado ainda.
+> **Dono de:** ambiente, build, convenções e as decisões técnicas de implementação. Tudo **decidido**; a base (Entrega 1) está implementada.
 
 ## Base
 - Minecraft Java 26.3 "Wilderness Bound" (15/09/2026), Fabric Loader +
@@ -10,7 +10,7 @@
 - Esqueleto criado a partir do `fabric-example-mod` oficial (mod id
   `aquamarine`, pacote `com.aquamarine`). Versões: loader 0.20.1, Fabric API
   0.165.0+26.3, Loom 1.19.x, Gradle 9.8.2.
-- Código atual: só o esqueleto (`Aquamarine`, `AquamarineClient`).
+- Código atual: a base da Entrega 1 (ver "Como adicionar conteúdo" abaixo).
 
 ## Ambiente local (validado em 24/10/2026)
 - **JDK 25 obrigatório**: Microsoft OpenJDK 25.0.4 instalado em
@@ -23,6 +23,41 @@
 - Screenshots do jogo (F2): `run/screenshots/`; qualquer agente pode ler os PNGs.
 - API do Minecraft 26.3 usa nomes oficiais da Mojang; consulte com `javap` nos
   jars de `~/.gradle/caches/fabric-loom/minecraftMaven/` ou com `genSources`.
+  O `genSources` grava os fontes em
+  `.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-*-sources.jar` da
+  pasta onde rodou; descompacte num diretório temporário e use `grep`.
+- No Git Bash, `javap` do Windows precisa de caminhos `cygpath -w` no classpath.
+- Heredoc com Python (`python - <<EOF`) trava neste ambiente: escreva o script
+  em arquivo.
+- Na 26.3 várias APIs mudaram de nome: telas usam `GuiGraphicsExtractor` e
+  `extractBackground`; `Minecraft.gui.screen()` em vez de `minecraft.screen`;
+  `ContainerInput` em vez de `ClickType`; `Player.drop(stack, false, Prediction.PREDICTED)`.
+
+## Como testar
+- `./gradlew build`: compila e roda os testes JUnit de `src/test` (consistência
+  de recursos: modelos, texturas, lang pt/en, receitas, camadas de equipamento;
+  e a config). Item novo sem textura ou sem nome quebra o build.
+- `./gradlew runClientGameTest`: abre o jogo sozinho (`src/gametest`), cria um
+  mundo plano, monta as cenas, confere por código a Forja e o bônus da armadura
+  e grava screenshots em `build/run/clientGameTest/screenshots/`. Não precisa
+  controlar o PC; qualquer agente pode rodar e ler os PNGs. Não roda no CI.
+- `C:\Python314\python tools/gen_textures.py --preview` regera as texturas e
+  grava folhas de prévia em `build/texture_preview*.png`.
+
+## Como adicionar conteúdo (estrutura da Entrega 1)
+- **Item:** campo em `item/ModItems` com `register(...)` (entra sozinho na aba
+  criativa "Aquamarine"); `items/<nome>.json`, `models/item/<nome>.json`, textura
+  em `tools/gen_textures.py` e nome nos dois `lang`.
+- **Bloco:** `block/ModBlocks` + `ModItems.registerBlock`; blockstate, modelo,
+  loot table em `data/aquamarine/loot_table/blocks/` e tags de ferramenta.
+- **Receita da Forja:** `data/aquamarine/recipe/<nome>.json` com
+  `"type": "aquamarine:abyssal_forging"` (resto igual ao `crafting_shaped`).
+- **Tags:** chaves em `ModTags`; JSON em `data/aquamarine/tags/`.
+- **Config:** campos públicos em `config/AquamarineConfig` (gravados em
+  `config/aquamarine.json`; campos novos entram sozinhos no arquivo).
+- **Efeitos de Oricálcio:** `item/OrichalcumEffects` (`armorPieces`,
+  `hasFullSet`, `PRESSURE_REDUCTION_PER_PIECE` para a Pressão).
+- **Óculos:** `client/DivingGogglesVision` + `client/mixin/WaterFogEnvironmentMixin`.
 
 ## Convenções de código e arte
 - `src/main` = comum/servidor; `src/client` = só cliente (HUD, renderers).

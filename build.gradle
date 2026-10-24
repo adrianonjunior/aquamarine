@@ -39,6 +39,19 @@ test {
 	useJUnitPlatform()
 }
 
+// Teste de cliente com screenshots (src/gametest): `./gradlew runClientGameTest`.
+// Abre uma janela do jogo, então não faz parte do `build` nem do CI.
+fabricApi {
+	configureTests {
+		createSourceSet = true
+		modId = "aquamarine-gametest"
+		enableGameTests = false
+		enableClientGameTests = true
+		eula = true
+		clearRunDirectory = true
+	}
+}
+
 processResources {
 	def version = project.version
 	inputs.property "version", version
