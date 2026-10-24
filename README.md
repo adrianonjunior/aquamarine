@@ -30,4 +30,6 @@ O plano oficial acima pode estar desatualizado: em conflito, vale
 | docs/06-tecnico.md | Implementação, ambiente, build e convenções |
 | docs/07-roadmap.md | Ordem dos marcos, progresso e especificação da Entrega 1 |
 | prompts/estruturador.md | Prompt para o agente que inicia a implementação |
-| prompts/kraken-v1.md | Prompt dos agentes da Entrega 2 (Kraken v1), uso só após liberação |
+| prompts/orquestrador.md | Prompt do Codex orquestrador (Entrega 2); enviá-lo libera a fase |
+| prompts/kraken-v1.md | Corpo das Tasks dos agentes Claude (Entrega 2) |
+| prompts/kraken-modelagem.md | Corpo das Tasks dos agentes Codex (modelagem e QA) |

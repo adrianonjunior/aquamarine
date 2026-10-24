@@ -21,7 +21,8 @@ Decisões do Adriano, 24/10/2026.
 | Barra de vida | Barra de boss **customizada e bonita** (detalhes em [02-kraken.md](02-kraken.md)). |
 | Nomes dos itens | Português no jogo, com tradução inglesa. |
 | Publicação | Só com amigos por enquanto. Repositório privado `adrianonjunior/aquamarine`. |
-| Agentes | Vários em paralelo (regras em [../AGENTS.md](../AGENTS.md)). Codex Astra cuida das tarefas de controle do PC (jogo, screenshots, Blockbench). |
+| Agentes | Vários em paralelo, rodando no **Orca** (regras em [../AGENTS.md](../AGENTS.md)). Divisão fixa: **Claude** = código, texturas em pixel art e decisões criativas; **Codex** = modelagem 3D, animações, testes visuais, screenshots e controle do PC; um **Codex orquestrador** coordena as faixas pelo Orca ([../prompts/orquestrador.md](../prompts/orquestrador.md)). |
+| Modelagem 3D | O Codex modela por script (`.bbmodel` gerado, exportado para Java), conferindo no jogo; Blockbench só para ajustes. Contrato com o Claude em [06-tecnico.md](06-tecnico.md). Decidido em 24/10/2026. |
 | Fase do projeto | **Implementação liberada só para a Entrega 1** (agente Estruturador) em 24/10/2026, por pedido explícito do Adriano. O restante continua em planejamento até nova liberação. |
 | Escopo da v1 | **Núcleo + cidade completa:** materiais, Kraken completo (barra customizada, Pressão, invocação), Cidade Perdida com bioma, criaturas e Walker já bem acabados. |
 | Como se joga | Servidor dedicado Fabric com **5 ou mais jogadores**. Kraken com mais vida, mais tentáculos simultâneos e escala dinâmica de dificuldade pelo número de jogadores. |

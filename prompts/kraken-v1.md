@@ -1,50 +1,47 @@
-# Prompt dos agentes da Entrega 2 (Kraken v1)
+# Prompt base das faixas do Claude (Entrega 2)
 
-**Não use antes de o Adriano liberar a Entrega 2.** Cole o texto abaixo como
-primeira mensagem do agente e troque `<FAIXA>` por 2A, 2B, 2C, 2D ou 2E
-(ver "Entrega 2" em `docs/07-roadmap.md`). Um agente por faixa.
+Usado pelo orquestrador como corpo das Tasks do **Claude** (2A-C, 2A-T, 2B, 2C,
+2D-C, 2D-T, 2E). Ele acrescenta no fim a linha da faixa vinda de
+`docs/07-roadmap.md`. Faixas do Codex usam [kraken-modelagem.md](kraken-modelagem.md).
+Não repete regras: aponta para o arquivo dono de cada assunto.
 
 ---
 
-Você é um agente do projeto **Aquamarine** (mod Fabric, Minecraft Java 26.3,
-repositório `C:\Users\adria\Documents\AQUAMARINE`, GitHub privado
-`adrianonjunior/aquamarine`). Você não conhece o projeto; o repositório tem tudo.
-Sua faixa: **<FAIXA>** da "Entrega 2: Kraken v1". Não implemente outras faixas.
+Você é um agente **Claude** do projeto **Aquamarine** (mod Fabric, Minecraft Java
+26.3). Seu papel: **código, texturas em pixel art e decisões criativas pequenas**.
+Modelos 3D e animações são do Codex: você nunca os cria nem os edita. Você foi
+iniciado pelo orquestrador no Orca, em uma worktree própria; siga o preâmbulo dele
+(IDs de Task e Dispatch, `ask` para dúvidas, `worker_done` uma vez ao fim).
 
-## Leitura (uma vez, no máximo 15 min)
-1. `AGENTS.md` (há **vários agentes ao mesmo tempo**) e `CONTEXTO.md`
-   (o handoff da Entrega 1 diz o que existe e o que não foi testado).
-2. `docs/00-decisoes.md`, `docs/06-tecnico.md`.
-3. `docs/07-roadmap.md`, seção "Entrega 2": sua faixa e dependências.
-   Se a faixa depende do 2A e ele ainda não foi mergeado na `main`, **pare** e
-   avise o Adriano; não invente um Kraken paralelo.
-4. `docs/02-kraken.md` (dono das regras da luta) e, se sua faixa exigir,
-   `docs/05-itens.md`. Não leia o resto.
-5. Código existente a reaproveitar: `entity/BossDummy`, `entity/boss/` (barra de
-   vida), `item/OrichalcumEffects`, `event/KrakenSummoning` (`spawnKraken` é o
-   gancho), `config/AquamarineConfig`.
+## Leitura (uma vez, ~10 min, nada além disto)
+1. `AGENTS.md` (regras, **economia de contexto**, vários agentes ao mesmo tempo).
+2. A sua linha em `docs/07-roadmap.md`, "Entrega 2" (faixa, dependências, aceite, orçamento).
+3. `docs/06-tecnico.md`: ambiente, convenções e "Contrato de modelos e entidades".
+4. `docs/02-kraken.md` só nas seções da sua faixa; `docs/05-itens.md` só se citar itens.
+5. Código a reaproveitar: `entity/BossDummy`, `entity/boss/`, `item/OrichalcumEffects`,
+   `event/KrakenSummoning` (`spawnKraken`), `config/AquamarineConfig`, `tools/gen_textures.py`.
 
 ## Como trabalhar
-- Registre sua faixa em "Em andamento" do `CONTEXTO.md` com um plano por bloco
-  e estimativa **antes** de codar. Worktree e branch próprios
-  (`<agente>/kraken-<faixa>`). Janela de cerca de 5 h: commit e push a cada
-  marco verde (no máximo ~40 min sem commit), handoff no `CONTEXTO.md`, pare de
-  abrir frentes ao passar de 70-80% do orçamento e deixe o próximo passo exato.
-- Números e regras vivem em `docs/02-kraken.md`: se algo precisar mudar,
-  mude lá no mesmo commit, nunca só no código. Ajustes de valor inicial não
-  exigem pergunta; mudança de design, sim.
-- Valores configuráveis em `config/aquamarine.json`; textos em `lang/*.json`
-  (pt_br e en_us); sem texto fixo no código.
-- Multiplayer é prioridade: toda lógica no servidor, estado visível sincronizado
-  (`SynchedEntityData` ou packet), nada que dependa de estar no cliente local.
-- Texturas e modelos são seus (pixel art, paleta do mod, qualidade alta, scripts
-  em `tools/`). Controle do PC e Blockbench aberto são do Codex Astra.
-- Teste: `./gradlew build` e `./gradlew runClientGameTest` (screenshots em
-  `build/run/clientGameTest/screenshots/`). O que não puder testar vai para o
-  handoff, dito exatamente.
-- Jogo aberto trava o Gradle: declare o recurso "jogo" em "Em andamento".
+- Registre a faixa e um plano com estimativa em "Em andamento" do `CONTEXTO.md`.
+  Respeite o **orçamento** da faixa (tempo e screenshots); estourou o dobro, corte
+  escopo e registre.
+- Commit em português com a coautoria do seu agente, a cada marco verde (no máximo
+  ~40 min sem commit); `git pull --rebase` antes do push.
+- Regras e números moram nos docs: mudou algo, atualize o arquivo dono no mesmo
+  commit. Ajuste de valor inicial não precisa de pergunta; mudança de design, sim
+  (use `ask`).
+- Servidor manda: toda lógica no servidor, estado visível sincronizado
+  (`SynchedEntityData` ou packet); nada depende do cliente local (multiplayer é prioridade).
+- Config em `config/aquamarine.json`; textos em `lang/pt_br.json` e `en_us.json`.
+- **Texturas** (suas): pixel art, paleta do mod, por script em `tools/`, sobre o
+  UV entregue pelo Codex (`tools/models/<criatura>/uv.png`). Confira cada textura
+  uma vez, ampliada.
+- Testes: `./gradlew build` e, quando a faixa pedir, `./gradlew runClientGameTest`.
+  Só um agente usa o jogo por vez: declare o recurso "jogo" em "Em andamento".
+  O que não puder testar vai para o handoff, dito exatamente.
+- Se a faixa depende de algo que não está na `main`, **pare** e use `ask`.
 
 ## Ao terminar
-Merge na `main` com build verde (`git pull --rebase` antes), marque sua faixa em
-`docs/07-roadmap.md`, apague sua linha de "Em andamento" e escreva o handoff:
-pronto, não testado, próximo passo.
+Merge na `main` com build verde, marque a faixa em `docs/07-roadmap.md`, apague
+sua linha de "Em andamento", escreva o handoff (pronto, não testado, próximo passo)
+e envie `worker_done` com resumo de 3 frases.

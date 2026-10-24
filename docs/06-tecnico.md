@@ -149,3 +149,41 @@ com.aquamarine
   e `/kill` para iterar rápido.
 - Testes automáticos: Fabric GameTests para o escudo (absorve o dano e quebra
   no zero), a escala por jogadores e a Pressão.
+
+## Contrato de modelos e entidades (Entrega 2)
+Dono desta regra: aqui. Existe para o **Claude** (lógica e texturas) e o **Codex**
+(modelos e animações) trabalharem em paralelo sem pisar nos mesmos arquivos.
+Divisão de papéis: [00-decisoes.md](00-decisoes.md).
+
+**Método de modelagem (decidido):** o Codex escreve o modelo por **script**
+(`tools/models/<criatura>/build_model.py` gera `<criatura>.bbmodel`), exporta as
+classes Java e confere no jogo por screenshot. O Blockbench, se estiver
+instalado, só serve para conferir e ajustar; o resultado precisa ser
+reproduzível pelo script.
+
+**Arquivos do Codex** (ninguém mais edita): `tools/models/**` e, no cliente,
+`com.aquamarine.client.entity.<criatura>.*` (`<Criatura>Model`,
+`<Criatura>Animations`, `<Criatura>Renderer`, estado de render).
+**Arquivos do Claude:** a entidade, a IA, os dados, os sons, o resto do código e
+as texturas (`tools/gen_textures.py` e `assets/aquamarine/textures/entity/**`).
+
+**Ponte entre os dois:** a interface `com.aquamarine.entity.boss.KrakenView`
+(código comum, criada pelo Codex no **primeiro commit da faixa 2A-M**, mergeada na
+`main` em cerca de 30 minutos). A entidade do Claude a implementa; o renderer do
+Codex só lê dela. Conteúdo mínimo:
+- `AnimationState` por animação, com estes nomes: `idle`, `swim`, `emerge`,
+  `stunned`, `phaseChange`, `death`, e um por aviso de ataque de
+  [02-kraken.md](02-kraken.md): `slam`, `grab`, `ink`, `whirlpool`, `spawnYoung`,
+  `waterJet`, `roar`, `bolts`, `ambush`, `doubleGrab`;
+- `int phase()` (1 a 3) e `float shieldFraction()` (0 a 1) para rachaduras e brilho.
+
+**Mesma regra para o tentáculo e a Cria** (faixa 2D-M): `TentacleView` e
+`YoungKrakenView` seguem o formato acima, com as animações que a tabela de ataques exigir.
+
+**Entregáveis do modelo, em caminhos fixos:** `tools/models/<criatura>/uv.png`
+(gabarito de UV, entregue cedo), textura final em
+`assets/aquamarine/textures/entity/<criatura>/<criatura>.png` (pintada pelo Claude
+sobre o UV), classes Java no pacote do cliente acima. O renderer do Codex começa
+**sem textura final**: usa o gabarito até a faixa de textura terminar.
+
+**Mudança de contrato:** só com aval do Adriano; o novo valor entra aqui, antes do código.

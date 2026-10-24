@@ -15,7 +15,7 @@ assumindo que outro agente está editando arquivos agora.
 
 1. **Uma tarefa, um dono.** Registre a tarefa na tabela "Em andamento" de
    `CONTEXTO.md` antes de começar; não pegue tarefa que já tem dono.
-2. **Branch e worktree próprios** para trabalho de código:
+2. **Branch e worktree próprios** para trabalho de código. Iniciado pelo Orca (`worker-start`), a worktree já vem pronta: use-a. Sem Orca:
    `git worktree add ../aquamarine-<agente>-<tarefa> -b <agente>/<tarefa>`.
    Isso evita disputar `build/` e `.gradle/`. Docs pequenos podem ir direto na `main`.
 3. **Só edite os arquivos da sua tarefa.** Arquivos compartilhados (registro de
@@ -27,6 +27,7 @@ assumindo que outro agente está editando arquivos agora.
    (`git log`, `git blame`).
 6. **Ao terminar:** apague sua linha de "Em andamento", marque o marco em
    `docs/07-roadmap.md` e acrescente uma linha ao "Registro de handoff".
+7. **Se você foi iniciado pelo orquestrador** (o prompt traz IDs de Task e Dispatch), siga o preâmbulo dele: pergunte pelo comando `ask`, mande `worker_done` uma vez ao fim e pare. Papéis e arquivos de cada agente: [docs/06-tecnico.md](docs/06-tecnico.md), "Contrato de modelos e entidades".
 
 ### Recursos de uso exclusivo (um agente por vez)
 - **Jogo aberto (`runClient`)**: trava jars; com ele aberto, `genSources` e
@@ -38,8 +39,8 @@ assumindo que outro agente está editando arquivos agora.
 ### Quem faz o quê
 | Agente | Responsabilidade |
 |---|---|
-| **Claude** | Design, código do mod, texturas em pixel art, modelos, docs. |
-| **Codex Astra** | Controle do PC, por decisão do Adriano: abrir o jogo, testes visuais, screenshots, Blockbench. Devolve prints e logs para os outros lerem. |
+| **Claude** | Código do mod, **texturas em pixel art**, decisões criativas pequenas, docs. |
+| **Codex** | **Modelagem 3D e animações**, testes visuais, screenshots, controle do PC (nome interno: Codex Astra). Orquestra as faixas pelo Orca. Devolve prints e logs para os outros lerem. |
 | Outros | Registrar-se em "Em andamento" antes de começar. |
 
 ## Regras de documentação
@@ -52,3 +53,21 @@ assumindo que outro agente está editando arquivos agora.
 - Seções de ideia dizem "(ideia)" no título; nunca misture ideia com decisão na mesma seção.
 - Idioma de docs e commits: português. Commits terminam com a linha de
   coautoria do agente que os fez.
+
+## Economia de contexto (vale para todos; o Codex gasta mais, atenção redobrada)
+Dono desta regra: aqui; os prompts só apontam para cá.
+- **Leia o mínimo:** só os arquivos que a sua tarefa cita; use `grep` e trechos
+  (`| tail -n 30`); não releia o que já leu nem cole arquivo inteiro na conversa.
+- **Compile em silêncio** e leia só o fim ou os erros. Não rode a suíte inteira
+  para checar uma linha.
+- **Screenshots:** no máximo 6 por ciclo de verificação, abertos uma vez cada;
+  descreva o que viu em 1 linha em vez de reabrir.
+- **Tarefas curtas e fechadas:** cada faixa traz lista de arquivos, critério de
+  aceite e **orçamento** (tempo e screenshots). Estourou o dobro: corte escopo,
+  registre no handoff e pare.
+- **Codex especificamente:** esforço `medium` por padrão (só `high` onde a faixa
+  disser); sem exploração aberta do repositório; sem refatorar o que não é da
+  faixa; sem repetir tentativas iguais (2 falhas iguais: registre e escale).
+- **Orquestrador:** espere com `check --wait`, nunca em laço curto; leia saída de
+  worker só com limite pequeno (`--limit 30`) e só se `worker-list` pedir; não leia
+  código do mod.
