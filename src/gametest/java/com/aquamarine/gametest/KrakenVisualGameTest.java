@@ -3,6 +3,7 @@ package com.aquamarine.gametest;
 import com.aquamarine.client.KrakenEffects;
 import com.aquamarine.command.KrakenCommand;
 import com.aquamarine.entity.KrakenEntity;
+import com.aquamarine.entity.boss.KrakenMovement;
 import com.aquamarine.event.KrakenSummoning;
 
 import java.util.ArrayList;
@@ -19,14 +20,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Animações, partículas e rachaduras do Kraken (faixa de animação do Opus). Três Krakens lado a lado,
  * cada um numa animação, disparadas em tempos diferentes para a foto pegar todos no meio do aviso.
  * Confere no cliente que cada animação de ataque e de fase soltou partículas (KrakenEffects).
- * Chamado por {@link AquamarineClientGameTest}; 7 screenshots.
+ * Chamado por {@link AquamarineClientGameTest}; 8 screenshots.
  */
 final class KrakenVisualGameTest {
 	/** Distância entre os Krakens da fileira (blocos). */
@@ -108,6 +111,21 @@ final class KrakenVisualGameTest {
 		check(context.computeOnClient(mc -> KrakenEffects.emitted("shield")) > 0, "Kraken visual: as rachaduras não soltaram estilhaços");
 		aim(context, server, o);
 		shot(context, "26_kraken_rachaduras_fases_1_2_3");
+
+		// Locomoção: com a IA ligada o Kraken do meio nada pela arena, preso ao centro, e solta rastro.
+		Vec3 start = server.computeOnServer(s -> row(s).get(1).position());
+		server.runOnServer(s -> row(s).get(1).attacks().setEnabled(true));
+		context.waitTicks(200);
+		Vec3 now = server.computeOnServer(s -> row(s).get(1).position());
+		double moved = Math.sqrt(Mth.square(now.x - start.x) + Mth.square(now.z - start.z));
+		check(moved > 1.5, "Kraken visual: com a IA ligada o Kraken devia nadar, andou " + moved);
+		Vec3 home = Vec3.atBottomCenterOf(o.offset(0, 24, 0));
+		double fromHome = Math.sqrt(Mth.square(now.x - home.x) + Mth.square(now.z - home.z));
+		check(fromHome <= KrakenMovement.LEASH + 1.0, "Kraken visual: saiu do limite da arena, " + fromHome + " blocos do centro");
+		check(context.computeOnClient(mc -> KrakenEffects.emitted("trail")) > 0, "Kraken visual: nadando sem rastro");
+		aim(context, server, o);
+		shot(context, "27_kraken_nadando");
+		server.runOnServer(s -> row(s).get(1).attacks().setEnabled(false));
 
 		server.runCommand("kill @e[type=aquamarine:kraken]");
 		server.runCommand(String.format(Locale.ROOT, "forceload remove %d %d %d %d", o.getX() - 24, o.getZ() - 24, o.getX() + 24, o.getZ() + 24));

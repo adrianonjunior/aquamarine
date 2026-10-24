@@ -89,6 +89,8 @@ public final class KrakenEffects {
 			}
 			track.elapsed[i] = now;
 		}
+		body.anim = "trail";
+		trail(body, kraken);
 		body.anim = "shield";
 		shield(body, kraken, track);
 		track.phase = kraken.phase();
@@ -352,6 +354,21 @@ public final class KrakenEffects {
 		if (crossed(before, t, hit + 0.1F)) {
 			b.ring(ParticleTypes.BUBBLE_POP, b.at(0, 22, 0), 40, 28, 0.15);
 			b.burst(ParticleTypes.BUBBLE_COLUMN_UP, b.at(0, 22, 0), 30, 30, 0.0, 0.3, 0.0);
+		}
+	}
+
+	/** Rastro ao nadar: bolhas soltas pelas pontas dos tentáculos e atrás do manto, mais quanto mais rápido. */
+	private static void trail(Body b, KrakenEntity kraken) {
+		double speed = Math.sqrt(Mth.square(kraken.getX() - kraken.xo) + Mth.square(kraken.getZ() - kraken.zo));
+		if (speed < 0.02) {
+			return;
+		}
+		int count = speed > 0.07 ? 3 : speed > 0.04 ? 2 : 1;
+		for (int k = 0; k < count; k++) {
+			b.emit(ParticleTypes.BUBBLE, b.arm(b.random.nextInt(8), 1.0F, -20), 0, 0.04, 0);
+		}
+		if (b.every(3)) {
+			b.emit(ParticleTypes.BUBBLE_COLUMN_UP, b.at(b.rand(-6, 6), -26, -14), 0, 0.05, 0);
 		}
 	}
 

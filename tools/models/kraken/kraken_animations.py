@@ -338,5 +338,22 @@ BUILDERS = {
 }
 
 
+# Avisos maiores (pedido do Adriano): os ataques exageram rotação, deslocamento e escala sobre o desenho base.
+ATTACK_AMPLITUDE = {"rotation": 1.3, "position": 1.4, "scale": 1.4}
+
+
+def amplify(clip: Clip) -> Clip:
+    for (bone, channel), track in clip.tracks.items():
+        k = ATTACK_AMPLITUDE[channel]
+        for time, (vec, interp) in list(track.items()):
+            if channel == "scale":
+                vec = tuple(1.0 + (v - 1.0) * k for v in vec)
+            else:
+                vec = tuple(v * k for v in vec)
+            track[time] = (vec, interp)
+    return clip
+
+
 def build_all() -> dict[str, Clip]:
-    return {name: builder().finish() for name, builder in BUILDERS.items()}
+    clips = {name: builder().finish() for name, builder in BUILDERS.items()}
+    return {name: amplify(clip) if name in WARN else clip for name, clip in clips.items()}

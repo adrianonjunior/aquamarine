@@ -66,6 +66,7 @@ public final class KrakenRenderer<T extends Mob> extends MobRenderer<T, KrakenRe
 			copy(view.doubleGrabAnimation(), state.doubleGrab);
 			state.phase = view.phase();
 			state.shieldFraction = view.shieldFraction();
+			state.speed = (float) Math.sqrt(Mth.square(entity.getX() - entity.xo) + Mth.square(entity.getZ() - entity.zo));
 		}
 	}
 

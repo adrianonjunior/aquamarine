@@ -23,4 +23,6 @@ public final class KrakenRenderState extends LivingEntityRenderState {
 	public final AnimationState doubleGrab = new AnimationState();
 	public int phase = 1;
 	public float shieldFraction = 1.0F;
+	/** Deslocamento horizontal no último tick (blocos): o modelo nada mais forte quanto mais rápido. */
+	public float speed;
 }

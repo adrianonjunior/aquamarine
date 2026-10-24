@@ -134,6 +134,19 @@ public final class KrakenAttacks {
 		return whirlpoolTicks > 0;
 	}
 
+	/** Locomoção (KrakenMovement): os tentáculos ociosos acompanham o corpo; os ocupados num ataque ficam. */
+	public void follow(ServerLevel level, Vec3 delta) {
+		if (delta.lengthSqr() < 1.0E-6) {
+			return;
+		}
+		for (int slot = 0; slot < tentacles.length; slot++) {
+			TentacleEntity t = tentacle(level, slot);
+			if (t != null && !t.isBusy()) {
+				t.snapTo(t.getX() + delta.x, t.getY() + delta.y, t.getZ() + delta.z, t.getYRot(), 0.0F);
+			}
+		}
+	}
+
 	/** Ataques em aviso agora (para testes e para o limite de simultâneos). */
 	public int activeCount() {
 		return active.size();

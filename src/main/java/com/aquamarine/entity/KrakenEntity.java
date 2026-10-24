@@ -6,6 +6,7 @@ import com.aquamarine.config.AquamarineConfig;
 import com.aquamarine.entity.boss.AggroTracker;
 import com.aquamarine.entity.boss.AquamarineBossBar;
 import com.aquamarine.entity.boss.KrakenAttacks;
+import com.aquamarine.entity.boss.KrakenMovement;
 import com.aquamarine.entity.boss.KrakenRewards;
 import com.aquamarine.entity.boss.KrakenStats;
 import com.aquamarine.entity.boss.KrakenView;
@@ -117,6 +118,9 @@ public class KrakenEntity extends Mob implements KrakenView {
 	private final AggroTracker aggro = new AggroTracker();
 	/** Tentáculos e ataques (docs/02-kraken.md); a IA roda no servidor. */
 	private final KrakenAttacks attacks = new KrakenAttacks(this);
+	/** Deslocamento pela arena (servidor). */
+	private final KrakenMovement movement = new KrakenMovement();
+	private Vec3 lastPosition;
 	/** Quem causou dano nesta luta (recebe as recompensas se estiver por perto na vitória). */
 	private final Set<UUID> damagers = new HashSet<>();
 	private float scale = 1.0F;
@@ -596,10 +600,24 @@ public class KrakenEntity extends Mob implements KrakenView {
 		attacks.tick(level);
 		target = aggro.top(level.getGameTime());
 		faceTarget(level, inArena);
+		tickMovement(level, inArena, phase);
 		tickAbsence(level, inArena);
 		if (isAlive()) {
 			bossBar.update(realHealth(), realMaxHealth(), shield(), maxShield(), phase, shieldRegenerating);
 		}
+	}
+
+	/** Locomoção (KrakenMovement): só com a IA ligada, fora de atordoamento e transição. */
+	private void tickMovement(ServerLevel level, List<ServerPlayer> inArena, int phase) {
+		Player who = target == null ? null : level.getPlayerByUUID(target);
+		if (who == null && !inArena.isEmpty()) {
+			who = inArena.getFirst();
+		}
+		movement.tick(this, who, phase, isAlive() && canAct() && attacks.isEnabled(), attacks.activeCount() > 0, getRandom());
+		if (lastPosition != null) {
+			attacks.follow(level, position().subtract(lastPosition));
+		}
+		lastPosition = position();
 	}
 
 	private void tickCounters() {
@@ -714,6 +732,9 @@ public class KrakenEntity extends Mob implements KrakenView {
 		output.putInt("Phase", phase());
 		output.putFloat("Scale", scale);
 		output.putInt("AbsentTicks", absentTicks);
+		if (movement.home() != null) {
+			output.store("Home", Vec3.CODEC, movement.home());
+		}
 	}
 
 	@Override
@@ -725,6 +746,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 		entityData.set(DATA_MAX_SHIELD, input.getFloatOr("MaxShield", 0.0F));
 		entityData.set(DATA_SHIELD, input.getFloatOr("Shield", 0.0F));
 		absentTicks = input.getIntOr("AbsentTicks", 0);
+		input.read("Home", Vec3.CODEC).ifPresent(movement::setHome);
 		initialized = maxShield() > 0;
 		bossBar.setName(getDisplayName());
 	}
