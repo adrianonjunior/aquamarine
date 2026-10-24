@@ -111,7 +111,11 @@ com.aquamarine
   (mixin no renderer da barra de boss ou callback da Fabric API de HUD) e
   desenha a barra própria com `GuiGraphics`. Escudo, fase e dano recente vêm de
   `SynchedEntityData` ou de packet próprio.
-- **Pressão:** efeito de status próprio, nível 0 a 4 por jogador, atualizado por
+- **Pressão (implementada, faixa 2B):** `pressure/PressureState` (contas puras, JUnit),
+  `PressureManager` (tick no servidor; nível em atributos e empuxo; `PressurePayload` ao
+  próprio jogador), `client/pressure/PressureHud` (vinheta e batimentos), `effect/ModEffects`
+  (Tônico), `block/AnchorBuoyBlock` + `item/AnchorBuoyItem` (Boia; `collapse` é o gancho para
+  o Kraken destruir a plataforma). Plano original: nível 0 a 4 por jogador, atualizado por
   tick perto do Kraken (regras em [02-kraken.md](02-kraken.md)); ajusta a velocidade
   vertical e aplica os efeitos de cada nível.
 - **Escudo:** campos `shield` e `maxShield` no Kraken, sincronizados com

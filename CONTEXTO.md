@@ -14,10 +14,13 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| 2B: Pressão (0-4), Tônico, Boia de Âncora, vinheta e som (~2 h) | Claude Sonnet 5.5 | Gradle da worktree 2B; jogo (runClientGameTest) | 24/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+
+- 24/10/2026 · Claude Sonnet 5.5 (faixa 2B) · Pressão 0-4 (`pressure/PressureState` puro + `PressureManager` no servidor, nível enviado por `PressurePayload`), `PressureHud` (vinheta azul no 2, escura e pulsante no 4, batimentos do 3), Tônico de Pressão (item de beber + efeito `ModEffects.PRESSURE_TONIC`, devolve o frasco), Boia de Âncora (`AnchorBuoyItem`/`AnchorBuoyBlock`: 3x3 por 90 s, recarga de 30 s, `AnchorBuoyBlock.collapse` para o Kraken destruir), `OrichalcumEffects.pressureReduction`, texturas por script, receitas e lang pt/en.
+  **Testado:** `./gradlew build` (JUnit `PressureStateTest`) e `runClientGameTest` (`PressureGameTest`: níveis 1-4 por tempo, nado lento, ataque lento, dano do nível 4, nível no cliente, Boia, armadura completa, Tônico; 2 screenshots, vinheta do nível 4 conferida).
+  **Não testado:** multiplayer, fase 3 em jogo (6 s, só no JUnit), Tônico dado por poção de água real na receita (aceita qualquer `minecraft:potion`), Kraken a destruir a Boia. **Para a 2D-C:** soltura de agarrões 50% mais rápida usa `ModEffects.hasTonic(jogador)`; o Kraken derruba a Boia com `AnchorBuoyBlock.collapse(level, pos)`. Som é o batimento vanilla (`WARDEN_HEARTBEAT`), sem som abafado nem bolhas.
 
 - 24/10/2026 · Codex Astra (2A-M) · `KrakenView`, gabarito UV, `.bbmodel` com 191 cubos e 16 clips, classes do modelo/animações/renderer e registro do modelo; `compileJava compileClientJava` passou, `/aquamarine kraken` criou a entidade e os 16 comandos responderam `Animation <nome> played.`
   **Visual não verificado:** no mundo de QA florestal o Kraken surgiu em y=57 sob o terreno; as 9 capturas autorizadas foram usadas sem obter uma vista do modelo. **Próximo passo:** repetir a vista geral e poses em mundo aquático/câmera acima do chão; deixar 2A-M sem marcar até conferir a silhueta.

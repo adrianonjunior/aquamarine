@@ -40,12 +40,14 @@ final class PressureGameTest {
 		BlockPos o = base.offset(400, 0, 0);
 		int top = o.getY() + SIZE - 2; // y da superfície da água
 		server.runCommand("gamemode survival @a");
+		server.runCommand(String.format("forceload add %d %d %d %d", o.getX() - 16, o.getZ() - 16, o.getX() + 16, o.getZ() + 16));
+		context.waitTicks(20);
 		server.runCommand(String.format("fill %d %d %d %d %d %d minecraft:glass hollow", o.getX() - 11, o.getY() - 1, o.getZ() - 11,
 			o.getX() + 11, o.getY() + SIZE, o.getZ() + 11));
 		server.runCommand(String.format("fill %d %d %d %d %d %d minecraft:water", o.getX() - 10, o.getY(), o.getZ() - 10,
 			o.getX() + 10, top, o.getZ() + 10));
 		server.runCommand(String.format("fill %d %d %d %d %d %d minecraft:air", o.getX() - 10, top + 1, o.getZ() - 10,
-			o.getX() + 10, o.getY() + SIZE - 1, o.getZ() + 10));
+			o.getX() + 10, o.getY() + SIZE, o.getZ() + 10));
 		server.runOnServer(s -> {
 			ServerLevel level = s.overworld();
 			KrakenEntity kraken = KrakenSummoning.spawnAt(level, o.offset(8, 8, 8), o);
@@ -83,7 +85,11 @@ final class PressureGameTest {
 			player.snapTo(o.getX() + 0.5, top + 2.0, o.getZ() + 0.5);
 			player.setXRot(90.0F);
 			var result = player.gameMode.useItem(player, s.overworld(), player.getMainHandItem(), InteractionHand.MAIN_HAND);
-			check(result.consumesAction(), "Boia: não formou a plataforma");
+			var eye = player.getEyePosition();
+			var clip = s.overworld().clip(new net.minecraft.world.level.ClipContext(eye, eye.add(0, -4.5, 0),
+				net.minecraft.world.level.ClipContext.Block.OUTLINE, net.minecraft.world.level.ClipContext.Fluid.SOURCE_ONLY, player));
+			check(result.consumesAction(), "Boia: não formou a plataforma (" + result + ", " + clip.getType() + " " + clip.getBlockPos()
+				+ ", y=" + player.getY() + ", pitch=" + player.getXRot() + ", topY=" + top + ")");
 			check(player.getCooldowns().isOnCooldown(new ItemStack(ModItems.ANCHOR_BUOY)), "Boia: recarga de 30 s não começou");
 			check(player.getMainHandItem().getCount() == 1, "Boia: o item não foi consumido");
 			ServerLevel level = s.overworld();
