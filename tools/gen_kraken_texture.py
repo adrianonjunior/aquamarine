@@ -4,14 +4,14 @@ Uso (na raiz do repositório):
     python tools/gen_kraken_texture.py
 
 Escreve src/main/resources/assets/aquamarine/textures/entity/kraken/kraken.png.
-ATENÇÃO: tools/models/kraken/build_model.py copia o uv.png por cima desse arquivo; depois de
-rodá-lo, rode este script de novo.
+Também escreve kraken_glow.png (só o que brilha: rachaduras, olhos, ventosas).
+tools/models/kraken/build_model.py roda este script no fim; não copia mais o uv.png por cima.
 
 O modelo do Codex (KrakenModel.java) usa o desdobramento de caixa do jogo: para uma caixa
 w x h x d em (u, v): topo (u+d, v), base (u+d+w, v), esquerda (u, v+d), frente (u+d, v+d),
 direita (u+d+w, v+d), costas (u+2d+w, v+d). A lista CUBES repete as caixas do Java.
-As rachaduras são geometria (crack_75/50/25, mostradas conforme o escudo cai) e só precisam
-de uma cor viva; a textura funciona em qualquer escala porque cada face é pintada por
+As rachaduras são cascas sobre o manto (crack_75/50/25, mostradas conforme o escudo cai),
+transparentes fora das fendas; a textura funciona em qualquer escala porque cada face é pintada por
 padrão repetido e não por posição absoluta.
 """
 import math
@@ -24,6 +24,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.normpath(os.path.join(HERE, "..", "src", "main", "resources", "assets", "aquamarine",
                                     "textures", "entity", "kraken", "kraken.png"))
 SIZE = 128
+HEIGHT = 256
+GLOW_OUT = OUT.replace("kraken.png", "kraken_glow.png")
 rng = random.Random(7)
 
 
@@ -48,15 +50,14 @@ CUBES = [
     (112, 56, 4, 3, 4, "beak"),
     (0, 92, 4, 4, 5, "arm"), (24, 92, 3.3, 3.3, 7, "arm"), (48, 92, 2.92, 2.92, 7, "arm"),
     (72, 92, 2.54, 2.54, 7, "arm"), (96, 92, 2, 1, 2, "sucker"),
-    (0, 118, 1, .5, 12, "crack"), (16, 118, 10, .5, 1, "crack"), (28, 118, 1, .5, 10, "crack"),
 ]
 
-im = Image.new("RGBA", (SIZE, SIZE), (0, 0, 0, 0))
+im = Image.new("RGBA", (SIZE, HEIGHT), (0, 0, 0, 0))
 px = im.load()
 
 
 def put(x, y, col):
-    if 0 <= x < SIZE and 0 <= y < SIZE:
+    if 0 <= x < SIZE and 0 <= y < HEIGHT:
         px[x, y] = col
 
 
@@ -120,6 +121,66 @@ def box(u, v, w, h, d, style):
 for cube in CUBES:
     box(*cube)
 
+# --- Rachaduras: cascas sobre o manto (crack_75 coroa, crack_50 elevação, crack_25 placa), em
+# v >= 128. Fora das fendas fica transparente; as fendas se repetem em kraken_glow.png, que o
+# renderer desenha com luz própria (enxerga-se de longe na água escura).
+CRACK_SHELLS = [(0, 128, 10, 4, 12, 3), (48, 128, 16, 5, 18, 5), (0, 152, 20, 8, 24, 8)]
+glow = Image.new("RGBA", (SIZE, HEIGHT), (0, 0, 0, 0))
+gpx = glow.load()
+HALO = TEAL[4]
+
+
+def crack_line(x0, y0, fw, fh, sx, sy, length, branch, horizontal=None):
+    """Fenda em zigue-zague a partir de (sx, sy), dentro da face; às vezes se ramifica."""
+    x, y = sx, sy
+    dx, dy = (1 if sx < fw / 2 else -1), (1 if sy < fh / 2 else -1)
+    if horizontal is None:
+        horizontal = fw >= fh
+    for _ in range(length):
+        if not (0 <= x < fw and 0 <= y < fh):
+            break
+        for hx, hy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            ax, ay = x0 + x + hx, y0 + y + hy
+            if 0 <= x + hx < fw and 0 <= y + hy < fh and px[ax, ay][3] == 0:
+                put(ax, ay, HALO)
+                gpx[ax, ay] = (40, 150, 140, 255)
+        put(x0 + x, y0 + y, CRACK)
+        gpx[x0 + x, y0 + y] = (235, 255, 250, 255)
+        if branch and rng.random() < 0.12:
+            crack_line(x0, y0, fw, fh, x, y, length // 2, False, horizontal)
+        if horizontal:
+            x += dx
+            y += rng.choice((-1, 0, 0, 1))
+        else:
+            y += dy
+            x += rng.choice((-1, 0, 0, 1))
+
+
+def crack_face(x0, y0, fw, fh, count):
+    for _ in range(count):
+        edge = rng.randrange(4)
+        sx = rng.randrange(fw) if edge < 2 else (0 if edge == 2 else fw - 1)
+        sy = rng.randrange(fh) if edge >= 2 else (0 if edge == 0 else fh - 1)
+        crack_line(x0, y0, fw, fh, sx, sy, max(fw, fh), True)
+
+
+for u, v, w, h, d, count in CRACK_SHELLS:
+    crack_face(u + d, v, w, d, count + 1)          # topo: o que mais aparece de cima
+    for sx0, sw in ((u, d), (u + d, w), (u + d + w, d), (u + 2 * d + w, w)):  # laterais: fendas que descem
+        for _ in range(max(1, count // 2)):
+            crack_line(sx0, v + d, sw, h, rng.randrange(sw), 0, h, False, False)
+
+# Olhos acesos e ventosas com um brilho fraco (bioluminescência) na camada de luz.
+for x in range(96, 102):
+    for y in range(48, 52):
+        if px[x, y][3]:
+            gpx[x, y] = (200, 255, 240, 255)
+for x in range(96, 104):
+    for y in range(92, 96):
+        if px[x, y][3] and (x + y) % 2:
+            gpx[x, y] = (30, 90, 100, 255)
+
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 im.save(OUT, optimize=True)
-print("Textura do Kraken gravada em", OUT)
+glow.save(GLOW_OUT, optimize=True)
+print("Textura do Kraken gravada em", OUT, "e", GLOW_OUT)

@@ -7,139 +7,2808 @@ import net.minecraft.client.animation.KeyframeAnimations;
 
 import org.joml.Vector3f;
 
-/** Named animation clips matching the KrakenView contract. Attacks each have wind-up, hit and recovery. */
+/**
+ * GERADO por tools/models/kraken/build_model.py a partir de kraken_animations.py: não edite à mão.
+ * Clipes do contrato KrakenView. Ataques: antecipação e tremor até o fim do aviso ({@code *_IMPACT},
+ * em segundos, igual ao tempo de aviso de docs/02-kraken.md), golpe e retorno.
+ */
 public final class KrakenAnimations {
 	private static final AnimationChannel.Target ROT = AnimationChannel.Targets.ROTATION;
 	private static final AnimationChannel.Target POS = AnimationChannel.Targets.POSITION;
+	private static final AnimationChannel.Target SCALE = AnimationChannel.Targets.SCALE;
 	private static final AnimationChannel.Interpolation SMOOTH = AnimationChannel.Interpolations.CATMULLROM;
+	private static final AnimationChannel.Interpolation LINEAR = AnimationChannel.Interpolations.LINEAR;
 
-	public static final AnimationDefinition IDLE = clip(3.0F, true,
-		motion("mantle", POS, 3.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.7F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_0_segment_1", ROT, 3.0F, 0.0F, 0.0F, 0.0F, -3.0F, 0.0F, 0.0F, 3.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_4_segment_1", ROT, 3.0F, 0.0F, 0.0F, 0.0F, 3.0F, 0.0F, 0.0F, -3.0F, 0.0F, 0.0F, SMOOTH));
+	public static final float SLAM_IMPACT = 1.5F;
+	public static final float GRAB_IMPACT = 1.5F;
+	public static final float INK_IMPACT = 2F;
+	public static final float WHIRLPOOL_IMPACT = 2F;
+	public static final float SPAWN_YOUNG_IMPACT = 2F;
+	public static final float WATER_JET_IMPACT = 1.2F;
+	public static final float ROAR_IMPACT = 1.5F;
+	public static final float BOLTS_IMPACT = 2F;
+	public static final float AMBUSH_IMPACT = 2F;
+	public static final float DOUBLE_GRAB_IMPACT = 1.5F;
 
-	public static final AnimationDefinition SWIM = clip(1.4F, true,
-		motion("mantle", ROT, 1.4F, -2.0F, 0.0F, 0.0F, 4.0F, 0.0F, 0.0F, -2.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_1_segment_0", ROT, 1.4F, -9.0F, 0.0F, 0.0F, 12.0F, 0.0F, 0.0F, -9.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_5_segment_0", ROT, 1.4F, 12.0F, 0.0F, 0.0F, -9.0F, 0.0F, 0.0F, 12.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_3_segment_1", ROT, 1.4F, 8.0F, 0.0F, 0.0F, -10.0F, 0.0F, 0.0F, 8.0F, 0.0F, 0.0F, SMOOTH));
+	public static final AnimationDefinition IDLE = AnimationDefinition.Builder.withLength(4F).looping()
+		.addAnimation("mantle", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.8F, 0F), SMOOTH),
+			k(4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.8F, 0F), SMOOTH),
+			k(4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.8F, 0F), SMOOTH),
+			k(4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.8F, 0F), SMOOTH),
+			k(4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.8F, 0F), SMOOTH),
+			k(4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.8F, 0F), SMOOTH),
+			k(4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.8F, 0F), SMOOTH),
+			k(4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.8F, 0F), SMOOTH),
+			k(4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.8F, 0F), SMOOTH),
+			k(4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.8F, 0F), SMOOTH),
+			k(4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(SCALE,
+			k(0F, scale(1F, 1F, 1F), SMOOTH),
+			k(2F, scale(1.03F, 1.06F, 1.03F), SMOOTH),
+			k(4F, scale(1F, 1F, 1F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(2F, rot(2.5F, 0F, 0F), SMOOTH),
+			k(4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(3.2211F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(4.9818F, 0F, 0F), SMOOTH),
+			k(1F, rot(3.8242F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(0.4265F, 0F, 0F), SMOOTH),
+			k(2F, rot(-3.2211F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(-4.9818F, 0F, 0F), SMOOTH),
+			k(3F, rot(-3.8242F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(-0.4265F, 0F, 0F), SMOOTH),
+			k(4F, rot(3.2211F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(6.8981F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(5.719F, 0F, 0F), SMOOTH),
+			k(1F, rot(1.1898F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(-4.0364F, 0F, 0F), SMOOTH),
+			k(2F, rot(-6.8981F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(-5.719F, 0F, 0F), SMOOTH),
+			k(3F, rot(-1.1898F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(4.0364F, 0F, 0F), SMOOTH),
+			k(4F, rot(6.8981F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(7.7689F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(2.2806F, 0F, 0F), SMOOTH),
+			k(1F, rot(-4.5436F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(-8.7063F, 0F, 0F), SMOOTH),
+			k(2F, rot(-7.7689F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(-2.2806F, 0F, 0F), SMOOTH),
+			k(3F, rot(4.5436F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(8.7063F, 0F, 0F), SMOOTH),
+			k(4F, rot(7.7689F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(4.9818F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(3.8242F, 0F, 0F), SMOOTH),
+			k(1F, rot(0.4265F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(-3.2211F, 0F, 0F), SMOOTH),
+			k(2F, rot(-4.9818F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(-3.8242F, 0F, 0F), SMOOTH),
+			k(3F, rot(-0.4265F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(3.2211F, 0F, 0F), SMOOTH),
+			k(4F, rot(4.9818F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(5.719F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(1.1898F, 0F, 0F), SMOOTH),
+			k(1F, rot(-4.0364F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(-6.8981F, 0F, 0F), SMOOTH),
+			k(2F, rot(-5.719F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(-1.1898F, 0F, 0F), SMOOTH),
+			k(3F, rot(4.0364F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(6.8981F, 0F, 0F), SMOOTH),
+			k(4F, rot(5.719F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(2.2806F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-4.5436F, 0F, 0F), SMOOTH),
+			k(1F, rot(-8.7063F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(-7.7689F, 0F, 0F), SMOOTH),
+			k(2F, rot(-2.2806F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(4.5436F, 0F, 0F), SMOOTH),
+			k(3F, rot(8.7063F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(7.7689F, 0F, 0F), SMOOTH),
+			k(4F, rot(2.2806F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(3.8242F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(0.4265F, 0F, 0F), SMOOTH),
+			k(1F, rot(-3.2211F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(-4.9818F, 0F, 0F), SMOOTH),
+			k(2F, rot(-3.8242F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(-0.4265F, 0F, 0F), SMOOTH),
+			k(3F, rot(3.2211F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(4.9818F, 0F, 0F), SMOOTH),
+			k(4F, rot(3.8242F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(1.1898F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-4.0364F, 0F, 0F), SMOOTH),
+			k(1F, rot(-6.8981F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(-5.719F, 0F, 0F), SMOOTH),
+			k(2F, rot(-1.1898F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(4.0364F, 0F, 0F), SMOOTH),
+			k(3F, rot(6.8981F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(5.719F, 0F, 0F), SMOOTH),
+			k(4F, rot(1.1898F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(-4.5436F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-8.7063F, 0F, 0F), SMOOTH),
+			k(1F, rot(-7.7689F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(-2.2806F, 0F, 0F), SMOOTH),
+			k(2F, rot(4.5436F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(8.7063F, 0F, 0F), SMOOTH),
+			k(3F, rot(7.7689F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(2.2806F, 0F, 0F), SMOOTH),
+			k(4F, rot(-4.5436F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0.4265F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-3.2211F, 0F, 0F), SMOOTH),
+			k(1F, rot(-4.9818F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(-3.8242F, 0F, 0F), SMOOTH),
+			k(2F, rot(-0.4265F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(3.2211F, 0F, 0F), SMOOTH),
+			k(3F, rot(4.9818F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(3.8242F, 0F, 0F), SMOOTH),
+			k(4F, rot(0.4265F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(-4.0364F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-6.8981F, 0F, 0F), SMOOTH),
+			k(1F, rot(-5.719F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(-1.1898F, 0F, 0F), SMOOTH),
+			k(2F, rot(4.0364F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(6.8981F, 0F, 0F), SMOOTH),
+			k(3F, rot(5.719F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(1.1898F, 0F, 0F), SMOOTH),
+			k(4F, rot(-4.0364F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(-8.7063F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-7.7689F, 0F, 0F), SMOOTH),
+			k(1F, rot(-2.2806F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(4.5436F, 0F, 0F), SMOOTH),
+			k(2F, rot(8.7063F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(7.7689F, 0F, 0F), SMOOTH),
+			k(3F, rot(2.2806F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(-4.5436F, 0F, 0F), SMOOTH),
+			k(4F, rot(-8.7063F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(-3.2211F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-4.9818F, 0F, 0F), SMOOTH),
+			k(1F, rot(-3.8242F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(-0.4265F, 0F, 0F), SMOOTH),
+			k(2F, rot(3.2211F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(4.9818F, 0F, 0F), SMOOTH),
+			k(3F, rot(3.8242F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(0.4265F, 0F, 0F), SMOOTH),
+			k(4F, rot(-3.2211F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(-6.8981F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-5.719F, 0F, 0F), SMOOTH),
+			k(1F, rot(-1.1898F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(4.0364F, 0F, 0F), SMOOTH),
+			k(2F, rot(6.8981F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(5.719F, 0F, 0F), SMOOTH),
+			k(3F, rot(1.1898F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(-4.0364F, 0F, 0F), SMOOTH),
+			k(4F, rot(-6.8981F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(-7.7689F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-2.2806F, 0F, 0F), SMOOTH),
+			k(1F, rot(4.5436F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(8.7063F, 0F, 0F), SMOOTH),
+			k(2F, rot(7.7689F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(2.2806F, 0F, 0F), SMOOTH),
+			k(3F, rot(-4.5436F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(-8.7063F, 0F, 0F), SMOOTH),
+			k(4F, rot(-7.7689F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(-4.9818F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-3.8242F, 0F, 0F), SMOOTH),
+			k(1F, rot(-0.4265F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(3.2211F, 0F, 0F), SMOOTH),
+			k(2F, rot(4.9818F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(3.8242F, 0F, 0F), SMOOTH),
+			k(3F, rot(0.4265F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(-3.2211F, 0F, 0F), SMOOTH),
+			k(4F, rot(-4.9818F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(-5.719F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-1.1898F, 0F, 0F), SMOOTH),
+			k(1F, rot(4.0364F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(6.8981F, 0F, 0F), SMOOTH),
+			k(2F, rot(5.719F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(1.1898F, 0F, 0F), SMOOTH),
+			k(3F, rot(-4.0364F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(-6.8981F, 0F, 0F), SMOOTH),
+			k(4F, rot(-5.719F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(-2.2806F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(4.5436F, 0F, 0F), SMOOTH),
+			k(1F, rot(8.7063F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(7.7689F, 0F, 0F), SMOOTH),
+			k(2F, rot(2.2806F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(-4.5436F, 0F, 0F), SMOOTH),
+			k(3F, rot(-8.7063F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(-7.7689F, 0F, 0F), SMOOTH),
+			k(4F, rot(-2.2806F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(-3.8242F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-0.4265F, 0F, 0F), SMOOTH),
+			k(1F, rot(3.2211F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(4.9818F, 0F, 0F), SMOOTH),
+			k(2F, rot(3.8242F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(0.4265F, 0F, 0F), SMOOTH),
+			k(3F, rot(-3.2211F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(-4.9818F, 0F, 0F), SMOOTH),
+			k(4F, rot(-3.8242F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(-1.1898F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(4.0364F, 0F, 0F), SMOOTH),
+			k(1F, rot(6.8981F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(5.719F, 0F, 0F), SMOOTH),
+			k(2F, rot(1.1898F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(-4.0364F, 0F, 0F), SMOOTH),
+			k(3F, rot(-6.8981F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(-5.719F, 0F, 0F), SMOOTH),
+			k(4F, rot(-1.1898F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(4.5436F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(8.7063F, 0F, 0F), SMOOTH),
+			k(1F, rot(7.7689F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(2.2806F, 0F, 0F), SMOOTH),
+			k(2F, rot(-4.5436F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(-8.7063F, 0F, 0F), SMOOTH),
+			k(3F, rot(-7.7689F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(-2.2806F, 0F, 0F), SMOOTH),
+			k(4F, rot(4.5436F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(-0.4265F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(3.2211F, 0F, 0F), SMOOTH),
+			k(1F, rot(4.9818F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(3.8242F, 0F, 0F), SMOOTH),
+			k(2F, rot(0.4265F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(-3.2211F, 0F, 0F), SMOOTH),
+			k(3F, rot(-4.9818F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(-3.8242F, 0F, 0F), SMOOTH),
+			k(4F, rot(-0.4265F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(4.0364F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(6.8981F, 0F, 0F), SMOOTH),
+			k(1F, rot(5.719F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(1.1898F, 0F, 0F), SMOOTH),
+			k(2F, rot(-4.0364F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(-6.8981F, 0F, 0F), SMOOTH),
+			k(3F, rot(-5.719F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(-1.1898F, 0F, 0F), SMOOTH),
+			k(4F, rot(4.0364F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(8.7063F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(7.7689F, 0F, 0F), SMOOTH),
+			k(1F, rot(2.2806F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(-4.5436F, 0F, 0F), SMOOTH),
+			k(2F, rot(-8.7063F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(-7.7689F, 0F, 0F), SMOOTH),
+			k(3F, rot(-2.2806F, 0F, 0F), SMOOTH),
+			k(3.5F, rot(4.5436F, 0F, 0F), SMOOTH),
+			k(4F, rot(8.7063F, 0F, 0F), SMOOTH)))
+		.build();
 
-	public static final AnimationDefinition EMERGE = clip(1.8F, false,
-		motion("mantle", POS, 1.8F, 0.0F, 5.0F, 0.0F, 0.0F, -8.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("head", ROT, 1.8F, 8.0F, 0.0F, 0.0F, -10.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_0_segment_0", ROT, 1.8F, 0.0F, 0.0F, 0.0F, -18.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH));
+	public static final AnimationDefinition SWIM = AnimationDefinition.Builder.withLength(1.4F).looping()
+		.addAnimation("mantle", new AnimationChannel(SCALE,
+			k(0F, scale(1F, 1F, 1F), SMOOTH),
+			k(0.45F, scale(0.9F, 1.08F, 0.9F), SMOOTH),
+			k(1.4F, scale(1F, 1F, 1F), SMOOTH)))
+		.addAnimation("arm_0_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(14F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-20F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(14F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(8F, 0F, 0F), SMOOTH),
+			k(0.3F, rot(10F, 0F, 0F), SMOOTH),
+			k(0.75F, rot(-16F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(8F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(14F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-20F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(14F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(8F, 0F, 0F), SMOOTH),
+			k(0.3F, rot(10F, 0F, 0F), SMOOTH),
+			k(0.75F, rot(-16F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(8F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(14F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-20F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(14F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(8F, 0F, 0F), SMOOTH),
+			k(0.3F, rot(10F, 0F, 0F), SMOOTH),
+			k(0.75F, rot(-16F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(8F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(14F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-20F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(14F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(8F, 0F, 0F), SMOOTH),
+			k(0.3F, rot(10F, 0F, 0F), SMOOTH),
+			k(0.75F, rot(-16F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(8F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(14F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-20F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(14F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(8F, 0F, 0F), SMOOTH),
+			k(0.3F, rot(10F, 0F, 0F), SMOOTH),
+			k(0.75F, rot(-16F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(8F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(14F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-20F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(14F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(8F, 0F, 0F), SMOOTH),
+			k(0.3F, rot(10F, 0F, 0F), SMOOTH),
+			k(0.75F, rot(-16F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(8F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(14F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-20F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(14F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(8F, 0F, 0F), SMOOTH),
+			k(0.3F, rot(10F, 0F, 0F), SMOOTH),
+			k(0.75F, rot(-16F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(8F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(14F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(-20F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(14F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(8F, 0F, 0F), SMOOTH),
+			k(0.3F, rot(10F, 0F, 0F), SMOOTH),
+			k(0.75F, rot(-16F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(8F, 0F, 0F), SMOOTH)))
+		.build();
 
-	public static final AnimationDefinition STUNNED = clip(1.1F, true,
-		motion("mantle", ROT, 1.1F, 0.0F, -7.0F, 4.0F, 0.0F, 7.0F, -4.0F, 0.0F, -7.0F, 4.0F, SMOOTH),
-		motion("arm_0_segment_0", ROT, 1.1F, -22.0F, 0.0F, 0.0F, 10.0F, 0.0F, 0.0F, -22.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_4_segment_0", ROT, 1.1F, 10.0F, 0.0F, 0.0F, -22.0F, 0.0F, 0.0F, 10.0F, 0.0F, 0.0F, SMOOTH));
+	public static final AnimationDefinition EMERGE = AnimationDefinition.Builder.withLength(2.2F)
+		.addAnimation("mantle", new AnimationChannel(POS,
+			k(0F, pos(0F, -18F, 0F), SMOOTH),
+			k(1.3F, pos(0F, 1.8F, 0F), SMOOTH),
+			k(1.7F, pos(0F, -0.4F, 0F), SMOOTH),
+			k(2.2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(POS,
+			k(0F, pos(0F, -18F, 0F), SMOOTH),
+			k(1.3F, pos(0F, 1.8F, 0F), SMOOTH),
+			k(1.7F, pos(0F, -0.4F, 0F), SMOOTH),
+			k(2.2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0", new AnimationChannel(POS,
+			k(0F, pos(0F, -18F, 0F), SMOOTH),
+			k(1.3F, pos(0F, 1.8F, 0F), SMOOTH),
+			k(1.7F, pos(0F, -0.4F, 0F), SMOOTH),
+			k(2.2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1", new AnimationChannel(POS,
+			k(0F, pos(0F, -18F, 0F), SMOOTH),
+			k(1.3F, pos(0F, 1.8F, 0F), SMOOTH),
+			k(1.7F, pos(0F, -0.4F, 0F), SMOOTH),
+			k(2.2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2", new AnimationChannel(POS,
+			k(0F, pos(0F, -18F, 0F), SMOOTH),
+			k(1.3F, pos(0F, 1.8F, 0F), SMOOTH),
+			k(1.7F, pos(0F, -0.4F, 0F), SMOOTH),
+			k(2.2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3", new AnimationChannel(POS,
+			k(0F, pos(0F, -18F, 0F), SMOOTH),
+			k(1.3F, pos(0F, 1.8F, 0F), SMOOTH),
+			k(1.7F, pos(0F, -0.4F, 0F), SMOOTH),
+			k(2.2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4", new AnimationChannel(POS,
+			k(0F, pos(0F, -18F, 0F), SMOOTH),
+			k(1.3F, pos(0F, 1.8F, 0F), SMOOTH),
+			k(1.7F, pos(0F, -0.4F, 0F), SMOOTH),
+			k(2.2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5", new AnimationChannel(POS,
+			k(0F, pos(0F, -18F, 0F), SMOOTH),
+			k(1.3F, pos(0F, 1.8F, 0F), SMOOTH),
+			k(1.7F, pos(0F, -0.4F, 0F), SMOOTH),
+			k(2.2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6", new AnimationChannel(POS,
+			k(0F, pos(0F, -18F, 0F), SMOOTH),
+			k(1.3F, pos(0F, 1.8F, 0F), SMOOTH),
+			k(1.7F, pos(0F, -0.4F, 0F), SMOOTH),
+			k(2.2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7", new AnimationChannel(POS,
+			k(0F, pos(0F, -18F, 0F), SMOOTH),
+			k(1.3F, pos(0F, 1.8F, 0F), SMOOTH),
+			k(1.7F, pos(0F, -0.4F, 0F), SMOOTH),
+			k(2.2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(ROT,
+			k(0F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(14F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-35F, 0F, 0F), SMOOTH),
+			k(0.9F, rot(-10F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(30F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(-12F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(10F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-35F, 0F, 0F), SMOOTH),
+			k(0.9F, rot(-10F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(30F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(-12F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(10F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-35F, 0F, 0F), SMOOTH),
+			k(0.9F, rot(-10F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(30F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(-12F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(10F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-35F, 0F, 0F), SMOOTH),
+			k(0.9F, rot(-10F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(30F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(-12F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(10F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-35F, 0F, 0F), SMOOTH),
+			k(0.9F, rot(-10F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(30F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(-12F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(10F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-35F, 0F, 0F), SMOOTH),
+			k(0.9F, rot(-10F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(30F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(-12F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(10F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-35F, 0F, 0F), SMOOTH),
+			k(0.9F, rot(-10F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(30F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(-12F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(10F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-35F, 0F, 0F), SMOOTH),
+			k(0.9F, rot(-10F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(30F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(-12F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(10F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(0F, 0F, 0F), SMOOTH)))
+		.build();
 
-	public static final AnimationDefinition PHASE_CHANGE = clip(2.2F, false,
-		motion("mantle", ROT, 2.2F, -12.0F, 0.0F, 0.0F, 15.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("head", ROT, 2.2F, 0.0F, 0.0F, -8.0F, 0.0F, 0.0F, 12.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_0_segment_0", ROT, 2.2F, 0.0F, 0.0F, 0.0F, -28.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_2_segment_0", ROT, 2.2F, 0.0F, 0.0F, 0.0F, -28.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_4_segment_0", ROT, 2.2F, 0.0F, 0.0F, 0.0F, -28.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_6_segment_0", ROT, 2.2F, 0.0F, 0.0F, 0.0F, -28.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH));
+	public static final AnimationDefinition STUNNED = AnimationDefinition.Builder.withLength(1.2F).looping()
+		.addAnimation("mantle", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, -9F), SMOOTH),
+			k(0.6F, rot(0F, 0F, 9F), SMOOTH),
+			k(1.2F, rot(0F, 0F, -9F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(ROT,
+			k(0F, rot(14F, 0F, 7F), SMOOTH),
+			k(0.6F, rot(14F, 0F, -7F), SMOOTH),
+			k(1.2F, rot(14F, 0F, 7F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(POS,
+			k(0F, pos(0F, -1.2F, 0F), SMOOTH),
+			k(0.6F, pos(0F, -1.8F, 0F), SMOOTH),
+			k(1.2F, pos(0F, -1.2F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(POS,
+			k(0F, pos(0F, -1.2F, 0F), SMOOTH),
+			k(0.6F, pos(0F, -1.8F, 0F), SMOOTH),
+			k(1.2F, pos(0F, -1.2F, 0F), SMOOTH)))
+		.addAnimation("arm_0", new AnimationChannel(POS,
+			k(0F, pos(0F, -1.2F, 0F), SMOOTH),
+			k(0.6F, pos(0F, -1.8F, 0F), SMOOTH),
+			k(1.2F, pos(0F, -1.2F, 0F), SMOOTH)))
+		.addAnimation("arm_1", new AnimationChannel(POS,
+			k(0F, pos(0F, -1.2F, 0F), SMOOTH),
+			k(0.6F, pos(0F, -1.8F, 0F), SMOOTH),
+			k(1.2F, pos(0F, -1.2F, 0F), SMOOTH)))
+		.addAnimation("arm_2", new AnimationChannel(POS,
+			k(0F, pos(0F, -1.2F, 0F), SMOOTH),
+			k(0.6F, pos(0F, -1.8F, 0F), SMOOTH),
+			k(1.2F, pos(0F, -1.2F, 0F), SMOOTH)))
+		.addAnimation("arm_3", new AnimationChannel(POS,
+			k(0F, pos(0F, -1.2F, 0F), SMOOTH),
+			k(0.6F, pos(0F, -1.8F, 0F), SMOOTH),
+			k(1.2F, pos(0F, -1.2F, 0F), SMOOTH)))
+		.addAnimation("arm_4", new AnimationChannel(POS,
+			k(0F, pos(0F, -1.2F, 0F), SMOOTH),
+			k(0.6F, pos(0F, -1.8F, 0F), SMOOTH),
+			k(1.2F, pos(0F, -1.2F, 0F), SMOOTH)))
+		.addAnimation("arm_5", new AnimationChannel(POS,
+			k(0F, pos(0F, -1.2F, 0F), SMOOTH),
+			k(0.6F, pos(0F, -1.8F, 0F), SMOOTH),
+			k(1.2F, pos(0F, -1.2F, 0F), SMOOTH)))
+		.addAnimation("arm_6", new AnimationChannel(POS,
+			k(0F, pos(0F, -1.2F, 0F), SMOOTH),
+			k(0.6F, pos(0F, -1.8F, 0F), SMOOTH),
+			k(1.2F, pos(0F, -1.2F, 0F), SMOOTH)))
+		.addAnimation("arm_7", new AnimationChannel(POS,
+			k(0F, pos(0F, -1.2F, 0F), SMOOTH),
+			k(0.6F, pos(0F, -1.8F, 0F), SMOOTH),
+			k(1.2F, pos(0F, -1.2F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-26F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-30F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-26F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-6F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-6F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-6F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-26F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-26F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-26F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-30F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-26F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-6F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-6F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-6F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-26F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-26F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-26F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-30F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-26F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-6F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-6F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-6F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-26F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-26F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-26F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-30F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-26F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-6F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-6F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-6F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(-26F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-26F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(-10F, 0F, 0F), SMOOTH),
+			k(0.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH)))
+		.build();
 
-	public static final AnimationDefinition DEATH = clip(2.4F, false,
-		motion("mantle", ROT, 2.4F, 0.0F, 0.0F, 0.0F, 25.0F, 0.0F, 32.0F, 80.0F, 0.0F, 90.0F, SMOOTH),
-		motion("head", ROT, 2.4F, 0.0F, 0.0F, 0.0F, -25.0F, 0.0F, -32.0F, -45.0F, 0.0F, -50.0F, SMOOTH),
-		motion("arm_0_segment_0", ROT, 2.4F, 0.0F, 0.0F, 0.0F, 35.0F, 0.0F, 0.0F, 60.0F, 0.0F, 0.0F, SMOOTH));
+	public static final AnimationDefinition PHASE_CHANGE = AnimationDefinition.Builder.withLength(3F)
+		.addAnimation("mantle", new AnimationChannel(SCALE,
+			k(0F, scale(1F, 1F, 1F), SMOOTH),
+			k(0.8F, scale(0.86F, 0.9F, 0.86F), SMOOTH),
+			k(0.85F, scale(0.89F, 0.89F, 0.89F), LINEAR),
+			k(0.93F, scale(0.83F, 0.83F, 0.83F), LINEAR),
+			k(1.01F, scale(0.89F, 0.89F, 0.89F), LINEAR),
+			k(1.2F, scale(1.22F, 1.18F, 1.22F), LINEAR),
+			k(1.9F, scale(1.15F, 1.15F, 1.15F), SMOOTH),
+			k(3F, scale(1F, 1F, 1F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(0.8F, pos(0F, -1.6F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1.2F, 0F), LINEAR),
+			k(3F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(0.8F, pos(0F, -1.6F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1.2F, 0F), LINEAR),
+			k(3F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(0.8F, pos(0F, -1.6F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1.2F, 0F), LINEAR),
+			k(3F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(0.8F, pos(0F, -1.6F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1.2F, 0F), LINEAR),
+			k(3F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(0.8F, pos(0F, -1.6F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1.2F, 0F), LINEAR),
+			k(3F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(0.8F, pos(0F, -1.6F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1.2F, 0F), LINEAR),
+			k(3F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(0.8F, pos(0F, -1.6F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1.2F, 0F), LINEAR),
+			k(3F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(0.8F, pos(0F, -1.6F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1.2F, 0F), LINEAR),
+			k(3F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(0.8F, pos(0F, -1.6F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1.2F, 0F), LINEAR),
+			k(3F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(0.8F, pos(0F, -1.6F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1.2F, 0F), LINEAR),
+			k(3F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(10F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-24F, 0F, 0F), LINEAR),
+			k(1.9F, rot(-20F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-24F, 0F, 0F), SMOOTH),
+			k(0.85F, rot(-20F, 0F, 0F), LINEAR),
+			k(0.93F, rot(-28F, 0F, 0F), LINEAR),
+			k(1.01F, rot(-20F, 0F, 0F), LINEAR),
+			k(1.2F, rot(48F, 0F, 0F), LINEAR),
+			k(1.9F, rot(40F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-24F, 0F, 0F), SMOOTH),
+			k(0.85F, rot(-20F, 0F, 0F), LINEAR),
+			k(0.93F, rot(-28F, 0F, 0F), LINEAR),
+			k(1.01F, rot(-20F, 0F, 0F), LINEAR),
+			k(1.2F, rot(48F, 0F, 0F), LINEAR),
+			k(1.9F, rot(40F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-24F, 0F, 0F), SMOOTH),
+			k(0.85F, rot(-20F, 0F, 0F), LINEAR),
+			k(0.93F, rot(-28F, 0F, 0F), LINEAR),
+			k(1.01F, rot(-20F, 0F, 0F), LINEAR),
+			k(1.2F, rot(48F, 0F, 0F), LINEAR),
+			k(1.9F, rot(40F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-24F, 0F, 0F), SMOOTH),
+			k(0.85F, rot(-20F, 0F, 0F), LINEAR),
+			k(0.93F, rot(-28F, 0F, 0F), LINEAR),
+			k(1.01F, rot(-20F, 0F, 0F), LINEAR),
+			k(1.2F, rot(48F, 0F, 0F), LINEAR),
+			k(1.9F, rot(40F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-24F, 0F, 0F), SMOOTH),
+			k(0.85F, rot(-20F, 0F, 0F), LINEAR),
+			k(0.93F, rot(-28F, 0F, 0F), LINEAR),
+			k(1.01F, rot(-20F, 0F, 0F), LINEAR),
+			k(1.2F, rot(48F, 0F, 0F), LINEAR),
+			k(1.9F, rot(40F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-24F, 0F, 0F), SMOOTH),
+			k(0.85F, rot(-20F, 0F, 0F), LINEAR),
+			k(0.93F, rot(-28F, 0F, 0F), LINEAR),
+			k(1.01F, rot(-20F, 0F, 0F), LINEAR),
+			k(1.2F, rot(48F, 0F, 0F), LINEAR),
+			k(1.9F, rot(40F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-24F, 0F, 0F), SMOOTH),
+			k(0.85F, rot(-20F, 0F, 0F), LINEAR),
+			k(0.93F, rot(-28F, 0F, 0F), LINEAR),
+			k(1.01F, rot(-20F, 0F, 0F), LINEAR),
+			k(1.2F, rot(48F, 0F, 0F), LINEAR),
+			k(1.9F, rot(40F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-24F, 0F, 0F), SMOOTH),
+			k(0.85F, rot(-20F, 0F, 0F), LINEAR),
+			k(0.93F, rot(-28F, 0F, 0F), LINEAR),
+			k(1.01F, rot(-20F, 0F, 0F), LINEAR),
+			k(1.2F, rot(48F, 0F, 0F), LINEAR),
+			k(1.9F, rot(40F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-18F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(12F, 0F, 0F), LINEAR),
+			k(1.9F, rot(6F, 0F, 0F), SMOOTH),
+			k(3F, rot(0F, 0F, 0F), SMOOTH)))
+		.build();
 
-	public static final AnimationDefinition SLAM = strike("arm_0_segment_0", "arm_0_segment_1", 1.25F, -48.0F, 42.0F);
-	public static final AnimationDefinition GRAB = strike("arm_1_segment_0", "arm_1_segment_1", 1.55F, -32.0F, 34.0F);
-	public static final AnimationDefinition INK = clip(1.35F, false,
-		motion("mantle", POS, 1.35F, 0.0F, 0.0F, 0.0F, 0.0F, 3.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("head", ROT, 1.35F, 12.0F, 0.0F, 0.0F, -22.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH));
-	public static final AnimationDefinition WHIRLPOOL = clip(2.0F, true,
-		motion("arm_0_segment_0", ROT, 2.0F, -12.0F, -12.0F, 0.0F, -12.0F, 18.0F, 0.0F, -12.0F, 24.0F, 0.0F, SMOOTH),
-		motion("arm_2_segment_0", ROT, 2.0F, -12.0F, -12.0F, 0.0F, -12.0F, 18.0F, 0.0F, -12.0F, 24.0F, 0.0F, SMOOTH),
-		motion("arm_4_segment_0", ROT, 2.0F, -12.0F, -12.0F, 0.0F, -12.0F, 18.0F, 0.0F, -12.0F, 24.0F, 0.0F, SMOOTH),
-		motion("arm_6_segment_0", ROT, 2.0F, -12.0F, -12.0F, 0.0F, -12.0F, 18.0F, 0.0F, -12.0F, 24.0F, 0.0F, SMOOTH));
-	public static final AnimationDefinition SPAWN_YOUNG = clip(1.6F, false,
-		motion("arm_4_segment_0", ROT, 1.6F, 0.0F, 0.0F, 0.0F, -20.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_5_segment_0", ROT, 1.6F, 0.0F, 0.0F, 0.0F, -26.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_6_segment_0", ROT, 1.6F, 0.0F, 0.0F, 0.0F, -20.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH));
-	public static final AnimationDefinition WATER_JET = clip(1.15F, false,
-		motion("head", POS, 1.15F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 3.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("head", ROT, 1.15F, 8.0F, 0.0F, 0.0F, -18.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_1_segment_0", ROT, 1.15F, 0.0F, 0.0F, 0.0F, 8.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH));
-	public static final AnimationDefinition ROAR = clip(1.7F, false,
-		motion("mantle", POS, 1.7F, 0.0F, 0.0F, 0.0F, 0.0F, -2.5F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("head", ROT, 1.7F, 14.0F, 0.0F, 0.0F, -28.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_0_segment_0", ROT, 1.7F, 0.0F, 0.0F, 0.0F, -24.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_4_segment_0", ROT, 1.7F, 0.0F, 0.0F, 0.0F, -24.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH));
-	public static final AnimationDefinition BOLTS = clip(1.5F, false,
-		motion("head", ROT, 1.5F, 0.0F, -8.0F, 0.0F, 0.0F, 16.0F, 0.0F, 0.0F, -8.0F, 0.0F, SMOOTH),
-		motion("arm_2_segment_0", ROT, 1.5F, 0.0F, 0.0F, 0.0F, -22.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_6_segment_0", ROT, 1.5F, 0.0F, 0.0F, 0.0F, -22.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH));
-	public static final AnimationDefinition AMBUSH = clip(1.3F, false,
-		motion("mantle", POS, 1.3F, 0.0F, 0.0F, 0.0F, 0.0F, 6.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_0_segment_0", ROT, 1.3F, 28.0F, 0.0F, 0.0F, -52.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-		motion("arm_0_segment_1", ROT, 1.3F, 10.0F, 0.0F, 0.0F, -34.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH));
-	public static final AnimationDefinition DOUBLE_GRAB = clip(1.7F, false,
-		arc("arm_1_segment_0", 1.7F, -30.0F, 38.0F),
-		arc("arm_1_segment_1", 1.7F, -12.0F, 24.0F),
-		arc("arm_5_segment_0", 1.7F, -30.0F, 38.0F),
-		arc("arm_5_segment_1", 1.7F, -12.0F, 24.0F));
+	public static final AnimationDefinition DEATH = AnimationDefinition.Builder.withLength(3.2F)
+		.addAnimation("mantle", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.7F, rot(0F, 0F, 6F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(20F, 0F, 70F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.7F, rot(-20F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(35F, 0F, 40F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1F, 0F), SMOOTH),
+			k(3.2F, pos(0F, -10F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1F, 0F), SMOOTH),
+			k(3.2F, pos(0F, -10F, 0F), SMOOTH)))
+		.addAnimation("arm_0", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1F, 0F), SMOOTH),
+			k(3.2F, pos(0F, -10F, 0F), SMOOTH)))
+		.addAnimation("arm_1", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1F, 0F), SMOOTH),
+			k(3.2F, pos(0F, -10F, 0F), SMOOTH)))
+		.addAnimation("arm_2", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1F, 0F), SMOOTH),
+			k(3.2F, pos(0F, -10F, 0F), SMOOTH)))
+		.addAnimation("arm_3", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1F, 0F), SMOOTH),
+			k(3.2F, pos(0F, -10F, 0F), SMOOTH)))
+		.addAnimation("arm_4", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1F, 0F), SMOOTH),
+			k(3.2F, pos(0F, -10F, 0F), SMOOTH)))
+		.addAnimation("arm_5", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1F, 0F), SMOOTH),
+			k(3.2F, pos(0F, -10F, 0F), SMOOTH)))
+		.addAnimation("arm_6", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1F, 0F), SMOOTH),
+			k(3.2F, pos(0F, -10F, 0F), SMOOTH)))
+		.addAnimation("arm_7", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.2F, pos(0F, 1F, 0F), SMOOTH),
+			k(3.2F, pos(0F, -10F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.15F, rot(-22F, 0F, 0F), LINEAR),
+			k(0.3F, rot(22F, 0F, 0F), LINEAR),
+			k(0.45F, rot(-22F, 0F, 0F), LINEAR),
+			k(0.6F, rot(22F, 0F, 0F), LINEAR),
+			k(1F, rot(36F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-34F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-42F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.15F, rot(22F, 0F, 0F), LINEAR),
+			k(0.3F, rot(-22F, 0F, 0F), LINEAR),
+			k(0.45F, rot(22F, 0F, 0F), LINEAR),
+			k(0.6F, rot(-22F, 0F, 0F), LINEAR),
+			k(1F, rot(36F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-34F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-42F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.15F, rot(-22F, 0F, 0F), LINEAR),
+			k(0.3F, rot(22F, 0F, 0F), LINEAR),
+			k(0.45F, rot(-22F, 0F, 0F), LINEAR),
+			k(0.6F, rot(22F, 0F, 0F), LINEAR),
+			k(1F, rot(36F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-34F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-42F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.15F, rot(22F, 0F, 0F), LINEAR),
+			k(0.3F, rot(-22F, 0F, 0F), LINEAR),
+			k(0.45F, rot(22F, 0F, 0F), LINEAR),
+			k(0.6F, rot(-22F, 0F, 0F), LINEAR),
+			k(1F, rot(36F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-34F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-42F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.15F, rot(-22F, 0F, 0F), LINEAR),
+			k(0.3F, rot(22F, 0F, 0F), LINEAR),
+			k(0.45F, rot(-22F, 0F, 0F), LINEAR),
+			k(0.6F, rot(22F, 0F, 0F), LINEAR),
+			k(1F, rot(36F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-34F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-42F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.15F, rot(22F, 0F, 0F), LINEAR),
+			k(0.3F, rot(-22F, 0F, 0F), LINEAR),
+			k(0.45F, rot(22F, 0F, 0F), LINEAR),
+			k(0.6F, rot(-22F, 0F, 0F), LINEAR),
+			k(1F, rot(36F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-34F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-42F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.15F, rot(-22F, 0F, 0F), LINEAR),
+			k(0.3F, rot(22F, 0F, 0F), LINEAR),
+			k(0.45F, rot(-22F, 0F, 0F), LINEAR),
+			k(0.6F, rot(22F, 0F, 0F), LINEAR),
+			k(1F, rot(36F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-34F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-42F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.15F, rot(22F, 0F, 0F), LINEAR),
+			k(0.3F, rot(-22F, 0F, 0F), LINEAR),
+			k(0.45F, rot(22F, 0F, 0F), LINEAR),
+			k(0.6F, rot(-22F, 0F, 0F), LINEAR),
+			k(1F, rot(36F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-34F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-42F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14F, 0F, 0F), SMOOTH),
+			k(3.2F, rot(-16F, 0F, 0F), SMOOTH)))
+		.build();
 
-	private static AnimationDefinition strike(String first, String second, float duration, float windUp, float impact) {
-		return clip(duration, false,
-			arc(first, duration, windUp, impact),
-			arc(second, duration, windUp * 0.35F, impact * 0.55F));
+	public static final AnimationDefinition SLAM = AnimationDefinition.Builder.withLength(2.4F)
+		.addAnimation("arm_2_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(1.15F, rot(78F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(82F, 0F, 0F), LINEAR),
+			k(1.27F, rot(74F, 0F, 0F), LINEAR),
+			k(1.34F, rot(82F, 0F, 0F), LINEAR),
+			k(1.41F, rot(74F, 0F, 0F), LINEAR),
+			k(1.6F, rot(-42F, 0F, 0F), LINEAR),
+			k(1.8F, rot(-34F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.15F, rot(18F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-10.8F, 0F, 0F), LINEAR),
+			k(1.85F, rot(-5.4F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.15F, rot(24F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-14.4F, 0F, 0F), LINEAR),
+			k(1.85F, rot(-7.2F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.15F, rot(30F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-18F, 0F, 0F), LINEAR),
+			k(1.85F, rot(-9F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_4", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.15F, rot(34F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-20.4F, 0F, 0F), LINEAR),
+			k(1.85F, rot(-10.2F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.15F, rot(7F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-9F, 0F, 0F), LINEAR),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.15F, rot(9F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-12F, 0F, 0F), LINEAR),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.6F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.68F, pos(0F, -0.8F, 0F), LINEAR),
+			k(1.95F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.6F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.68F, pos(0F, -0.8F, 0F), LINEAR),
+			k(1.95F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.6F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.68F, pos(0F, -0.8F, 0F), LINEAR),
+			k(1.95F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.6F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.68F, pos(0F, -0.8F, 0F), LINEAR),
+			k(1.95F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.6F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.68F, pos(0F, -0.8F, 0F), LINEAR),
+			k(1.95F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.6F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.68F, pos(0F, -0.8F, 0F), LINEAR),
+			k(1.95F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.6F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.68F, pos(0F, -0.8F, 0F), LINEAR),
+			k(1.95F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.6F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.68F, pos(0F, -0.8F, 0F), LINEAR),
+			k(1.95F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.6F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.68F, pos(0F, -0.8F, 0F), LINEAR),
+			k(1.95F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.4F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.6F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.68F, pos(0F, -0.8F, 0F), LINEAR),
+			k(1.95F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.4F, pos(0F, 0F, 0F), SMOOTH)))
+		.build();
+
+	public static final AnimationDefinition GRAB = AnimationDefinition.Builder.withLength(2.4F)
+		.addAnimation("arm_6_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(22F, -12F, 0F), SMOOTH),
+			k(1.3F, rot(26F, -34F, 0F), SMOOTH),
+			k(1.62F, rot(4F, 32F, 0F), LINEAR),
+			k(2F, rot(0F, 28F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(0F, 12F, 0F), SMOOTH),
+			k(0.5F, rot(0F, -12F, 0F), SMOOTH),
+			k(0.75F, rot(0F, 12F, 0F), SMOOTH),
+			k(1F, rot(0F, -12F, 0F), SMOOTH),
+			k(1.25F, rot(0F, 12F, 0F), SMOOTH),
+			k(1.5F, rot(0F, -12F, 0F), SMOOTH),
+			k(1.65F, rot(-36F, 0F, 0F), LINEAR),
+			k(2F, rot(-42F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(0F, -14.4F, 0F), SMOOTH),
+			k(0.5F, rot(0F, 14.4F, 0F), SMOOTH),
+			k(0.75F, rot(0F, -14.4F, 0F), SMOOTH),
+			k(1F, rot(0F, 14.4F, 0F), SMOOTH),
+			k(1.25F, rot(0F, -14.4F, 0F), SMOOTH),
+			k(1.5F, rot(0F, 14.4F, 0F), SMOOTH),
+			k(1.65F, rot(-42F, 0F, 0F), LINEAR),
+			k(2F, rot(-48F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(0F, 16.8F, 0F), SMOOTH),
+			k(0.5F, rot(0F, -16.8F, 0F), SMOOTH),
+			k(0.75F, rot(0F, 16.8F, 0F), SMOOTH),
+			k(1F, rot(0F, -16.8F, 0F), SMOOTH),
+			k(1.25F, rot(0F, 16.8F, 0F), SMOOTH),
+			k(1.5F, rot(0F, -16.8F, 0F), SMOOTH),
+			k(1.65F, rot(-48F, 0F, 0F), LINEAR),
+			k(2F, rot(-54F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_4", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(0F, -19.2F, 0F), SMOOTH),
+			k(0.5F, rot(0F, 19.2F, 0F), SMOOTH),
+			k(0.75F, rot(0F, -19.2F, 0F), SMOOTH),
+			k(1F, rot(0F, 19.2F, 0F), SMOOTH),
+			k(1.25F, rot(0F, -19.2F, 0F), SMOOTH),
+			k(1.5F, rot(0F, 19.2F, 0F), SMOOTH),
+			k(1.65F, rot(-54F, 0F, 0F), LINEAR),
+			k(2F, rot(-60F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(0F, -10F, 0F), SMOOTH),
+			k(1.65F, rot(0F, 8F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.build();
+
+	public static final AnimationDefinition INK = AnimationDefinition.Builder.withLength(2.8F)
+		.addAnimation("mantle", new AnimationChannel(SCALE,
+			k(0F, scale(1F, 1F, 1F), SMOOTH),
+			k(1.6F, scale(1.2F, 1.14F, 1.2F), SMOOTH),
+			k(1.65F, scale(1.25F, 1.25F, 1.25F), LINEAR),
+			k(1.73F, scale(1.19F, 1.19F, 1.19F), LINEAR),
+			k(1.81F, scale(1.25F, 1.25F, 1.25F), LINEAR),
+			k(1.89F, scale(1.19F, 1.19F, 1.19F), LINEAR),
+			k(2.08F, scale(0.8F, 0.86F, 0.8F), LINEAR),
+			k(2.35F, scale(0.92F, 0.92F, 0.92F), SMOOTH),
+			k(2.8F, scale(1F, 1F, 1F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-12F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(6F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.6F, 0F), SMOOTH),
+			k(2.12F, pos(0F, 2F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.6F, 0F), SMOOTH),
+			k(2.12F, pos(0F, 2F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.6F, 0F), SMOOTH),
+			k(2.12F, pos(0F, 2F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.6F, 0F), SMOOTH),
+			k(2.12F, pos(0F, 2F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.6F, 0F), SMOOTH),
+			k(2.12F, pos(0F, 2F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.6F, 0F), SMOOTH),
+			k(2.12F, pos(0F, 2F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.6F, 0F), SMOOTH),
+			k(2.12F, pos(0F, 2F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.6F, 0F), SMOOTH),
+			k(2.12F, pos(0F, 2F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.6F, 0F), SMOOTH),
+			k(2.12F, pos(0F, 2F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, -0.6F, 0F), SMOOTH),
+			k(2.12F, pos(0F, 2F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(32F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(-16F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(6F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(32F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(-16F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(6F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(32F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(-16F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(6F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(32F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(-16F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(6F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(32F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(-16F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(6F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(32F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(-16F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(6F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(32F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(-16F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(6F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(32F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(-16F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(6F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.build();
+
+	public static final AnimationDefinition WHIRLPOOL = AnimationDefinition.Builder.withLength(2F).looping()
+		.addAnimation("mantle", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), LINEAR),
+			k(0.5F, rot(0F, 90F, 0F), LINEAR),
+			k(1F, rot(0F, 180F, 0F), LINEAR),
+			k(1.5F, rot(0F, 270F, 0F), LINEAR),
+			k(2F, rot(0F, 360F, 0F), LINEAR)))
+		.addAnimation("arm_0_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(28F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(25.0711F, 18.3848F, 0F), SMOOTH),
+			k(0.5F, rot(18F, 26F, 0F), SMOOTH),
+			k(0.75F, rot(10.9289F, 18.3848F, 0F), SMOOTH),
+			k(1F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.25F, rot(10.9289F, -18.3848F, 0F), SMOOTH),
+			k(1.5F, rot(18F, -26F, 0F), SMOOTH),
+			k(1.75F, rot(25.0711F, -18.3848F, 0F), SMOOTH),
+			k(2F, rot(28F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, -17.2332F, 0F), SMOOTH),
+			k(0.25F, rot(0F, -2.5157F, 0F), SMOOTH),
+			k(0.5F, rot(0F, 13.6754F, 0F), SMOOTH),
+			k(0.75F, rot(0F, 21.8557F, 0F), SMOOTH),
+			k(1F, rot(0F, 17.2332F, 0F), SMOOTH),
+			k(1.25F, rot(0F, 2.5157F, 0F), SMOOTH),
+			k(1.5F, rot(0F, -13.6754F, 0F), SMOOTH),
+			k(1.75F, rot(0F, -21.8557F, 0F), SMOOTH),
+			k(2F, rot(0F, -17.2332F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(25.0711F, -18.3848F, 0F), SMOOTH),
+			k(0.25F, rot(28F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(25.0711F, 18.3848F, 0F), SMOOTH),
+			k(0.75F, rot(18F, 26F, 0F), SMOOTH),
+			k(1F, rot(10.9289F, 18.3848F, 0F), SMOOTH),
+			k(1.25F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(10.9289F, -18.3848F, 0F), SMOOTH),
+			k(1.75F, rot(18F, -26F, 0F), SMOOTH),
+			k(2F, rot(25.0711F, -18.3848F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, -21.8557F, 0F), SMOOTH),
+			k(0.25F, rot(0F, -17.2332F, 0F), SMOOTH),
+			k(0.5F, rot(0F, -2.5157F, 0F), SMOOTH),
+			k(0.75F, rot(0F, 13.6754F, 0F), SMOOTH),
+			k(1F, rot(0F, 21.8557F, 0F), SMOOTH),
+			k(1.25F, rot(0F, 17.2332F, 0F), SMOOTH),
+			k(1.5F, rot(0F, 2.5157F, 0F), SMOOTH),
+			k(1.75F, rot(0F, -13.6754F, 0F), SMOOTH),
+			k(2F, rot(0F, -21.8557F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(18F, -26F, 0F), SMOOTH),
+			k(0.25F, rot(25.0711F, -18.3848F, 0F), SMOOTH),
+			k(0.5F, rot(28F, 0F, 0F), SMOOTH),
+			k(0.75F, rot(25.0711F, 18.3848F, 0F), SMOOTH),
+			k(1F, rot(18F, 26F, 0F), SMOOTH),
+			k(1.25F, rot(10.9289F, 18.3848F, 0F), SMOOTH),
+			k(1.5F, rot(8F, 0F, 0F), SMOOTH),
+			k(1.75F, rot(10.9289F, -18.3848F, 0F), SMOOTH),
+			k(2F, rot(18F, -26F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, -13.6754F, 0F), SMOOTH),
+			k(0.25F, rot(0F, -21.8557F, 0F), SMOOTH),
+			k(0.5F, rot(0F, -17.2332F, 0F), SMOOTH),
+			k(0.75F, rot(0F, -2.5157F, 0F), SMOOTH),
+			k(1F, rot(0F, 13.6754F, 0F), SMOOTH),
+			k(1.25F, rot(0F, 21.8557F, 0F), SMOOTH),
+			k(1.5F, rot(0F, 17.2332F, 0F), SMOOTH),
+			k(1.75F, rot(0F, 2.5157F, 0F), SMOOTH),
+			k(2F, rot(0F, -13.6754F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(10.9289F, -18.3848F, 0F), SMOOTH),
+			k(0.25F, rot(18F, -26F, 0F), SMOOTH),
+			k(0.5F, rot(25.0711F, -18.3848F, 0F), SMOOTH),
+			k(0.75F, rot(28F, 0F, 0F), SMOOTH),
+			k(1F, rot(25.0711F, 18.3848F, 0F), SMOOTH),
+			k(1.25F, rot(18F, 26F, 0F), SMOOTH),
+			k(1.5F, rot(10.9289F, 18.3848F, 0F), SMOOTH),
+			k(1.75F, rot(8F, 0F, 0F), SMOOTH),
+			k(2F, rot(10.9289F, -18.3848F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 2.5157F, 0F), SMOOTH),
+			k(0.25F, rot(0F, -13.6754F, 0F), SMOOTH),
+			k(0.5F, rot(0F, -21.8557F, 0F), SMOOTH),
+			k(0.75F, rot(0F, -17.2332F, 0F), SMOOTH),
+			k(1F, rot(0F, -2.5157F, 0F), SMOOTH),
+			k(1.25F, rot(0F, 13.6754F, 0F), SMOOTH),
+			k(1.5F, rot(0F, 21.8557F, 0F), SMOOTH),
+			k(1.75F, rot(0F, 17.2332F, 0F), SMOOTH),
+			k(2F, rot(0F, 2.5157F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(8F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(10.9289F, -18.3848F, 0F), SMOOTH),
+			k(0.5F, rot(18F, -26F, 0F), SMOOTH),
+			k(0.75F, rot(25.0711F, -18.3848F, 0F), SMOOTH),
+			k(1F, rot(28F, 0F, 0F), SMOOTH),
+			k(1.25F, rot(25.0711F, 18.3848F, 0F), SMOOTH),
+			k(1.5F, rot(18F, 26F, 0F), SMOOTH),
+			k(1.75F, rot(10.9289F, 18.3848F, 0F), SMOOTH),
+			k(2F, rot(8F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 17.2332F, 0F), SMOOTH),
+			k(0.25F, rot(0F, 2.5157F, 0F), SMOOTH),
+			k(0.5F, rot(0F, -13.6754F, 0F), SMOOTH),
+			k(0.75F, rot(0F, -21.8557F, 0F), SMOOTH),
+			k(1F, rot(0F, -17.2332F, 0F), SMOOTH),
+			k(1.25F, rot(0F, -2.5157F, 0F), SMOOTH),
+			k(1.5F, rot(0F, 13.6754F, 0F), SMOOTH),
+			k(1.75F, rot(0F, 21.8557F, 0F), SMOOTH),
+			k(2F, rot(0F, 17.2332F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(10.9289F, 18.3848F, 0F), SMOOTH),
+			k(0.25F, rot(8F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(10.9289F, -18.3848F, 0F), SMOOTH),
+			k(0.75F, rot(18F, -26F, 0F), SMOOTH),
+			k(1F, rot(25.0711F, -18.3848F, 0F), SMOOTH),
+			k(1.25F, rot(28F, 0F, 0F), SMOOTH),
+			k(1.5F, rot(25.0711F, 18.3848F, 0F), SMOOTH),
+			k(1.75F, rot(18F, 26F, 0F), SMOOTH),
+			k(2F, rot(10.9289F, 18.3848F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 21.8557F, 0F), SMOOTH),
+			k(0.25F, rot(0F, 17.2332F, 0F), SMOOTH),
+			k(0.5F, rot(0F, 2.5157F, 0F), SMOOTH),
+			k(0.75F, rot(0F, -13.6754F, 0F), SMOOTH),
+			k(1F, rot(0F, -21.8557F, 0F), SMOOTH),
+			k(1.25F, rot(0F, -17.2332F, 0F), SMOOTH),
+			k(1.5F, rot(0F, -2.5157F, 0F), SMOOTH),
+			k(1.75F, rot(0F, 13.6754F, 0F), SMOOTH),
+			k(2F, rot(0F, 21.8557F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(18F, 26F, 0F), SMOOTH),
+			k(0.25F, rot(10.9289F, 18.3848F, 0F), SMOOTH),
+			k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+			k(0.75F, rot(10.9289F, -18.3848F, 0F), SMOOTH),
+			k(1F, rot(18F, -26F, 0F), SMOOTH),
+			k(1.25F, rot(25.0711F, -18.3848F, 0F), SMOOTH),
+			k(1.5F, rot(28F, 0F, 0F), SMOOTH),
+			k(1.75F, rot(25.0711F, 18.3848F, 0F), SMOOTH),
+			k(2F, rot(18F, 26F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 13.6754F, 0F), SMOOTH),
+			k(0.25F, rot(0F, 21.8557F, 0F), SMOOTH),
+			k(0.5F, rot(0F, 17.2332F, 0F), SMOOTH),
+			k(0.75F, rot(0F, 2.5157F, 0F), SMOOTH),
+			k(1F, rot(0F, -13.6754F, 0F), SMOOTH),
+			k(1.25F, rot(0F, -21.8557F, 0F), SMOOTH),
+			k(1.5F, rot(0F, -17.2332F, 0F), SMOOTH),
+			k(1.75F, rot(0F, -2.5157F, 0F), SMOOTH),
+			k(2F, rot(0F, 13.6754F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(25.0711F, 18.3848F, 0F), SMOOTH),
+			k(0.25F, rot(18F, 26F, 0F), SMOOTH),
+			k(0.5F, rot(10.9289F, 18.3848F, 0F), SMOOTH),
+			k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+			k(1F, rot(10.9289F, -18.3848F, 0F), SMOOTH),
+			k(1.25F, rot(18F, -26F, 0F), SMOOTH),
+			k(1.5F, rot(25.0711F, -18.3848F, 0F), SMOOTH),
+			k(1.75F, rot(28F, 0F, 0F), SMOOTH),
+			k(2F, rot(25.0711F, 18.3848F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, -2.5157F, 0F), SMOOTH),
+			k(0.25F, rot(0F, 13.6754F, 0F), SMOOTH),
+			k(0.5F, rot(0F, 21.8557F, 0F), SMOOTH),
+			k(0.75F, rot(0F, 17.2332F, 0F), SMOOTH),
+			k(1F, rot(0F, 2.5157F, 0F), SMOOTH),
+			k(1.25F, rot(0F, -13.6754F, 0F), SMOOTH),
+			k(1.5F, rot(0F, -21.8557F, 0F), SMOOTH),
+			k(1.75F, rot(0F, -17.2332F, 0F), SMOOTH),
+			k(2F, rot(0F, -2.5157F, 0F), SMOOTH)))
+		.build();
+
+	public static final AnimationDefinition SPAWN_YOUNG = AnimationDefinition.Builder.withLength(2.8F)
+		.addAnimation("arm_3_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(46F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(30F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(14F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(46F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(30F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(14F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(46F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(30F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(14F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(0.8F, pos(0.7F, 0F, 0F), LINEAR),
+			k(0.9F, pos(-0.7F, 0F, 0F), LINEAR),
+			k(1F, pos(0.7F, 0F, 0F), LINEAR),
+			k(1.1F, pos(-0.7F, 0F, 0F), LINEAR),
+			k(1.2F, pos(0.7F, 0F, 0F), LINEAR),
+			k(1.3F, pos(-0.7F, 0F, 0F), LINEAR),
+			k(1.4F, pos(0.7F, 0F, 0F), LINEAR),
+			k(1.5F, pos(-0.7F, 0F, 0F), LINEAR),
+			k(1.6F, pos(0.7F, 0F, 0F), LINEAR),
+			k(1.7F, pos(-0.7F, 0F, 0F), LINEAR),
+			k(1.8F, pos(0.7F, 0F, 0F), LINEAR),
+			k(1.9F, pos(-0.7F, 0F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(SCALE,
+			k(0F, scale(1F, 1F, 1F), SMOOTH),
+			k(1F, scale(1.1F, 1.06F, 1.1F), SMOOTH),
+			k(1.3F, scale(1F, 1F, 1F), SMOOTH),
+			k(1.7F, scale(1.13F, 1.08F, 1.13F), SMOOTH),
+			k(2.08F, scale(0.9F, 0.84F, 0.9F), LINEAR),
+			k(2.8F, scale(1F, 1F, 1F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.08F, rot(4F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.build();
+
+	public static final AnimationDefinition WATER_JET = AnimationDefinition.Builder.withLength(2F)
+		.addAnimation("head", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.45F, rot(18F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(-8F, 0F, 0F), SMOOTH),
+			k(1.08F, rot(-5.5F, 0F, 0F), LINEAR),
+			k(1.13F, rot(-10.5F, 0F, 0F), LINEAR),
+			k(1.18F, rot(-5.5F, 0F, 0F), LINEAR),
+			k(1.26F, rot(-14F, 0F, 0F), LINEAR),
+			k(2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.05F, pos(0F, 0F, -2.6F), SMOOTH),
+			k(1.26F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.45F, pos(0F, 0F, -2F), SMOOTH),
+			k(1.55F, pos(0F, 0F, 1F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(SCALE,
+			k(0F, scale(1F, 1F, 1F), SMOOTH),
+			k(1.05F, scale(1.16F, 1.1F, 1.16F), SMOOTH),
+			k(1.26F, scale(0.88F, 0.9F, 0.88F), LINEAR),
+			k(2F, scale(1F, 1F, 1F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.26F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.45F, pos(0F, 0F, -2F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.26F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.45F, pos(0F, 0F, -2F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.26F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.45F, pos(0F, 0F, -2F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.26F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.45F, pos(0F, 0F, -2F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.26F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.45F, pos(0F, 0F, -2F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.26F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.45F, pos(0F, 0F, -2F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.26F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.45F, pos(0F, 0F, -2F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.26F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.45F, pos(0F, 0F, -2F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.26F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.45F, pos(0F, 0F, -2F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(22F, 0F, 0F), SMOOTH),
+			k(1.6F, rot(22F, 0F, 0F), SMOOTH),
+			k(2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(6F, -30F, 0F), SMOOTH),
+			k(1.6F, rot(6F, -30F, 0F), SMOOTH),
+			k(2F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(6F, 30F, 0F), SMOOTH),
+			k(1.6F, rot(6F, 30F, 0F), SMOOTH),
+			k(2F, rot(0F, 0F, 0F), SMOOTH)))
+		.build();
+
+	public static final AnimationDefinition ROAR = AnimationDefinition.Builder.withLength(2.5F)
+		.addAnimation("mantle", new AnimationChannel(SCALE,
+			k(0F, scale(1F, 1F, 1F), SMOOTH),
+			k(1F, scale(0.8F, 0.86F, 0.8F), SMOOTH),
+			k(1.05F, scale(0.835F, 0.835F, 0.835F), LINEAR),
+			k(1.11F, scale(0.765F, 0.765F, 0.765F), LINEAR),
+			k(1.17F, scale(0.835F, 0.835F, 0.835F), LINEAR),
+			k(1.23F, scale(0.765F, 0.765F, 0.765F), LINEAR),
+			k(1.29F, scale(0.835F, 0.835F, 0.835F), LINEAR),
+			k(1.35F, scale(0.765F, 0.765F, 0.765F), LINEAR),
+			k(1.41F, scale(0.835F, 0.835F, 0.835F), LINEAR),
+			k(1.58F, scale(1.26F, 1.2F, 1.26F), LINEAR),
+			k(1.9F, scale(1.18F, 1.18F, 1.18F), SMOOTH),
+			k(2.5F, scale(1F, 1F, 1F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1F, pos(0F, -2.2F, 0F), SMOOTH),
+			k(1.58F, pos(0F, 1F, 0F), LINEAR),
+			k(2.5F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1F, pos(0F, -2.2F, 0F), SMOOTH),
+			k(1.58F, pos(0F, 1F, 0F), LINEAR),
+			k(2.5F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1F, pos(0F, -2.2F, 0F), SMOOTH),
+			k(1.58F, pos(0F, 1F, 0F), LINEAR),
+			k(2.5F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1F, pos(0F, -2.2F, 0F), SMOOTH),
+			k(1.58F, pos(0F, 1F, 0F), LINEAR),
+			k(2.5F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1F, pos(0F, -2.2F, 0F), SMOOTH),
+			k(1.58F, pos(0F, 1F, 0F), LINEAR),
+			k(2.5F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1F, pos(0F, -2.2F, 0F), SMOOTH),
+			k(1.58F, pos(0F, 1F, 0F), LINEAR),
+			k(2.5F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1F, pos(0F, -2.2F, 0F), SMOOTH),
+			k(1.58F, pos(0F, 1F, 0F), LINEAR),
+			k(2.5F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1F, pos(0F, -2.2F, 0F), SMOOTH),
+			k(1.58F, pos(0F, 1F, 0F), LINEAR),
+			k(2.5F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1F, pos(0F, -2.2F, 0F), SMOOTH),
+			k(1.58F, pos(0F, 1F, 0F), LINEAR),
+			k(2.5F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1F, pos(0F, -2.2F, 0F), SMOOTH),
+			k(1.58F, pos(0F, 1F, 0F), LINEAR),
+			k(2.5F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(16F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(16F, 0F, 3F), LINEAR),
+			k(1.11F, rot(16F, 0F, -3F), LINEAR),
+			k(1.17F, rot(16F, 0F, 3F), LINEAR),
+			k(1.23F, rot(16F, 0F, -3F), LINEAR),
+			k(1.29F, rot(16F, 0F, 3F), LINEAR),
+			k(1.35F, rot(16F, 0F, -3F), LINEAR),
+			k(1.41F, rot(16F, 0F, 3F), LINEAR),
+			k(1.58F, rot(-26F, 0F, 0F), LINEAR),
+			k(1.9F, rot(-22F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-28F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.11F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.17F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.23F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.29F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.35F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.41F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.58F, rot(42F, 0F, 0F), LINEAR),
+			k(1.9F, rot(36F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-28F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.11F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.17F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.23F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.29F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.35F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.41F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.58F, rot(42F, 0F, 0F), LINEAR),
+			k(1.9F, rot(36F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-28F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.11F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.17F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.23F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.29F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.35F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.41F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.58F, rot(42F, 0F, 0F), LINEAR),
+			k(1.9F, rot(36F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-28F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.11F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.17F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.23F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.29F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.35F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.41F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.58F, rot(42F, 0F, 0F), LINEAR),
+			k(1.9F, rot(36F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-28F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.11F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.17F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.23F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.29F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.35F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.41F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.58F, rot(42F, 0F, 0F), LINEAR),
+			k(1.9F, rot(36F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-28F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.11F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.17F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.23F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.29F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.35F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.41F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.58F, rot(42F, 0F, 0F), LINEAR),
+			k(1.9F, rot(36F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-28F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.11F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.17F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.23F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.29F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.35F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.41F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.58F, rot(42F, 0F, 0F), LINEAR),
+			k(1.9F, rot(36F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-28F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.11F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.17F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.23F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.29F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.35F, rot(-31F, 0F, 0F), LINEAR),
+			k(1.41F, rot(-25F, 0F, 0F), LINEAR),
+			k(1.58F, rot(42F, 0F, 0F), LINEAR),
+			k(1.9F, rot(36F, 0F, 0F), SMOOTH),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-22F, 0F, 0F), SMOOTH),
+			k(1.58F, rot(4F, 0F, 0F), LINEAR),
+			k(2.5F, rot(0F, 0F, 0F), SMOOTH)))
+		.build();
+
+	public static final AnimationDefinition BOLTS = AnimationDefinition.Builder.withLength(2.8F)
+		.addAnimation("head", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.8F, rot(30F, 0F, 0F), SMOOTH),
+			k(2.05F, rot(34F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(82F, 0F, 0F), SMOOTH),
+			k(2.05F, rot(82F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(70F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(6F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(6F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(12F, 8F, 0F), LINEAR),
+			k(1.15F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.25F, rot(12F, 8F, 0F), LINEAR),
+			k(1.35F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.45F, rot(12F, 8F, 0F), LINEAR),
+			k(1.55F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.65F, rot(12F, 8F, 0F), LINEAR),
+			k(1.75F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.85F, rot(12F, 8F, 0F), LINEAR),
+			k(1.95F, rot(-12F, -8F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(82F, 0F, 0F), SMOOTH),
+			k(2.05F, rot(82F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(70F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(6F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(6F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(12F, 8F, 0F), LINEAR),
+			k(1.15F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.25F, rot(12F, 8F, 0F), LINEAR),
+			k(1.35F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.45F, rot(12F, 8F, 0F), LINEAR),
+			k(1.55F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.65F, rot(12F, 8F, 0F), LINEAR),
+			k(1.75F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.85F, rot(12F, 8F, 0F), LINEAR),
+			k(1.95F, rot(-12F, -8F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(82F, 0F, 0F), SMOOTH),
+			k(2.05F, rot(82F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(70F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(6F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(6F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(12F, 8F, 0F), LINEAR),
+			k(1.15F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.25F, rot(12F, 8F, 0F), LINEAR),
+			k(1.35F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.45F, rot(12F, 8F, 0F), LINEAR),
+			k(1.55F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.65F, rot(12F, 8F, 0F), LINEAR),
+			k(1.75F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.85F, rot(12F, 8F, 0F), LINEAR),
+			k(1.95F, rot(-12F, -8F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(82F, 0F, 0F), SMOOTH),
+			k(2.05F, rot(82F, 0F, 0F), SMOOTH),
+			k(2.2F, rot(70F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(6F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(6F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.05F, rot(12F, 8F, 0F), LINEAR),
+			k(1.15F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.25F, rot(12F, 8F, 0F), LINEAR),
+			k(1.35F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.45F, rot(12F, 8F, 0F), LINEAR),
+			k(1.55F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.65F, rot(12F, 8F, 0F), LINEAR),
+			k(1.75F, rot(-12F, -8F, 0F), LINEAR),
+			k(1.85F, rot(12F, 8F, 0F), LINEAR),
+			k(1.95F, rot(-12F, -8F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-14F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-14F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-14F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1F, rot(-14F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(SCALE,
+			k(0F, scale(1F, 1F, 1F), SMOOTH),
+			k(2F, scale(1F, 1F, 1F), SMOOTH),
+			k(2.06F, scale(1.12F, 1.12F, 1.12F), LINEAR),
+			k(2.25F, scale(1F, 1F, 1F), SMOOTH),
+			k(2.8F, scale(1F, 1F, 1F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.06F, pos(0F, 1F, 0F), LINEAR),
+			k(2.3F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.06F, pos(0F, 1F, 0F), LINEAR),
+			k(2.3F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.06F, pos(0F, 1F, 0F), LINEAR),
+			k(2.3F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.06F, pos(0F, 1F, 0F), LINEAR),
+			k(2.3F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.06F, pos(0F, 1F, 0F), LINEAR),
+			k(2.3F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.06F, pos(0F, 1F, 0F), LINEAR),
+			k(2.3F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.06F, pos(0F, 1F, 0F), LINEAR),
+			k(2.3F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.06F, pos(0F, 1F, 0F), LINEAR),
+			k(2.3F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.06F, pos(0F, 1F, 0F), LINEAR),
+			k(2.3F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(2F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.06F, pos(0F, 1F, 0F), LINEAR),
+			k(2.3F, pos(0F, 0F, 0F), SMOOTH),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.build();
+
+	public static final AnimationDefinition AMBUSH = AnimationDefinition.Builder.withLength(2.8F)
+		.addAnimation("mantle", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.4F, pos(0F, -3F, 0F), SMOOTH),
+			k(2F, pos(0F, -3.2F, 0F), SMOOTH),
+			k(2.1F, pos(0F, -4.6F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.4F, pos(0F, -3F, 0F), SMOOTH),
+			k(2F, pos(0F, -3.2F, 0F), SMOOTH),
+			k(2.1F, pos(0F, -4.6F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.4F, pos(0F, -3F, 0F), SMOOTH),
+			k(2F, pos(0F, -3.2F, 0F), SMOOTH),
+			k(2.1F, pos(0F, -4.6F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.4F, pos(0F, -3F, 0F), SMOOTH),
+			k(2F, pos(0F, -3.2F, 0F), SMOOTH),
+			k(2.1F, pos(0F, -4.6F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.4F, pos(0F, -3F, 0F), SMOOTH),
+			k(2F, pos(0F, -3.2F, 0F), SMOOTH),
+			k(2.1F, pos(0F, -4.6F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.4F, pos(0F, -3F, 0F), SMOOTH),
+			k(2F, pos(0F, -3.2F, 0F), SMOOTH),
+			k(2.1F, pos(0F, -4.6F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.4F, pos(0F, -3F, 0F), SMOOTH),
+			k(2F, pos(0F, -3.2F, 0F), SMOOTH),
+			k(2.1F, pos(0F, -4.6F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.4F, pos(0F, -3F, 0F), SMOOTH),
+			k(2F, pos(0F, -3.2F, 0F), SMOOTH),
+			k(2.1F, pos(0F, -4.6F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.4F, pos(0F, -3F, 0F), SMOOTH),
+			k(2F, pos(0F, -3.2F, 0F), SMOOTH),
+			k(2.1F, pos(0F, -4.6F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7", new AnimationChannel(POS,
+			k(0F, pos(0F, 0F, 0F), SMOOTH),
+			k(1.4F, pos(0F, -3F, 0F), SMOOTH),
+			k(2F, pos(0F, -3.2F, 0F), SMOOTH),
+			k(2.1F, pos(0F, -4.6F, 0F), LINEAR),
+			k(2.8F, pos(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(-6F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("head", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.4F, rot(-14F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-52F, 0F, 0F), SMOOTH),
+			k(1.25F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.37F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.49F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.61F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.73F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.85F, rot(-57F, 0F, 0F), LINEAR),
+			k(2.1F, rot(-76F, 0F, 0F), LINEAR),
+			k(2.4F, rot(-70F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_0_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-52F, 0F, 0F), SMOOTH),
+			k(1.25F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.37F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.49F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.61F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.73F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.85F, rot(-57F, 0F, 0F), LINEAR),
+			k(2.1F, rot(-76F, 0F, 0F), LINEAR),
+			k(2.4F, rot(-70F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-52F, 0F, 0F), SMOOTH),
+			k(1.25F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.37F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.49F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.61F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.73F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.85F, rot(-57F, 0F, 0F), LINEAR),
+			k(2.1F, rot(-76F, 0F, 0F), LINEAR),
+			k(2.4F, rot(-70F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_2_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-52F, 0F, 0F), SMOOTH),
+			k(1.25F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.37F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.49F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.61F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.73F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.85F, rot(-57F, 0F, 0F), LINEAR),
+			k(2.1F, rot(-76F, 0F, 0F), LINEAR),
+			k(2.4F, rot(-70F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_3_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-52F, 0F, 0F), SMOOTH),
+			k(1.25F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.37F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.49F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.61F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.73F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.85F, rot(-57F, 0F, 0F), LINEAR),
+			k(2.1F, rot(-76F, 0F, 0F), LINEAR),
+			k(2.4F, rot(-70F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_4_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-52F, 0F, 0F), SMOOTH),
+			k(1.25F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.37F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.49F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.61F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.73F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.85F, rot(-57F, 0F, 0F), LINEAR),
+			k(2.1F, rot(-76F, 0F, 0F), LINEAR),
+			k(2.4F, rot(-70F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_5_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-52F, 0F, 0F), SMOOTH),
+			k(1.25F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.37F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.49F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.61F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.73F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.85F, rot(-57F, 0F, 0F), LINEAR),
+			k(2.1F, rot(-76F, 0F, 0F), LINEAR),
+			k(2.4F, rot(-70F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_6_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-52F, 0F, 0F), SMOOTH),
+			k(1.25F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.37F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.49F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.61F, rot(-57F, 0F, 0F), LINEAR),
+			k(1.73F, rot(-47F, 0F, 0F), LINEAR),
+			k(1.85F, rot(-57F, 0F, 0F), LINEAR),
+			k(2.1F, rot(-76F, 0F, 0F), LINEAR),
+			k(2.4F, rot(-70F, 0F, 0F), SMOOTH),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.2F, rot(-10F, 0F, 0F), SMOOTH),
+			k(2.1F, rot(2F, 0F, 0F), LINEAR),
+			k(2.8F, rot(0F, 0F, 0F), SMOOTH)))
+		.build();
+
+	public static final AnimationDefinition DOUBLE_GRAB = AnimationDefinition.Builder.withLength(2.4F)
+		.addAnimation("arm_1_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(30F, -18F, 0F), SMOOTH),
+			k(1.3F, rot(38F, -36F, 0F), SMOOTH),
+			k(1.62F, rot(8F, 26F, 0F), LINEAR),
+			k(2F, rot(4F, 22F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(0F, -14F, 0F), SMOOTH),
+			k(0.5F, rot(0F, 14F, 0F), SMOOTH),
+			k(0.75F, rot(0F, -14F, 0F), SMOOTH),
+			k(1F, rot(0F, 14F, 0F), SMOOTH),
+			k(1.25F, rot(0F, -14F, 0F), SMOOTH),
+			k(1.5F, rot(0F, 14F, 0F), SMOOTH),
+			k(1.65F, rot(-38F, 0F, 0F), LINEAR),
+			k(2F, rot(-44F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(0F, -14F, 0F), SMOOTH),
+			k(0.5F, rot(0F, 14F, 0F), SMOOTH),
+			k(0.75F, rot(0F, -14F, 0F), SMOOTH),
+			k(1F, rot(0F, 14F, 0F), SMOOTH),
+			k(1.25F, rot(0F, -14F, 0F), SMOOTH),
+			k(1.5F, rot(0F, 14F, 0F), SMOOTH),
+			k(1.65F, rot(-44F, 0F, 0F), LINEAR),
+			k(2F, rot(-50F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(0F, -14F, 0F), SMOOTH),
+			k(0.5F, rot(0F, 14F, 0F), SMOOTH),
+			k(0.75F, rot(0F, -14F, 0F), SMOOTH),
+			k(1F, rot(0F, 14F, 0F), SMOOTH),
+			k(1.25F, rot(0F, -14F, 0F), SMOOTH),
+			k(1.5F, rot(0F, 14F, 0F), SMOOTH),
+			k(1.65F, rot(-50F, 0F, 0F), LINEAR),
+			k(2F, rot(-56F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_1_segment_4", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(0F, -14F, 0F), SMOOTH),
+			k(0.5F, rot(0F, 14F, 0F), SMOOTH),
+			k(0.75F, rot(0F, -14F, 0F), SMOOTH),
+			k(1F, rot(0F, 14F, 0F), SMOOTH),
+			k(1.25F, rot(0F, -14F, 0F), SMOOTH),
+			k(1.5F, rot(0F, 14F, 0F), SMOOTH),
+			k(1.65F, rot(-56F, 0F, 0F), LINEAR),
+			k(2F, rot(-62F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_0", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.5F, rot(30F, 18F, 0F), SMOOTH),
+			k(1.3F, rot(38F, 36F, 0F), SMOOTH),
+			k(1.62F, rot(8F, -26F, 0F), LINEAR),
+			k(2F, rot(4F, -22F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_1", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(0F, 14F, 0F), SMOOTH),
+			k(0.5F, rot(0F, -14F, 0F), SMOOTH),
+			k(0.75F, rot(0F, 14F, 0F), SMOOTH),
+			k(1F, rot(0F, -14F, 0F), SMOOTH),
+			k(1.25F, rot(0F, 14F, 0F), SMOOTH),
+			k(1.5F, rot(0F, -14F, 0F), SMOOTH),
+			k(1.65F, rot(-38F, 0F, 0F), LINEAR),
+			k(2F, rot(-44F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_2", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(0F, 14F, 0F), SMOOTH),
+			k(0.5F, rot(0F, -14F, 0F), SMOOTH),
+			k(0.75F, rot(0F, 14F, 0F), SMOOTH),
+			k(1F, rot(0F, -14F, 0F), SMOOTH),
+			k(1.25F, rot(0F, 14F, 0F), SMOOTH),
+			k(1.5F, rot(0F, -14F, 0F), SMOOTH),
+			k(1.65F, rot(-44F, 0F, 0F), LINEAR),
+			k(2F, rot(-50F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_3", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(0F, 14F, 0F), SMOOTH),
+			k(0.5F, rot(0F, -14F, 0F), SMOOTH),
+			k(0.75F, rot(0F, 14F, 0F), SMOOTH),
+			k(1F, rot(0F, -14F, 0F), SMOOTH),
+			k(1.25F, rot(0F, 14F, 0F), SMOOTH),
+			k(1.5F, rot(0F, -14F, 0F), SMOOTH),
+			k(1.65F, rot(-50F, 0F, 0F), LINEAR),
+			k(2F, rot(-56F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("arm_7_segment_4", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(0.25F, rot(0F, 14F, 0F), SMOOTH),
+			k(0.5F, rot(0F, -14F, 0F), SMOOTH),
+			k(0.75F, rot(0F, 14F, 0F), SMOOTH),
+			k(1F, rot(0F, -14F, 0F), SMOOTH),
+			k(1.25F, rot(0F, 14F, 0F), SMOOTH),
+			k(1.5F, rot(0F, -14F, 0F), SMOOTH),
+			k(1.65F, rot(-56F, 0F, 0F), LINEAR),
+			k(2F, rot(-62F, 0F, 0F), SMOOTH),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.addAnimation("mantle", new AnimationChannel(ROT,
+			k(0F, rot(0F, 0F, 0F), SMOOTH),
+			k(1.3F, rot(6F, 0F, 0F), SMOOTH),
+			k(1.62F, rot(-6F, 0F, 0F), LINEAR),
+			k(2.4F, rot(0F, 0F, 0F), SMOOTH)))
+		.build();
+
+	/** Duração do clipe em segundos (as partículas sabem quando ele acabou). */
+	public static float lengthSeconds(String name) {
+		return switch (name) {
+			case "idle" -> 4F;
+			case "swim" -> 1.4F;
+			case "emerge" -> 2.2F;
+			case "stunned" -> 1.2F;
+			case "phaseChange" -> 3F;
+			case "death" -> 3.2F;
+			case "slam" -> 2.4F;
+			case "grab" -> 2.4F;
+			case "ink" -> 2.8F;
+			case "whirlpool" -> 2F;
+			case "spawnYoung" -> 2.8F;
+			case "waterJet" -> 2F;
+			case "roar" -> 2.5F;
+			case "bolts" -> 2.8F;
+			case "ambush" -> 2.8F;
+			case "doubleGrab" -> 2.4F;
+			default -> 0.0F;
+		};
 	}
 
-	private static AnimationChannel arc(String part, float duration, float windUp, float impact) {
-		AnimationChannel channel = new AnimationChannel(ROT,
-			key(ROT, 0.0F, 0.0F, 0.0F, 0.0F, SMOOTH),
-			key(ROT, duration * 0.28F, windUp, 0.0F, 0.0F, SMOOTH),
-			key(ROT, duration * 0.54F, impact, 0.0F, 0.0F, SMOOTH),
-			key(ROT, duration, 0.0F, 0.0F, 0.0F, SMOOTH));
-		ChannelParts.put(channel, part);
-		return channel;
-	}
-
-	private static AnimationDefinition clip(float length, boolean looping, AnimationChannel... channels) {
-		AnimationDefinition.Builder builder = AnimationDefinition.Builder.withLength(length);
-		if (looping) {
-			builder.looping();
-		}
-		for (AnimationChannel channel : channels) {
-			builder.addAnimation(channelPart(channel), channel);
-		}
-		return builder.build();
-	}
-
-	/* The target part is carried in a tiny registry so clip declarations stay readable. */
-	private static String channelPart(AnimationChannel channel) {
-		return ChannelParts.part(channel);
-	}
-
-	private static AnimationChannel motion(String part, AnimationChannel.Target target, float duration,
-		float startX, float startY, float startZ, float peakX, float peakY, float peakZ,
-		float endX, float endY, float endZ, AnimationChannel.Interpolation interpolation) {
-		AnimationChannel channel = new AnimationChannel(target,
-			key(target, 0.0F, startX, startY, startZ, interpolation),
-			key(target, duration * 0.27F, peakX * 0.35F, peakY * 0.35F, peakZ * 0.35F, interpolation),
-			key(target, duration * 0.58F, peakX, peakY, peakZ, interpolation),
-			key(target, duration, endX, endY, endZ, interpolation));
-		ChannelParts.put(channel, part);
-		return channel;
-	}
-
-	private static Keyframe key(AnimationChannel.Target target, float time, float x, float y, float z,
-		AnimationChannel.Interpolation interpolation) {
-		Vector3f vector = target == AnimationChannel.Targets.ROTATION
-			? KeyframeAnimations.degreeVec(x, y, z)
-			: KeyframeAnimations.posVec(x, y, z);
+	private static Keyframe k(float time, Vector3f vector, AnimationChannel.Interpolation interpolation) {
 		return new Keyframe(time, vector, interpolation);
 	}
 
-	private static final class ChannelParts {
-		private static final java.util.IdentityHashMap<AnimationChannel, String> PARTS = new java.util.IdentityHashMap<>();
-		static void put(AnimationChannel channel, String part) { PARTS.put(channel, part); }
-		static String part(AnimationChannel channel) { return PARTS.get(channel); }
+	private static Vector3f rot(float x, float y, float z) {
+		return KeyframeAnimations.degreeVec(x, y, z);
+	}
+
+	private static Vector3f pos(float x, float y, float z) {
+		return KeyframeAnimations.posVec(x, y, z);
+	}
+
+	private static Vector3f scale(float x, float y, float z) {
+		return KeyframeAnimations.scaleVec(x, y, z);
 	}
 
 	private KrakenAnimations() {}

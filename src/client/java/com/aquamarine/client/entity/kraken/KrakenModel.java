@@ -86,12 +86,15 @@ public final class KrakenModel extends EntityModel<KrakenRenderState> {
 			.addBox(-1.0F, -3.0F, -10.0F, 2.0F, 2.0F, 20.0F, none), PartPose.offset(-7.0F, -3.0F, 0.0F));
 		mantle.addOrReplaceChild("mantle_ridge_right", CubeListBuilder.create().texOffs(80, 22)
 			.addBox(-1.0F, -3.0F, -10.0F, 2.0F, 2.0F, 20.0F, none), PartPose.offset(7.0F, -3.0F, 0.0F));
-		mantle.addOrReplaceChild("crack_75", CubeListBuilder.create().texOffs(0, 118)
-			.addBox(-0.5F, -0.6F, -6.0F, 1.0F, 0.5F, 12.0F, none), PartPose.offset(-4.0F, -12.0F, 0.0F));
-		mantle.addOrReplaceChild("crack_50", CubeListBuilder.create().texOffs(16, 118)
-			.addBox(-5.0F, -0.6F, -0.5F, 10.0F, 0.5F, 1.0F, none), PartPose.offset(2.0F, -12.0F, 1.0F));
-		mantle.addOrReplaceChild("crack_25", CubeListBuilder.create().texOffs(28, 118)
-			.addBox(-0.5F, -0.6F, -5.0F, 1.0F, 0.5F, 10.0F, none), PartPose.offset(4.0F, -12.0F, 0.0F));
+		// Rachaduras: cascas um pouco infladas sobre coroa, elevação e placa do manto. A textura é
+		// transparente fora das fendas, e a KrakenRenderer as desenha de novo com brilho próprio.
+		CubeDeformation shell = new CubeDeformation(0.12F);
+		mantle.addOrReplaceChild("crack_75", CubeListBuilder.create().texOffs(0, 128)
+			.addBox(-5.0F, -12.0F, -6.0F, 10.0F, 4.0F, 12.0F, shell), PartPose.ZERO);
+		mantle.addOrReplaceChild("crack_50", CubeListBuilder.create().texOffs(48, 128)
+			.addBox(-8.0F, -9.0F, -9.0F, 16.0F, 5.0F, 18.0F, shell), PartPose.ZERO);
+		mantle.addOrReplaceChild("crack_25", CubeListBuilder.create().texOffs(0, 152)
+			.addBox(-10.0F, -5.0F, -12.0F, 20.0F, 8.0F, 24.0F, shell), PartPose.ZERO);
 
 		PartDefinition head = root.addOrReplaceChild("head", CubeListBuilder.create()
 			.texOffs(0, 60).addBox(-7.0F, -7.0F, -8.0F, 14.0F, 13.0F, 16.0F, none)
@@ -139,7 +142,7 @@ public final class KrakenModel extends EntityModel<KrakenRenderState> {
 				}
 			}
 		}
-		return LayerDefinition.create(mesh, 128, 128);
+		return LayerDefinition.create(mesh, 128, 256);
 	}
 
 	@Override

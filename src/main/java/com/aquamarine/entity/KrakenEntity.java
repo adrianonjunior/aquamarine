@@ -108,6 +108,9 @@ public class KrakenEntity extends Mob implements KrakenView {
 		"slam", "grab", "ink", "whirlpool", "spawnYoung", "waterJet", "roar", "bolts", "ambush", "doubleGrab");
 	private static final EntityDataAccessor<Integer> DATA_ANIM = SynchedEntityData.defineId(KrakenEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> DATA_ANIM_SEQ = SynchedEntityData.defineId(KrakenEntity.class, EntityDataSerializers.INT);
+	/** Cliente: estado do tick anterior, para ligar e desligar stunned/phaseChange só na mudança. */
+	private boolean wasStunned;
+	private boolean wasTransitioning;
 
 	private final AquamarineBossBar bossBar = new AquamarineBossBar(this.getDisplayName());
 	private final AggroTracker aggro = new AggroTracker();
@@ -275,8 +278,18 @@ public class KrakenEntity extends Mob implements KrakenView {
 		super.tick();
 		if (level().isClientSide()) {
 			idleAnimation.startIfStopped(tickCount);
-			stunnedAnimation.animateWhen(isStunned(), tickCount);
-			phaseChangeAnimation.animateWhen(isTransitioning(), tickCount);
+			// Só reage quando o estado muda: assim `kraken anim stunned/phaseChange` não é cortado no tick seguinte.
+			if (isStunned() != wasStunned) {
+				wasStunned = isStunned();
+				stunnedAnimation.animateWhen(wasStunned, tickCount);
+			}
+			if (isTransitioning() != wasTransitioning) {
+				wasTransitioning = isTransitioning();
+				phaseChangeAnimation.animateWhen(wasTransitioning, tickCount);
+			}
+			if (isDeadOrDying()) {
+				deathAnimation.startIfStopped(tickCount);
+			}
 		}
 	}
 

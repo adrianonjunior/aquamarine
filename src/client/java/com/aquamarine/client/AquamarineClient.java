@@ -26,6 +26,7 @@ public class AquamarineClient implements ClientModInitializer {
 		PressureHud.register();
 		SummonEffects.register();
 		ItemDescriptions.register();
+		KrakenEffects.register();
 		// Renderizadores e HUD do Kraken entram aqui.
 	}
 }
