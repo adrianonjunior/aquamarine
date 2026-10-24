@@ -79,6 +79,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			bossBar(context, world, server, base);
 			altar(context, world, server, base);
 			kraken(context, world, server, base);
+			PressureGameTest.run(context, world, server, base);
 		}
 	}
 

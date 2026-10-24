@@ -78,6 +78,17 @@ public final class ModItems {
 			.setEquipSound(SoundEvents.ARMOR_EQUIP_LEATHER)
 			.build()));
 
+	/** Tônico de Pressão: bebida de 5 min que reduz o máximo da Pressão em 2 níveis. */
+	public static final Item PRESSURE_TONIC = register("pressure_tonic", Item::new, new Item.Properties()
+		.stacksTo(16).usingConvertsTo(Items.GLASS_BOTTLE)
+		.component(DataComponents.CONSUMABLE, Consumable.builder().consumeSeconds(1.6F)
+			.animation(ItemUseAnimation.DRINK).sound(SoundEvents.GENERIC_DRINK)
+			.onConsume(new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(ModEffects.PRESSURE_TONIC, PressureState.TONIC_TICKS)))
+			.build()));
+	/** Boia de Âncora: forma uma plataforma 3x3 na superfície da água por 90 s (recarga de 30 s). */
+	public static final Item ANCHOR_BUOY = register("anchor_buoy", AnchorBuoyItem::new,
+		new Item.Properties().useBlockDescriptionPrefix().stacksTo(16));
+
 	// Invocação
 	/** Projeto do Chamariz: vem do Cofre do Templo (ainda não existe); por enquanto só criativo. */
 	public static final Item LURE_BLUEPRINT = register("lure_blueprint", Item::new,
