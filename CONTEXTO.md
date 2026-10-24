@@ -30,14 +30,14 @@ Fonte da verdade: [docs/00-decisoes.md](docs/00-decisoes.md). Resumo:
 - Mundo de teste criado pelo Adriano (modo singleplayer, em `run/saves`).
 - Python 3.14 + Pillow em `C:\Python314\python`.
 - `genSources` falha com o jogo aberto (jar travado); rodar com o jogo fechado.
-- Código atual: só o esqueleto (`Aquamarine`, `AquamarineClient`), sem itens ainda.
+- Código atual: `Aquamarine`, `AquamarineClient`, `item/ModItems` (Óculos de Mergulho), `event/DivingGogglesHandler`.
 
 ## Quadro de tarefas
 Status: `livre` | `em andamento` | `revisão` | `feito`. Campo "Recurso" = jogo/Gradle em uso.
 
 | Tarefa | Dono | Status | Recurso | Notas |
 |---|---|---|---|---|
-| Óculos de mergulho (item, textura, efeito na água) | Claude | em andamento | Gradle | Equipável na cabeça; efeito só enquanto submerso |
+| Óculos de mergulho (item, textura, efeito na água) | Claude | revisão | jogo | Código, textura (`tools/gen_goggles.py`), receita e lang prontos; build OK. Falta testar no jogo: `/give @s aquamarine:diving_goggles`, entrar na água, conferir visão e modelo na cabeça (F2). Seguimento: reduzir a névoa da água (mixin cliente) 
 | Texturas provisórias dos 3 materiais (Oricálcio, Pérola, Cristal) | Claude | livre | | Pixel art via script |
 | Ciclo de screenshot (F2 → `run/screenshots` → leitura) | Codex Astra | livre | jogo | Validar que os PNGs saem e que dá para lerem |
 | Gerar sources do Minecraft (`genSources`) | qualquer | livre | Gradle, jogo fechado | Facilita consultar a API |
@@ -53,6 +53,7 @@ Status: `livre` | `em andamento` | `revisão` | `feito`. Campo "Recurso" = jogo/
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
 
+- 24/10/2026 · Claude · Óculos de Mergulho implementados (item equipável na cabeça, visão noturna discreta só submerso, receita couro+vidro+cobre, textura pixel art gerada por script). Falta: teste no jogo e névoa da água.
 - 24/10/2026 · Claude · Repo criado e docs reorganizados em `docs/`; JDK 25
   instalado; build e runClient OK; AGENTS.md e CONTEXTO.md criados. Falta:
   óculos de mergulho e primeira textura.

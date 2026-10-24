@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "equipment",
+	"key": {
+		"L": "minecraft:leather",
+		"G": "minecraft:glass_pane",
+		"C": "minecraft:copper_ingot"
+	},
+	"pattern": [
+		"LLL",
+		"GCG"
+	],
+	"result": {
+		"id": "aquamarine:diving_goggles"
+	}
+}
