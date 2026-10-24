@@ -4,7 +4,8 @@
 > **decidido**; números são valores iniciais a testar (ajustar aqui).
 > **Implementados (Entrega 1):** Oricálcio (minério, lingote, bloco, ferramentas,
 > armadura), Pérola Abissal, Cristal de Maré e Escama Antiga como itens, Forja
-> Abissal e Óculos de Mergulho. O resto ainda é planejamento. Regra: todo item
+> Abissal, Óculos de Mergulho, Chamariz Abissal (e Projeto) e Altar do Abismo.
+> O resto ainda é planejamento. Regra: todo item
 > responde "o que faz na luta ou na exploração?". Decisões gerais em
 > [00-decisoes.md](00-decisoes.md).
 
@@ -35,7 +36,7 @@ Todas as receitas abaixo são na Forja Abissal, exceto quando indicado.
 
 | Item | Receita | Efeito |
 |---|---|---|
-| Chamariz Abissal | Projeto do Chamariz + 4 Pérolas + 2 Cristais + 1 Lingote (montado no Altar do Abismo) | Invoca o Kraken; consumido ao invocar |
+| Chamariz Abissal | Projeto do Chamariz + 4 Pérolas + 2 Cristais + 1 Lingote; usado no Altar do Abismo | Invoca o Kraken; consumido ao invocar (implementado; o Projeto por enquanto só no criativo) |
 | Arpão de Oricálcio | 3 Lingotes + 1 Cristal + 1 vareta | Arremessável; dano triplo no escudo; prende o tentáculo por 3 s; volta com Lealdade ou é recolhido |
 | Carga de Pulso | 1 Cristal + 1 pólvora + 1 Pérola (rende 2) | Granada submarina; 100 de dano fixo no escudo em área de 4 blocos |
 | Pilar Ressonante | 4 Cristais + 2 Lingotes + 1 bloco de prismarinho | Bloco; perto da arena, a cada 15 s tira 5% do escudo; até 3 ativos |

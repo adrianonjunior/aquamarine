@@ -37,6 +37,14 @@ Algo no chat que parece o Kraken, mas não é.
 - Música de boss própria só no polimento, depois da v1.
 
 ## Implementação
+- **Feito (Entrega 1):** `event/KrakenSummoning` com as mensagens de 0, 5 e 10 s
+  (raio 128), bolhas, título "O KRAKEN", tempestade e o modo falso (as três
+  mensagens + "As águas voltam ao silêncio..." 20 s depois); o Altar do Abismo
+  checa a água funda e não gasta o Chamariz se faltar. `spawnKraken` é o gancho
+  onde o Kraken entra.
+- **Falta:** gatilho do aviso falso (noite de tempestade, 8%, 1 a cada 3 dias,
+  config `falseWarning`; precisa de `SavedData`), tremor de tela e silenciar os
+  sons do oceano em 0 s, céu escurecendo no aviso falso, sons próprios.
 - Evento de invocação no servidor com contador de ticks (0, 100, 200).
 - `SavedData` do mundo guarda se o Kraken foi derrotado e se o jogador já
   recebeu o Coração.
