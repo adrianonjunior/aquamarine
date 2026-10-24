@@ -15,7 +15,24 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 
-## Registro de handoff
+## Registro de handoff
+
+- 24/10/2026 · Orquestrador (Claude Sonnet 5.5) · **Entrega 2 em andamento** (Run `run_a6bda8ca6927`, Orca;
+  liberação em `e1d894b`). **Aceitas e validadas na main (build verde):** 2A-M (modelo, UV, 16 animações,
+  renderer; QA visual em arena aquática), 2A-C (`KrakenEntity`, `ModEntities.KRAKEN`, `/aquamarine kraken [arena|anim <nome>]`),
+  2C (tabela de dano do escudo, Nós de Maré, atordoamento). **Rodando:** 2B, 2E (Claude, worktrees `2B`/`2E`),
+  2A-T (Claude, reaproveitou o terminal da worktree `2A-C`), 2D-M (Codex medium, worktree `2D-M`;
+  tarefa reenviada por `terminal send` com preâmbulo, pois a original se perdeu). **Pendentes:** 2D-C (dep. 2A-C, 2B, 2C),
+  2D-T (dep. 2D-M), 2Q (todas) e a faixa de polimento do tamanho (Kraken final 24 x 16 blocos, ver docs/00-decisoes.md).
+  **Abertos da 2C:** itens Arpão, Carga de Pulso e Pilar (só existem os ganchos), visual dos nós (`nodeCenters()`),
+  acerto em nó por raio do olhar não testado no jogo. **Lições do Orca:** Claude novo em worktree nova para no aviso
+  Bypass Permissions e o Codex no aviso de trust/atualização: o Adriano aceita; depois reenviar a spec com
+  `dispatch --dry-run --return-preamble` (trocar `ctx_dryrun` pelo dispatch real) + `terminal send --enter`.
+  Terminais ociosos reaproveitáveis: Claude `term_5882b258...` (2A-C), Codex `term_4019b92f...` (2A-M);
+  dispatches retidos (`worker-release` deu `retained`). A árvore principal tem edições de outro agente
+  (README, docs/00-decisoes, docs/07-roadmap, docs/08-fase3.md): não mexer; validar em worktree temporária.
+  **Próximo:** esperar `worker_done` de 2B, 2E, 2A-T e 2D-M (`check --wait`), validar cada um, liberar 2D-C quando 2B e 2C
+  estiverem mergeadas, depois 2D-T, 2Q e o relatório final.
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
 
 - 24/10/2026 · Codex Astra (2A-M.2) · Verificação visual do Kraken no `runClientGameTest` em arena aquática, com gabarito UV e câmera acima do chão; `slam` e `grab` dispararam por comando, teste passou. **Pronto:** modelo e poses visíveis; **não testado nesta faixa:** textura final e combate completo; **próximo passo:** 2A-T aplicar a textura definitiva.
