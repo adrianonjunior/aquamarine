@@ -1,5 +1,7 @@
 # Itens
 
+> **Status:** tabelas "do plano" = decidido. "Ideias novas" = **ideias**; só entram se responderem "o que fazem na luta ou na exploração?".
+
 ## Materiais (do plano)
 | Material | Origem | Uso |
 |---|---|---|

@@ -1,9 +1,11 @@
 # O Kraken
 
+> **Status:** seções marcadas "Decidido" valem; o resto é **ideia** (não decidida). Números de balanceamento são chutes a testar. Decisões em [00-decisoes.md](00-decisoes.md).
+
 Base do plano: 1.500 de vida, 3 fases (Tormenta, Fúria, Abismo), barra de
 escudo "Carapaça Abissal" (400 / 600 / 800), 8 tentáculos de 60 de vida.
 
-## Ideias para o escudo
+## Ideias para o escudo (ideias)
 - **Visual:** a carapaça é uma camada de cristal azul sobre o corpo. Rachaduras
   aparecem em 75%, 50% e 25% do escudo, para o jogador sentir progresso mesmo
   sem olhar a barra.
@@ -16,7 +18,7 @@ escudo "Carapaça Abissal" (400 / 600 / 800), 8 tentáculos de 60 de vida.
 - **Regeneração:** 20 s sem dano → regenera. Na fase 3, regenera sozinho a
   cada 45 s. Mostrar a regeneração com brilho subindo na barra.
 
-## Ideias para a IA
+## Ideias para a IA (ideias)
 - Ciclo de ataques com peso aleatório, mas sem repetir o mesmo ataque 2 vezes
   seguidas.
 - O Kraken escolhe alvo: quem deu mais dano no escudo recentemente (aggro).
@@ -26,24 +28,24 @@ escudo "Carapaça Abissal" (400 / 600 / 800), 8 tentáculos de 60 de vida.
   cortar os 8, o Kraken fica exposto por um tempo extra (recompensa por jogar
   agressivo).
 
-## Ataques (além dos do plano)
+## Ataques extras (ideias)
 - **Maré Negra:** a água ao redor fica escura (tinta) e só a armadura de
   Oricálcio completa enxerga.
 - **Rugido Abissal:** onda de choque que tira o jogador de barcos e quebra
   blocos de 1 camada.
 
-## Balanceamento, primeiros números para testar
+## Balanceamento: números iniciais (chutes)
 - Alvo de tempo de luta: 6 a 10 minutos para um jogador bem preparado.
 - Dano de tentáculo: ~12 (6 corações) com netherite = o jogador aguenta uns
   4 a 5 golpes sem curar.
 - Ajustar depois de jogar; esses números são chute.
 
-## Dificuldade configurável
+## Dificuldade — Decidido: um pouco acima do Warden
 - `normal`: um pouco acima do Warden (decisão do Adriano).
 - `abissal` (modo mestre): mais vida, escudo regenera mais rápido, drop
   exclusivo (ex.: troféu dourado ou cosmético). *Engolir foi cortado.*
 
-## Peso do abismo (decisão: superfície + fundo)
+## Peso do abismo — Decidido (superfície + fundo)
 - Fase 1 na superfície; fases 2-3 puxam a luta para o fundo.
 - Efeito **Pressão**: nível que sobe com o tempo perto do Kraken. Cada nível
   aumenta a gravidade na água e afunda o jogador (velocidade vertical para
@@ -52,7 +54,7 @@ escudo "Carapaça Abissal" (400 / 600 / 800), 8 tentáculos de 60 de vida.
   Corrente, Boia de Âncora (reduzem ou resetam o nível).
 - Multiplayer: Pressão por jogador; o aggro continua escolhendo o alvo.
 
-## Barra de vida customizada
+## Barra de vida customizada — Decidido
 - Barra própria desenhada no HUD (cliente), no lugar da barra de boss vanilla:
   moldura de coral/oricálcio dourado, preenchimento azul-profundo com brilho
   verde-água.

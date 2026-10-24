@@ -1,5 +1,7 @@
 # Invocação e mensagens no chat (estilo Terraria)
 
+> **Status:** sequência base = plano oficial (decidido). "Ideias extras" = ideias. Aviso falso = **decidido (manter)**.
+
 ## Sequência (do plano)
 | Tempo | Mensagem | Cor | Efeito |
 |---|---|---|---|

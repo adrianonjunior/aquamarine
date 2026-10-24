@@ -1,5 +1,7 @@
 # Notas técnicas
 
+> **Status:** rascunho de implementação. Barra de boss customizada e efeito de Pressão = **decididos**; o resto = abordagem sugerida.
+
 ## Base
 - Minecraft Java 26.3 "Wilderness Bound" (15/09/2026), Fabric Loader +
   Fabric API, Java 25, Gradle 9.x, plugin `net.fabricmc.fabric-loom`.

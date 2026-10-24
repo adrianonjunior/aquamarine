@@ -1,5 +1,7 @@
 # Cidade Perdida de Nereia
 
+> **Status:** "Partes" = plano oficial (decidido). "Ideias extras", bioma e criaturas novas = **ideias** ainda não decididas.
+
 Estrutura grande e rara no oceano profundo, dentro do bioma Fossa de Nereia.
 Único lugar com os materiais que enfraquecem o Kraken.
 

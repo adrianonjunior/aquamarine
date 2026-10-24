@@ -1,4 +1,6 @@
-# Decisões do Adriano (24/10/2026)
+# Decisões (fonte da verdade)
+
+Se outro arquivo contradisser este, **este vale**. Decisões do Adriano em 24/10/2026.
 
 | # | Pergunta | Decisão |
 |---|---|---|
@@ -11,3 +13,12 @@
 | 7 | Publicação | Só com amigos por enquanto (repositório privado). |
 | 8 | Nome dos itens | Português no jogo, com tradução inglesa. |
 | extra | Barra de vida | Barra de boss **customizada e bonita** (ver 02-kraken.md e 06-tecnico.md). |
+
+## Ainda em aberto
+- **Quem faz texturas e modelos?** Por padrão, Claude cria provisórios para o Adriano trocar depois.
+- **Pontos fracos brilhantes no escudo** (02-kraken.md): vale a complexidade?
+- **Dano dos itens da cidade no escudo:** hoje, sem eles o escudo leva 25% do dano.
+
+## Resolvido
+- Repositório: `adrianonjunior/aquamarine` (privado).
+- Engolir: cortado, não implementar.

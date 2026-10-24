@@ -1,5 +1,7 @@
 # Pensamentos gerais
 
+> **Status:** visão e riscos. Referência, não é tarefa. Decisões em [00-decisoes.md](00-decisoes.md).
+
 ## O que o mod é, numa frase
 Um mod de fim de jogo em que o oceano deixa de ser "o lugar vazio entre
 continentes" e vira uma ameaça: você explora uma cidade afundada, se prepara
