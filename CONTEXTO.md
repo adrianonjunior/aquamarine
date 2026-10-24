@@ -5,7 +5,7 @@
 > marcos (ver [docs/07-roadmap.md](docs/07-roadmap.md)) nem ambiente técnico
 > (ver [docs/06-tecnico.md](docs/06-tecnico.md)). Regras: [AGENTS.md](AGENTS.md).
 
-> **FASE ATUAL: ENTREGA 1 CONCLUÍDA (24/10/2026).** Nada além dela está liberado: não implemente
+> **FASE ATUAL: ENTREGA 1 CONCLUÍDA; ENTREGA 2 (Kraken v1) LIBERADA em 24/10/2026.** Nada além delas está liberado: não implemente
 > nada (código, texturas, modelos) até o Adriano liberar explicitamente o próximo passo.
 
 ## Em andamento
