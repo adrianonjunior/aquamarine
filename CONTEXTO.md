@@ -19,6 +19,11 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
 
+- 24/10/2026 12:55 · Estruturador · Checkpoint na branch `estruturador/entrega-1`
+  (build verde, 7 testes JUnit): blocos A, B e C escritos (registros, config, aba,
+  tags, lang, Oricálcio completo, Forja Abissal, Óculos, texturas por
+  `tools/gen_textures.py`). Falta: testar no jogo, docs e merge na `main`.
+
 - 24/10/2026 · Claude · Repositório criado, docs organizados, JDK 25 instalado,
   AGENTS.md e CONTEXTO.md criados. Um óculos foi implementado por engano e
   removido a pedido. Falta: decidir o que sai do planejamento primeiro.
