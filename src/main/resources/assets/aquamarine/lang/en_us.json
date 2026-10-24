@@ -17,5 +17,7 @@
   "item.aquamarine.orichalcum_chestplate": "Orichalcum Chestplate",
   "item.aquamarine.orichalcum_leggings": "Orichalcum Leggings",
   "item.aquamarine.orichalcum_boots": "Orichalcum Boots",
-  "item.aquamarine.diving_goggles": "Diving Goggles"
+  "item.aquamarine.diving_goggles": "Diving Goggles",
+  "entity.aquamarine.boss_dummy": "Kraken (test)",
+  "bossbar.aquamarine.title": "%s · Phase %s"
 }

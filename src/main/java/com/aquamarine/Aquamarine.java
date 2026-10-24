@@ -2,6 +2,8 @@ package com.aquamarine;
 
 import com.aquamarine.block.ModBlocks;
 import com.aquamarine.config.AquamarineConfig;
+import com.aquamarine.entity.ModEntities;
+import com.aquamarine.entity.boss.AquamarineBossBar;
 import com.aquamarine.item.ModCreativeTab;
 import com.aquamarine.item.ModItems;
 import com.aquamarine.item.OrichalcumEffects;
@@ -28,6 +30,8 @@ public class Aquamarine implements ModInitializer {
 		ModRecipes.register();
 		ModMenus.register();
 		ModCreativeTab.register();
+		ModEntities.register();
+		AquamarineBossBar.registerPayloads();
 		OrichalcumEffects.register();
 		LOGGER.info("Aquamarine carregado.");
 	}

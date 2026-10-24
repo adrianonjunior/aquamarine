@@ -58,6 +58,13 @@
 - **Efeitos de Oricálcio:** `item/OrichalcumEffects` (`armorPieces`,
   `hasFullSet`, `PRESSURE_REDUCTION_PER_PIECE` para a Pressão).
 - **Óculos:** `client/DivingGogglesVision` + `client/mixin/WaterFogEnvironmentMixin`.
+- **Barra de boss:** o boss cria um `entity/boss/AquamarineBossBar`, chama
+  `addPlayer`/`removePlayer` em `startSeenByPlayer`/`stopSeenByPlayer` e
+  `update(vida, vidaMax, escudo, escudoMax, fase, regenerando)` a cada tick. O
+  cliente (`client/bossbar/AquamarineBossBarHud` + `BossHealthOverlayMixin`)
+  troca a barra vanilla desse evento pela própria; sem o mod no cliente, aparece
+  a vanilla. Exemplo completo: `entity/BossDummy` (entidade de teste oculta,
+  `/summon aquamarine:boss_dummy`, `/damage @e[type=aquamarine:boss_dummy] 40`).
 
 ## Convenções de código e arte
 - `src/main` = comum/servidor; `src/client` = só cliente (HUD, renderers).
