@@ -5,6 +5,7 @@ import com.aquamarine.ModTags;
 import com.aquamarine.config.AquamarineConfig;
 import com.aquamarine.entity.boss.AggroTracker;
 import com.aquamarine.entity.boss.AquamarineBossBar;
+import com.aquamarine.entity.boss.KrakenAttacks;
 import com.aquamarine.entity.boss.KrakenRewards;
 import com.aquamarine.entity.boss.KrakenStats;
 import com.aquamarine.entity.boss.KrakenView;
@@ -111,6 +112,8 @@ public class KrakenEntity extends Mob implements KrakenView {
 
 	private final AquamarineBossBar bossBar = new AquamarineBossBar(this.getDisplayName());
 	private final AggroTracker aggro = new AggroTracker();
+	/** Tentáculos e ataques (docs/02-kraken.md); a IA roda no servidor. */
+	private final KrakenAttacks attacks = new KrakenAttacks(this);
 	/** Quem causou dano nesta luta (recebe as recompensas se estiver por perto na vitória). */
 	private final Set<UUID> damagers = new HashSet<>();
 	private float scale = 1.0F;
@@ -326,6 +329,11 @@ public class KrakenEntity extends Mob implements KrakenView {
 		return !isStunned() && !isTransitioning();
 	}
 
+	/** Tentáculos e ataques do Kraken (comandos e testes). */
+	public KrakenAttacks attacks() {
+		return attacks;
+	}
+
 	public boolean isExposed() {
 		return exposedTicks > 0;
 	}
@@ -520,6 +528,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 		scale = Math.min(scale, KrakenStats.scale(n, AquamarineConfig.get().scalingCap));
 		applyMaxHealth(false);
 		setNodes(n);
+		attacks.cancelAll(level);
 		entityData.set(DATA_PHASE, phase);
 		setShieldFull(phase);
 		entityData.set(DATA_STUN, 0);
@@ -571,6 +580,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 		int phase = phase();
 		tickCounters();
 		tickShield(phase);
+		attacks.tick(level);
 		target = aggro.top(level.getGameTime());
 		faceTarget(level, inArena);
 		tickAbsence(level, inArena);
@@ -669,6 +679,9 @@ public class KrakenEntity extends Mob implements KrakenView {
 
 	@Override
 	public void remove(RemovalReason reason) {
+		if (reason.shouldDestroy() && level() instanceof ServerLevel level) {
+			attacks.cleanup(level);
+		}
 		bossBar.removeAllPlayers();
 		super.remove(reason);
 	}

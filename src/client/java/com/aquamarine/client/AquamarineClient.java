@@ -22,6 +22,9 @@ public class AquamarineClient implements ClientModInitializer {
 		EntityRendererRegistry.register(ModEntities.BOSS_DUMMY, NoopRenderer::new);
 		ModelLayerRegistry.registerModelLayer(KrakenModel.LAYER, KrakenModel::createBodyLayer);
 		EntityRendererRegistry.register(ModEntities.KRAKEN, KrakenRenderer::new);
+		// Renderers provisórios até os modelos da 2D-M.
+		EntityRendererRegistry.register(ModEntities.TENTACLE, NoopRenderer::new);
+		EntityRendererRegistry.register(ModEntities.YOUNG_KRAKEN, NoopRenderer::new);
 		AquamarineBossBarHud.register();
 		PressureHud.register();
 		SummonEffects.register();

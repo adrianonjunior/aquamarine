@@ -104,5 +104,12 @@
   "tooltip.aquamarine.golden_abyss_trophy": "Troféu de ouro do Abismo.",
   "tooltip.aquamarine.golden_abyss_trophy.2": "Bloco decorativo; só no modo abissal.",
   "message.aquamarine.kraken.defeated": "O Kraken foi derrotado!",
-  "message.aquamarine.kraken.heart": "O Kraken deixou seu Coração para você."
+  "message.aquamarine.kraken.heart": "O Kraken deixou seu Coração para você.",
+  "commands.aquamarine.kraken.attack": "Ataque %s disparado.",
+  "commands.aquamarine.kraken.attack_unknown": "Ataque desconhecido: %s.",
+  "commands.aquamarine.kraken.attack_failed": "O ataque %s não pôde começar (sem jogador ou sem tentáculo livre).",
+  "commands.aquamarine.kraken.ai_on": "Ataques automáticos do Kraken ligados.",
+  "commands.aquamarine.kraken.ai_off": "Ataques automáticos do Kraken desligados.",
+  "entity.aquamarine.tentacle": "Tentáculo do Kraken",
+  "entity.aquamarine.young_kraken": "Cria de Kraken"
 }
