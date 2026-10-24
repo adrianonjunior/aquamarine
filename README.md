@@ -34,3 +34,6 @@ O plano oficial acima pode estar desatualizado: em conflito, vale
 | prompts/orquestrador.md | Prompt histórico de arranque da Entrega 2; para retomar, leia CONTEXTO.md |
 | prompts/kraken-v1.md | Corpo das Tasks dos agentes Claude (Entrega 2) |
 | prompts/kraken-modelagem.md | Corpo das Tasks dos agentes Codex (modelagem e QA) |
+| prompts/fase3-claude.md | Corpo das Tasks do Claude na Fase 3 (**bloqueado**, ver 07-roadmap) |
+| prompts/fase3-modelagem.md | Corpo das Tasks do Codex na Fase 3 (**bloqueado**) |
+| prompts/orquestrador-fase3.md | Prompt do orquestrador da Fase 3; **enviá-lo libera a fase** (só com a Entrega 2 completa) |
