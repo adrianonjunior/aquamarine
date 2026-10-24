@@ -223,7 +223,19 @@ final class AttackGameTest {
 		server.runCommand("aquamarine kraken tentacle anim slam");
 		server.runCommand("aquamarine kraken egg anim hatch");
 		context.waitTicks(6);
-		shot(context, "22_criaturas_anim");
+		// Texturas (2D-T): uma criatura de cada vez, de perto.
+		String[][] close = {{"egg", "^ ^ ^3", "23_textura_ovo"}, {"young", "^ ^ ^3.5", "24_textura_cria"}, {"tentacle", "^ ^ ^7", "25_textura_tentaculo"}};
+		for (String[] c : close) {
+			server.runCommand("kill @e[type=aquamarine:young_kraken]");
+			server.runOnServer(s -> {
+				s.overworld().getEntities(ModEntities.KRAKEN_EGG, e -> true).forEach(e -> e.discard());
+				s.overworld().getEntities(ModEntities.TENTACLE, t -> t.owner() == null).forEach(t -> t.discard());
+			});
+			reset(server);
+			server.runCommand("execute as @p at @p rotated ~ 0 positioned " + c[1] + " run aquamarine kraken " + c[0]);
+			context.waitTicks(8);
+			shot(context, c[2]);
+		}
 		server.runCommand("kill @e[type=aquamarine:young_kraken]");
 		server.runOnServer(s -> s.overworld().getEntities(ModEntities.KRAKEN_EGG, e -> true).forEach(e -> e.discard()));
 		server.runOnServer(s -> s.overworld().getEntities(ModEntities.TENTACLE, t -> t.owner() == null).forEach(t -> t.discard()));
