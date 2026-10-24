@@ -3,8 +3,8 @@
 > **Status:** ordem de trabalho atual. Atualize os checkboxes aqui, não em outros arquivos.
 
 - [x] Repositório `adrianonjunior/aquamarine` (privado) com esqueleto Fabric 26.3.
-- [ ] **Adriano (no PC):** instalar JDK 25, rodar `gradlew runClient` e
-   confirmar que o mod abre. Se der erro, mandar o log.
+- [x] JDK 25 instalado; `gradlew build` e `runClient` funcionam (24/10/2026).
+- [ ] Ciclo de screenshot: print no jogo (F2) e o Claude lê de `run/screenshots`.
 - [ ] Marco 2, Materiais: minério de Oricálcio, lingote, ferramentas, armadura,
    aba no criativo, receitas, texturas provisórias.
 - [ ] **Kraken protótipo** cedo (cubo grande com barra de boss customizada,

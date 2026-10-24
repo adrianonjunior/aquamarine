@@ -15,6 +15,7 @@ Se outro arquivo contradisser este, **este vale**. Decisões do Adriano em 24/10
 | extra | Barra de vida | Barra de boss **customizada e bonita** (ver 02-kraken.md e 06-tecnico.md). |
 
 ## Ainda em aberto
+- **Walker** (mob pacífico noturno que troca itens, ver 04-cidade-perdida.md): ideia aceita; falta definir o que troca, quando some e como se comporta.
 - **Quem faz texturas e modelos?** Por padrão, Claude cria provisórios para o Adriano trocar depois.
 - **Pontos fracos brilhantes no escudo** (02-kraken.md): vale a complexidade?
 - **Dano dos itens da cidade no escudo:** hoje, sem eles o escudo leva 25% do dano.
