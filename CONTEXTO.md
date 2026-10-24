@@ -37,6 +37,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| Kraken vivo: ondulação, respiração, rastro e locomoção no servidor (pedido do Adriano via orquestrador) | Claude Opus 5.5 (worktree `aquamarine-opus-kraken`, branch `opus/kraken-vida`) | jogo (runClientGameTest) | 24/10/2026 |
 
 ## Registro de handoff
 
