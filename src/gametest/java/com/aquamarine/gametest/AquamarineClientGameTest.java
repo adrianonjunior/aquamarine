@@ -341,8 +341,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			== com.aquamarine.event.FalseWarning.Outcome.TRIGGERED, "Aviso falso: devia disparar na noite sorteada com sorte"));
 		check(server.computeOnServer(s -> com.aquamarine.event.KrakenSummoning.isActiveNear(s.overworld(), player(s).blockPosition())),
 			"Aviso falso: a sequência devia estar rodando");
+		context.waitTicks(3);
 		check(context.computeOnClient(mc -> com.aquamarine.client.SummonEffects.silenced()), "Aviso falso: oceano devia silenciar em 0 s");
-		context.waitTicks(105);
+		context.waitTicks(102);
 		check(context.computeOnClient(mc -> com.aquamarine.client.SummonEffects.shaking()), "Aviso falso: tela devia tremer aos 5 s");
 		context.waitTicks(100);
 		check(context.computeOnClient(mc -> com.aquamarine.client.SummonEffects.darkening()), "Aviso falso: o céu devia escurecer");

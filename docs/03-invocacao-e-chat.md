@@ -42,9 +42,15 @@ Algo no chat que parece o Kraken, mas não é.
   mensagens + "As águas voltam ao silêncio..." 20 s depois); o Altar do Abismo
   checa a água funda e não gasta o Chamariz se faltar. `spawnKraken` é o gancho
   onde o Kraken entra.
-- **Falta:** gatilho do aviso falso (noite de tempestade, 8%, 1 a cada 3 dias,
-  config `falseWarning`; precisa de `SavedData`), tremor de tela e silenciar os
-  sons do oceano em 0 s, céu escurecendo no aviso falso, sons próprios.
+- **Feito (2E):** `event/FalseWarning` (gatilho: tempestade à noite, jogador na água de
+  oceano profundo, 8% de sorte uma vez por noite, mínimo de 3 dias entre avisos, config
+  `falseWarning`; checa a cada 5 s no overworld; contas puras com JUnit) e
+  `event/KrakenWorldData` (`SavedData` no overworld). `SummonEffectPayload` leva ao cliente
+  o **silêncio do oceano** (0 s: barra sons novos da categoria ambiente e para os que tocam),
+  o **tremor de tela** (5 s: desvio de até 1,2° na câmera) e o **céu escurecendo** (os 20 s
+  finais do aviso falso: véu azul-escuro no HUD, 55% de opacidade no máximo). Lado do
+  cliente: `SummonEffects` e os mixins `CameraMixin` e `SoundEngineMixin`.
+- **Falta:** sons próprios.
 - Evento de invocação no servidor com contador de ticks (0, 100, 200).
-- `SavedData` do mundo guarda se o Kraken foi derrotado e se o jogador já
-  recebeu o Coração.
+- `KrakenWorldData` guarda quem já recebeu o Coração e o controle do aviso falso
+  (se o Kraken foi derrotado não é guardado: nada o usa na v1).

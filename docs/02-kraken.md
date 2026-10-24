@@ -143,6 +143,13 @@ Olho do Kraken, Tinta Abissal, Coração do Kraken (garantido na primeira
 vitória de cada jogador), 1.000 de XP e um troféu. O Coração libera os itens
 pós-boss (lista em [05-itens.md](05-itens.md)).
 
+**Como é entregue (2E, valores iniciais):** a recompensa é **pessoal**, entregue direto
+no inventário (o que não couber cai aos pés) de cada jogador que estava na arena (32 blocos)
+ou causou dano e está a até 128 blocos na morte. Cada um recebe 1 Olho, 2 a 4 Tinta Abissal,
+1.000 de XP (cada um, não dividido), 1 Troféu do Kraken (no modo `abissal`, o Troféu Dourado do
+Abismo no lugar) e, se for a primeira vitória dele (`KrakenWorldData`), o Coração.
+Código: `entity/boss/KrakenRewards`; a mensagem "O Kraken foi derrotado!" vai a todos a 128 blocos.
+
 ## Invocação
 Detalhes em [03-invocacao-e-chat.md](03-invocacao-e-chat.md).
 
