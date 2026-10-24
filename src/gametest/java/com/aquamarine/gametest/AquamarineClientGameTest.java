@@ -231,6 +231,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			"Kraken: fase 3 com 800 de escudo");
 		shot(context, "15_kraken_fase3");
 
+		context.waitTicks(70);
 		// 2C: tabela de dano por fonte, Nós de Maré e exposição (escudo cheio de 800 na fase 3).
 		check(server.computeOnServer(s -> kraken(s).nodeCount() == 4 && kraken(s).nodeCenters().stream().allMatch(c -> c.y < kraken(s).getY())),
 			"Kraken: 4 Nós de Maré sob o corpo na fase 3");

@@ -14,7 +14,6 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| 2C: Carapaça, Nós de Maré, tabela de dano, atordoamento (~2 h) | Claude Sonnet 5.5 | jogo (runClientGameTest) | 24/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
@@ -23,6 +22,7 @@ Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou ·
   - `tools/models/kraken/qa/01_kraken_geral.png`: silhueta completa e oito tentáculos aparecem sob a água, com gabarito escuro.
   - `tools/models/kraken/qa/02_kraken_slam.png`: tentáculo do ataque `slam` aberto à esquerda da imagem.
   - `tools/models/kraken/qa/03_kraken_grab.png`: tentáculo do ataque `grab` erguido à direita da imagem.
+- 24/10/2026 · Claude Sonnet 5.5 (2C) · Escudo: tabela de dano por fonte (`ShieldDamage`, JUnit), Nós de Maré (`TideNodes`, 4 a 8, por fase, opção `weakPoints`), `KrakenEntity.hitShield(...)` para Pulso/Pilar, `expose(ticks)` (+25%, sem regenerar), `canAct()`, tags `shield_breakers`/`harpoons` e encantamento `shell_breaker`; teste de cliente confere absorve, quebra, regenera e a tabela (verde). **Não feito:** itens Arpão, Carga de Pulso e Pilar (só os ganchos), visual dos nós (usar `nodeCenters()`), acerto em nó por raio do olhar não testado no jogo. **Próximo passo:** 2D-C chama `canAct()`/`expose()`; itens chamam `hitShield`.
 
 - 24/10/2026 · Codex Astra (2A-M) · `KrakenView`, gabarito UV, `.bbmodel` com 191 cubos e 16 clips, classes do modelo/animações/renderer e registro do modelo; `compileJava compileClientJava` passou, `/aquamarine kraken` criou a entidade e os 16 comandos responderam `Animation <nome> played.`
   **Visual não verificado:** no mundo de QA florestal o Kraken surgiu em y=57 sob o terreno; as 9 capturas autorizadas foram usadas sem obter uma vista do modelo. **Próximo passo:** repetir a vista geral e poses em mundo aquático/câmera acima do chão; deixar 2A-M sem marcar até conferir a silhueta.
