@@ -3,6 +3,7 @@ package com.aquamarine.client;
 import com.aquamarine.client.bossbar.AquamarineBossBarHud;
 import com.aquamarine.client.entity.kraken.KrakenModel;
 import com.aquamarine.client.entity.kraken.KrakenRenderer;
+import com.aquamarine.client.pressure.PressureHud;
 import com.aquamarine.client.screen.AbyssalForgeScreen;
 import com.aquamarine.entity.ModEntities;
 import com.aquamarine.menu.ModMenus;
@@ -22,6 +23,7 @@ public class AquamarineClient implements ClientModInitializer {
 		ModelLayerRegistry.registerModelLayer(KrakenModel.LAYER, KrakenModel::createBodyLayer);
 		EntityRendererRegistry.register(ModEntities.KRAKEN, KrakenRenderer::new);
 		AquamarineBossBarHud.register();
+		PressureHud.register();
 		ItemDescriptions.register();
 		// Renderizadores e HUD do Kraken entram aqui.
 	}

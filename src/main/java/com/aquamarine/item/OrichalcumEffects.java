@@ -75,6 +75,11 @@ public final class OrichalcumEffects {
 		return pieces;
 	}
 
+	/** Redução do ganho da Pressão pela armadura: 15% por peça (60% com o conjunto). */
+	public static float pressureReduction(LivingEntity entity) {
+		return PRESSURE_REDUCTION_PER_PIECE * armorPieces(entity);
+	}
+
 	public static boolean hasFullSet(LivingEntity entity) {
 		return armorPieces(entity) == ARMOR_SLOTS.length;
 	}

@@ -1133,6 +1133,73 @@ def boss_bar():
 
 # ---------------------------------------------------------------- principal
 
+# ---------------------------------------------------------------- Pressão (2B)
+
+TONIC = [
+    "................",
+    "......jmj.......",
+    "......cwc.......",
+    "......ccc.......",
+    ".....cdddc......",
+    ".....cdddc......",
+    "....cdTTTTc.....",
+    "...cdTTTTTTc....",
+    "...cTTTTTTTTc...",
+    "...cTTuTTTTTc...",
+    "...cTTTTTTuTc...",
+    "...cTuTTTTTTc...",
+    "...cTTTTTuTTc...",
+    "....cTTTTTTc....",
+    ".....ccccccc....",
+]
+
+
+def tonic():
+    """Tônico de Pressão: frasco de vidro com líquido verde-água e gargalo rolhado."""
+    return render(TONIC)
+
+
+def anchor_buoy_block():
+    """Boia de Âncora: casco laranja com faixas brancas, argolas de Oricálcio nos cantos."""
+    img = Image.new("RGBA", (16, 16))
+    orange = [hexc("c2531c"), hexc("e0702a"), hexc("f08a3c")]
+    white = [hexc("cfd8dc"), hexc("f1f5f7")]
+    dark = hexc("5a2a12")
+    rnd = random.Random(88)
+    for y in range(16):
+        for x in range(16):
+            band = (x // 4) % 2 == 0
+            base = white[rnd.randint(0, 1)] if band else orange[rnd.randint(0, 2)]
+            img.putpixel((x, y), base)
+    for i in range(16):
+        for p in ((i, 0), (i, 15), (0, i), (15, i)):
+            img.putpixel(p, dark)
+    for p in ((1, 1), (14, 1), (1, 14), (14, 14), (2, 1), (1, 2), (13, 1), (14, 2), (2, 14), (1, 13), (13, 14), (14, 13)):
+        img.putpixel(p, RAMPS["G"][3])
+    return img
+
+
+def pressure_tonic_icon():
+    """Ícone do efeito (18x18): gota de pressão sobre fundo azul profundo."""
+    img = Image.new("RGBA", (18, 18), (0, 0, 0, 0))
+    for y in range(18):
+        for x in range(18):
+            dx, dy = x - 8.5, y - 8.5
+            if dx * dx + dy * dy <= 8.5 * 8.5:
+                img.putpixel((x, y), RAMPS["B"][2] if dx * dx + dy * dy < 7.2 * 7.2 else RAMPS["B"][0])
+    drop = [(9, 3), (8, 4), (10, 4), (8, 5), (10, 5), (7, 6), (11, 6), (7, 7), (11, 7), (6, 8), (12, 8), (6, 9), (12, 9),
+            (6, 10), (12, 10), (7, 11), (11, 11), (8, 12), (9, 12), (10, 12)]
+    for p in drop:
+        img.putpixel(p, RAMPS["T"][4])
+    for y in range(5, 12):
+        for x in range(7, 12):
+            if img.getpixel((x, y))[:3] == RAMPS["B"][2][:3]:
+                img.putpixel((x, y), RAMPS["T"][2])
+    img.putpixel((8, 7), RAMPS["T"][5])
+    img.putpixel((8, 8), RAMPS["T"][5])
+    return img
+
+
 def main():
     out = {}
     out["item/orichalcum_ingot"] = ingot()
@@ -1161,6 +1228,8 @@ def main():
     out["block/abyssal_altar_side"] = altar_side()
     out["block/abyssal_altar_column"] = altar_column()
     out["block/abyssal_altar_bottom"] = forge_bricks(71)
+    out["item/pressure_tonic"] = tonic()
+    out["block/anchor_buoy"] = anchor_buoy_block()
     for rel, img in out.items():
         save(img, rel + ".png")
     layers = [
@@ -1170,6 +1239,7 @@ def main():
     ]
     gui = save(gui_forge(), "gui/container/abyssal_forge.png")
     save(boss_bar(), "gui/boss_bar.png")
+    save(pressure_tonic_icon(), "mob_effect/pressure_tonic.png")
     # ícone do mod (128x128) a partir da pérola
     save(pearl().resize((128, 128), Image.NEAREST), os.path.join("..", "icon.png"))
 

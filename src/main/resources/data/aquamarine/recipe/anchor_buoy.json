@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:barrel",
+    "C": "minecraft:copper_ingot",
+    "P": "minecraft:prismarine_crystals"
+  },
+  "pattern": [
+    "CBC",
+    " P "
+  ],
+  "result": {
+    "id": "aquamarine:anchor_buoy"
+  }
+}

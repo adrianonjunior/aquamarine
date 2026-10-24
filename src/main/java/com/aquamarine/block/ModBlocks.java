@@ -40,6 +40,11 @@ public final class ModBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).instrument(NoteBlockInstrument.BASEDRUM)
 			.strength(-1.0F, 3600000.0F).sound(SoundType.DEEPSLATE_TILES).lightLevel(state -> 6).noOcclusion());
 
+	/** Plataforma da Boia de Âncora: dura 90 s e zera a Pressão de quem pisa (docs/05-itens.md). */
+	public static final Block ANCHOR_BUOY = register("anchor_buoy", AnchorBuoyBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).instrument(NoteBlockInstrument.BASS)
+			.strength(0.5F, 3600000.0F).sound(SoundType.WOOD).noLootTable());
+
 	private static Block register(String name, Function<BlockBehaviour.Properties, Block> factory, BlockBehaviour.Properties properties) {
 		ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Aquamarine.id(name));
 		return Registry.register(BuiltInRegistries.BLOCK, key, factory.apply(properties.setId(key)));

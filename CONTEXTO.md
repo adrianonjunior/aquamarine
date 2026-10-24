@@ -14,6 +14,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| 2B: Pressão (0-4), Tônico, Boia de Âncora, vinheta e som (~2 h) | Claude Sonnet 5.5 | Gradle da worktree 2B; "jogo" só se livre | 24/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.

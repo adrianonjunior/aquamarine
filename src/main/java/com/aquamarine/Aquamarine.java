@@ -3,6 +3,7 @@ package com.aquamarine;
 import com.aquamarine.block.ModBlocks;
 import com.aquamarine.command.KrakenCommand;
 import com.aquamarine.config.AquamarineConfig;
+import com.aquamarine.effect.ModEffects;
 import com.aquamarine.entity.ModEntities;
 import com.aquamarine.entity.boss.AquamarineBossBar;
 import com.aquamarine.event.KrakenSummoning;
@@ -10,6 +11,7 @@ import com.aquamarine.item.ModCreativeTab;
 import com.aquamarine.item.ModItems;
 import com.aquamarine.item.OrichalcumEffects;
 import com.aquamarine.menu.ModMenus;
+import com.aquamarine.pressure.PressureManager;
 import com.aquamarine.recipe.ModRecipes;
 
 import net.fabricmc.api.ModInitializer;
@@ -35,6 +37,8 @@ public class Aquamarine implements ModInitializer {
 		ModEntities.register();
 		AquamarineBossBar.registerPayloads();
 		OrichalcumEffects.register();
+		ModEffects.register();
+		PressureManager.register();
 		KrakenSummoning.register();
 		KrakenCommand.register();
 		LOGGER.info("Aquamarine carregado.");

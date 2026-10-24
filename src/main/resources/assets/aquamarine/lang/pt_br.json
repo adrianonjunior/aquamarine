@@ -79,5 +79,12 @@
   "commands.aquamarine.kraken.arena": "Arena de teste criada; Kraken no centro.",
   "commands.aquamarine.kraken.none": "Nenhum Kraken perto.",
   "commands.aquamarine.kraken.anim": "Animação %s disparada.",
-  "commands.aquamarine.kraken.anim_unknown": "Animação desconhecida: %s."
+  "commands.aquamarine.kraken.anim_unknown": "Animação desconhecida: %s.",
+  "item.aquamarine.pressure_tonic": "Tônico de Pressão",
+  "block.aquamarine.anchor_buoy": "Boia de Âncora",
+  "effect.aquamarine.pressure_tonic": "Tônico de Pressão",
+  "tooltip.aquamarine.pressure_tonic": "Por 5 minutos o máximo da Pressão cai 2 níveis.",
+  "tooltip.aquamarine.pressure_tonic.2": "Solta de agarrões 50% mais rápido.",
+  "tooltip.aquamarine.anchor_buoy": "Mire na superfície da água e use: forma uma plataforma 3x3 por 90 s.",
+  "tooltip.aquamarine.anchor_buoy.2": "Quem pisa nela tem a Pressão zerada. Recarga de 30 s; o Kraken pode destruí-la."
 }
