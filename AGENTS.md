@@ -5,6 +5,10 @@
 > ([CONTEXTO.md](CONTEXTO.md)) nem build, ambiente e convenções de código
 > ([docs/06-tecnico.md](docs/06-tecnico.md)). **Leia os três antes de mexer em qualquer coisa.**
 
+> **Ao retomar uma sessão:** leia o aviso "Atualização para todos os agentes" em
+> [CONTEXTO.md](CONTEXTO.md) e confira os marcos em [docs/07-roadmap.md](docs/07-roadmap.md)
+> antes de assumir uma faixa. Um handoff antigo não comprova o estado atual da tarefa.
+
 > **FASE ATUAL: IMPLEMENTAÇÃO LIBERADA SOMENTE PARA AS "ENTREGA 1" (concluída) E "ENTREGA 2" (Kraken v1, liberada em 24/10/2026; ver docs/07-roadmap.md).** Todo o resto continua em planejamento: não escreva código,
 > texturas ou modelos do mod até o Adriano liberar explicitamente. Na dúvida,
 > pergunte antes de implementar.

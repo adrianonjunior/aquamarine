@@ -28,8 +28,9 @@ O plano oficial acima pode estar desatualizado: em conflito, vale
 | docs/04-cidade-perdida.md | Estrutura, bioma, criaturas (incluindo o Walker) |
 | docs/05-itens.md | Materiais e itens (incluindo o Óculos de Mergulho) |
 | docs/06-tecnico.md | Implementação, ambiente, build e convenções |
-| docs/07-roadmap.md | Ordem dos marcos, progresso e especificação da Entrega 1 |
+| docs/07-roadmap.md | Ordem dos marcos, progresso e faixas das Entregas 1 e 2; Fase 3 planejada |
+| docs/08-fase3.md | Fase 3 (bloqueada até a Entrega 2 completa): especificação de Pressão por profundidade, Moréia, baleias, Propulsor, munições, encantamentos e Vila |
 | prompts/estruturador.md | Prompt para o agente que inicia a implementação |
-| prompts/orquestrador.md | Prompt do Codex orquestrador (Entrega 2); enviá-lo libera a fase |
+| prompts/orquestrador.md | Prompt histórico de arranque da Entrega 2; para retomar, leia CONTEXTO.md |
 | prompts/kraken-v1.md | Corpo das Tasks dos agentes Claude (Entrega 2) |
 | prompts/kraken-modelagem.md | Corpo das Tasks dos agentes Codex (modelagem e QA) |

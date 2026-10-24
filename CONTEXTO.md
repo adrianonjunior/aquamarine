@@ -8,6 +8,29 @@
 > **FASE ATUAL: ENTREGA 1 CONCLUÍDA; ENTREGA 2 (Kraken v1) LIBERADA em 24/10/2026.** Nada além delas está liberado: não implemente
 > nada (código, texturas, modelos) até o Adriano liberar explicitamente o próximo passo.
 
+## Atualização para todos os agentes — 24/10/2026
+Leia este aviso ao retomar uma sessão; ele registra a organização da documentação,
+sem iniciar, cancelar ou atribuir tarefas a outros agentes.
+
+- A fonte dos marcos é [docs/07-roadmap.md](docs/07-roadmap.md). Entrega 1 está
+  concluída; na Entrega 2, 2A-M, 2A-C, 2B, 2C e 2E foram aceitas na `main`.
+  As demais faixas e o aceite multiplayer da Entrega 2 ainda não foram concluídos.
+- O último handoff do orquestrador registrou **2A-T e 2D-M em execução**. Isso é
+  histórico, não confirmação de atividade neste instante. Antes de assumir uma
+  faixa, confira a tabela "Em andamento" e a coordenação existente no Orca.
+- O renderer real do Kraken já está registrado no cliente; a textura atual ainda
+  é o gabarito UV. Na 2A-T, confira o trabalho existente e foque a textura final
+  e a verificação visual das fases, sem refazer o renderer.
+- A 2C foi aceita com os ganchos de dano do escudo; Arpão, Carga de Pulso e
+  Pilar ainda constam como pendentes no handoff da faixa. Não trate os ganchos
+  como itens jogáveis já entregues.
+- A [Fase 3](docs/08-fase3.md) está documentada para planejamento e **bloqueada**.
+  Sua especificação e as faixas do roadmap não autorizam Tasks, worktrees,
+  código, texturas ou modelos antes das condições de liberação nas
+  [decisões](docs/00-decisoes.md).
+- Ao voltar à própria worktree, sincronize com a `main` preservando alterações
+  locais; só marque um marco após o aceite e registre pendências no handoff.
+
 ## Em andamento
 Registre aqui antes de começar e apague a linha ao terminar. "Recurso" = o que
 não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
@@ -15,7 +38,10 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 
-## Registro de handoff
+## Registro de handoff
+Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+
+- 24/10/2026 · Codex (organização documental) · Reconciliou marcos da Entrega 1 e das faixas 2B/2E com o histórico da `main`; corrigiu textos de liberação e da 2A-T, incorporou a documentação planejada da Fase 3 e deixou o aviso "Atualização para todos os agentes" acima. **Sem executar agentes ou build.** Permanecem pendentes as faixas desmarcadas no roadmap e o aceite multiplayer da Entrega 2; a Fase 3 segue bloqueada.
 
 - 24/10/2026 · Orquestrador · **Atualização (limite de uso atingido):** 2B e 2E aceitas e validadas na main (build verde, 473adaf).
   **Ainda rodando:** 2A-T (Claude, terminal da worktree 2A-C, dispatch `ctx_bb7771a97cfe`) e 2D-M (Codex, dispatch `ctx_2776644f41a3`).
@@ -43,7 +69,6 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
   (README, docs/00-decisoes, docs/07-roadmap, docs/08-fase3.md): não mexer; validar em worktree temporária.
   **Próximo:** esperar `worker_done` de 2B, 2E, 2A-T e 2D-M (`check --wait`), validar cada um, liberar 2D-C quando 2B e 2C
   estiverem mergeadas, depois 2D-T, 2Q e o relatório final.
-Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
 
 - 24/10/2026 · Claude Sonnet 5.5 (faixa 2E) · Aviso falso, efeitos de tela, drops, troféus e primeira vitória. `FalseWarning` (gatilho: tempestade à noite, jogador em oceano profundo, 8% por noite, 3 dias entre avisos; checa a cada 5 s) e `KrakenWorldData` (`SavedData`: quem já tem o Coração + controle do aviso); `SummonEffectPayload` leva ao cliente o silêncio do oceano (0 s), o tremor (5 s, `CameraMixin`) e o escurecer (20 s finais do aviso falso, véu no HUD); `KrakenRewards` entrega, a cada jogador da luta, Olho, 2 a 4 Tinta, 1.000 de XP, Troféu (Dourado no `abissal`) e Coração só na primeira vitória; itens `kraken_eye`, `abyssal_ink`, `kraken_heart`, blocos `kraken_trophy` e `golden_abyss_trophy` (texturas por `tools/gen_textures.py`). **Testado:** `./gradlew build` (JUnit do gatilho) e `runClientGameTest` (3 mortes: primeira vitória, segunda sem Coração, abissal com Dourado; XP; gatilho com sorte, noite repetida, 3 dias de espera, config desligada; sem Kraken no aviso falso; silêncio, tremor e escurecer no cliente; 2 screenshots). **Não testado:** o aspecto dos troféus no mundo (o screenshot pegou só água; modelo conferido só por JUnit de recursos), o som real do silêncio (só o estado), o aviso falso disparando sozinho em oceano profundo real e multiplayer. **Falta:** sons próprios; alvo da recompensa por jogador pode ganhar regra de distribuição se o Adriano preferir loot compartilhado.
 

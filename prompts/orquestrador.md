@@ -1,5 +1,10 @@
 # Prompt do Codex orquestrador (Entrega 2: Kraken v1)
 
+> **Arranque já realizado em 24/10/2026.** Este prompt é histórico: não repita
+> o registro de liberação nem reinicie faixas aceitas. Para retomar a coordenação,
+> leia [CONTEXTO.md](../CONTEXTO.md) e os marcos de
+> [docs/07-roadmap.md](../docs/07-roadmap.md) antes de qualquer nova Task.
+
 Cole o texto abaixo, inteiro, como primeira mensagem do Codex orquestrador, aberto
 no Orca na pasta principal do repositório. **Enviar este prompt é a liberação
 explícita da Entrega 2 pelo Adriano.** Este arquivo não repete o plano: o plano

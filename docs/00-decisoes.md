@@ -25,6 +25,18 @@ Decisões do Adriano, 24/10/2026.
 | Modelagem 3D | O Codex modela por script (`.bbmodel` gerado, exportado para Java), conferindo no jogo; Blockbench só para ajustes. Contrato com o Claude em [06-tecnico.md](06-tecnico.md). Decidido em 24/10/2026. |
 | Tamanho do Kraken | **Bem maior no produto final** (pedido do Adriano, 24/10/2026). Hoje é provisório (hitbox 8 x 6 em `ModEntities.KRAKEN`); durante o desenvolvimento pode ficar pequeno para testar. **Tamanho final (decidido pelo orquestrador a pedido do Adriano; ele avisa se ficar pequeno):** cerca de 24 blocos de largura e 16 de altura, modelo e hitbox (3x o atual), aplicado numa faixa de polimento no fim da Entrega 2. |
 | Fase do projeto | **Implementação liberada só para a Entrega 1** (agente Estruturador) e para a **Entrega 2** (Kraken v1), esta em 24/10/2026 por pedido explícito do Adriano. O restante continua em planejamento até nova liberação. |
+| Fase 3 | **Bloqueada**: só começa com a Entrega 2 completa e liberação explícita do Adriano; a especificação escrita não autoriza preparar Tasks operacionais, worktrees, código, texturas ou modelos. Plano em [08-fase3.md](08-fase3.md). |
+| Fase 3: escopo | Baleias (com montaria), Moréia Tempestuosa e Escama Elétrica, Propulsor de Maré, Vila subaquática, Pressão por profundidade, munições do Arpão (veneno, fogo, wither, choque), encantamentos novos, Traje de Mergulho Profundo. Especificação em [08-fase3.md](08-fase3.md); faixas em [07-roadmap.md](07-roadmap.md). Respostas do Adriano em 24/10/2026. |
+| Fase 3: Pressão | **Efeito único** com duas fontes (ambiental e Kraken); vale o **maior** nível, não soma (decisão delegada ao Claude). A separação das fontes é a primeira tarefa da Fase 3 (3A), sem alterar a Entrega 2. |
+| Fase 3: Propulsor | Vestido na **mão secundária**; consome Bobina Voltaica; ativado por tecla própria. O Manto de Tinta continua como versão pós-boss. |
+| Fase 3: Escama Elétrica | Cria a **Bobina Voltaica** (bateria do Propulsor e munição de Choque) **e** o Chicote de Moréia. |
+| Fase 3: Baleias | Têm **montaria** (Sela de Baleia). Matar uma baleia **não traz consequência**. |
+| Fase 3: Vila | Aldeões com **profissões novas** (Mergulhadores), redesenhada em [08-fase3.md](08-fase3.md). |
+| Fase 3: armadura | "Durar mais" = **tempo debaixo d'água** (Reserva de Ar), não durabilidade. |
+| Fase 3: munições | Só as pedidas: veneno, fogo, wither e choque. Âncora e Explosiva ficam fora. |
+| Fase 3: ordem | 3A a 3E, como em [07-roadmap.md](07-roadmap.md). |
+| Fase 3: estruturas | As peças da Vila (e, por coerência, da Cidade Perdida) são **geradas por script** pelo Claude em `tools/`, reproduzíveis e versionadas; o Codex só confere no jogo (decisão delegada ao Claude, 24/10/2026). |
+| Fase 3: baleias e o Kraken | As baleias **fogem a 48 blocos do Kraken** e nunca entram na arena (confirmado pelo Adriano em 24/10/2026). |
 | Escopo da v1 | **Núcleo + cidade completa:** materiais, Kraken completo (barra customizada, Pressão, invocação), Cidade Perdida com bioma, criaturas e Walker já bem acabados. |
 | Como se joga | Servidor dedicado Fabric com **5 ou mais jogadores**. Kraken com mais vida, mais tentáculos simultâneos e escala dinâmica de dificuldade pelo número de jogadores. |
 | Decisões criativas | Delegadas ao Claude. Só perguntar ao Adriano o que muda escopo, prazo ou direção geral. |
@@ -35,7 +47,7 @@ Decisões do Adriano, 24/10/2026.
 | Dano dos itens no escudo | Sem item especial 25%; ferramentas de Oricálcio 60%; Arpão dano triplo; Carga de Pulso 100 fixo; Pilar 5% a cada 15 s (tabela em [02-kraken.md](02-kraken.md)). |
 | Escala por jogadores | Vida e escudo × `1 + 0,3 × (n − 1)`, máximo em 12 jogadores; dano do Kraken não escala. Substitui a regra antiga "+50% por jogador extra" (fórmula em [02-kraken.md](02-kraken.md)). |
 | Achar biomas | Todo bioma do mod é achado com `/locate biome #aquamarine_<bioma>` (pedido do Adriano, 24/10/2026). Como fazer em [06-tecnico.md](06-tecnico.md). |
-| Design da v1 | **Fechado em 24/10/2026** em todos os arquivos de `docs/` (Kraken, invocação, cidade, itens, técnico). Falta só a liberação do Adriano para implementar. |
+| Design da v1 | **Fechado em 24/10/2026** em todos os arquivos de `docs/` (Kraken, invocação, cidade, itens, técnico). O andamento da implementação está em [07-roadmap.md](07-roadmap.md). |
 
 Os números das linhas acima são valores iniciais a testar no jogo; ajustes de
 balanceamento não precisam de nova decisão, só de atualização em `02-kraken.md`.
