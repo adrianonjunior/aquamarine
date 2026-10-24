@@ -125,6 +125,34 @@ class ResourceConsistencyTest {
 		assertTrue(missing.isEmpty(), "Receitas com resultado inexistente: " + missing);
 	}
 
+	/**
+	 * Convenção dos biomas: cada bioma do mod tem a tag {@code minecraft:aquamarine_<nome>}, para
+	 * achar com {@code /locate biome #aquamarine_<nome>} (sem namespace o jogo usa minecraft).
+	 */
+	@Test
+	void everyBiomeHasShortLocateTag() throws IOException {
+		Path tags = RES.resolve("data/minecraft/tags/worldgen/biome");
+		List<String> problems = new ArrayList<>();
+		if (Files.isDirectory(tags)) {
+			for (Path tag : jsonFiles(tags)) {
+				String n = name(tag);
+				if (n.startsWith("aquamarine_") && read(tag).getAsJsonArray("values").isEmpty()) {
+					problems.add(n + " está vazia");
+				}
+			}
+		}
+		Path biomes = DATA.resolve("worldgen/biome");
+		if (Files.isDirectory(biomes)) {
+			for (Path biome : jsonFiles(biomes)) {
+				Path tag = tags.resolve("aquamarine_" + name(biome) + ".json");
+				if (!Files.exists(tag) || !Files.readString(tag).contains("aquamarine:" + name(biome))) {
+					problems.add("bioma " + name(biome) + " sem a tag aquamarine_" + name(biome));
+				}
+			}
+		}
+		assertTrue(problems.isEmpty(), "Tags de bioma: " + problems);
+	}
+
 	@Test
 	void equipmentAssetsHaveTextures() throws IOException {
 		List<String> missing = new ArrayList<>();

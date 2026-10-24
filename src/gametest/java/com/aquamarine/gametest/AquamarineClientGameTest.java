@@ -23,6 +23,9 @@ import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -61,6 +64,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			server.runCommand("weather clear");
 			server.runCommand("gamemode creative @a");
 			BlockPos base = server.computeOnServer(s -> player(s).blockPosition());
+			check(server.computeOnServer(s -> s.registryAccess().lookupOrThrow(Registries.BIOME)
+				.get(TagKey.create(Registries.BIOME, Identifier.withDefaultNamespace("aquamarine_fossa_de_nereia")))
+				.map(set -> set.size() > 0).orElse(false)), "a tag #aquamarine_fossa_de_nereia não carregou");
 
 			showcase(context, world, server, base);
 			creativeTab(context, world);

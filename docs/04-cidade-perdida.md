@@ -39,6 +39,8 @@
 | Minas | Veias de Oricálcio por todas as galerias |
 
 ## Bioma Fossa de Nereia
+- Achar com `/locate biome #aquamarine_fossa_de_nereia` (por enquanto a tag
+  aponta para os oceanos profundos do vanilla; ver [06-tecnico.md](06-tecnico.md)).
 - Água mais escura (cor da água e da névoa próprias).
 - **Coral Luminoso:** novo coral que emite luz (nível 10).
 - **Areia azulada** e **Cristais de Maré** crescendo no chão (como ametista,
