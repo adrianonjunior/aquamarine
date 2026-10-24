@@ -5,7 +5,7 @@
 > marcos (ver [docs/07-roadmap.md](docs/07-roadmap.md)) nem ambiente técnico
 > (ver [docs/06-tecnico.md](docs/06-tecnico.md)). Regras: [AGENTS.md](AGENTS.md).
 
-> **FASE ATUAL: PLANEJAMENTO.** Não implemente nada (código, texturas,
+> **FASE ATUAL: IMPLEMENTAÇÃO LIBERADA SOMENTE PARA A "ENTREGA 1" (Estruturador).** Fora dela, não implemente nada (código, texturas,
 > modelos) até o Adriano liberar explicitamente.
 
 ## Em andamento
@@ -14,7 +14,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| (nenhuma) | | | |
+| Entrega 1 (ver docs/07-roadmap.md) | Estruturador | jogo, Gradle | a iniciar |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.

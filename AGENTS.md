@@ -5,7 +5,7 @@
 > ([CONTEXTO.md](CONTEXTO.md)) nem build, ambiente e convenções de código
 > ([docs/06-tecnico.md](docs/06-tecnico.md)). **Leia os três antes de mexer em qualquer coisa.**
 
-> **FASE ATUAL: PLANEJAMENTO.** Só documente e planeje. Não escreva código,
+> **FASE ATUAL: IMPLEMENTAÇÃO LIBERADA SOMENTE PARA A "ENTREGA 1" (agente Estruturador, ver docs/07-roadmap.md).** Todo o resto continua em planejamento: não escreva código,
 > texturas ou modelos do mod até o Adriano liberar explicitamente. Na dúvida,
 > pergunte antes de implementar.
 
