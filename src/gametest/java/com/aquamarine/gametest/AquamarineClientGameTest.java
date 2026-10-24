@@ -184,6 +184,12 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		});
 	}
 
+	/** A água leva o jogador para baixo; reposiciona de frente para o Kraken antes de cada foto. */
+	private static void aimAtKraken(ClientGameTestContext context, TestServerContext server, BlockPos origin) {
+		tp(server, origin.getX() + 0.5, origin.getY() + 36, origin.getZ() + 9.0, 180, 42);
+		context.waitTicks(3);
+	}
+
 	/** Kraken: vida e escudo por fase, escala, transição, regeneração do escudo e aggro. */
 	private static void kraken(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos base) {
 		// O teste do altar pode ter deixado um Kraken vivo; kraken(s) pega o primeiro da lista.
@@ -202,6 +208,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		check(server.computeOnServer(s -> kraken(s).realMaxHealth() == 1500F && kraken(s).shield() == 400F
 			&& kraken(s).phase() == 1 && kraken(s).scaleFactor() == 1F), "Kraken: valores da fase 1 com 1 jogador");
 		check(server.computeOnServer(s -> near(kraken(s).realHealth(), 1500F)), "Kraken: vida inicial");
+		aimAtKraken(context, server, origin);
 		shot(context, "13_kraken_fase1_sem_rachaduras");
 		for (String name : KrakenEntity.ANIMATION_NAMES) {
 			server.runCommand("aquamarine kraken anim " + name);
@@ -210,6 +217,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 
 		krakenHit(server, 250);
 		context.waitTicks(6);
+		aimAtKraken(context, server, origin);
 		shot(context, "14_kraken_fase1_rachaduras");
 		krakenHit(server, 250);
 		context.waitTicks(2);
@@ -223,12 +231,14 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			&& kraken(s).isTransitioning()), "Kraken: o golpe deve parar na fronteira da fase 2 com escudo cheio");
 		krakenHit(server, 50);
 		check(server.computeOnServer(s -> near(kraken(s).realHealth(), 1000F) && kraken(s).shield() == 600F), "Kraken: invulnerável na transição");
+		aimAtKraken(context, server, origin);
 		shot(context, "15_kraken_fase2_escudo_cheio");
 
 		context.waitTicks(70);
 		check(server.computeOnServer(s -> !kraken(s).isTransitioning()), "Kraken: a transição devia ter acabado");
 		krakenHit(server, 450);
 		context.waitTicks(6);
+		aimAtKraken(context, server, origin);
 		shot(context, "16_kraken_fase2_rachaduras");
 		context.waitTicks(620);
 		check(server.computeOnServer(s -> kraken(s).shield() == 600F), "Kraken: o escudo devia regenerar após 20 s sem dano");
@@ -240,6 +250,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			"Kraken: fase 3 com 800 de escudo");
 		krakenHit(server, 700);
 		context.waitTicks(6);
+		aimAtKraken(context, server, origin);
 		shot(context, "17_kraken_fase3_rachaduras");
 
 		context.waitTicks(70);

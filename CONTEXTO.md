@@ -142,3 +142,69 @@ Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou ·
 - 24/10/2026 · Claude · Repositório criado, docs organizados, JDK 25 instalado,
   AGENTS.md e CONTEXTO.md criados. Um óculos foi implementado por engano e
   removido a pedido. Falta: decidir o que sai do planejamento primeiro.
+- 24/10/2026 · Codex Astra (2A-M) · `KrakenView`, gabarito UV, `.bbmodel` com 191 cubos e 16 clips, classes do modelo/animações/renderer e registro do modelo; `compileJava compileClientJava` passou, `/aquamarine kraken` criou a entidade e os 16 comandos responderam `Animation <nome> played.`
+  **Visual não verificado:** no mundo de QA florestal o Kraken surgiu em y=57 sob o terreno; as 9 capturas autorizadas foram usadas sem obter uma vista do modelo. **Próximo passo:** repetir a vista geral e poses em mundo aquático/câmera acima do chão; deixar 2A-M sem marcar até conferir a silhueta.
+
+- 24/10/2026 · Claude Sonnet 5.5 (2A-T) · Textura do Kraken por `tools/gen_kraken_texture.py` (box UV do `KrakenModel`, 128x128), sem mudar o renderer; teste de cliente fotografa as 3 fases. **Atenção:** `build_model.py` do Codex sobrescreve `kraken.png` com o uv.png; rode o meu script depois. **Não aceito ainda:** as rachaduras (geometria `crack_*` de 1 px do Codex) não aparecem nos prints, o Kraken é pequeno (~2 blocos) e escuro na água; deve melhorar com o tamanho final 24x16 e/ou rachaduras maiores/emissivas (pedir ao Codex).
+
+- 24/10/2026 · Claude Sonnet 5.5 (2A-C.2) · `/aquamarine kraken anim <nome>` dispara as 16 animações do contrato no Kraken mais próximo (sincronizado por dados da entidade); testado no teste de cliente (estado no servidor), **não** conferido visualmente.
+
+- 24/10/2026 · Claude Sonnet 5.5 (faixa 2A-C) · `KrakenEntity` (`entity/`),
+  `KrakenStats` e `AggroTracker` (`entity/boss/`, contas puras com JUnit), `KrakenCommand`
+  (`/aquamarine kraken` e `/aquamarine kraken arena`, nível 2), `KrakenSummoning.spawnKraken`
+  (surge 10 blocos abaixo da água funda mais próxima) e renderer provisório (`NoopRenderer`).
+  Pronto: vida/escudo por fase, escala `f`, transição de 3 s, quebra do escudo com atordoamento de 8 s,
+  regeneração (20 s sem dano, 10%/s; fase 3 a cada 45 s), aggro de 10 s, fuga (30 s, +10%) e
+  abandono (3 min), barra com a vida real. **Detalhe:** o atributo de vida do jogo para em 1024,
+  então a vida do Kraken usa o atributo como régua de 0 a 1000; use `realHealth()`/`realMaxHealth()`
+  e dê dano por `hurtServer`. `setNoAi(true)` impede `customServerAiStep`: o Kraken não usa.
+  **Testado:** `./gradlew build` (JUnit) e `runClientGameTest` (fases, escudo, transição,
+  regeneração, aggro, escala com 5 jogadores, 3 screenshots; o modelo ainda é invisível).
+  **Não testado:** multiplayer, fuga/abandono (só no código), difícil `abissal`, Kraken salvo e recarregado.
+  **Falta:** `KrakenEntity` já implementa `KrakenView` (idle, stunned e phaseChange ligados no cliente;
+  os ataques ficam para a 2D-C; troque o `NoopRenderer` pelo renderer do Codex na 2A-T); multiplicadores
+  de dano por fonte (2C), ataques (2D), movimento.
+
+- 24/10/2026 14:15 · Estruturador (Claude Opus 5.5) · A pedido do Adriano:
+  biomas do mod achados com `/locate biome #aquamarine_<bioma>` (tag
+  `minecraft:aquamarine_<bioma>`, exigida pelo teste). Só existe
+  `#aquamarine_fossa_de_nereia`, provisória (oceanos profundos). **Falta:** quem
+  criar o bioma Fossa de Nereia troca o valor da tag por `aquamarine:fossa_de_nereia`.
+
+- 24/10/2026 14:05 · Estruturador (Claude Opus 5.5) · A pedido do Adriano: JEI
+  31.16.0.90 no ambiente de dev, plugin com a categoria "Forja Abissal" e
+  descrição curta de cada item (tooltip + informação do JEI), itens também nas
+  abas vanilla (a aba "Aquamarine" fica na página 2 do criativo). Testado no
+  teste de cliente (screenshots do tooltip e da categoria). **Falta:** quando a
+  Pressão e a Nuvem de Tinta existirem, acrescentar esses efeitos às descrições
+  da armadura e dos óculos; receitas da Forja no JEI em servidor dedicado.
+
+- 24/10/2026 13:20 · Estruturador (Claude Opus 5.5) · **Entrega 1 concluída e
+  mergeada na `main`** (A, B, C e D; CI verde). Pronto: registros, aba
+  "Aquamarine", config, tags, lang pt/en; Oricálcio (minério, lingote, bloco,
+  5 ferramentas com Maré, armadura com bônus de nado), Pérola, Cristal, Escama;
+  Forja Abissal (tipo de receita próprio + tela); Óculos de Mergulho (névoa 1,5x,
+  água mais clara); barra de boss customizada + entidade de teste
+  `aquamarine:boss_dummy`; Projeto do Chamariz, Chamariz Abissal, Altar do Abismo
+  e mensagens de invocação; 30 texturas por `tools/gen_textures.py`.
+  **Testado:** `./gradlew build` (7 testes JUnit) e `./gradlew runClientGameTest`
+  (abre o jogo sozinho, confere Forja, receita exclusiva, bônus de conjunto,
+  escudo da barra e altar, e grava 14 screenshots que foram revisados).
+  **Não testado:** multiplayer/servidor dedicado; velocidade real de nado do
+  bônus (+0,33 de `water_movement_efficiency`, calibrar); Maré minerando
+  debaixo d'água; armadura em bebês (sem camada `humanoid_baby`).
+  **Falta (fora do escopo):** gatilho do aviso falso, tremor de tela e silêncio
+  do oceano na invocação (ver docs/03), o Kraken em si (`KrakenSummoning.spawnKraken`
+  é o gancho), Nuvem de Tinta e Pressão (usar `OrichalcumEffects`).
+  **Próximo passo:** o Adriano abrir o jogo (`./gradlew runClient`, aba
+  "Aquamarine") e liberar o próximo marco; o cliente antigo aberto desde 12:00
+  pela pasta principal não tem este código.
+
+- 24/10/2026 12:55 · Estruturador · Checkpoint na branch `estruturador/entrega-1`
+  (build verde, 7 testes JUnit): blocos A, B e C escritos (registros, config, aba,
+  tags, lang, Oricálcio completo, Forja Abissal, Óculos, texturas por
+  `tools/gen_textures.py`). Falta: testar no jogo, docs e merge na `main`.
+
+- 24/10/2026 · Claude · Repositório criado, docs organizados, JDK 25 instalado,
+  AGENTS.md e CONTEXTO.md criados. Um óculos foi implementado por engano e
+  removido a pedido. Falta: decidir o que sai do planejamento primeiro.
