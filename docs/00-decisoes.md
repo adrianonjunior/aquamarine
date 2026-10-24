@@ -21,17 +21,20 @@ Decisões do Adriano, 24/10/2026.
 | Barra de vida | Barra de boss **customizada e bonita** (detalhes em [02-kraken.md](02-kraken.md)). |
 | Nomes dos itens | Português no jogo, com tradução inglesa. |
 | Publicação | Só com amigos por enquanto. Repositório privado `adrianonjunior/aquamarine`. |
-| Walker | Mob aceito: zumbi pacífico, só à noite, nas profundezas, que troca itens (detalhes em [04-cidade-perdida.md](04-cidade-perdida.md)). |
-| Óculos de Mergulho | Item aceito: melhora a visão dentro da água (detalhes em [05-itens.md](05-itens.md)). |
 | Agentes | Vários em paralelo (regras em [../AGENTS.md](../AGENTS.md)). Codex Astra cuida das tarefas de controle do PC (jogo, screenshots, Blockbench). |
 | Fase do projeto | **Planejamento.** Nada é implementado até o Adriano liberar explicitamente com palavras suas (não vale deduzir de outra instrução). |
 | Escopo da v1 | **Núcleo + cidade completa:** materiais, Kraken completo (barra customizada, Pressão, invocação), Cidade Perdida com bioma, criaturas e Walker já bem acabados. |
 | Como se joga | Servidor dedicado Fabric com **5 ou mais jogadores**. Kraken com mais vida, mais tentáculos simultâneos e escala dinâmica de dificuldade pelo número de jogadores. |
 | Decisões criativas | Delegadas ao Claude. Só perguntar ao Adriano o que muda escopo, prazo ou direção geral. |
 | Plano oficial (claude.ai) | Deve ser mantido atualizado a partir deste arquivo. |
+| Walker | Pacífico, só à noite no oceano profundo; troca Pérola Abissal e Escama Antiga por suprimentos (Tônico, Boia, Bússola, Lanterna, Mapa), **nunca** por itens da cidade; some ao amanhecer (detalhes em [04-cidade-perdida.md](04-cidade-perdida.md)). |
+| Óculos de Mergulho | Efeito só visual (menos névoa debaixo d'água), sem visão noturna; não enxergam através da Maré Negra; ocupam o slot da cabeça (detalhes em [05-itens.md](05-itens.md)). |
+| Pontos fracos do escudo | Sim, 4 "Nós de Maré" com dano 2x, que mudam de lugar por fase e aumentam com o número de jogadores (detalhes em [02-kraken.md](02-kraken.md)). |
+| Dano dos itens no escudo | Sem item especial 25%; Oricálcio 60%; Arpão 100%; Carga de Pulso e Pilar com dano fixo (tabela em [02-kraken.md](02-kraken.md)). |
+| Escala por jogadores | Vida e escudo × `1 + 0,3 × (n − 1)`, máximo em 12 jogadores; dano do Kraken não escala (fórmula em [02-kraken.md](02-kraken.md)). |
+
+Os números das linhas acima são valores iniciais a testar no jogo; ajustes de
+balanceamento não precisam de nova decisão, só de atualização em `02-kraken.md`.
 
 ## Em aberto
-- **Walker:** o que vende e aceita; o que acontece com ele de dia.
-- **Pontos fracos brilhantes no escudo do Kraken:** vale a complexidade?
-- **Dano dos itens da cidade no escudo:** hoje, sem eles o escudo leva 25% do dano.
-- **Óculos de Mergulho:** qual efeito (visão noturna, menos névoa na água, ou os dois).
+Nada no momento. Novas dúvidas entram aqui.

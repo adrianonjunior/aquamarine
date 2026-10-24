@@ -12,9 +12,7 @@ escudo "Carapaça Abissal" (400 / 600 / 800), 8 tentáculos de 60 de vida.
 - **Quebra:** quando chega a zero, a carapaça explode em estilhaços (partículas
   + som de vidro grave), o Kraken grita e fica atordoado 8 s. Esse momento tem
   que ser *muito* satisfatório, é o "pico" da luta.
-- **Pontos fracos no escudo:** em vez de dano em qualquer lugar, talvez 3 a 4
-  "nós" brilhantes no escudo que levam dano extra. Dá alvo ao jogador e
-  recompensa mira. (Em aberto, ver [00-decisoes.md](00-decisoes.md).)
+- **Pontos fracos no escudo:** decididos, ver "Nós de Maré" abaixo.
 - **Regeneração:** 20 s sem dano → regenera. Na fase 3, regenera sozinho a
   cada 45 s. Mostrar a regeneração com brilho subindo na barra.
 
@@ -64,3 +62,41 @@ escudo "Carapaça Abissal" (400 / 600 / 800), 8 tentáculos de 60 de vida.
 - Pulso roxo bioluminescente na fase 3 e na regeneração do escudo.
 - Texturas em `assets/aquamarine/textures/gui/`; vida e escudo sincronizados
   por packet próprio ou `SynchedEntityData`.
+
+## Nós de Maré (pontos fracos do escudo) — Decidido
+- 4 "nós" de cristal brilhante na carapaça, cada um uma hitbox pequena
+  (mesma técnica das partes do Ender Dragon). Dano no nó vale **2x** no escudo.
+- A cada fase os nós mudam de posição (fase 1 nas costas, fase 2 nos flancos,
+  fase 3 sob o corpo, exigindo mergulhar). Piscam antes de trocar.
+- Por jogador acima de 4, entra 1 nó extra a cada 2 jogadores (máximo 8), para
+  grupos grandes terem alvos para todos.
+- Opção na configuração para desligar os nós (dano uniforme no escudo).
+- Projéteis comuns contam, mas com o mesmo multiplicador de arma; o Arpão
+  recebe bônus adicional ao acertar um nó.
+
+## Dano no escudo por item — Decidido (números iniciais, a testar)
+Sem item especial, o escudo recebe **25%** do dano: dá para vencer sem os itens
+da cidade, mas é bem mais demorado e a regeneração pune quem para de bater.
+
+| Fonte de dano | Dano no escudo |
+|---|---|
+| Armas comuns (espada, machado, arco, besta, tridente) | 25% |
+| Ferramentas e armas de Oricálcio (tag `aquamarine:shield_breakers`) | 60% |
+| Arpão de Oricálcio | 100% (150% em um nó) |
+| Carga de Pulso | 60 de dano fixo no escudo, em área |
+| Pilar Ressonante | 15 por segundo no escudo, alcance de 12 blocos; até 3 ativos |
+| Encantamento Quebra-Carapaça | +10% por nível, até o nível 3, sobre qualquer item |
+
+O dano na vida do Kraken só acontece com o escudo em zero (como no plano).
+
+## Escala por número de jogadores — Decidido (servidor com 5 ou mais)
+Fator `f = 1 + 0,3 × (n − 1)`, com `n` jogadores num raio de 96 blocos e máximo
+em `n = 12`.
+- Vida e escudo máximos (por fase) multiplicados por `f`.
+- Ataques simultâneos de tentáculo: `2 + n ÷ 3` (arredondado para baixo), no
+  máximo 8.
+- Dano que o Kraken causa não escala, para a luta não virar punição só pelo
+  tamanho do grupo.
+- Se jogadores saem do raio no meio da luta, o fator só diminui entre fases,
+  nunca no meio de uma.
+- Dificuldade `abissal` aplica um multiplicador próprio sobre `f`.

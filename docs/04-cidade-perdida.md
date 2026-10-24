@@ -44,13 +44,36 @@ Abissal, Biblioteca em ruínas, Minas de Oricálcio.
 - Estrutura jigsaw (template pools + NBT de estruturas) primeiro, sem bioma.
 - Bioma depois com Biolith ou TerraBlender quando tiver versão para 26.3.
 
-## Walker — ideia do Adriano (aceita, detalhes em aberto)
-- Zumbi **pacífico** que aparece **só à noite**, nas profundezas do oceano
-  (Fossa de Nereia / arredores da cidade).
-- **Troca itens interessantes** (comércio, à la aldeão/piglin). O que ele
-  vende e aceita ainda não foi definido.
-- Ideias para decidir: aceita Pérola Abissal ou Escama Antiga em troca de
-  itens úteis contra o Kraken (Tônico de Pressão, Boia de Âncora, mapa/Bússola
-  de Maré); some ao amanhecer ou afunda; não reage a dano ou foge; som e
-  visual próprios (zumbi afogado, bioluminescente, com lanterna de coral).
-- Reforça a exploração do fundo e dá um motivo para ir à noite.
+## Walker — Decidido (números e trocas iniciais, a testar)
+O **Walker** é o único habitante pacífico das profundezas: um morto-vivo
+afogado que caminha devagar pelo fundo carregando uma Lanterna de Coral. Ele
+dá ao jogador um motivo para ir ao fundo à noite e uma segunda fonte de
+suprimentos, sem substituir a cidade.
+
+**Aparição**
+- Só **à noite**, em oceano profundo (coluna d'água de 25 blocos ou mais) e
+  com mais frequência na Fossa de Nereia e ao redor da Cidade Perdida.
+- No máximo 1 por vez a cada 64 blocos; some ao amanhecer: afunda em uma nuvem
+  de bolhas e desaparece (não deixa drops).
+- Luz própria (a lanterna) e som grave e lento, para ser achado de longe.
+
+**Comportamento**
+- Pacífico: nunca ataca. Se levar dano, solta a lanterna, foge nadando para o
+  fundo e não negocia mais naquela noite. Matá-lo não dá nada e toca um som de
+  lamento para todos por perto.
+- Vida 20 (10 corações). Não é atingido por Pressão e não se afoga.
+
+**Troca** (clique direito, como um aldeão; novo estoque a cada noite, cada
+troca com 1 a 3 usos, estoque independente por jogador no multiplayer)
+- **Aceita como pagamento:** Pérola Abissal (principal), Escama Antiga e
+  fragmentos de prismarinho.
+- **Vende:** Tônico de Pressão, Boia de Âncora, Bússola de Maré, Lanterna de
+  Coral, Mapa de Nereia e, raramente, livros de história da cidade.
+- **Nunca vende:** Oricálcio, armaduras, Arpão, Carga de Pulso nem Pilar
+  Ressonante. Esses vêm só da cidade, para preservar o motivo de explorá-la.
+- Cada noite oferece 3 a 5 trocas sorteadas; a Bússola de Maré e o Mapa de
+  Nereia são raros (no máximo 1 deles por noite).
+
+**Arte e modelo:** silhueta de zumbi afogado, pele azul-esverdeada, algas e
+conchas nos ombros, lanterna de coral na mão; modelo detalhado, com animação
+de caminhada lenta e balanço da lanterna.
