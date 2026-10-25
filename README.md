@@ -78,6 +78,8 @@ da verdade é [docs/00-decisoes.md](docs/00-decisoes.md); seções de **ideia** 
 | docs/06-tecnico.md | Implementação, ambiente, build, testes e convenções |
 | docs/07-roadmap.md | Marcos e faixas das Entregas 1 e 2 e da Fase 3 |
 | docs/08-fase3.md | Especificação da Fase 3 |
+| docs/09-audio.md | Áudio: direção sonora, camadas de ambiência, música, lista de efeitos, método e padrões |
+| prompts/audio.md | Prompt do agente que produz e integra o áudio (Áudio v1) |
 | docs/relatorio-2q.md | QA visual da Entrega 2 |
 | docs/relatorio-3q.md | QA da Fase 3 e o roteiro do aceite com jogadores reais |
 | docs/historico.md | Registro antigo de handoffs (somente leitura) |

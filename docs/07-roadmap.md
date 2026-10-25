@@ -124,3 +124,20 @@ as screenshots 27 e 30 a 38 do `runClientGameTest`.
 do Kraken; 3 clientes no ciclo da Fase 3, sem crash nem desync), o ritmo e o dano da luta, a montaria
 pilotada por um jogador de verdade, o Propulsor e as teclas R e V na mão, a legibilidade dos avisos
 (slam, Descarga, Enrolar) e o surgimento natural das criaturas num mundo normal.
+
+## Áudio v1: ambientação, efeitos e música (**liberado ao enviar `prompts/audio.md`**)
+Especificação, lista de sons, método e padrões: [09-audio.md](09-audio.md). Um agente (qualquer
+um, divisão Claude/Codex só preferencial) ou vários em worktrees próprias; sempre **lotes
+pequenos com aprovação do Adriano** (agentes não ouvem). Arquivos novos em `tools/audio/` e
+`assets/aquamarine/sounds/`; mudanças em código compartilhado só acrescentam.
+
+| Lote | Conteúdo | Aceite observável | Portão do Adriano |
+|---|---|---|---|
+| A0 | Pipeline (`tools/audio/`, prévia HTML, medidores) e **prova de qualidade** de 6 amostras | Amostras geradas, medidas e na prévia | Aprova as 6 |
+| A1 | Ambiência em camadas, `AmbienceController`, config, `ModSounds`, `sounds.json` | Camadas trocam por profundidade, hora, Pressão e local | Prévia |
+| A2 | Efeitos de Kraken, tentáculos, Crias, Moréia, baleias, Walker e criaturas planejadas; troca dos sons vanilla | `grep` sem `SoundEvents.` vanilla fora da lista de exceções | Prévia |
+| A3 | Efeitos de itens, blocos, interface, Vila e invocação | Todos os eventos da lista de [09-audio.md](09-audio.md) com legendas | Prévia |
+| A4 | Música: temas, stems do Kraken e stingers, gatilhos no cliente | Temas tocam na situação certa; luta com camadas por fase | Prévia + jogo |
+| A5 | Mixagem final, orçamento de 70 MB, verificação em `runClientGameTest` | Medidores verdes e build verde | Aceite no jogo |
+
+- [ ] A0 · [ ] A1 · [ ] A2 · [ ] A3 · [ ] A4 · [ ] A5

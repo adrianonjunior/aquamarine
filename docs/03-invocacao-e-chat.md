@@ -32,10 +32,9 @@ Algo no chat que parece o Kraken, mas não é.
 - Ligado por padrão; desligável na configuração.
 
 ## Som e música
-- A v1 usa **sons próprios** (rugido, estilhaço do escudo, avisos de ataque,
-  caminhada do Walker), sem trilha própria. **Hoje o código usa sons vanilla** no lugar deles: faltam
-  os arquivos de áudio (pergunta em aberto em [00-decisoes.md](00-decisoes.md)).
-- Música de boss própria só no polimento, depois da v1.
+- Sons próprios, ambientação e **música** (inclusive temas do Kraken por fase e stingers da
+  invocação, da vitória e do retorno) são especificados em [09-audio.md](09-audio.md), que é o
+  dono. Hoje o código ainda usa sons vanilla até o Áudio v1 ser entregue.
 
 ## Implementação
 - **Feito (Entrega 1):** `event/KrakenSummoning` com as mensagens de 0, 5 e 10 s

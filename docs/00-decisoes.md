@@ -50,6 +50,7 @@ Decisões do Adriano de 24/10/2026, com as atualizações datadas em cada linha.
 | Dano dos itens no escudo | Sem item especial 25%; ferramentas de Oricálcio 60%; Arpão dano triplo; Carga de Pulso 100 fixo; Pilar 5% a cada 15 s (tabela em [02-kraken.md](02-kraken.md)). |
 | Escala por jogadores | Vida e escudo × `1 + 0,3 × (n − 1)`, máximo em 12 jogadores; dano do Kraken não escala. Substitui a regra antiga "+50% por jogador extra" (fórmula em [02-kraken.md](02-kraken.md)). |
 | Achar biomas | Todo bioma do mod é achado com `/locate biome #aquamarine_<bioma>` (pedido do Adriano, 24/10/2026). Como fazer em [06-tecnico.md](06-tecnico.md). |
+| Áudio | **Ambientação e música próprias**, estilo Calamity, tudo original ([09-audio.md](09-audio.md)): camadas de ambiente por profundidade, Pressão, hora e local, temas de música (bioma, Cidade, Vila e um por fase do Kraken) e efeitos que substituem os sons vanilla. Produção **local e grátis** (síntese por script, IA local opcional, ffmpeg); o Adriano aprova por **portões de audição**. Decidido em 25/10/2026; muda a antiga regra "sem música de boss na v1". |
 | Design da v1 | **Fechado em 24/10/2026** em todos os arquivos de `docs/` (Kraken, invocação, cidade, itens, técnico). O andamento da implementação está em [07-roadmap.md](07-roadmap.md). |
 
 Os números das linhas acima são valores iniciais a testar no jogo; ajustes de
@@ -57,6 +58,4 @@ balanceamento não precisam de nova decisão, só de atualização em `02-kraken
 
 ## Em aberto
 Perguntas que só o Adriano responde (o resto está decidido):
-- **Sons próprios** (silêncio do oceano, rugido, canto da baleia): hoje são sons vanilla. Precisam de
-  arquivos de áudio; quem os faz (ou se ficam os vanilla)?
 - **Branch `estruturador/entrega-1`** (6 commits fora da `main`) e as worktrees antigas das faixas: apagar ou guardar?
