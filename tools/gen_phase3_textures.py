@@ -256,6 +256,113 @@ def thruster():
     return gt.render(THRUSTER)
 
 
+# Fase 3E: blocos de trabalho da Vila e o escafandro dos Mergulhadores (camada de profissão 64x64).
+def workstation(seed, top_rows, side_ch, band_ch, accent):
+    """Bloco de trabalho: lados de pedra escura com faixa da profissão; topo desenhado à mão."""
+    side = gt.render(["".join(side_ch for _ in range(16))] * 16, outline=False)
+    px = side.load()
+    for x in range(16):
+        for y in (3, 4, 11, 12):
+            px[x, y] = gt.FIXED[band_ch] if y in (3, 12) else gt.RAMPS["G"][3]
+    for x in range(1, 16, 5):
+        for y in range(5, 11):
+            px[x, y] = gt.RAMPS["B"][1]
+    px[7, 7] = accent
+    px[8, 8] = accent
+    top = gt.render(top_rows, outline=False)
+    bottom = gt.render(["".join(side_ch for _ in range(16))] * 16, outline=False)
+    return top, side, bottom
+
+
+ANVIL_TOP = [
+    "BBBBBBBBBBBBBBBB",
+    "BGGGGGGGGGGGGGGB",
+    "BGEEEEEEEEEEEEGB",
+    "BGEEEEEEEEEEEEGB",
+    "BGEETTTTTTTTEEGB",
+    "BGEETTTTTTTTEEGB",
+    "BGEETTTTTTTTEEGB",
+    "BGEETTTTTTTTEEGB",
+    "BGEETTTTTTTTEEGB",
+    "BGEETTTTTTTTEEGB",
+    "BGEETTTTTTTTEEGB",
+    "BGEETTTTTTTTEEGB",
+    "BGEEEEEEEEEEEEGB",
+    "BGEEEEEEEEEEEEGB",
+    "BGGGGGGGGGGGGGGB",
+    "BBBBBBBBBBBBBBBB",
+]
+CHART_TOP = [
+    "HHHHHHHHHHHHHHHH",
+    "HmmmmmmmmmmmmmmH",
+    "HmeeeeeeeeeeeemH",
+    "HmeeeeceeeeeeemH",
+    "HmeeecceeeeeeemH",
+    "HmeeeeeeeeyeeemH",
+    "HmeeeeeeeyyyeemH",
+    "HmeeeeeeeeyeeemH",
+    "HmeecceeeeeeeemH",
+    "HmeeeceeeeeeeemH",
+    "HmeeeeeeeqqeeemH",
+    "HmeeeeeeeqreeemH",
+    "HmeeeeeeeeeeeemH",
+    "HmmmmmmmmmmmmmmH",
+    "HHHHHHHHHHHHHHHH",
+    "HHHHHHHHHHHHHHHH",
+]
+ALTAR_TOP = [
+    "PPPPPPPPPPPPPPPP",
+    "PSSSSSSSSSSSSSSP",
+    "PSSSSSSqqSSSSSSP",
+    "PSSSSSqrrqSSSSSP",
+    "PSSSSqrssrqSSSSP",
+    "PSSSqrsssssrqSSP",
+    "PSSqrssyysssrqSP",
+    "PSSqrssyysssrqSP",
+    "PSSSqrsssssrqSSP",
+    "PSSSSqrssrqSSSSP",
+    "PSSSSSqrrqSSSSSP",
+    "PSSSSSSqqSSSSSSP",
+    "PSSSSSSSSSSSSSSP",
+    "PSSSSSSSSSSSSSSP",
+    "PSSSSSSSSSSSSSSP",
+    "PPPPPPPPPPPPPPPP",
+]
+
+
+def diver_overlay(coat, accent):
+    """Escafandro de latão com visor aberto (o rosto aparece) e casaco da profissão."""
+    img = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
+    px = img.load()
+    brass, dark = gt.RAMPS["G"][3], gt.RAMPS["G"][1]
+    # Chapéu do aldeão (32,0) 8x10x8: o capacete inteiro, rebites mais escuros.
+    for x in range(32, 64):
+        for y in range(0, 18):
+            if y < 8 and not (40 <= x < 56):
+                continue
+            px[x, y] = dark if (x + y) % 5 == 0 else brass
+    for x in range(42, 46):
+        for y in range(11, 15):
+            px[x, y] = (0, 0, 0, 0)
+    for x in range(41, 47):
+        for y in (10, 15):
+            px[x, y] = gt.RAMPS["T"][4]
+    for y in range(10, 16):
+        px[41, y] = px[46, y] = gt.RAMPS["T"][4]
+    # Casaco (camada do manto, 0,38 8x20x6): cor da profissão com cinto e detalhe.
+    for x in range(0, 28):
+        for y in range(38, 64):
+            if y < 44 and not (6 <= x < 22):
+                continue
+            px[x, y] = coat if (x + y) % 7 else tuple(max(0, c - 25) for c in coat[:3]) + (255,)
+    for x in range(0, 28):
+        px[x, 50] = gt.RAMPS["H"][2]
+    px[9, 50] = px[10, 50] = gt.RAMPS["G"][4]
+    for x, y in ((7, 46), (12, 47), (8, 54)):
+        px[x, y] = accent
+    return img
+
+
 # Capacete de mergulho clássico: cúpula verde-escama, visor redondo com aro de latão e gola.
 DIVE_HELMET = [
     "................",
@@ -312,6 +419,17 @@ def main():
         "item/shock_harpoon_tip": tip_icon("E", gt.RAMPS["T"][5]),
         "item/tide_thruster": thruster(),
     }
+    for name, rows, side, band, accent in (("tide_anvil", ANVIL_TOP, "a", "u", gt.RAMPS["T"][5]),
+                                           ("chart_table", CHART_TOP, "h", "m", gt.FIXED["y"]),
+                                           ("shell_altar", ALTAR_TOP, "p", "r", gt.FIXED["s"])):
+        top, block_side, bottom = workstation(name, rows, side, band, accent)
+        out[f"block/{name}_top"] = top
+        out[f"block/{name}_side"] = block_side
+        out[f"block/{name}_bottom"] = bottom
+    for name, coat, accent in (("tide_smith", gt.hexc("2a6e5f"), gt.RAMPS["G"][4]),
+                               ("nautical_cartographer", gt.hexc("2c5a8e"), gt.FIXED["y"]),
+                               ("abyss_enchanter", gt.hexc("50348f"), gt.FIXED["s"])):
+        out[f"entity/villager/profession/{name}"] = diver_overlay(coat, accent)
     for rel, img in out.items():
         gt.save(img, rel + ".png")
     body, legs = suit_layers()

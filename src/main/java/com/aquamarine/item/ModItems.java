@@ -141,6 +141,11 @@ public final class ModItems {
 	/** Propulsor de Maré: mão secundária, tecla V; 1 Bobina = 6 cargas. */
 	public static final Item TIDE_THRUSTER = register("tide_thruster", TideThrusterItem::new, new Item.Properties());
 
+	// Fase 3E: blocos de trabalho da Vila
+	public static final Item TIDE_ANVIL = registerBlock(ModBlocks.TIDE_ANVIL, new Item.Properties());
+	public static final Item CHART_TABLE = registerBlock(ModBlocks.CHART_TABLE, new Item.Properties());
+	public static final Item SHELL_ALTAR = registerBlock(ModBlocks.SHELL_ALTAR, new Item.Properties());
+
 	// Invocação
 	/** Projeto do Chamariz: vem do Cofre do Templo (ainda não existe); por enquanto só criativo. */
 	public static final Item LURE_BLUEPRINT = register("lure_blueprint", Item::new,

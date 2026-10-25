@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "aquamarine:block/tide_anvil_top",
+    "side": "aquamarine:block/tide_anvil_side",
+    "bottom": "aquamarine:block/tide_anvil_bottom"
+  }
+}

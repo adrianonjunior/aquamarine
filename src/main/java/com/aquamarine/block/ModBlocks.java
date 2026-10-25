@@ -54,6 +54,16 @@ public final class ModBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).instrument(NoteBlockInstrument.BELL)
 			.requiresCorrectToolForDrops().strength(3.0F, 1200.0F).sound(SoundType.METAL).lightLevel(state -> 8).noOcclusion());
 
+	// Fase 3E: blocos de trabalho dos Mergulhadores do Porto dos Náufragos
+	public static final Block TIDE_ANVIL = register("tide_anvil", Block::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).requiresCorrectToolForDrops().strength(5.0F, 1200.0F)
+			.sound(SoundType.ANVIL));
+	public static final Block CHART_TABLE = register("chart_table", Block::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.5F).sound(SoundType.WOOD));
+	public static final Block SHELL_ALTAR = register("shell_altar", Block::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PINK).requiresCorrectToolForDrops().strength(3.0F)
+			.lightLevel(state -> 7).sound(SoundType.CORAL_BLOCK));
+
 	private static Block register(String name, Function<BlockBehaviour.Properties, Block> factory, BlockBehaviour.Properties properties) {
 		ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Aquamarine.id(name));
 		return Registry.register(BuiltInRegistries.BLOCK, key, factory.apply(properties.setId(key)));

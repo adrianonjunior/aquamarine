@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "aquamarine:block/chart_table_top",
+    "side": "aquamarine:block/chart_table_side",
+    "bottom": "aquamarine:block/chart_table_bottom"
+  }
+}

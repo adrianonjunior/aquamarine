@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "aquamarine:block/shell_altar_top",
+    "side": "aquamarine:block/shell_altar_side",
+    "bottom": "aquamarine:block/shell_altar_bottom"
+  }
+}

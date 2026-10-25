@@ -4,6 +4,7 @@ import com.aquamarine.Aquamarine;
 import com.aquamarine.block.AnchorBuoyBlock;
 import com.aquamarine.effect.ModEffects;
 import com.aquamarine.entity.KrakenEntity;
+import com.aquamarine.entity.ModVillagers;
 import com.aquamarine.entity.WhaleEntity;
 import com.aquamarine.item.DiveGear;
 import com.aquamarine.item.OrichalcumEffects;
@@ -109,6 +110,10 @@ public final class PressureManager {
 		} else if (player.tickCount % EXPOSURE_CHECK_TICKS == 0) {
 			entry.exposed = player.isUnderWater() && nearestKraken(level, player) != null;
 			entry.rawAmbient = rawAmbientCap(player);
+			if (!player.isUnderWater() && entry.state.level() > 0 && ModVillagers.isInHarbor(level, player.blockPosition())) {
+				// Eclusa e Cúpula do Porto dos Náufragos: no ar da Vila a Pressão zera de uma vez.
+				entry.state.reset();
+			}
 			int bubble = player.getVehicle() instanceof WhaleEntity ? 1 : 0;
 			entry.ambientTarget = Math.max(0, entry.rawAmbient - DiveGear.ambientReduction(player) - bubble);
 		}

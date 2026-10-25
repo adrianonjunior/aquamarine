@@ -1,0 +1,15 @@
+{
+  "gives": {
+    "id": "aquamarine:pressure_regulator"
+  },
+  "max_uses": 12,
+  "reputation_discount": 0.05,
+  "wants": {
+    "id": "aquamarine:abyssal_pearl"
+  },
+  "xp": 15,
+  "additional_wants": {
+    "id": "minecraft:emerald",
+    "count": 12
+  }
+}

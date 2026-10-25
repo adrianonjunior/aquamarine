@@ -200,5 +200,15 @@
   "message.aquamarine.thruster.aiming": "Propulsor pronto (%s cargas): solte para disparar",
   "message.aquamarine.thruster.dry": "O Propulsor só funciona na água.",
   "message.aquamarine.thruster.no_charge": "Sem cargas: falta uma Bobina Voltaica.",
-  "message.aquamarine.thruster.no_thruster": "Ponha o Propulsor na mão secundária."
+  "message.aquamarine.thruster.no_thruster": "Ponha o Propulsor na mão secundária.",
+  "block.aquamarine.tide_anvil": "Bigorna de Maré",
+  "block.aquamarine.chart_table": "Mesa de Cartas Náuticas",
+  "block.aquamarine.shell_altar": "Altar de Concha",
+  "tooltip.aquamarine.tide_anvil": "Bloco de trabalho do Ferreiro de Maré, no Porto dos Náufragos.",
+  "tooltip.aquamarine.chart_table": "Bloco de trabalho do Cartógrafo Náutico.",
+  "tooltip.aquamarine.shell_altar": "Bloco de trabalho do Encantador de Fossa; brilha de leve.",
+  "entity.aquamarine.villager.tide_smith": "Ferreiro de Maré",
+  "entity.aquamarine.villager.nautical_cartographer": "Cartógrafo Náutico",
+  "entity.aquamarine.villager.abyss_enchanter": "Encantador de Fossa",
+  "item.aquamarine.harbor_map": "Mapa da Vila"
 }

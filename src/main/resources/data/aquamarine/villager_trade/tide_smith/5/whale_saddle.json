@@ -1,0 +1,16 @@
+{
+  "gives": {
+    "id": "aquamarine:whale_saddle"
+  },
+  "max_uses": 12,
+  "reputation_discount": 0.2,
+  "wants": {
+    "id": "aquamarine:abyssal_pearl",
+    "count": 2
+  },
+  "xp": 30,
+  "additional_wants": {
+    "id": "minecraft:emerald",
+    "count": 10
+  }
+}

@@ -6,6 +6,7 @@ import com.aquamarine.command.KrakenCommand;
 import com.aquamarine.config.AquamarineConfig;
 import com.aquamarine.effect.ModEffects;
 import com.aquamarine.entity.ModEntities;
+import com.aquamarine.entity.ModVillagers;
 import com.aquamarine.entity.boss.AquamarineBossBar;
 import com.aquamarine.event.KrakenSummoning;
 import com.aquamarine.item.ModCreativeTab;
@@ -40,6 +41,7 @@ public class Aquamarine implements ModInitializer {
 		ModMenus.register();
 		ModCreativeTab.register();
 		ModEntities.register();
+		ModVillagers.register();
 		AquamarineBossBar.registerPayloads();
 		OrichalcumEffects.register();
 		ModEffects.register();

@@ -120,6 +120,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			if (enabled("gear")) {
 				GearGameTest.run(context, world, server, base);
 			}
+			if (enabled("harbor")) {
+				HarborGameTest.run(context, world, server, base);
+			}
 			if (enabled("attack")) {
 				AttackGameTest.run(context, world, server, base);
 			}

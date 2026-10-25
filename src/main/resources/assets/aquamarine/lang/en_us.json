@@ -200,5 +200,15 @@
   "message.aquamarine.thruster.aiming": "Thruster ready (%s charges): release to fire",
   "message.aquamarine.thruster.dry": "The Thruster only works in water.",
   "message.aquamarine.thruster.no_charge": "No charge: you need a Voltaic Coil.",
-  "message.aquamarine.thruster.no_thruster": "Put the Thruster in your off hand."
+  "message.aquamarine.thruster.no_thruster": "Put the Thruster in your off hand.",
+  "block.aquamarine.tide_anvil": "Tide Anvil",
+  "block.aquamarine.chart_table": "Nautical Chart Table",
+  "block.aquamarine.shell_altar": "Shell Altar",
+  "tooltip.aquamarine.tide_anvil": "Workstation of the Tide Smith, in the Castaways' Harbor.",
+  "tooltip.aquamarine.chart_table": "Workstation of the Nautical Cartographer.",
+  "tooltip.aquamarine.shell_altar": "Workstation of the Trench Enchanter; glows faintly.",
+  "entity.aquamarine.villager.tide_smith": "Tide Smith",
+  "entity.aquamarine.villager.nautical_cartographer": "Nautical Cartographer",
+  "entity.aquamarine.villager.abyss_enchanter": "Trench Enchanter",
+  "item.aquamarine.harbor_map": "Harbor Map"
 }

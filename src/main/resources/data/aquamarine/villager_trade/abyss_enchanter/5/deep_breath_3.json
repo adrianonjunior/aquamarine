@@ -1,0 +1,23 @@
+{
+  "gives": {
+    "id": "minecraft:enchanted_book"
+  },
+  "max_uses": 12,
+  "reputation_discount": 0.2,
+  "wants": {
+    "id": "aquamarine:abyssal_pearl",
+    "count": 3
+  },
+  "xp": 30,
+  "additional_wants": {
+    "id": "minecraft:book"
+  },
+  "given_item_modifier": [
+    {
+      "type": "minecraft:set_enchantments",
+      "enchantments": {
+        "aquamarine:deep_breath": 3
+      }
+    }
+  ]
+}

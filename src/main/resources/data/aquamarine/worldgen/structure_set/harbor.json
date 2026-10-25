@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1946013517,
+    "separation": 20,
+    "spacing": 44
+  },
+  "structures": [
+    {
+      "structure": "aquamarine:harbor",
+      "weight": 1
+    }
+  ]
+}
