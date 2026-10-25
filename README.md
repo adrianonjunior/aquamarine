@@ -1,20 +1,61 @@
 # AQUAMARINE
 
-Mod Fabric para Minecraft Java 26.3: explore a Cidade Perdida de Nereia e
-enfrente o Kraken. Repositório privado, uso com amigos (multiplayer é
-prioridade).
+Mod Fabric para Minecraft Java 26.3: explore a Cidade Perdida de Nereia, desça ao fundo do mar
+sentindo a Pressão e enfrente o Kraken. Repositório privado, para jogar com amigos (multiplayer é
+prioridade: toda a lógica roda no servidor).
 
-Plano oficial: https://claude.ai/artifact/M68jvjvKRddKZMxq3yEQjT
+Plano oficial: https://claude.ai/artifact/M68jvjvKRddKZMxq3yEQjT (pode estar desatualizado; em
+conflito, vale [docs/00-decisoes.md](docs/00-decisoes.md)).
 
-O plano oficial acima pode estar desatualizado: em conflito, vale
-[docs/00-decisoes.md](docs/00-decisoes.md).
+## O que tem no mod
+- **Entrega 1:** Oricálcio (minério, ferramentas, armadura), Forja Abissal, Óculos de Mergulho, aba
+  criativa e plugin do JEI.
+- **Entrega 2:** o Kraken (3 fases, escudo com Nós de Maré, tentáculos, Crias, barra de boss
+  própria), a Pressão, a invocação no Altar do Abismo e as recompensas.
+- **Fase 3 (em andamento):** Pressão por profundidade com Medidor, Regulador e Traje de Mergulho
+  Profundo; Moréia Tempestuosa e Escama Elétrica; Baleia-de-Nereia (montaria de 3) e Cachalote;
+  Arpão de Oricálcio com Aljava e 4 pontas; 7 encantamentos; Propulsor de Maré. Estado de cada faixa
+  em [docs/07-roadmap.md](docs/07-roadmap.md).
 
-## Por onde começar
-- **Agentes:** [AGENTS.md](AGENTS.md) (regras, vários agentes em paralelo),
-  depois [CONTEXTO.md](CONTEXTO.md) (quem faz o quê agora).
-- **Todos:** [docs/00-decisoes.md](docs/00-decisoes.md) é a fonte da verdade.
-  Os demais arquivos de `docs/` detalham um assunto cada e trazem um aviso de
-  status; seções de **ideia** não são decisão.
+## Tecnologias
+Java 25, Fabric Loader + Fabric API, Gradle 9 com o plugin Loom, JUnit e Fabric Client GameTests.
+Modelos e texturas são gerados por scripts Python (Pillow) em `tools/`. Versões exatas em
+`gradle.properties`; ambiente validado em [docs/06-tecnico.md](docs/06-tecnico.md).
+
+## Como rodar
+1. Instale o **JDK 25** e aponte o `JAVA_HOME` para ele (o caminho usado nesta máquina está em
+   [docs/06-tecnico.md](docs/06-tecnico.md), "Ambiente local").
+2. Na raiz do repositório:
+   - `./gradlew build`: compila e roda os testes JUnit (consistência de recursos, contas da luta).
+     O jar fica em `build/libs/`.
+   - `./gradlew runClient`: abre o jogo com o mod (mundo de teste em `run/saves`).
+   - `./gradlew runClientGameTest`: abre o jogo sozinho, roda os testes de jogo e grava
+     screenshots em `build/run/clientGameTest/screenshots/`. Para uma parte só:
+     `AQUAMARINE_GAMETEST_ONLY=moray,whale ./gradlew runClientGameTest`.
+3. Para jogar fora do ambiente de desenvolvimento: copie o jar de `build/libs/` e a Fabric API para a
+   pasta `mods/` de uma instalação Fabric 26.3 (cliente e servidor).
+4. **Configuração:** `config/aquamarine.json` é criado na primeira execução (aviso falso, Nós de
+   Maré, dificuldade, escala por jogadores, quem pilota a baleia, Alerta de Moréia).
+5. **Texturas e modelos:** com Python 3 e Pillow, `python tools/gen_textures.py` (Entregas 1 e 2),
+   `python tools/gen_phase3_textures.py` (itens da Fase 3) e
+   `python tools/models/<criatura>/build_model.py` (modelo; a textura vem depois, ver 06-tecnico).
+6. Comandos de teste (operador): `/aquamarine kraken ...`, `/aquamarine moray ...`,
+   `/aquamarine whale ...`, `/aquamarine sperm_whale ...`.
+
+## Estrutura de pastas
+| Pasta | Conteúdo |
+|---|---|
+| `src/main` | Código comum e do servidor (`com.aquamarine`: itens, blocos, entidades, Pressão, comandos) e os dados (`resources`: modelos, texturas, lang, receitas, tags, encantamentos) |
+| `src/client` | Só do cliente: renderers e modelos das criaturas, HUD, teclas, mixins de tela |
+| `src/test` | Testes JUnit (rodam no `build`) |
+| `src/gametest` | Testes de jogo com screenshots (`runClientGameTest`) |
+| `tools/` | Scripts reproduzíveis de texturas e de modelos (`tools/models/<criatura>/`) |
+| `docs/` | Especificação e decisões (índice abaixo) |
+| `prompts/` | Prompts usados para os agentes de IA (histórico) |
+
+## Por onde começar (agentes)
+[AGENTS.md](AGENTS.md) (regras), depois [CONTEXTO.md](CONTEXTO.md) (quem faz o quê agora). A fonte
+da verdade é [docs/00-decisoes.md](docs/00-decisoes.md); seções de **ideia** não são decisão.
 
 ## Índice (cada arquivo é dono do seu assunto)
 | Arquivo | Assunto |
@@ -26,14 +67,10 @@ O plano oficial acima pode estar desatualizado: em conflito, vale
 | docs/02-kraken.md | Luta, escudo, Pressão, barra de vida, IA, balanceamento |
 | docs/03-invocacao-e-chat.md | Anúncio estilo Terraria, aviso falso |
 | docs/04-cidade-perdida.md | Estrutura, bioma, criaturas (incluindo o Walker) |
-| docs/05-itens.md | Materiais e itens (incluindo o Óculos de Mergulho) |
-| docs/06-tecnico.md | Implementação, ambiente, build e convenções |
-| docs/07-roadmap.md | Ordem dos marcos, progresso e faixas das Entregas 1 e 2; Fase 3 planejada |
-| docs/08-fase3.md | Fase 3 (bloqueada até a Entrega 2 completa): especificação de Pressão por profundidade, Moréia, baleias, Propulsor, munições, encantamentos e Vila |
-| prompts/estruturador.md | Prompt para o agente que inicia a implementação |
-| prompts/orquestrador.md | Prompt histórico de arranque da Entrega 2; para retomar, leia CONTEXTO.md |
-| prompts/kraken-v1.md | Corpo das Tasks dos agentes Claude (Entrega 2) |
-| prompts/kraken-modelagem.md | Corpo das Tasks dos agentes Codex (modelagem e QA) |
-| prompts/fase3-claude.md | Corpo das Tasks do Claude na Fase 3 (**bloqueado**, ver 07-roadmap) |
-| prompts/fase3-modelagem.md | Corpo das Tasks do Codex na Fase 3 (**bloqueado**) |
-| prompts/orquestrador-fase3.md | Prompt do orquestrador da Fase 3; **enviá-lo libera a fase** (só com a Entrega 2 completa) |
+| docs/05-itens.md | Materiais e itens |
+| docs/06-tecnico.md | Implementação, ambiente, build, testes e convenções |
+| docs/07-roadmap.md | Marcos e faixas das Entregas 1 e 2 e da Fase 3 |
+| docs/08-fase3.md | Especificação da Fase 3 |
+| docs/relatorio-2q.md | QA visual da Entrega 2 |
+| prompts/fechamento-final.md | Prompt do agente único que fecha a Fase 3 e organiza o projeto |
+| prompts/*.md (demais) | Prompts históricos das Entregas 1, 2 e da preparação da Fase 3 |
