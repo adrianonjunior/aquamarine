@@ -17,11 +17,14 @@ if ($AudioRoot) { $atlasBuildArgs += @('--audio-root', (Resolve-Path $AudioRoot)
 & $atlasPython @atlasBuildArgs
 if ($LASTEXITCODE -ne 0) { throw 'Falha ao gerar o Atlas.' }
 $atlasRunning = $false
+$atlasStatus = $null
 try {
     $atlasStatus = Invoke-RestMethod "http://127.0.0.1:$Port/api/status" -TimeoutSec 2
+} catch { }
+if ($atlasStatus) {
     $atlasRunning = $atlasStatus.app -eq 'aquamarine-atlas' -and $atlasStatus.root -eq $atlasRoot
     if (!$atlasRunning) { throw 'A porta está sendo usada por outro servidor. Use -Port 8767.' }
-} catch [System.Net.Http.HttpRequestException] { }
+}
 if (!$atlasRunning) {
     $atlasServerArgs = @('"' + (Join-Path $PSScriptRoot 'serve.py') + '"', '--port', "$Port")
     if ($AudioRoot) { $atlasServerArgs += @('--audio-root', '"' + (Resolve-Path $AudioRoot).Path + '"') }
