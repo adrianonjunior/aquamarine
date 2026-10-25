@@ -90,6 +90,48 @@ class ResourceConsistencyTest {
 		assertTrue(missing.isEmpty(), "Arquivos faltando: " + missing);
 	}
 
+	/** Sons (docs/09-audio.md): cada evento do ModSounds está na sounds.json e vice-versa, todo arquivo
+	 * existe, todo efeito tem legenda nas duas línguas e cada fase do Kraken tem as três camadas. */
+	@Test
+	void soundsHaveFilesSubtitlesAndKrakenLayers() throws IOException {
+		JsonObject sounds = read(ASSETS.resolve("sounds.json"));
+		JsonObject ptBr = read(ASSETS.resolve("lang/pt_br.json"));
+		JsonObject enUs = read(ASSETS.resolve("lang/en_us.json"));
+		String source = Files.readString(Path.of("src/main/java/com/aquamarine/sound/ModSounds.java"));
+		Set<String> registered = new TreeSet<>();
+		java.util.regex.Matcher m = java.util.regex.Pattern.compile("register\\(\"([a-z0-9_.]+)\"\\)").matcher(source);
+		while (m.find()) {
+			registered.add(m.group(1));
+		}
+		assertEquals(registered, new TreeSet<>(sounds.keySet()), "ModSounds e sounds.json com eventos diferentes");
+		List<String> problems = new ArrayList<>();
+		for (String event : sounds.keySet()) {
+			JsonObject entry = sounds.getAsJsonObject(event);
+			for (JsonElement sound : entry.getAsJsonArray("sounds")) {
+				String name = sound.getAsJsonObject().get("name").getAsString();
+				if (name.startsWith("aquamarine:") && !Files.exists(asset(name, "sounds", ".ogg"))) {
+					problems.add("arquivo " + name);
+				}
+			}
+			if (entry.has("subtitle")) {
+				String key = entry.get("subtitle").getAsString();
+				if (!ptBr.has(key) || !enUs.has(key)) {
+					problems.add("legenda " + key);
+				}
+			} else if (!event.startsWith("music.")) {
+				problems.add("efeito sem legenda: " + event);
+			}
+		}
+		for (String track : com.aquamarine.sound.KrakenMusicPlan.TRACKS) {
+			for (String layer : com.aquamarine.sound.KrakenMusicPlan.LAYERS) {
+				if (!Files.exists(ASSETS.resolve("sounds/music/kraken/" + track + "_" + layer + ".ogg"))) {
+					problems.add("camada " + track + "_" + layer);
+				}
+			}
+		}
+		assertTrue(problems.isEmpty(), "Sons com problema: " + problems);
+	}
+
 	@Test
 	void everyItemHasNameAndDescriptionInBothLanguages() throws IOException {
 		JsonObject ptBr = read(ASSETS.resolve("lang/pt_br.json"));

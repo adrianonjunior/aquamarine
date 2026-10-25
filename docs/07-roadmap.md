@@ -140,4 +140,8 @@ pequenos com aprovação do Adriano** (agentes não ouvem). Arquivos novos em `t
 | A4 | Música: temas, stems do Kraken e stingers, gatilhos no cliente | Temas tocam na situação certa; luta com camadas por fase | Prévia + jogo |
 | A5 | Mixagem final, orçamento de 70 MB, verificação em `runClientGameTest` | Medidores verdes e build verde | Aceite no jogo |
 
-- [ ] A0 (entregue em 25/10/2026; aguarda o aval do Adriano) · [ ] A1 · [ ] A2 · [ ] A3 · [ ] A4 · [ ] A5
+- [x] A0 (aprovado pelo Adriano em 25/10/2026) · [ ] A1 · [ ] A2 · [ ] A3 · [ ] A4 · [ ] A5
+- [x] **A-K, luta do Kraken** (adiantada a pedido do Adriano, 25/10/2026): 3 trilhas em camadas, stingers, efeitos do
+  Kraken e das crias, céu por fase, tempestade e destruição do ambiente ([09-audio.md](09-audio.md), "Luta do Kraken";
+  [02-kraken.md](02-kraken.md), "A luta muda o mundo"). Cobre a parte do Kraken de A2 e A4. Falta o portão 4 (luta no jogo).
+- [x] **Criaturas do oceano nascendo sozinhas** (correção de 25/10/2026; [00-decisoes.md](00-decisoes.md)).

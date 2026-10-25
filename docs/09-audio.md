@@ -52,15 +52,16 @@ depois de tocar, silêncio de 1 a 3 minutos (padrão do jogo).
 | Fossa de Nereia | Bioma | Bioluminescente, cristal, etéreo |
 | Cidade Perdida | Estrutura | Melancólico e imponente, coro sintético, sinos |
 | Porto dos Náufragos | Vila | Caloroso, seguro, harpa de vidro |
-| Kraken: Tormenta | Fase 1 | Ritmo marcial surdo, ondas, tensão crescente |
-| Kraken: Fúria | Fase 2 | Mais ritmo, coro, graves duplos |
-| Kraken: Abismo | Fase 3 | Épico: coro, percussão pesada, riffs graves |
+| Kraken: Tormenta | Fase 1 | Marcha surda, ostinato, motivo do Kraken; o breakcore abre o filtro; trombetas no fim |
+| Kraken: Fúria | Fase 2 | Graves duplos, coro gritando, breakcore inteiro, tema heroico das trombetas |
+| Kraken: Abismo | Fase 3 | Riff distorcido, sinos de catedral, breakcore no máximo; vira ré maior com o tema do Porto |
 | Invocação | Sequência de 10 s | Silêncio e um acorde que cresce (stinger) |
 | Vitória | Kraken derrotado | Stinger de alívio e glória |
 | Retorno | "O Kraken retorna às profundezas..." | Stinger curto e frio |
 
-A luta usa **stems em camadas** (base + ritmo + coro) que entram por fase e por vida, para
-transições suaves; o tema anterior termina com fade, nunca corta seco.
+A luta usa **camadas sincronizadas** (base + breakcore + glória) que entram pelo estado da luta e uma
+trilha por fase; o tema anterior cai com fade sob o golpe da troca, nunca corta seco. Detalhes em
+"Luta do Kraken", abaixo.
 
 ## Efeitos (lista de substituição dos sons vanilla)
 Hoje o código usa sons do jogo no lugar destes; o produtor faz um **audit** (`grep
@@ -113,9 +114,48 @@ Em `tools/audio/` (ambientes Python locais em `tools/audio/.venv*`, fora do git)
   comparar; não entram no mod sem aval.
 - Rodar: `tools/audio/.venv/Scripts/python tools/audio/a0.py` (todas) ou com nomes (`roar harbor`).
 
+## Luta do Kraken (entregue em 25/10/2026)
+Pedido do Adriano depois de aprovar o A0 (decisão em [00-decisoes.md](00-decisoes.md), "Áudio: luta do Kraken").
+Tudo sintetizado por `tools/audio/instruments.py` (instrumentos), `kraken_music.py` (trilhas e stingers) e
+`kraken_sfx.py` (efeitos; também escreve `assets/aquamarine/sounds.json`).
+
+**Trilhas** (ré menor com o mi bemol frígio do Kraken; uma por fase, em laço): Tormenta (160 bpm, 56
+compassos, 84 s), Fúria (172 bpm, 64 compassos, 89 s) e Abismo (180 bpm, 72 compassos, 96 s). Cada uma tem
+**três camadas** com o mesmo número de amostras (`sounds/music/kraken/<trilha>_<camada>.ogg`):
+- `base`: orquestra (cordas em ostinato, metais graves com o **motivo do Kraken**, coro), **sinos** (catedral,
+  tubulares e os sinos de vidro do Porto), baixo, taikos, tímpanos, impactos e a tempestade de fundo;
+- `breaks`: **breakcore** com bateria **sintetizada** (bumbo, caixa, chimbal, condução; padrões próprios, nada
+  de amostra), picotada em 16 avos: gagueiras, trechos invertidos, mudança de tom, parada de fita e esmagado;
+- `glory`: **trombetas** (naipe de 3, com o "bico" do lábio e o brilho que abre com a força), trompas e coro
+  heroico. No Abismo, as trombetas tocam o tema do Porto em ré maior: a esperança contra o abismo.
+
+**Como toca** (cliente; regras em `sound/KrakenMusicPlan`, controle em `client/music/KrakenMusic`):
+| Situação | O que acontece |
+|---|---|
+| Invocação (silêncio do oceano) | Stinger da invocação (lote A0) |
+| Kraken vivo a até 72 blocos | Entra a trilha da fase atual; a música normal do jogo fica calada |
+| Troca de fase | A trilha cai em 0,5 s, toca o golpe de transição (3,6 s) e a trilha nova entra no fim da subida |
+| 12 s sem combate (fases 1 e 2) | **Respiro**: o breakcore sai; volta no próximo golpe, dano ou ataque |
+| Glória | Fase 1: 35%, fase 2: 60%, fase 3: 85%; +30% abaixo da metade da vida da fase; **100% com a Carapaça quebrada ou o jogador com menos de 30% de vida** |
+| Kraken morre | A trilha cai e toca a **vitória** (fanfarra, tema do Porto, sinos repicando); céu dourado |
+| Kraken some vivo por perto | Stinger do **recuo** ("retorna às profundezas") |
+| Jogador morre ou passa de 112 blocos | A trilha some em 3 s; volta ao renascer perto |
+
+**Implementação:** cada trilha é um `LayeredMusicInstance` (categoria Música) cujo evento aponta para o som
+vazio da Fabric em fluxo; o `LayeredMusicStream` decodifica as três camadas juntas e soma com os ganhos ao vivo.
+Camadas em canais separados do jogo não serviriam: cada canal começa dezenas de ms depois do outro e o
+breakcore sairia do tempo da orquestra. O laço é **nativo** (sem a sobra de 2 s): as camadas voltam ao
+começo na mesma amostra, e a emenda cai num impacto. Blocos de 0,5 s: mudança de camada chega em até ~2 s;
+os fades imediatos usam o volume da instância.
+
+**Efeitos** (eventos em `sound/ModSounds`, arquivos e variações em `sounds.json`, legendas `subtitles.aquamarine.*`):
+Kraken (ronco, ferido, morte, rugido, emergir, recuar, aviso e golpe de cada ataque, onda de choque, raios,
+erupção, Carapaça rachando, partindo e se refazendo), tentáculos (ferido, cortado), Crias (chiado, ferida,
+morte) e ovo chocando. Os sons vanilla do Kraken saíram do código.
+
 ## Padrões técnicos
 - Formato `.ogg` (Vorbis). **Efeitos posicionais em mono**; música e camadas globais em estéreo.
-- **Laços** (camadas e temas): a mixagem é circular e o `.ogg` leva **2 s a mais**, iguais ao começo;
+- **Laços** (camadas de ambiência e temas simples): a mixagem é circular e o `.ogg` leva **2 s a mais**, iguais ao começo;
   o tocador do jogo começa a próxima volta 2 s antes do fim e cruza esse trecho (as bordas do
   Vorbis estragam um laço "colado"). O manifesto guarda `loop_overlap_s`.
 - Alvos: ambiência −26 a −24 LUFS; efeitos com pico em −3 dBFS; música −18 LUFS integrado.

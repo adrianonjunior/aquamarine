@@ -95,7 +95,7 @@ clareza). Dano base com netherite: 4 a 5 golpes até curar.
 | Redemoinho | 2-3 | Som grave por 2 s e espiral de partículas | Puxa quem está num raio de 16 blocos | Amuleto da Corrente, sair do raio |
 | Crias de Kraken | 2-3 | Ovos brilham 2 s | Invoca `3 + n ÷ 2` Crias (4 de dano cada, 8 de vida) | Matar rápido; têm pouca vida |
 | Jato de Água | 2-3 | Fileira de bolhas por 1,2 s | 10 de dano em linha de 24 blocos | Sair da linha |
-| Rugido Abissal | 2-3 | Corpo se contrai por 1,5 s | Onda de choque que quebra blocos de 1 camada e derruba de barcos (6 de dano) | Estar no fundo ou fora de barcos |
+| Rugido Abissal | 2-3 | Corpo se contrai por 1,5 s | Onda de choque que quebra blocos de 1 camada (só com `mob_griefing`) e derruba de barcos (6 de dano) | Estar no fundo ou fora de barcos |
 | Raios Guiados | 3 | Céu escurece e uma marca azul no jogador por 2 s | 14 de dano, segue o alvo | Ficar submerso; a marca expira |
 | Emboscada por Baixo | 3 | Bolhas no fundo por 2 s | Tentáculos emergem do chão em área de 6 blocos | Sair da área |
 | Agarrão Duplo | 3 | Dois tentáculos brilham juntos | Prende com dois, 10 de dano por segundo | Cortar um para soltar parcialmente |
@@ -170,6 +170,25 @@ ou causou dano e está a até 128 blocos na morte. Cada um recebe 1 Olho, 2 a 4 
 1.000 de XP (cada um, não dividido), 1 Troféu do Kraken (no modo `abissal`, o Troféu Dourado do
 Abismo no lugar) e, se for a primeira vitória dele (`KrakenWorldData`), o Coração.
 Código: `entity/boss/KrakenRewards`; a mensagem "O Kraken foi derrotado!" vai a todos a 128 blocos.
+
+## A luta muda o mundo
+Decidido em [00-decisoes.md](00-decisoes.md). Código: `entity/boss/KrakenWorldEffects` (servidor) e
+`client/music/KrakenSky` (céu). Valores iniciais a testar:
+- **Céu por fase** (só no cliente, a até 128 blocos de um Kraken vivo): céu, névoa, névoa da água, nuvens e
+  luz do céu puxam para a cor da fase (Tormenta: ardósia esverdeada; Fúria: violeta; Abismo: carmim), com
+  transição de alguns segundos; na vitória, clarão dourado de 7 s e o céu volta ao normal.
+- **Tempestade** (opção `krakenStorm`): com jogador na arena, chuva na fase 1 e trovoada a partir da 2,
+  renovada enquanto a luta dura; quando o Kraken morre ou recua, o tempo limpa. Na fase 2, um raio a cada 4 a
+  10 s cai a 12 a 36 blocos do Kraken (mais rápido na fase 3); a menos de 8 blocos de alguém, o raio é só de
+  enfeite.
+- **Destruição** (precisa de `mob_griefing` e da opção `krakenWorldDamage`; nunca quebra bloco com inventário,
+  bloco do mod nem nada com dureza acima de 2):
+  - o **recife morre** e as **algas soltam** num raio de 20 blocos (mais 6 por fase) em volta do Kraken;
+  - a **Pancada** abre uma cratera de 2,5 blocos no ponto do golpe;
+  - a **Emboscada** abre uma cratera de 3 blocos no fundo do mar;
+  - a **troca de fase** solta uma onda de choque: quebra o que é frágil (dureza até 0,6: vidro, folhas, gelo,
+    plantas) num raio de 14 blocos, arranca as algas e cai um raio no Kraken.
+  Abaixo do nível do mar, o buraco vira água. As marcas ficam no mundo depois da luta.
 
 ## Invocação
 Detalhes em [03-invocacao-e-chat.md](03-invocacao-e-chat.md).

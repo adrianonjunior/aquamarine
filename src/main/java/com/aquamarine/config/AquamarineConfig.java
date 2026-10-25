@@ -35,6 +35,10 @@ public final class AquamarineConfig {
 	public boolean whaleOwnerOnlyPilots = true;
 	/** Evento "Alerta de Moréia" da Vila (uma vez a cada 3 dias de jogo, em noite de tempestade). */
 	public boolean harborAlert = true;
+	/** A luta do Kraken traz tempestade (trovoada a partir da fase 2) e raios em volta da arena. */
+	public boolean krakenStorm = true;
+	/** A luta do Kraken marca o mundo: recife morto, algas arrancadas, crateras (também precisa de mob_griefing). */
+	public boolean krakenWorldDamage = true;
 
 	public static AquamarineConfig get() {
 		return instance;

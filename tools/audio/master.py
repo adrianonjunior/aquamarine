@@ -153,6 +153,73 @@ def export(name, x, kind, script, seed, description, listen_for, loop=False, lic
     return entry
 
 
+def export_stems(name, stems, script, seed, description, listen_for, bpm, bars):
+    """Trilha em camadas que o jogo mistura ao vivo (docs/09-audio.md, "Luta do Kraken"): um ganho comum
+    leva a mistura completa ao alvo de música com pico real seguro, e cada camada vira um .ogg com o mesmo
+    número de amostras. Laço nativo (sem a sobra de 2 s): o tocador do mod decodifica as camadas juntas e
+    volta ao começo na mesma amostra. Grava também as misturas de prévia (completa, sem breaks, sem glória)."""
+    full = sum(stems.values())
+    n = full.shape[-1]
+    tmp = os.path.join(BUILD, "_measure.wav")
+    _write_wav(tmp, full)
+    gain = dsp.db(TARGETS["music"] - measure(tmp)["lufs"])
+    while true_peak_db(full * gain) > TRUE_PEAK_MAX - 0.3:
+        gain *= dsp.db(-0.25)
+    manifest = load_manifest()
+    layers, decoded_sum = {}, None
+    for stem, x in stems.items():
+        stem_name = f"{name}_{stem}"
+        wav = os.path.join(BUILD, "masters", stem_name + ".wav")
+        ogg = os.path.join(SOUNDS, stem_name + ".ogg")
+        png = os.path.join(BUILD, "spectrograms", stem_name.replace("/", "_") + ".png")
+        _write_wav(wav, x * gain)
+        os.makedirs(os.path.dirname(ogg), exist_ok=True)
+        os.makedirs(os.path.dirname(png), exist_ok=True)
+        enc = ffmpeg("-y", "-i", wav, "-ac", "2", "-c:a", "libvorbis", "-q:a", "4", ogg)
+        if enc.returncode:
+            raise RuntimeError(enc.stderr[-800:])
+        ffmpeg("-y", "-i", ogg, "-lavfi", "showspectrumpic=s=960x360:legend=1:scale=log:fscale=log:color=intensity", png)
+        decoded, _ = sf.read(ogg, always_2d=True)
+        if decoded.shape[0] != n:
+            raise RuntimeError(f"{stem_name}: o .ogg decodifica {decoded.shape[0]} amostras, o laço tem {n}")
+        decoded_sum = decoded if decoded_sum is None else decoded_sum + decoded
+        stats = measure(ogg)
+        layers[stem] = os.path.relpath(ogg, REPO).replace("\\", "/")
+        manifest[stem_name] = {
+            "name": stem_name, "file": layers[stem], "kind": "stem", "stem_of": name, "channels": 2,
+            "seconds": round(n / dsp.SR, 2), "loop": True, "loop_overlap_s": 0, "bytes": os.path.getsize(ogg),
+            "script": script, "seed": seed, "license": "original (síntese por código)", **stats,
+            "clipping_samples": int((np.abs(decoded) >= 0.999).sum()),
+        }
+    audition = {}
+    mixes = {"full": full, "respiro": stems["base"] + stems["glory"], "sem_gloria": stems["base"] + stems["breaks"]}
+    for key, x in mixes.items():
+        lap_wav = os.path.join(BUILD, "audition", f"{name.replace('/', '_')}_{key}.wav")
+        os.makedirs(os.path.dirname(lap_wav), exist_ok=True)
+        sf.write(lap_wav, np.concatenate([x, x], axis=-1).T * gain, dsp.SR, subtype="PCM_24")
+        ffmpeg("-y", "-i", lap_wav, "-c:a", "libvorbis", "-q:a", "5", lap_wav[:-4] + ".ogg")
+        audition[key] = os.path.relpath(lap_wav[:-4] + ".ogg", REPO).replace("\\", "/")
+    full_png = os.path.join(BUILD, "spectrograms", name.replace("/", "_") + ".png")
+    ffmpeg("-y", "-i", os.path.join(REPO, audition["full"]),
+           "-lavfi", "showspectrumpic=s=960x360:legend=1:scale=log:fscale=log:color=intensity", full_png)
+    stats = measure(os.path.join(REPO, audition["full"]))
+    entry = {
+        "name": name, "kind": "music", "layers": layers, "audition": audition, "channels": 2, "loop": True,
+        "loop_overlap_s": 0, "seconds": round(n / dsp.SR, 2), "bpm": bpm, "bars": bars,
+        "bytes": sum(manifest[f"{name}_{k}"]["bytes"] for k in stems), "script": script, "seed": seed,
+        "license": "original (síntese por código)", "description": description, "listen_for": listen_for,
+        "master_seam": seam(full * gain), **seam(decoded_sum.T), **stats,
+        "clipping_samples": int((np.abs(decoded_sum) >= 0.999).sum()),
+    }
+    manifest[name] = entry
+    with open(MANIFEST, "w", encoding="utf-8") as f:
+        json.dump(dict(sorted(manifest.items())), f, ensure_ascii=False, indent=2)
+        f.write("\n")
+    print(f"{name}: {entry['seconds']} s, {stats['lufs']} LUFS, pico {stats['true_peak']} dBTP, "
+          f"{entry['bytes'] // 1024} KB em {len(stems)} camadas, emenda {entry['seam_jump']}/{entry['seam_spectral']}")
+    return entry
+
+
 def load_manifest():
     if os.path.exists(MANIFEST):
         with open(MANIFEST, encoding="utf-8") as f:

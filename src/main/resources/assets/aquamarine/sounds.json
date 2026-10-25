@@ -1,0 +1,350 @@
+{
+  "entity.kraken.ambient": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.ambient",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/ambient1"
+      },
+      {
+        "name": "aquamarine:entity/kraken/ambient2"
+      },
+      {
+        "name": "aquamarine:entity/kraken/ambient3"
+      }
+    ]
+  },
+  "entity.kraken.hurt": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.hurt",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/hurt1"
+      },
+      {
+        "name": "aquamarine:entity/kraken/hurt2"
+      },
+      {
+        "name": "aquamarine:entity/kraken/hurt3"
+      }
+    ]
+  },
+  "entity.kraken.death": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.death",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/death"
+      }
+    ]
+  },
+  "entity.kraken.roar": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.roar",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/roar1"
+      },
+      {
+        "name": "aquamarine:entity/kraken/roar2"
+      }
+    ]
+  },
+  "entity.kraken.emerge": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.emerge",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/emerge"
+      }
+    ]
+  },
+  "entity.kraken.retreat": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.retreat",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/retreat"
+      }
+    ]
+  },
+  "entity.kraken.slam_warn": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.slam_warn",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/slam_warn1"
+      },
+      {
+        "name": "aquamarine:entity/kraken/slam_warn2"
+      }
+    ]
+  },
+  "entity.kraken.slam": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.slam",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/slam1"
+      },
+      {
+        "name": "aquamarine:entity/kraken/slam2"
+      },
+      {
+        "name": "aquamarine:entity/kraken/slam3"
+      }
+    ]
+  },
+  "entity.kraken.grab_warn": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.grab_warn",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/grab_warn1"
+      },
+      {
+        "name": "aquamarine:entity/kraken/grab_warn2"
+      }
+    ]
+  },
+  "entity.kraken.grab": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.grab",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/grab1"
+      },
+      {
+        "name": "aquamarine:entity/kraken/grab2"
+      }
+    ]
+  },
+  "entity.kraken.ink": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.ink",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/ink1"
+      },
+      {
+        "name": "aquamarine:entity/kraken/ink2"
+      }
+    ]
+  },
+  "entity.kraken.whirlpool": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.whirlpool",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/whirlpool"
+      }
+    ]
+  },
+  "entity.kraken.spawn_young": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.spawn_young",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/spawn_young1"
+      },
+      {
+        "name": "aquamarine:entity/kraken/spawn_young2"
+      }
+    ]
+  },
+  "entity.kraken.water_jet_charge": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.water_jet_charge",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/water_jet_charge"
+      }
+    ]
+  },
+  "entity.kraken.water_jet": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.water_jet",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/water_jet1"
+      },
+      {
+        "name": "aquamarine:entity/kraken/water_jet2"
+      }
+    ]
+  },
+  "entity.kraken.roar_blast": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.roar_blast",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/roar_blast"
+      }
+    ]
+  },
+  "entity.kraken.bolts_charge": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.bolts_charge",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/bolts_charge"
+      }
+    ]
+  },
+  "entity.kraken.bolt": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.bolt",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/bolt1"
+      },
+      {
+        "name": "aquamarine:entity/kraken/bolt2"
+      }
+    ]
+  },
+  "entity.kraken.ambush_warn": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.ambush_warn",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/ambush_warn"
+      }
+    ]
+  },
+  "entity.kraken.ambush": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.ambush",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/ambush1"
+      },
+      {
+        "name": "aquamarine:entity/kraken/ambush2"
+      }
+    ]
+  },
+  "entity.kraken.shield_crack": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.shield_crack",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/shield_crack1"
+      },
+      {
+        "name": "aquamarine:entity/kraken/shield_crack2"
+      },
+      {
+        "name": "aquamarine:entity/kraken/shield_crack3"
+      }
+    ]
+  },
+  "entity.kraken.shield_break": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.shield_break",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/shield_break"
+      }
+    ]
+  },
+  "entity.kraken.shield_regen": {
+    "subtitle": "subtitles.aquamarine.entity.kraken.shield_regen",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken/shield_regen"
+      }
+    ]
+  },
+  "entity.kraken_tentacle.hurt": {
+    "subtitle": "subtitles.aquamarine.entity.kraken_tentacle.hurt",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken_tentacle/hurt1"
+      },
+      {
+        "name": "aquamarine:entity/kraken_tentacle/hurt2"
+      }
+    ]
+  },
+  "entity.kraken_tentacle.death": {
+    "subtitle": "subtitles.aquamarine.entity.kraken_tentacle.death",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken_tentacle/death"
+      }
+    ]
+  },
+  "entity.young_kraken.ambient": {
+    "subtitle": "subtitles.aquamarine.entity.young_kraken.ambient",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/young_kraken/ambient1"
+      },
+      {
+        "name": "aquamarine:entity/young_kraken/ambient2"
+      }
+    ]
+  },
+  "entity.young_kraken.hurt": {
+    "subtitle": "subtitles.aquamarine.entity.young_kraken.hurt",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/young_kraken/hurt1"
+      },
+      {
+        "name": "aquamarine:entity/young_kraken/hurt2"
+      }
+    ]
+  },
+  "entity.young_kraken.death": {
+    "subtitle": "subtitles.aquamarine.entity.young_kraken.death",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/young_kraken/death"
+      }
+    ]
+  },
+  "entity.kraken_egg.hatch": {
+    "subtitle": "subtitles.aquamarine.entity.kraken_egg.hatch",
+    "sounds": [
+      {
+        "name": "aquamarine:entity/kraken_egg/hatch"
+      }
+    ]
+  },
+  "music.kraken.tormenta": {
+    "sounds": [
+      {
+        "name": "fabric-sound-api-v1:empty",
+        "stream": true
+      }
+    ]
+  },
+  "music.kraken.furia": {
+    "sounds": [
+      {
+        "name": "fabric-sound-api-v1:empty",
+        "stream": true
+      }
+    ]
+  },
+  "music.kraken.abismo": {
+    "sounds": [
+      {
+        "name": "fabric-sound-api-v1:empty",
+        "stream": true
+      }
+    ]
+  },
+  "music.kraken.transition": {
+    "sounds": [
+      {
+        "name": "aquamarine:music/kraken/transition",
+        "stream": true
+      }
+    ]
+  },
+  "music.kraken.victory": {
+    "sounds": [
+      {
+        "name": "aquamarine:music/kraken/victory",
+        "stream": true
+      }
+    ]
+  },
+  "music.kraken.retreat": {
+    "sounds": [
+      {
+        "name": "aquamarine:music/kraken/retreat",
+        "stream": true
+      }
+    ]
+  },
+  "music.kraken.summon": {
+    "sounds": [
+      {
+        "name": "aquamarine:music/stinger_summon",
+        "stream": true
+      }
+    ]
+  }
+}

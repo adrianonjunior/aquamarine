@@ -3,6 +3,7 @@ package com.aquamarine.entity;
 import com.aquamarine.entity.boss.KrakenAttackType;
 
 import com.aquamarine.entity.boss.AnimationSync;
+import com.aquamarine.sound.ModSounds;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
 
@@ -182,4 +184,20 @@ public class YoungKrakenEntity extends Monster implements YoungKrakenView {
 		return false;
 	}
 
+	// --- Sons (docs/09-audio.md) ---
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.YOUNG_KRAKEN_AMBIENT;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return ModSounds.YOUNG_KRAKEN_HURT;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.YOUNG_KRAKEN_DEATH;
+	}
 }

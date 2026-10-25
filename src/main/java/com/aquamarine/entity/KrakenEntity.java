@@ -10,8 +10,10 @@ import com.aquamarine.entity.boss.KrakenMovement;
 import com.aquamarine.entity.boss.KrakenRewards;
 import com.aquamarine.entity.boss.KrakenStats;
 import com.aquamarine.entity.boss.KrakenView;
+import com.aquamarine.entity.boss.KrakenWorldEffects;
 import com.aquamarine.entity.boss.ShieldDamage;
 import com.aquamarine.entity.boss.TideNodes;
+import com.aquamarine.sound.ModSounds;
 
 import java.util.HashSet;
 import java.util.List;
@@ -27,7 +29,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
@@ -115,6 +117,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 	private boolean wasTransitioning;
 
 	private final AquamarineBossBar bossBar = new AquamarineBossBar(this.getDisplayName());
+	private final KrakenWorldEffects worldEffects = new KrakenWorldEffects();
 	private final AggroTracker aggro = new AggroTracker();
 	/** Tentáculos e ataques (docs/02-kraken.md); a IA roda no servidor. */
 	private final KrakenAttacks attacks = new KrakenAttacks(this);
@@ -534,8 +537,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 
 	private void breakShield(ServerLevel level) {
 		entityData.set(DATA_STUN, STUN_TICKS);
-		level.playSound(null, getX(), getY(), getZ(), SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 3.0F, 0.5F);
-		level.playSound(null, getX(), getY(), getZ(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.HOSTILE, 2.0F, 0.6F);
+		level.playSound(null, getX(), getY(), getZ(), ModSounds.KRAKEN_SHIELD_BREAK, SoundSource.HOSTILE, 5.0F, 1.0F);
 		broadcast(level, Component.translatable("message.aquamarine.kraken.shield_broken").withStyle(ChatFormatting.AQUA));
 	}
 
@@ -550,7 +552,9 @@ public class KrakenEntity extends Mob implements KrakenView {
 		setShieldFull(phase);
 		entityData.set(DATA_STUN, 0);
 		entityData.set(DATA_TRANSITION, TRANSITION_TICKS);
-		level.playSound(null, getX(), getY(), getZ(), SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 4.0F, 0.5F);
+		level.playSound(null, getX(), getY(), getZ(), ModSounds.KRAKEN_ROAR, SoundSource.HOSTILE, 6.0F, 0.85F);
+		KrakenWorldEffects.shockwave(level, position());
+		KrakenWorldEffects.lightning(level, position().add(0, getBbHeight() * 0.5, 0), true);
 		broadcast(level, Component.translatable("message.aquamarine.kraken.phase" + phase)
 			.withStyle(phase == 3 ? ChatFormatting.DARK_PURPLE : ChatFormatting.BLUE, ChatFormatting.BOLD));
 	}
@@ -585,6 +589,34 @@ public class KrakenEntity extends Mob implements KrakenView {
 		return List.copyOf(set);
 	}
 
+	// --- Sons do corpo (docs/09-audio.md) ---
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.KRAKEN_AMBIENT;
+	}
+
+	@Override
+	public int getAmbientSoundInterval() {
+		return 220;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return ModSounds.KRAKEN_HURT;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.KRAKEN_DEATH;
+	}
+
+	/** Bicho de 32 blocos: ouvido de longe (o alcance do som cresce com o volume). */
+	@Override
+	protected float getSoundVolume() {
+		return 5.0F;
+	}
+
 	// --- Tick do servidor ---
 
 	@Override
@@ -598,6 +630,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 		tickCounters();
 		tickShield(phase);
 		attacks.tick(level);
+		worldEffects.tick(this, level, phase, inArena);
 		target = aggro.top(level.getGameTime());
 		faceTarget(level, inArena);
 		tickMovement(level, inArena, phase);
@@ -681,10 +714,11 @@ public class KrakenEntity extends Mob implements KrakenView {
 		if (absentTicks == FLEE_TICKS && !fled) {
 			fled = true;
 			setHealth(Math.min(getMaxHealth(), getHealth() + getMaxHealth() * 0.10F));
-			level.playSound(null, getX(), getY(), getZ(), SoundEvents.ELDER_GUARDIAN_AMBIENT, SoundSource.HOSTILE, 3.0F, 0.4F);
+			level.playSound(null, getX(), getY(), getZ(), ModSounds.KRAKEN_RETREAT, SoundSource.HOSTILE, 4.0F, 1.0F);
 		}
 		if (absentTicks >= ABANDON_TICKS) {
 			broadcast(level, Component.translatable("message.aquamarine.kraken.retreats").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+			level.playSound(null, getX(), getY(), getZ(), ModSounds.KRAKEN_RETREAT, SoundSource.HOSTILE, 6.0F, 0.8F);
 			discard();
 		}
 	}
@@ -712,6 +746,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 	public void remove(RemovalReason reason) {
 		if (reason.shouldDestroy() && level() instanceof ServerLevel level) {
 			attacks.cleanup(level);
+			worldEffects.endStorm(level);
 		}
 		bossBar.removeAllPlayers();
 		super.remove(reason);

@@ -38,6 +38,7 @@ public final class SummonEffects {
 				case SummonEffectPayload.SILENCE -> {
 					silenceTicks = payload.ticks();
 					Minecraft.getInstance().getSoundManager().stop(null, SoundSource.AMBIENT);
+					com.aquamarine.client.music.KrakenMusic.onSummon();
 				}
 				case SummonEffectPayload.DARKEN -> darkenTicks = darkenTotal = Math.max(1, payload.ticks());
 				default -> { }

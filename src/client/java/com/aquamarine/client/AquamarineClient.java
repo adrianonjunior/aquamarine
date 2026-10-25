@@ -17,6 +17,7 @@ import com.aquamarine.client.entity.whale.WhaleModel;
 import com.aquamarine.client.entity.whale.WhaleRenderer;
 import com.aquamarine.client.pressure.PressureHud;
 import com.aquamarine.client.screen.AbyssalForgeScreen;
+import com.aquamarine.client.music.KrakenMusic;
 import com.aquamarine.entity.ModEntities;
 import com.aquamarine.menu.ModMenus;
 
@@ -52,6 +53,7 @@ public class AquamarineClient implements ClientModInitializer {
 		SummonEffects.register();
 		ItemDescriptions.register();
 		KrakenEffects.register();
+		KrakenMusic.register();
 		AquamarineKeys.register();
 		// Renderizadores e HUD do Kraken entram aqui.
 	}

@@ -22,6 +22,7 @@ import com.aquamarine.item.OrichalcumEffects;
 import com.aquamarine.menu.ModMenus;
 import com.aquamarine.pressure.PressureManager;
 import com.aquamarine.recipe.ModRecipes;
+import com.aquamarine.sound.ModSounds;
 
 import net.fabricmc.api.ModInitializer;
 
@@ -37,6 +38,7 @@ public class Aquamarine implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		AquamarineConfig.load();
+		ModSounds.register();
 		// Ordem importa: blocos antes dos itens de bloco.
 		ModBlocks.register();
 		ModComponents.register();

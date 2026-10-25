@@ -49,6 +49,10 @@
   fixa e estruturas ligadas, e confere o que só o mundo gerado prova: `/locate` do Porto, Cúpula seca,
   Torre de Vigia, elevadores, Eclusa e Mapa de Fossas. O `/place structure` do mundo plano não registra
   a estrutura nem aplica a decoração do oceano, então não pega esses erros.
+- A parte `spawn` (`OceanSpawnGameTest`) abre outro mundo normal, para num oceano fundo com o surgimento
+  de mobs ligado, acelera o tempo com `/tick sprint` e conta baleias e Moréias (média e máximo no log,
+  linha "Densidade do oceano"). A parte `worldfx` (`KrakenWorldGameTest`) confere recife morto e crateras;
+  a música por fase, o céu e a tempestade são conferidos na parte `kraken`.
 - `C:\Python314\python tools/gen_textures.py --preview` regera as texturas e
   grava folhas de prévia em `build/texture_preview*.png`.
 
@@ -155,7 +159,9 @@ A Cidade Perdida (`worldgen`) entra quando for liberada.
 - **Configuração** (arquivo JSON próprio, `config/aquamarine.json`):
   `falseWarning` (aviso falso, padrão ligado), `weakPoints` (Nós de Maré, padrão
   ligado), `difficulty` (`normal` ou `abissal`), `scalingCap` (máximo de
-  jogadores no cálculo, padrão 12), `naturalWalkers` (liga ou desliga o Walker).
+  jogadores no cálculo, padrão 12), `naturalWalkers` (liga ou desliga o Walker), `harborAlert` (Alerta de
+  Moréia da Vila), `krakenStorm` (tempestade e raios na luta) e `krakenWorldDamage` (marcas da luta no mundo;
+  também precisa da regra `mob_griefing`).
 - **Dados do mundo:** `SavedData` para "Kraken derrotado", "jogador já recebeu a
   Chave" e "jogador já recebeu o Coração".
 - **Multiplayer:** todo cálculo de luta no servidor (aggro, Pressão, escala por
@@ -242,6 +248,18 @@ só os nomes novos e as lições abaixo são específicos. Em execução desde 2
   32.768 blocos: arenas grandes de teste vão em camadas; (3) mob criado longe do jogador some pelo
   despawn: nos testes, `setPersistenceRequired()`; (4) o `FakePlayer` da Fabric não monta nada;
   (5) cor de texto no HUD é ARGB: sem `0xFF` no alfa o texto some.
+- **Lições do áudio e da luta (25/10/2026):** (1) **criatura aquática que não estende `WaterAnimal`
+  precisa sobrescrever `checkSpawnObstruction`** (o padrão de `Mob` recusa nascer com o corpo em líquido:
+  Moréia e baleias nunca nasciam sozinhas); (2) cada jogador tem só 5 vagas de `WATER_CREATURE` (no 26.3
+  o náutilo pesa 5 no oceano) e 70 de `MONSTER` (disputadas com as cavernas embaixo do mar); a Moréia usa
+  `UNDERGROUND_WATER_CREATURE`; (3) regras do jogo no 26.3 têm nome novo (`spawn_mobs`, `spawn_monsters`,
+  `mob_griefing`); a chuva sobe 1% por tick, então "está chovendo" só vale uns 20 ticks depois:
+  teste o pedido em `server.getWeatherData()`; (4) **música em camadas**: o `FabricSoundInstance.getAudioStream`
+  deixa a instância fornecer o próprio `AudioStream` (o evento da `sounds.json` aponta para
+  `fabric-sound-api-v1:empty` com `"stream": true`); o `JOrbisAudioStream` do jogo decodifica em float e
+  respeita o fim exato do Vorbis, então camadas do mesmo tamanho voltam juntas; o canal do jogo enfileira
+  4 blocos do tamanho que o fluxo devolver; (5) cores do céu, névoa, água, nuvens e luz vêm do
+  `EnvironmentAttributeProbe.getValue` (atributos `visual/*`): um mixin no retorno tinge tudo de uma vez.
 - **Corpo da Moréia:** `MorayEntity.PART_OFFSETS` (blocos atrás da cabeça) acompanha os segmentos
   de `tools/models/moray/build_model.py`; quem mudar um muda o outro.
 - **Vila (3E):** a peça do Porto sai de `tools/gen_harbor.py` (NBT de estrutura escrito à mão);

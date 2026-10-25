@@ -3,6 +3,7 @@ package com.aquamarine.client;
 import com.aquamarine.client.entity.kraken.KrakenAnimations;
 import com.aquamarine.client.entity.kraken.KrakenRenderer;
 import com.aquamarine.entity.KrakenEntity;
+import com.aquamarine.sound.ModSounds;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,7 +18,6 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -156,7 +156,7 @@ public final class KrakenEffects {
 		if (crossed(before, t, 1.3F)) {
 			b.burst(ParticleTypes.SPLASH, b.at(0, -30, 0), 16, 60, 0.0, 0.4, 0.0);
 			b.burst(ParticleTypes.BUBBLE_POP, b.at(0, -24, 0), 14, 30, 0.0, 0.1, 0.0);
-			b.sound(SoundEvents.PLAYER_SPLASH_HIGH_SPEED, 3.0F, 0.5F);
+			b.sound(ModSounds.KRAKEN_EMERGE, 5.0F, 1.0F);
 		}
 	}
 
@@ -383,7 +383,7 @@ public final class KrakenEffects {
 					// Nova rachadura: estilhaços de cristal e estalo grave.
 					b.burst(SHARD, b.at(0, -36, 0), 16, 24, 0.0, 0.15, 0.0);
 					b.burst(CRYSTAL, b.at(0, -36, 0), 16, 16, 0.0, 0.05, 0.0);
-					b.sound(SoundEvents.AMETHYST_CLUSTER_BREAK, 3.0F, 0.5F + mark * 0.4F);
+					b.sound(ModSounds.KRAKEN_SHIELD_CRACK, 4.0F, 0.85F + mark * 0.3F);
 				}
 			}
 			if (before > 0.0F && now <= 0.0F) {
@@ -394,7 +394,7 @@ public final class KrakenEffects {
 			if (now - before > 0.15F) {
 				// Escudo se refaz: brilho subindo em volta do manto.
 				b.ring(ParticleTypes.END_ROD, b.at(0, -10, 0), 18, 24, 0.0);
-				b.sound(SoundEvents.AMETHYST_BLOCK_RESONATE, 2.0F, 0.6F);
+				b.sound(ModSounds.KRAKEN_SHIELD_REGEN, 3.0F, 1.0F);
 			}
 		}
 		// Rachaduras abertas soltam brilho; quanto menos escudo, mais.

@@ -129,9 +129,15 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			if (enabled("visual")) {
 				KrakenVisualGameTest.run(context, world, server, base);
 			}
+			if (enabled("worldfx")) {
+				KrakenWorldGameTest.run(context, world, server, base);
+			}
 		}
 		if (enabled("worldgen")) {
 			WorldgenGameTest.run(context);
+		}
+		if (enabled("spawn")) {
+			OceanSpawnGameTest.run(context);
 		}
 	}
 
@@ -260,6 +266,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		check(server.computeOnServer(s -> kraken(s).realMaxHealth() == 1500F && kraken(s).shield() == 400F
 			&& kraken(s).phase() == 1 && kraken(s).scaleFactor() == 1F), "Kraken: valores da fase 1 com 1 jogador");
 		check(server.computeOnServer(s -> near(kraken(s).realHealth(), 1500F)), "Kraken: vida inicial");
+		check(context.computeOnClient(mc -> com.aquamarine.client.music.KrakenMusic.currentPhase() == 1),
+			"Música: a Tormenta devia tocar com o Kraken perto");
+		check(server.computeOnServer(s -> s.getWeatherData().isRaining()), "Mundo: a luta devia trazer chuva");
 		aimAtKraken(context, server, origin);
 		shot(context, "13_kraken_fase1_sem_rachaduras");
 		for (String name : KrakenEntity.ANIMATION_NAMES) {
@@ -288,6 +297,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 
 		context.waitTicks(70);
 		check(server.computeOnServer(s -> !kraken(s).isTransitioning()), "Kraken: a transição devia ter acabado");
+		check(context.computeOnClient(mc -> com.aquamarine.client.music.KrakenMusic.currentPhase() == 2
+			&& com.aquamarine.client.music.KrakenSky.intensity() > 0.5F), "Música e céu: a Fúria devia tocar com o céu tingido");
+		check(server.computeOnServer(s -> s.getWeatherData().isThundering()), "Mundo: a fase 2 devia trazer trovoada");
 		krakenHit(server, 450);
 		context.waitTicks(6);
 		aimAtKraken(context, server, origin);
@@ -306,6 +318,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		shot(context, "17_kraken_fase3_rachaduras");
 
 		context.waitTicks(70);
+		check(context.computeOnClient(mc -> com.aquamarine.client.music.KrakenMusic.currentPhase() == 3), "Música: o Abismo devia tocar na fase 3");
 		// 2C: tabela de dano por fonte, Nós de Maré e exposição (escudo cheio de 800 na fase 3).
 		check(server.computeOnServer(s -> kraken(s).nodeCount() == 4 && kraken(s).nodeCenters().stream().allMatch(c -> c.y < kraken(s).getY())),
 			"Kraken: 4 Nós de Maré sob o corpo na fase 3");

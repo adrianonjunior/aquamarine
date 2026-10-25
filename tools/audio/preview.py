@@ -16,6 +16,37 @@ KIND = {"ambience": "Ambiência", "sfx": "Efeito", "music": "Música"}
 TARGET = {"ambience": "−26 a −24 LUFS", "sfx": "pico −3 dBFS", "music": "−18 LUFS"}
 
 
+def layered_card(entry):
+    """Trilha em camadas (luta do Kraken): a mistura completa e duas parciais, como o jogo mistura."""
+    name = entry["name"]
+    base = name.replace("/", "_")
+    labels = {"full": "Completa (as 3 camadas)", "respiro": "Respiro (sem o breakcore: luta parada)",
+              "sem_gloria": "Sem glória (sem as trombetas: o Kraken está ganhando)"}
+    players = []
+    for key, label in labels.items():
+        audio = f"files/{base}_{key}.ogg"
+        shutil.copyfile(os.path.join(REPO, entry["audition"][key]), os.path.join(OUT, audio))
+        players.append(f'<p class="listen"><b>{label}</b></p><audio controls preload="none" src="{audio}"></audio>')
+    spec = f"files/{base}.png"
+    png = os.path.join(BUILD, "spectrograms", base + ".png")
+    if os.path.exists(png):
+        shutil.copyfile(png, os.path.join(OUT, spec))
+    return f"""
+<article>
+  <header><span class="kind">Música em camadas</span><h2>{html.escape(entry['description'])}</h2>
+  <code>{html.escape(', '.join(entry['layers'].values()))}</code></header>
+  {''.join(players)}
+  <p class="listen"><b>Ouça:</b> {html.escape(entry['listen_for'])}</p>
+  <ul class="stats">
+    <li>{entry['seconds']} s por volta · {entry['bpm']:.0f} bpm · {entry['bars']} compassos · {entry['bytes'] // 1024} KB nas 3 camadas</li>
+    <li>Loudness {entry['lufs']} LUFS (alvo −18) · LRA {entry['lra']} LU · pico real {entry['true_peak']} dBTP · saturadas: {entry['clipping_samples']}</li>
+    <li>Emenda do laço nativo: salto {entry['seam_jump']} · espectral {entry['seam_spectral']} (os players tocam 2 voltas)</li>
+    <li>Origem: {html.escape(entry['license'])} · {html.escape(entry['script'])}</li>
+  </ul>
+  <img src="{spec}" alt="Espectrograma de {html.escape(name)}" loading="lazy">
+</article>"""
+
+
 def card(entry):
     name = entry["name"]
     audio = "files/" + name.replace("/", "_") + ".ogg"
@@ -83,10 +114,11 @@ def alt_cards():
 def build():
     os.makedirs(os.path.join(OUT, "files"), exist_ok=True)
     manifest = load_manifest()
-    order = {"ambience": 0, "sfx": 1, "music": 2}
-    entries = sorted(manifest.values(), key=lambda e: (order[e["kind"]], e["name"]))
+    order = {"music": 0, "ambience": 1, "sfx": 2}
+    entries = sorted((e for e in manifest.values() if e["kind"] != "stem"),
+                     key=lambda e: (order[e["kind"]], "layers" not in e, e.get("bars", 0), e["name"]))
     total = sum(e["bytes"] for e in entries)
-    cards = "\n".join(card(e) for e in entries)
+    cards = "\n".join(layered_card(e) if "layers" in e else card(e) for e in entries)
     page = f"""<!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aquamarine: prévia de áudio</title>

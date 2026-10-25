@@ -3,6 +3,7 @@ package com.aquamarine.entity;
 import com.aquamarine.entity.boss.KrakenAttackType;
 
 import com.aquamarine.entity.boss.AnimationSync;
+import com.aquamarine.sound.ModSounds;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,6 +11,7 @@ import java.util.UUID;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.AnimationState;
 
 import net.minecraft.server.level.ServerLevel;
@@ -195,5 +197,22 @@ public class TentacleEntity extends Mob implements TentacleView {
 		super.readAdditionalSaveData(input);
 		slot = input.getIntOr("Slot", 0);
 		owner = input.getString("Owner").map(UUID::fromString).orElse(null);
+	}
+
+	// --- Sons (docs/09-audio.md) ---
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return ModSounds.TENTACLE_HURT;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.TENTACLE_DEATH;
+	}
+
+	@Override
+	protected float getSoundVolume() {
+		return 2.0F;
 	}
 }

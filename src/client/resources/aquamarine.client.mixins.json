@@ -5,6 +5,8 @@
 	"client": [
 		"BossHealthOverlayMixin",
 		"CameraMixin",
+		"EnvironmentAttributeProbeMixin",
+		"MusicManagerMixin",
 		"SoundEngineMixin",
 		"WaterFogEnvironmentMixin"
 	],

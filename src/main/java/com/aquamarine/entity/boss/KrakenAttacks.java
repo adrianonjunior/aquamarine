@@ -10,6 +10,7 @@ import com.aquamarine.entity.KrakenEntity;
 import com.aquamarine.entity.ModEntities;
 import com.aquamarine.entity.TentacleEntity;
 import com.aquamarine.entity.YoungKrakenEntity;
+import com.aquamarine.sound.ModSounds;
 import com.aquamarine.item.OrichalcumEffects;
 
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.RandomSource;
@@ -433,19 +433,18 @@ public final class KrakenAttacks {
 
 	private void warnSound(ServerLevel level, Active a) {
 		SoundEvent sound = switch (a.type) {
-			case SLAM -> SoundEvents.WARDEN_SONIC_CHARGE;
-			case GRAB, DOUBLE_GRAB -> SoundEvents.ENDERMAN_STARE;
-			case INK -> SoundEvents.SQUID_SQUIRT;
-			case WHIRLPOOL -> SoundEvents.BEACON_DEACTIVATE;
-			case SPAWN_YOUNG -> SoundEvents.TURTLE_EGG_CRACK;
-			case WATER_JET -> SoundEvents.GUARDIAN_ATTACK;
-			case ROAR -> SoundEvents.ENDER_DRAGON_GROWL;
-			case BOLTS -> SoundEvents.TRIDENT_THUNDER.value();
-			case AMBUSH -> SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT;
+			case SLAM -> ModSounds.KRAKEN_SLAM_WARN;
+			case GRAB, DOUBLE_GRAB -> ModSounds.KRAKEN_GRAB_WARN;
+			case INK, WATER_JET -> ModSounds.KRAKEN_WATER_JET_CHARGE;
+			case WHIRLPOOL -> ModSounds.KRAKEN_WHIRLPOOL;
+			case SPAWN_YOUNG -> ModSounds.KRAKEN_SPAWN_YOUNG;
+			case ROAR -> ModSounds.KRAKEN_ROAR;
+			case BOLTS -> ModSounds.KRAKEN_BOLTS_CHARGE;
+			case AMBUSH -> ModSounds.KRAKEN_AMBUSH_WARN;
 		};
-		float pitch = a.type == KrakenAttackType.GRAB || a.type == KrakenAttackType.DOUBLE_GRAB ? 1.8F : 0.7F;
+		float pitch = 0.95F + random.nextFloat() * 0.1F;
 		Vec3 at = a.type == KrakenAttackType.SLAM || a.type == KrakenAttackType.AMBUSH ? a.point : kraken.position();
-		level.playSound(null, at.x, at.y, at.z, sound, SoundSource.HOSTILE, 3.0F, pitch);
+		level.playSound(null, at.x, at.y, at.z, sound, SoundSource.HOSTILE, a.type == KrakenAttackType.ROAR ? 6.0F : 4.0F, pitch);
 	}
 
 	// --- Aviso (por tick) ---
@@ -570,7 +569,8 @@ public final class KrakenAttacks {
 		collapseBuoys(level, a.point, 6);
 		particles(level, ParticleTypes.EXPLOSION, a.point.add(0, 1.0, 0), 6, 1.5, 0.0);
 		particles(level, ParticleTypes.SPLASH, a.point.add(0, 1.0, 0), 60, 2.5, 0.4);
-		level.playSound(null, a.point.x, a.point.y, a.point.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, 3.0F, 0.6F);
+		level.playSound(null, a.point.x, a.point.y, a.point.z, ModSounds.KRAKEN_SLAM, SoundSource.HOSTILE, 5.0F, 0.95F + random.nextFloat() * 0.1F);
+		KrakenWorldEffects.crater(level, a.point, 2.5, KrakenWorldEffects.CRATER_MAX_HARDNESS);
 	}
 
 	private void strikeGrab(ServerLevel level, Active a) {
@@ -578,6 +578,7 @@ public final class KrakenAttacks {
 		for (ServerPlayer p : kraken.playersInArena(level)) {
 			if (p.position().subtract(a.point).horizontalDistanceSqr() <= 16.0 && !p.isCreative() && !isGrabbed(p)) {
 				grabs.add(new Grab(p.getUUID(), a.slots, a.point));
+				level.playSound(null, p.getX(), p.getY(), p.getZ(), ModSounds.KRAKEN_GRAB, SoundSource.HOSTILE, 3.0F, 1.0F);
 				for (int slot : a.slots) {
 					TentacleEntity t = tentacle(level, slot);
 					if (t != null) {
@@ -610,6 +611,7 @@ public final class KrakenAttacks {
 			}
 		}
 		particles(level, ParticleTypes.SQUID_INK, kraken.position().add(0, 2.0, 0), 200, 8.0, 0.05);
+		level.playSound(null, kraken.getX(), kraken.getY(), kraken.getZ(), ModSounds.KRAKEN_INK, SoundSource.HOSTILE, 4.0F, 1.0F);
 	}
 
 	/** Choca (ou some com) os ovos do aviso de um ataque. */
@@ -638,6 +640,7 @@ public final class KrakenAttacks {
 				level.addFreshEntity(young);
 				youngs.add(young.getUUID());
 				particles(level, ParticleTypes.POOF, egg, 8, 0.4, 0.05);
+				level.playSound(null, egg.x, egg.y, egg.z, ModSounds.KRAKEN_EGG_HATCH, SoundSource.HOSTILE, 1.5F, 0.9F + random.nextFloat() * 0.2F);
 			}
 		}
 	}
@@ -653,7 +656,7 @@ public final class KrakenAttacks {
 				hurt(level, p, KrakenAttackType.JET_DAMAGE);
 			}
 		}
-		level.playSound(null, a.point.x, a.point.y, a.point.z, SoundEvents.DOLPHIN_SPLASH, SoundSource.HOSTILE, 3.0F, 0.5F);
+		level.playSound(null, a.point.x, a.point.y, a.point.z, ModSounds.KRAKEN_WATER_JET, SoundSource.HOSTILE, 4.0F, 1.0F);
 	}
 
 	private void strikeRoar(ServerLevel level) {
@@ -671,7 +674,8 @@ public final class KrakenAttacks {
 			}
 			if (state.is(ModBlocks.ANCHOR_BUOY)) {
 				AnchorBuoyBlock.collapse(level, pos.immutable());
-			} else if (state.getDestroySpeed(level, pos) >= 0.0F && state.getDestroySpeed(level, pos) <= 0.5F) {
+			} else if (KrakenWorldEffects.destructionAllowed(level) && state.getDestroySpeed(level, pos) >= 0.0F
+				&& state.getDestroySpeed(level, pos) <= 0.5F) {
 				level.destroyBlock(pos, false);
 				broken++;
 			}
@@ -685,7 +689,7 @@ public final class KrakenAttacks {
 			}
 		}
 		particles(level, ParticleTypes.EXPLOSION_EMITTER, c.add(0, 2.0, 0), 1, 0.0, 0.0);
-		level.playSound(null, c.x, c.y, c.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, 4.0F, 0.4F);
+		level.playSound(null, c.x, c.y, c.z, ModSounds.KRAKEN_ROAR_BLAST, SoundSource.HOSTILE, 6.0F, 1.0F);
 	}
 
 	private void strikeBolts(ServerLevel level, Active a) {
@@ -701,7 +705,7 @@ public final class KrakenAttacks {
 			for (int y = 0; y < 12; y++) {
 				particles(level, ParticleTypes.ELECTRIC_SPARK, p.position().add(0, y, 0), 6, 0.3, 0.1);
 			}
-			level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.HOSTILE, 2.0F, 1.2F);
+			level.playSound(null, p.getX(), p.getY(), p.getZ(), ModSounds.KRAKEN_BOLT, SoundSource.HOSTILE, 3.0F, 0.95F + random.nextFloat() * 0.1F);
 			hurt(level, p, KrakenAttackType.BOLT_DAMAGE);
 		}
 	}
@@ -715,7 +719,8 @@ public final class KrakenAttacks {
 			}
 		}
 		particles(level, ParticleTypes.POOF, a.point.add(0, 0.5, 0), 40, r * 0.5, 0.2);
-		level.playSound(null, a.point.x, a.point.y, a.point.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, 2.5F, 0.8F);
+		level.playSound(null, a.point.x, a.point.y, a.point.z, ModSounds.KRAKEN_AMBUSH, SoundSource.HOSTILE, 4.0F, 1.0F);
+		KrakenWorldEffects.seabedCrater(level, a.point, 3.0);
 	}
 
 	private void collapseBuoys(ServerLevel level, Vec3 center, int radius) {
