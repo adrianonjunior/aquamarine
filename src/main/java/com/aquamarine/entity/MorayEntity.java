@@ -42,7 +42,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -70,8 +72,12 @@ public class MorayEntity extends Monster implements MorayView {
 	public static final int STUN_TICKS = 60;
 	public static final int XP = 40;
 	public static final int MAX_SCALES = 6;
-	/** Profundidade mínima abaixo do nível do mar para surgir sozinha. */
-	public static final int SPAWN_DEPTH = 25;
+	/** Surge sozinha a pelo menos esta distância abaixo da superfície... */
+	public static final int SPAWN_DEPTH = 12;
+	/** ...onde a coluna d'água (nível do mar menos o fundo) tem pelo menos isto. */
+	public static final int MIN_WATER_DEPTH = 18;
+	/** Nenhuma outra Moréia num raio deste tamanho: é o que controla quantas há no oceano. */
+	public static final int SPAWN_SPACING = 80;
 
 	/** Centros das caixas do corpo, em blocos atrás do centro da cabeça (segmentos do modelo); o último é o rabo. */
 	public static final double[] PART_OFFSETS = {2.2, 4.0, 5.8, 7.6, 9.4, 11.0, 12.6};
@@ -118,17 +124,25 @@ public class MorayEntity extends Monster implements MorayView {
 			.add(Attributes.KNOCKBACK_RESISTANCE, 0.8);
 	}
 
-	/** Regra de surgimento natural: na água, a {@link #SPAWN_DEPTH} blocos ou mais, em fossas ou sob tempestade. */
+	/** Regra de surgimento natural: em água funda, nas fossas ou em qualquer oceano sob tempestade, espaçadas. */
 	public static boolean checkSpawn(EntityType<MorayEntity> type, ServerLevelAccessor level, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
 		if (reason != EntitySpawnReason.NATURAL && reason != EntitySpawnReason.CHUNK_GENERATION) {
 			return true;
 		}
-		if (!level.getFluidState(pos).is(FluidTags.WATER) || pos.getY() > level.getLevel().getSeaLevel() - SPAWN_DEPTH) {
+		int sea = level.getLevel().getSeaLevel();
+		if (!level.getFluidState(pos).is(FluidTags.WATER) || pos.getY() > sea - SPAWN_DEPTH
+			|| sea - level.getHeight(Heightmap.Types.OCEAN_FLOOR, pos.getX(), pos.getZ()) < MIN_WATER_DEPTH) {
 			return false;
 		}
 		boolean trench = level.getBiome(pos).is(com.aquamarine.ModTags.Biomes.MORAY_TRENCHES);
-		return (trench || level.getLevel().isThundering()) && random.nextInt(trench ? 6 : 3) == 0
-			&& level.getEntitiesOfClass(MorayEntity.class, new AABB(pos).inflate(64.0)).isEmpty();
+		return (trench || level.getLevel().isThundering()) && random.nextInt(trench ? 3 : 2) == 0
+			&& level.getEntitiesOfClass(MorayEntity.class, new AABB(pos).inflate(SPAWN_SPACING)).isEmpty();
+	}
+
+	/** O padrão de {@code Mob} recusa nascer com o corpo em líquido; a Moréia só nasce nele (como o Afogado). */
+	@Override
+	public boolean checkSpawnObstruction(LevelReader level) {
+		return level.isUnobstructed(this);
 	}
 
 	@Override

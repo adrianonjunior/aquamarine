@@ -15,7 +15,9 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -27,8 +29,10 @@ import net.minecraft.world.phys.Vec3;
 public abstract class AbstractWhaleEntity extends PathfinderMob {
 	/** As baleias fogem a 48 blocos do Kraken (docs/00-decisoes.md). */
 	public static final double KRAKEN_FLEE_RANGE = 48.0;
-	/** Profundidade mínima abaixo do nível do mar para surgir. */
-	public static final int SPAWN_DEPTH = 40;
+	/** Surgem a pelo menos esta distância abaixo da superfície (não nascem boiando). */
+	public static final int SPAWN_DEPTH = 6;
+	/** Coluna d'água mínima no lugar (nível do mar menos o fundo): o oceano fundo tem uns 30 blocos, o comum 15 a 20. */
+	public static final int MIN_WATER_DEPTH = 14;
 	/** No máximo 2 grupos (6 baleias) numa área de 16 x 16 chunks. */
 	public static final int MAX_PER_AREA = 6;
 
@@ -45,14 +49,22 @@ public abstract class AbstractWhaleEntity extends PathfinderMob {
 		this.setNoGravity(true);
 	}
 
-	/** Surgimento natural: água a 40 blocos ou mais abaixo do nível do mar, sem lotar a área. */
+	/** Surgimento natural: dentro d'água funda o bastante para o corpo, sem lotar a área. */
 	public static boolean checkSpawn(EntityType<? extends AbstractWhaleEntity> type, ServerLevelAccessor level, EntitySpawnReason reason,
 		BlockPos pos, net.minecraft.util.RandomSource random) {
 		if (reason != EntitySpawnReason.NATURAL && reason != EntitySpawnReason.CHUNK_GENERATION) {
 			return true;
 		}
-		return level.getFluidState(pos).is(FluidTags.WATER) && pos.getY() <= level.getLevel().getSeaLevel() - SPAWN_DEPTH
+		int sea = level.getLevel().getSeaLevel();
+		return level.getFluidState(pos).is(FluidTags.WATER) && pos.getY() <= sea - SPAWN_DEPTH
+			&& sea - level.getHeight(Heightmap.Types.OCEAN_FLOOR, pos.getX(), pos.getZ()) >= MIN_WATER_DEPTH
 			&& level.getEntitiesOfClass(AbstractWhaleEntity.class, new AABB(pos).inflate(128.0, 64.0, 128.0)).size() < MAX_PER_AREA;
+	}
+
+	/** O padrão de {@code Mob} recusa nascer com o corpo em líquido; baleias só nascem nele (como {@code WaterAnimal}). */
+	@Override
+	public boolean checkSpawnObstruction(LevelReader level) {
+		return level.isUnobstructed(this);
 	}
 
 	@Override

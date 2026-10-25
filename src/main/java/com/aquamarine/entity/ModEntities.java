@@ -61,7 +61,7 @@ public final class ModEntities {
 
 	/** Moréia Tempestuosa (docs/08-fase3.md): a caixa é a cabeça; o corpo são as partes abaixo. */
 	public static final EntityType<MorayEntity> MORAY = Registry.register(BuiltInRegistries.ENTITY_TYPE, MORAY_KEY,
-		EntityType.Builder.of(MorayEntity::new, MobCategory.MONSTER).sized(1.6F, 1.6F).eyeHeight(0.8F)
+		EntityType.Builder.of(MorayEntity::new, MobCategory.UNDERGROUND_WATER_CREATURE).sized(1.6F, 1.6F).eyeHeight(0.8F)
 			.clientTrackingRange(10).build(MORAY_KEY));
 
 	/** Trecho do corpo da Moréia (caixa de colisão); não é salvo nem invocável. */
@@ -91,13 +91,18 @@ public final class ModEntities {
 		FabricDefaultAttributeRegistry.register(YOUNG_KRAKEN, YoungKrakenEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(MORAY, MorayEntity.createAttributes());
 		SpawnPlacements.register(MORAY, SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, MorayEntity::checkSpawn);
-		BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_OCEAN), MobCategory.MONSTER, MORAY, 2, 1, 1);
+		// Densidade do oceano (docs/00-decisoes.md, "Criaturas do oceano"): a regra de cada criatura limita quantas há.
+		// A Moréia usa a categoria das criaturas aquáticas profundas: vagas próprias (5 por jogador), em vez de
+		// disputar as 70 dos monstros com as cavernas embaixo do mar.
+		BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_OCEAN), MobCategory.UNDERGROUND_WATER_CREATURE, MORAY, 6, 1, 1);
 		FabricDefaultAttributeRegistry.register(WHALE, WhaleEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(SPERM_WHALE, SpermWhaleEntity.createAttributes());
 		SpawnPlacements.register(WHALE, SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, AbstractWhaleEntity::checkSpawn);
 		SpawnPlacements.register(SPERM_WHALE, SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, AbstractWhaleEntity::checkSpawn);
-		BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_DEEP_OCEAN), MobCategory.WATER_CREATURE, WHALE, 2, 1, 3);
-		BiomeModifications.addSpawn(BiomeSelectors.tag(ModTags.Biomes.MORAY_TRENCHES), MobCategory.WATER_CREATURE, SPERM_WHALE, 1, 1, 1);
+		BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_DEEP_OCEAN), MobCategory.WATER_CREATURE, WHALE, 8, 1, 3);
+		BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_OCEAN).and(BiomeSelectors.tag(BiomeTags.IS_DEEP_OCEAN).negate()),
+			MobCategory.WATER_CREATURE, WHALE, 3, 1, 2);
+		BiomeModifications.addSpawn(BiomeSelectors.tag(ModTags.Biomes.MORAY_TRENCHES), MobCategory.WATER_CREATURE, SPERM_WHALE, 3, 1, 1);
 	}
 
 	private ModEntities() {}

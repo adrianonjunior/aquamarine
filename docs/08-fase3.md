@@ -60,7 +60,9 @@
 
 ## 3. Moréia Tempestuosa e a Escama Elétrica
 - **Hostil, ~14 blocos de comprimento**, hitbox segmentada (técnica do Ender Dragon, como
-  os Nós de Maré). Vive em fossas e em águas sob tempestade, profundidade ≥ 25.
+  os Nós de Maré). Vive em fossas e em águas sob tempestade: a 12 blocos ou mais da superfície, onde a
+  coluna d'água tem 18 ou mais; 1 em 3 nas fossas, 1 em 2 sob tempestade, nunca a menos de 80 blocos de outra
+  (densidade decidida em 25/10/2026, [00-decisoes.md](00-decisoes.md), "Criaturas do oceano").
 - **Vida:** 150, escalando com `f = 1 + 0,3 × (n − 1)` ([02-kraken.md](02-kraken.md))
   para `n` jogadores num raio de 48 (máximo em 12). Dano não escala.
 - **Ataques com aviso** (regra de clareza):
@@ -111,7 +113,8 @@
 
 ## 6. Baleias
 - **Baleia-de-Nereia** (passiva, 200 de vida, ~16 blocos, bioluminescente): nada em grupos de
-  1 a 3 em águas com profundidade ≥ 40. **Canta** de longe (som e partículas); seguir o
+  1 a 3 onde a coluna d'água tem 14 blocos ou mais (peso 8 no oceano fundo, 3 no comum; até 6 numa área
+  de 16 x 16 chunks; nunca a menos de 6 blocos da superfície). **Canta** de longe (som e partículas); seguir o
   canto indica a Cidade Perdida (rota para a mais próxima, sem substituir a Bússola).
 - **Cachalote** (neutra, 140 de vida): vive em fossas; só reage se atacada, com **onda
   sonora** que empurra e dá 6 de dano num cone de 8 blocos. Tem cicatrizes de tentáculo.
