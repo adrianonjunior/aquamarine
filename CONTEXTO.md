@@ -38,7 +38,9 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 
-## Registro de handoff
+## Registro de handoff
+
+- 24/10/2026 · Orquestrador · **Entrega 2 completa nas faixas** (2A–2Q aceitas; 2Q-fix `64a8724`, build verde). **Pendente com o Adriano:** aceite multiplayer real (2 clientes, 3 fases), sensação de dano/ritmo e legibilidade do aviso do slam com a câmera normal. **Fase 3 liberada** (`ccee430`) por pedido do Adriano. **Onda 1 rodando (mesma Run `run_a6bda8ca6927`):** 3A (Claude, `ctx_e6a27537c07c`, terminal/worktree 2B, branch `claude/3A`), 3B-M2 (Codex medium, `ctx_ed1dda7e6bf4`, worktree 2D-M, branch `codex/3B-M2`), 3B-M1 (Codex high, `ctx_2a4c060d5656`, worktree nova 3B-M1). **Próximo:** quando 3B-M1 mergear as views, iniciar 3B-C (deps 3A, 3B-M1); quando 3B-M2 mergear, 3B-W (deps 3A, 3B-M2); depois 3B-T, 3C, 3D, 3E, 3Q.
 
 - 24/10/2026 · Claude Sonnet 5.5 (2Q-fix) · P1: os retângulos ciano eram as partículas de pó `TEAL_LIGHT` (tamanho 1,6, opacas, em anel ao redor da câmera no Rugido/Jato); tamanho 0,5 em `KrakenEffects`, sem retângulo no print `22b_kraken_jato_rugido_raios_impacto`. P2: o aviso da Pancada passou de anel de tinta escura para `END_ROD` + `GLOW` (`KrakenAttacks.warn`, só visual). Testado: `build` e `runClientGameTest`. Não conferido: legibilidade em câmera comum de jogo (o print do teste enquadra o chão).
 
