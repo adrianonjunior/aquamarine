@@ -35,6 +35,8 @@ public abstract class AbstractWhaleEntity extends PathfinderMob {
 	public static final int MIN_WATER_DEPTH = 14;
 	/** No máximo 2 grupos (6 baleias) numa área de 16 x 16 chunks. */
 	public static final int MAX_PER_AREA = 6;
+	/** Distância em que a baleia selvagem não some sozinha. */
+	public static final double KEEP_NEAR = 64.0;
 
 	private static final EntityDataAccessor<Integer> DATA_ANIM = SynchedEntityData.defineId(AbstractWhaleEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> DATA_ANIM_SEQ = SynchedEntityData.defineId(AbstractWhaleEntity.class, EntityDataSerializers.INT);
@@ -59,6 +61,12 @@ public abstract class AbstractWhaleEntity extends PathfinderMob {
 		return level.getFluidState(pos).is(FluidTags.WATER) && pos.getY() <= sea - SPAWN_DEPTH
 			&& sea - level.getHeight(Heightmap.Types.OCEAN_FLOOR, pos.getX(), pos.getZ()) >= MIN_WATER_DEPTH
 			&& level.getEntitiesOfClass(AbstractWhaleEntity.class, new AABB(pos).inflate(128.0, 64.0, 128.0)).size() < MAX_PER_AREA;
+	}
+
+	/** Baleia selvagem não some sozinha enquanto alguém está a até {@link #KEEP_NEAR} blocos (some longe, como as outras). */
+	@Override
+	public boolean removeWhenFarAway(double distSqr) {
+		return distSqr > KEEP_NEAR * KEEP_NEAR;
 	}
 
 	/** O padrão de {@code Mob} recusa nascer com o corpo em líquido; baleias só nascem nele (como {@code WaterAnimal}). */

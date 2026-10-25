@@ -67,6 +67,11 @@ public final class LayeredMusicInstance extends AbstractTickableSoundInstance {
 		}
 	}
 
+	public long framesMixed() {
+		LayeredMusicStream s = stream;
+		return s == null ? 0 : s.framesMixed();
+	}
+
 	public float[] layerGains() {
 		return gains.clone();
 	}

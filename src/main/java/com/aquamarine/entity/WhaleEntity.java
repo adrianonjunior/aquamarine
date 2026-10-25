@@ -378,8 +378,8 @@ public class WhaleEntity extends AbstractWhaleEntity implements WhaleView {
 	}
 
 	@Override
-	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !isTamed();
+	public boolean removeWhenFarAway(double distSqr) {
+		return !isTamed() && super.removeWhenFarAway(distSqr);
 	}
 
 	@Override

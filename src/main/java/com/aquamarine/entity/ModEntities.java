@@ -76,12 +76,12 @@ public final class ModEntities {
 
 	/** Baleia-de-Nereia (docs/08-fase3.md): montaria de 3 jogadores. A caixa cobre o tronco, não as nadadeiras. */
 	public static final EntityType<WhaleEntity> WHALE = Registry.register(BuiltInRegistries.ENTITY_TYPE, WHALE_KEY,
-		EntityType.Builder.of(WhaleEntity::new, MobCategory.WATER_CREATURE).sized(6.0F, 5.0F).eyeHeight(3.0F)
+		EntityType.Builder.of(WhaleEntity::new, MobCategory.UNDERGROUND_WATER_CREATURE).sized(6.0F, 5.0F).eyeHeight(3.0F)
 			.clientTrackingRange(12).build(WHALE_KEY));
 
 	/** Cachalote (docs/08-fase3.md): neutro, onda sonora quando atacado. */
 	public static final EntityType<SpermWhaleEntity> SPERM_WHALE = Registry.register(BuiltInRegistries.ENTITY_TYPE, SPERM_WHALE_KEY,
-		EntityType.Builder.of(SpermWhaleEntity::new, MobCategory.WATER_CREATURE).sized(5.5F, 5.0F).eyeHeight(3.0F)
+		EntityType.Builder.of(SpermWhaleEntity::new, MobCategory.UNDERGROUND_WATER_CREATURE).sized(5.5F, 5.0F).eyeHeight(3.0F)
 			.clientTrackingRange(12).build(SPERM_WHALE_KEY));
 
 	public static void register() {
@@ -92,17 +92,18 @@ public final class ModEntities {
 		FabricDefaultAttributeRegistry.register(MORAY, MorayEntity.createAttributes());
 		SpawnPlacements.register(MORAY, SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, MorayEntity::checkSpawn);
 		// Densidade do oceano (docs/00-decisoes.md, "Criaturas do oceano"): a regra de cada criatura limita quantas há.
-		// A Moréia usa a categoria das criaturas aquáticas profundas: vagas próprias (5 por jogador), em vez de
-		// disputar as 70 dos monstros com as cavernas embaixo do mar.
+		// Moréia e baleias usam a categoria das criaturas aquáticas profundas: vagas próprias (5 por jogador), quase
+		// livres no oceano (a lula-brilhante só nasce bem fundo); assim não disputam com náutilos, lulas, golfinhos
+		// nem com os monstros das cavernas embaixo do mar.
 		BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_OCEAN), MobCategory.UNDERGROUND_WATER_CREATURE, MORAY, 6, 1, 1);
 		FabricDefaultAttributeRegistry.register(WHALE, WhaleEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(SPERM_WHALE, SpermWhaleEntity.createAttributes());
 		SpawnPlacements.register(WHALE, SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, AbstractWhaleEntity::checkSpawn);
 		SpawnPlacements.register(SPERM_WHALE, SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, AbstractWhaleEntity::checkSpawn);
-		BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_DEEP_OCEAN), MobCategory.WATER_CREATURE, WHALE, 8, 1, 3);
+		BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_DEEP_OCEAN), MobCategory.UNDERGROUND_WATER_CREATURE, WHALE, 8, 1, 3);
 		BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_OCEAN).and(BiomeSelectors.tag(BiomeTags.IS_DEEP_OCEAN).negate()),
-			MobCategory.WATER_CREATURE, WHALE, 3, 1, 2);
-		BiomeModifications.addSpawn(BiomeSelectors.tag(ModTags.Biomes.MORAY_TRENCHES), MobCategory.WATER_CREATURE, SPERM_WHALE, 3, 1, 1);
+			MobCategory.UNDERGROUND_WATER_CREATURE, WHALE, 3, 1, 2);
+		BiomeModifications.addSpawn(BiomeSelectors.tag(ModTags.Biomes.MORAY_TRENCHES), MobCategory.UNDERGROUND_WATER_CREATURE, SPERM_WHALE, 3, 1, 1);
 	}
 
 	private ModEntities() {}

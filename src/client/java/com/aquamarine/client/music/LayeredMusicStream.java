@@ -31,6 +31,7 @@ public final class LayeredMusicStream implements AudioStream {
 	private final AudioFormat format;
 	private final int rampFrames;
 	private volatile float[] targets;
+	private volatile long framesMixed;
 	private final float[] gains;
 
 	private LayeredMusicStream(Layer[] layers, AudioFormat format, float[] initial) {
@@ -72,6 +73,11 @@ public final class LayeredMusicStream implements AudioStream {
 		targets = values.clone();
 	}
 
+	/** Quadros já entregues ao jogo (para testes: prova que as camadas decodificaram e tocaram). */
+	public long framesMixed() {
+		return framesMixed;
+	}
+
 	@Override
 	public AudioFormat getFormat() {
 		return format;
@@ -107,6 +113,7 @@ public final class LayeredMusicStream implements AudioStream {
 		for (Layer layer : layers) {
 			layer.consume(frames * CHANNELS);
 		}
+		framesMixed += frames;
 		out.flip();
 		return out;
 	}

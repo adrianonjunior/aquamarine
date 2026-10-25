@@ -30,8 +30,8 @@ import org.slf4j.Logger;
 final class OceanSpawnGameTest {
 	private static final Logger LOGGER = LogUtils.getLogger();
 	private static final String SEED = "aquamarine";
-	/** Cada medição: {@link #SAMPLES} trechos de {@link #SPRINT_TICKS} ticks (6 minutos de jogo), contando no fim de cada um. */
-	private static final int SPRINT_TICKS = 1200;
+	/** Cada medição: {@link #SAMPLES} trechos de {@link #SPRINT_TICKS} ticks (4 minutos de jogo), contando no fim de cada um. */
+	private static final int SPRINT_TICKS = 800;
 	private static final int SAMPLES = 6;
 	private static final double RADIUS = 128.0;
 

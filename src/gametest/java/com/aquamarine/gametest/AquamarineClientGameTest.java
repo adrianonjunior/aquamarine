@@ -268,6 +268,8 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		check(server.computeOnServer(s -> near(kraken(s).realHealth(), 1500F)), "Kraken: vida inicial");
 		check(context.computeOnClient(mc -> com.aquamarine.client.music.KrakenMusic.currentPhase() == 1),
 			"Música: a Tormenta devia tocar com o Kraken perto");
+		check(context.computeOnClient(mc -> com.aquamarine.client.music.KrakenMusic.framesMixed() > 0),
+			"Música: o misturador de camadas não tocou nada (o fluxo não abriu?)");
 		check(server.computeOnServer(s -> s.getWeatherData().isRaining()), "Mundo: a luta devia trazer chuva");
 		aimAtKraken(context, server, origin);
 		shot(context, "13_kraken_fase1_sem_rachaduras");

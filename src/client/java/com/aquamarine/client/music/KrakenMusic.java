@@ -66,6 +66,11 @@ public final class KrakenMusic {
 		return playing() ? currentPhase : 0;
 	}
 
+	/** Quadros que a trilha atual já tocou (0 se o fluxo não abriu). */
+	public static long framesMixed() {
+		return current == null ? 0 : current.framesMixed();
+	}
+
 	public static float[] currentGains() {
 		return current == null ? new float[3] : current.layerGains();
 	}

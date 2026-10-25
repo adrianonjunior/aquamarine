@@ -251,8 +251,8 @@ só os nomes novos e as lições abaixo são específicos. Em execução desde 2
 - **Lições do áudio e da luta (25/10/2026):** (1) **criatura aquática que não estende `WaterAnimal`
   precisa sobrescrever `checkSpawnObstruction`** (o padrão de `Mob` recusa nascer com o corpo em líquido:
   Moréia e baleias nunca nasciam sozinhas); (2) cada jogador tem só 5 vagas de `WATER_CREATURE` (no 26.3
-  o náutilo pesa 5 no oceano) e 70 de `MONSTER` (disputadas com as cavernas embaixo do mar); a Moréia usa
-  `UNDERGROUND_WATER_CREATURE`; (3) regras do jogo no 26.3 têm nome novo (`spawn_mobs`, `spawn_monsters`,
+  o náutilo pesa 5 no oceano) e 70 de `MONSTER` (disputadas com as cavernas embaixo do mar); Moréia e baleias
+  usam `UNDERGROUND_WATER_CREATURE`, quase livre no oceano (a lula-brilhante só nasce 33 blocos abaixo do mar); (3) regras do jogo no 26.3 têm nome novo (`spawn_mobs`, `spawn_monsters`,
   `mob_griefing`); a chuva sobe 1% por tick, então "está chovendo" só vale uns 20 ticks depois:
   teste o pedido em `server.getWeatherData()`; (4) **música em camadas**: o `FabricSoundInstance.getAudioStream`
   deixa a instância fornecer o próprio `AudioStream` (o evento da `sounds.json` aponta para
