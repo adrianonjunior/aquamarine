@@ -42,3 +42,12 @@ replay_*.log
 # logs do teste JUnit (fabric-loader-junit)
 
 logs/
+
+# python
+
+__pycache__/
+*.pyc
+
+# temporários
+
+*.tmp
