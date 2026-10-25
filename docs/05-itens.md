@@ -53,6 +53,7 @@ Todas as receitas abaixo são na Forja Abissal, exceto quando indicado.
 | Aljava de Arpões | 3 couro + 2 Escamas Antigas + 1 Pérola (bancada comum) | Guarda até 64 pontas de cada tipo; usar recolhe as pontas do inventário, agachado devolve; R troca a ponta; o Arpão gasta 1 por arremesso (3C) |
 | Ponta de Oricálcio | 1 Lingote de Oricálcio + 1 pederneira, rende 4 (bancada comum) | Base das pontas especiais (3C) |
 | Pontas de Veneno, Fogo, Wither e Choque | Ponta + olho de aranha / pó de blaze (1 cada); 8 pontas + 1 caveira de wither esqueleto (rende 8); 4 pontas + 1 Bobina (rende 4) | Veneno I 10 s; Chama Abissal 5 s (2/s, até debaixo d'água); Wither I 8 s; descarga nos alvos molhados a 6 blocos (50%). No Kraken: tabela de [02-kraken.md](02-kraken.md) (3C) |
+| Bigorna de Maré, Mesa de Cartas Náuticas, Altar de Concha | Só na Vila (blocos; quebrar devolve o bloco) | Blocos de trabalho do Ferreiro de Maré, do Cartógrafo Náutico e do Encantador de Fossa (3E) |
 | Propulsor de Maré | 1 concha de náutilo + 2 Lingotes + 1 Cristal + 1 Bobina | Mão secundária, tecla V (segura e solta): impulso de ~16 blocos em 1,2 s, recarga 3 s, só na água; 1 Bobina = 6 cargas (+2 por nível de Sobrecarga), gasta do inventário quando acabam (3D) |
 | Bússola de Maré | 1 bússola + 1 Pérola + 1 Cristal (bancada comum) | Aponta para a Cidade Perdida mais próxima |
 | Mapa de Nereia | Cartógrafo (nível 3, por esmeraldas e uma bússola), naufrágios ou Walker | Marca a Cidade Perdida mais próxima |

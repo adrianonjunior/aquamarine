@@ -128,8 +128,8 @@ public class SpermWhaleEntity extends AbstractWhaleEntity implements SpermWhaleV
 		if (angryAt != null) {
 			face(angryAt.position().subtract(position()), 6.0F);
 		}
-		Vec3 front = Vec3.directionFromRotation(getXRot(), getYRot());
-		Vec3 mouth = position().add(0, 2.5, 0).add(front.scale(5.0));
+		Vec3 front = front();
+		Vec3 mouth = mouth();
 		if (++sonicTicks < SONIC_WARN) {
 			level.sendParticles(ParticleTypes.BUBBLE, mouth.x, mouth.y, mouth.z, 4 + sonicTicks / 2, 0.5, 0.5, 0.5, 0.05);
 			return;
@@ -148,6 +148,20 @@ public class SpermWhaleEntity extends AbstractWhaleEntity implements SpermWhaleV
 		level.playSound(null, mouth.x, mouth.y, mouth.z, SoundEvents.WARDEN_SONIC_BOOM, SoundSource.NEUTRAL, 2.0F, 0.6F);
 		sonicTicks = -1;
 		cooldown = SONIC_COOLDOWN;
+	}
+
+	/** Carregando a onda sonora (aviso). */
+	public boolean isCharging() {
+		return sonicTicks >= 0;
+	}
+
+	public Vec3 front() {
+		return Vec3.directionFromRotation(getXRot(), getYRot());
+	}
+
+	/** De onde sai a onda: a ponta da cabeça. */
+	public Vec3 mouth() {
+		return position().add(0, 2.5, 0).add(front().scale(5.0));
 	}
 
 	/** Dentro do cone de 8 blocos à frente da boca. */

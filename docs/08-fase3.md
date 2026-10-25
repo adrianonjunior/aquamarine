@@ -172,6 +172,14 @@ nem Quebra-Carapaça. Moeda: **esmeralda** (itens comuns) e **Pérola Abissal** 
 | Encantador de Fossa | N1: Fôlego Profundo I; N2: Aclimatação I, Correnteza I; N3: Isolamento I, Fisgada I; N4: Perfurante I, Sobrecarga I; N5: níveis II e III | Âmbar-cinza, Bobina Voltaica, Escama Elétrica |
 - **Reputação:** por jogador, sobe ao vender e ao defender a Vila; abre os níveis de comércio.
 
+**Implementado na v1 (faixa 3E, 24/10/2026):** a Cúpula Central (vidro, ar por dentro, Sino,
+bancos), as três oficinas dentro dela (bloco de trabalho, baú e 2 Mergulhadores cada), dormitório com
+4 camas, estufa de algas, a Eclusa de duas portas e os baús com saque; a Pressão zera no ar do Porto.
+Trocas da tabela acima, exceto os mapas de Fossas e de Nereia e a Bússola de Maré (dependem da Fossa,
+da Cidade Perdida e do item). **Ainda não:** reputação por jogador (hoje valem os níveis do próprio
+aldeão e os preços por reputação do jogo), o Alerta de Moréia (a opção `harborAlert` já existe na
+config), o Cais, a Torre de Vigia e prédios separados por oficina.
+
 **Evento "Alerta de Moréia"** (opcional, uma vez a cada 3 dias de jogo, só em noite de
 tempestade): o Sino toca; uma Moréia ataca a Cúpula; quem ajudar ganha reputação e 2 a
 4 Escamas Elétricas. Falhar não destrói a Vila. Pode ser desligado na config (`harborAlert`).

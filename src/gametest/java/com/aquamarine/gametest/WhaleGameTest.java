@@ -152,8 +152,16 @@ final class WhaleGameTest {
 			check(sperm.angryAt() == player(s), "Cachalote: devia ficar bravo com quem atacou (golpe " + hurt + ", vida "
 				+ sperm.getHealth() + ")");
 		});
-		// Confere no tick da onda: com a fome cheia o jogador se cura rápido logo depois.
+		// Durante o aviso o jogador fica bem na frente da boca (o Cachalote se vira e anda, e a posição
+		// muda conforme o mundo); confere no tick da onda, porque com a fome cheia ele se cura rápido.
 		for (int i = 0; i < SpermWhaleEntity.SONIC_WARN + 60 && server.computeOnServer(s -> sperm(s).sonicCooldown()) == 0; i++) {
+			server.runOnServer(s -> {
+				SpermWhaleEntity sperm = sperm(s);
+				if (sperm.isCharging()) {
+					net.minecraft.world.phys.Vec3 spot = sperm.mouth().add(sperm.front().scale(3.0)).subtract(0, 0.9, 0);
+					player(s).teleportTo(spot.x, spot.y, spot.z);
+				}
+			});
 			context.waitTick();
 		}
 		check(server.computeOnServer(s -> player(s).getHealth()) <= 15.0F, "Cachalote: a onda sonora devia dar 6 de dano; "

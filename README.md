@@ -14,8 +14,9 @@ conflito, vale [docs/00-decisoes.md](docs/00-decisoes.md)).
   própria), a Pressão, a invocação no Altar do Abismo e as recompensas.
 - **Fase 3 (em andamento):** Pressão por profundidade com Medidor, Regulador e Traje de Mergulho
   Profundo; Moréia Tempestuosa e Escama Elétrica; Baleia-de-Nereia (montaria de 3) e Cachalote;
-  Arpão de Oricálcio com Aljava e 4 pontas; 7 encantamentos; Propulsor de Maré. Estado de cada faixa
-  em [docs/07-roadmap.md](docs/07-roadmap.md).
+  Arpão de Oricálcio com Aljava e 4 pontas; 7 encantamentos; Propulsor de Maré; a Vila subaquática
+  (Porto dos Náufragos) com os Mergulhadores. Estado de cada faixa em
+  [docs/07-roadmap.md](docs/07-roadmap.md).
 
 ## Tecnologias
 Java 25, Fabric Loader + Fabric API, Gradle 9 com o plugin Loom, JUnit e Fabric Client GameTests.
@@ -37,8 +38,9 @@ Modelos e texturas são gerados por scripts Python (Pillow) em `tools/`. Versõe
 4. **Configuração:** `config/aquamarine.json` é criado na primeira execução (aviso falso, Nós de
    Maré, dificuldade, escala por jogadores, quem pilota a baleia, Alerta de Moréia).
 5. **Texturas e modelos:** com Python 3 e Pillow, `python tools/gen_textures.py` (Entregas 1 e 2),
-   `python tools/gen_phase3_textures.py` (itens da Fase 3) e
-   `python tools/models/<criatura>/build_model.py` (modelo; a textura vem depois, ver 06-tecnico).
+   `python tools/gen_phase3_textures.py` (itens, blocos e Mergulhadores da Fase 3),
+   `python tools/models/<criatura>/build_model.py` (modelo; a textura vem depois, ver 06-tecnico) e
+   `python tools/gen_harbor.py` (estrutura da Vila).
 6. Comandos de teste (operador): `/aquamarine kraken ...`, `/aquamarine moray ...`,
    `/aquamarine whale ...`, `/aquamarine sperm_whale ...`.
 

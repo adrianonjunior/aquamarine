@@ -10,7 +10,8 @@
 - Esqueleto criado a partir do `fabric-example-mod` oficial (mod id
   `aquamarine`, pacote `com.aquamarine`). Versões: loader 0.20.1, Fabric API
   0.165.0+26.3, Loom 1.19.x, Gradle 9.8.2.
-- Código atual: a base da Entrega 1 (ver "Como adicionar conteúdo" abaixo).
+- Código atual: Entregas 1 e 2 e a Fase 3 (ver "Como adicionar conteúdo" abaixo). Versão do mod em
+  `gradle.properties`: 0.3.0 desde a Fase 3.
 
 ## Ambiente local (validado em 24/10/2026)
 - **JDK 25 obrigatório**: Microsoft OpenJDK 25.0.4 instalado em
@@ -227,5 +228,10 @@ só os nomes novos e as lições abaixo são específicos. Em execução desde 2
   (5) cor de texto no HUD é ARGB: sem `0xFF` no alfa o texto some.
 - **Corpo da Moréia:** `MorayEntity.PART_OFFSETS` (blocos atrás da cabeça) acompanha os segmentos
   de `tools/models/moray/build_model.py`; quem mudar um muda o outro.
+- **Vila (3E):** a peça do Porto sai de `tools/gen_harbor.py` (NBT de estrutura escrito à mão);
+  no 26.3 a paleta do NBT usa `id` e `properties` (minúsculas), não `Name`/`Properties`. Mergulhador
+  sem XP perde a profissão antes de achar o bloco de trabalho: o NBT dá `Xp: 1`. O `/place structure`
+  só põe blocos e entidades, sem registrar a estrutura (a Eclusa e o `/locate` só valem em mundo
+  gerado). Trocas em `data/aquamarine/villager_trade/` (modificadores usam `type`, não `function`).
 - **Texturas das criaturas da Fase 3:** `tools/gen_creature_textures.py` pinta sobre o layout de UV
   lido do próprio `build_model.py` (rode depois dele); o da Moréia já chama o de textura no fim.

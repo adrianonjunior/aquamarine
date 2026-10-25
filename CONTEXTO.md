@@ -5,8 +5,8 @@
 > marcos (ver [docs/07-roadmap.md](docs/07-roadmap.md)) nem ambiente técnico
 > (ver [docs/06-tecnico.md](docs/06-tecnico.md)). Regras: [AGENTS.md](AGENTS.md).
 
-> **FASE ATUAL: ENTREGA 1 CONCLUÍDA; ENTREGA 2 (Kraken v1) LIBERADA em 24/10/2026.** A **Fase 3 está liberada** (24/10/2026). Nada além dela está liberado: não implemente
-> nada (código, texturas, modelos) até o Adriano liberar explicitamente o próximo passo.
+> **FASE ATUAL: ENTREGAS 1 E 2 NAS FAIXAS; FASE 3 COM 3A A 3D FEITAS E 3E (Vila) EM v1** (24/10/2026). Nada além
+> da Fase 3 está liberado: não implemente nada novo até o Adriano liberar explicitamente o próximo passo.
 
 ## Atualização para todos os agentes — 24/10/2026
 Leia este aviso ao retomar uma sessão; ele registra a organização da documentação,
@@ -24,10 +24,8 @@ sem iniciar, cancelar ou atribuir tarefas a outros agentes.
 - A 2C foi aceita com os ganchos de dano do escudo; Arpão, Carga de Pulso e
   Pilar ainda constam como pendentes no handoff da faixa. Não trate os ganchos
   como itens jogáveis já entregues.
-- A [Fase 3](docs/08-fase3.md) está documentada para planejamento e **bloqueada**.
-  Sua especificação e as faixas do roadmap não autorizam Tasks, worktrees,
-  código, texturas ou modelos antes das condições de liberação nas
-  [decisões](docs/00-decisoes.md).
+- A [Fase 3](docs/08-fase3.md) foi liberada em 24/10/2026 e fechada por um agente único
+  até a 3E v1; o que falta está no handoff abaixo e em [07-roadmap.md](docs/07-roadmap.md).
 - Ao voltar à própria worktree, sincronize com a `main` preservando alterações
   locais; só marque um marco após o aceite e registre pendências no handoff.
 
@@ -37,9 +35,10 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| Fechamento final: Fase 3 + revisão ([prompt](prompts/fechamento-final.md)) | Claude Opus 5.5 (agente único) | jogo, Gradle, `main` | 24/10/2026 |
 
 ## Registro de handoff
+
+- 24/10/2026 · Claude Opus 5.5 (agente único de fechamento) · **Fechamento entregue na `main`** (3E v1 `8b0cfa5`, docs e revisão no commit seguinte). 3E: Porto dos Náufragos gerado por script (`tools/gen_harbor.py`), 3 profissões com blocos de trabalho e trocas em dados, Eclusa, baús. Revisão: sem TODO/FIXME reais (os "~10" eram a palavra "todo"), sem segredos nem caminhos pessoais versionados, `.gitignore` cobre `__pycache__/`, `*.pyc`, `*.tmp` e `mods/`, versão 0.3.0. **Testado:** `build` e a suíte inteira do `runClientGameTest` (build verde; suíte inteira verde em todas as partes até o Cachalote, que falhou só na rodada completa (jogador fora do cone) e foi corrigido no teste (verde isolado); a rodada completa final ficou rodando quando a cota acabou: rode de novo `./gradlew runClientGameTest` para confirmar). **Falta (3E):** reputação por jogador, Alerta de Moréia, Cais, Torre de Vigia, mapas de Fossas/Nereia e Bússola de Maré. **Falta (3Q e só o Adriano):** aceite com 3 clientes reais, multiplayer da Entrega 2, ritmo/dano do Kraken, montaria pilotada, Propulsor e teclas R/V na mão, legibilidade dos avisos (slam, Descarga, Enrolar), Vila e criaturas surgindo num mundo normal (`/locate structure aquamarine:harbor`). **Branches:** todas mergeadas na `main` exceto `estruturador/entrega-1` (6 commits fora); nenhuma apagada, aguarda o Adriano.
 
 - 24/10/2026 · Claude Opus 5.5 (agente único de fechamento) · **3A a 3D na `main`** (`405447b`, `2731476`, `183eca9`). 3A validada: o GameTest achou receitas do Traje que derrubavam o carregamento do mundo e o teste de profundidade que nunca rodou (mundo plano sem mar); corrigidos. 3B: Moréia (modelo por script, 7 partes de colisão, 3 ataques com aviso), Baleia-de-Nereia (domar, Sela, 3 a bordo) e Cachalote, texturas por script. 3C: Arpão de Oricálcio (arremesso do tridente), Aljava, 4 pontas, 7 encantamentos. 3D: Propulsor de Maré. Ícones ilegíveis redesenhados a pedido do Adriano. **Testado:** `build` e `runClientGameTest` (suíte inteira verde até a 3B; `gear` verde isolado). **Não testado:** multiplayer real, montaria pilotada por um jogador de verdade (só o servidor), tecla V/R no jogo, surgimento natural das criaturas no mundo normal. **Falta:** 3E (Vila), 3Q, revisão final. **Como retomar:** ver a linha "Em andamento" e `prompts/fechamento-final.md`.
 
