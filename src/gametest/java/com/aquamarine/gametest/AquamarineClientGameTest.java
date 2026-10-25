@@ -474,7 +474,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		player.setItemSlot(EquipmentSlot.FEET, new ItemStack(ModItems.ORICHALCUM_BOOTS));
 	}
 
-	/** Vitrine: blocos, suportes de armadura vestidos e a barra de itens. */
+	/** Vitrine: blocos (com troféus e blocos de trabalho do Porto), suportes de armadura vestidos e a barra de itens. */
 	private static void showcase(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos base) {
 		server.runOnServer(s -> {
 			ServerLevel level = s.overworld();
@@ -482,6 +482,12 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			level.setBlockAndUpdate(base.offset(-2, 0, 5), forge);
 			level.setBlockAndUpdate(base.offset(0, 0, 5), ModBlocks.ORICHALCUM_ORE.defaultBlockState());
 			level.setBlockAndUpdate(base.offset(2, 0, 5), ModBlocks.ORICHALCUM_BLOCK.defaultBlockState());
+			// Troféus do Kraken (2E) e blocos de trabalho dos Mergulhadores (3E), para ver no mundo.
+			level.setBlockAndUpdate(base.offset(-4, 0, 5), ModBlocks.KRAKEN_TROPHY.defaultBlockState());
+			level.setBlockAndUpdate(base.offset(4, 0, 5), ModBlocks.GOLDEN_ABYSS_TROPHY.defaultBlockState());
+			level.setBlockAndUpdate(base.offset(-2, 0, 7), ModBlocks.TIDE_ANVIL.defaultBlockState());
+			level.setBlockAndUpdate(base.offset(0, 0, 7), ModBlocks.CHART_TABLE.defaultBlockState());
+			level.setBlockAndUpdate(base.offset(2, 0, 7), ModBlocks.SHELL_ALTAR.defaultBlockState());
 
 			spawnStand(level, base.offset(-1, 0, 3), ModItems.ORICHALCUM_HELMET, ModItems.ORICHALCUM_SWORD);
 			spawnStand(level, base.offset(1, 0, 3), ModItems.DIVING_GOGGLES, ModItems.ORICHALCUM_PICKAXE);

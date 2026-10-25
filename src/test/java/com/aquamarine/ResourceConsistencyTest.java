@@ -125,6 +125,20 @@ class ResourceConsistencyTest {
 		assertTrue(missing.isEmpty(), "Receitas com resultado inexistente: " + missing);
 	}
 
+	/**
+	 * Cadeia do aceite da Fase 3 (docs/08-fase3.md): a Escama Elétrica da Moréia faz a Bobina Voltaica, e a
+	 * Bobina faz o Propulsor de Maré e a Munição de Choque.
+	 */
+	@Test
+	void phase3AcceptanceChainHasRecipes() throws IOException {
+		assertTrue(read(DATA.resolve("recipe/voltaic_coil.json")).toString().contains("aquamarine:electric_scale"),
+			"A Bobina Voltaica devia usar a Escama Elétrica");
+		assertTrue(read(DATA.resolve("recipe/tide_thruster.json")).toString().contains("aquamarine:voltaic_coil"),
+			"O Propulsor de Maré devia usar a Bobina Voltaica");
+		assertTrue(read(DATA.resolve("recipe/shock_harpoon_tip.json")).toString().contains("aquamarine:voltaic_coil"),
+			"A ponta de Choque devia usar a Bobina Voltaica");
+	}
+
 	/** O jogo recusa o mundo inteiro se uma receita com forma tiver símbolo sobrando ou faltando na chave. */
 	@Test
 	void shapedRecipeKeysMatchPattern() throws IOException {
