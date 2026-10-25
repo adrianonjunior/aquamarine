@@ -26,6 +26,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| **Release 0.4.0 para teste multiplayer** (auditoria de rede, teste em servidor dedicado, instalador de clique duplo e pacote de servidor) | Claude Opus 5.5 (worktree `aquamarine-claude-kraken`, branch `claude/release-mp`) | Gradle na worktree; jogo de teste e servidor de teste em pasta temporária | 25/10/2026 |
 | Publicar e verificar link ngrok do Atlas de amostra | Codex | Servidor Atlas 8767 e túnel ngrok | 25/10/2026 |
 
 ## Registro de handoff
