@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
@@ -29,7 +30,12 @@ public final class KrakenEggRenderer<T extends Entity> extends EntityRenderer<T,
         CameraRenderState cameraState) {
         super.submit(state, poseStack, collector, cameraState);
         model.setupAnim(state);
-        collector.submitModel(model, state, poseStack, TEXTURE, state.lightCoords, 0, -1);
+        // Modelo no padrão de entidade do Blockbench (Y para baixo): inverte como o LivingEntityRenderer faz.
+        poseStack.pushPose();
+        poseStack.scale(-1.0F, -1.0F, 1.0F);
+        poseStack.translate(0.0F, -1.501F, 0.0F);
+        collector.submitModel(model, state, poseStack, TEXTURE, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
+        poseStack.popPose();
     }
     private static void copy(AnimationState from, AnimationState to) { to.copyFrom(from); }
 }

@@ -15,6 +15,19 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 public final class TentacleModel extends EntityModel<TentacleRenderState> {
     public static final ModelLayerLocation LAYER = new ModelLayerLocation(Aquamarine.id("tentacle"), "main");
     private final KeyframeAnimation idle, rise, slam, grab, release;
+    // UV:BEGIN gerado por tools/models/spawnlings/build_model.py (nao edite a mao)
+    private static final int[][] SEGMENT_UV = {
+        {0, 0}, {21, 0}, {42, 0}, {63, 0}, {80, 0}, {97, 0},
+        {110, 0}
+    };
+    private static final int[][] SUCKER_UV = {
+        {14, 11}, {23, 11}, {32, 11}, {41, 11}, {48, 11}, {55, 11},
+        {62, 11}, {69, 11}, {76, 11}, {83, 11}, {90, 11}, {97, 11},
+        {104, 11}, {111, 11}, {118, 11}, {0, 16}, {5, 16}, {10, 16},
+        {15, 16}, {20, 16}, {25, 16}
+    };
+    private static final int[] HOOK_UV = {5, 11};
+    // UV:END
 
     public TentacleModel(ModelPart root) {
         super(root);
@@ -30,16 +43,16 @@ public final class TentacleModel extends EntityModel<TentacleRenderState> {
         for (int i = 0; i < 7; i++) {
             float r = 2.5F - i * .23F;
             PartDefinition segment = parent.addOrReplaceChild("segment_" + i,
-                CubeListBuilder.create().texOffs(i * 12, 0).addBox(-r, -4, -r, r * 2, 4.3F, r * 2, CubeDeformation.NONE),
+                CubeListBuilder.create().texOffs(SEGMENT_UV[i][0], SEGMENT_UV[i][1]).addBox(-r, -4, -r, r * 2, 4.3F, r * 2, CubeDeformation.NONE),
                 PartPose.offset(0, i == 0 ? -4 : 0, 0));
             for (int j = 0; j < 3; j++) {
-                segment.addOrReplaceChild("sucker_" + j, CubeListBuilder.create().texOffs(i * 12, 20 + j * 4)
+                segment.addOrReplaceChild("sucker_" + j, CubeListBuilder.create().texOffs(SUCKER_UV[i * 3 + j][0], SUCKER_UV[i * 3 + j][1])
                     .addBox(-r + .35F, .2F, -r - .6F, Math.max(.65F, r - .4F), .55F, .8F, CubeDeformation.NONE),
                     PartPose.offset(0, -j * .2F, j * .1F));
             }
             parent = segment;
         }
-        parent.addOrReplaceChild("hook", CubeListBuilder.create().texOffs(96, 0)
+        parent.addOrReplaceChild("hook", CubeListBuilder.create().texOffs(HOOK_UV[0], HOOK_UV[1])
             .addBox(-1.5F, -2, -.5F, 3, 2, 1, CubeDeformation.NONE), PartPose.offset(0, -4, 0));
         return LayerDefinition.create(mesh, 128, 128);
     }
