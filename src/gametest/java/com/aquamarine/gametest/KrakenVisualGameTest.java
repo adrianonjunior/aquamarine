@@ -82,6 +82,7 @@ final class KrakenVisualGameTest {
 		pose(context, server, o, "20_kraken_slam_grab_duplo", "slam", 1.25F, "grab", 1.3F, "doubleGrab", 1.3F);
 		pose(context, server, o, "21_kraken_tinta_redemoinho_crias", "ink", 1.75F, "whirlpool", 1.0F, "spawnYoung", 1.7F);
 		pose(context, server, o, "22_kraken_jato_rugido_raios", "waterJet", 1.0F, "roar", 1.25F, "bolts", 1.7F);
+		pose(context, server, o, "22b_kraken_jato_rugido_raios_impacto", "waterJet", 1.45F, "roar", 1.75F, "bolts", 2.3F);
 		pose(context, server, o, "23_kraken_emboscada_emerge_atordoado", "ambush", 1.7F, "emerge", 1.1F, "stunned", 0.4F);
 		pose(context, server, o, "24_kraken_fase_morte_nado", "phaseChange", 1.0F, "death", 1.0F, "swim", 0.5F);
 		pose(context, server, o, "25_kraken_golpes", "slam", 1.65F, "roar", 1.62F, "ink", 2.15F);

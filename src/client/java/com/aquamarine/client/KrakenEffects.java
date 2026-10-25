@@ -40,7 +40,7 @@ public final class KrakenEffects {
 	private static final DustParticleOptions INK_DUST = new DustParticleOptions(0x150A26, 2.2F);
 	private static final DustParticleOptions CRYSTAL = new DustParticleOptions(0xC4FFF0, 1.2F);
 	private static final DustParticleOptions EGG = new DustParticleOptions(0xFFE07A, 1.8F);
-	private static final DustParticleOptions TEAL_LIGHT = new DustParticleOptions(0x6FDCC4, 1.6F);
+	private static final DustParticleOptions TEAL_LIGHT = new DustParticleOptions(0x6FDCC4, 0.5F);
 	private static final BlockParticleOption SHARD = new BlockParticleOption(ParticleTypes.BLOCK,
 		Blocks.SEA_LANTERN.defaultBlockState());
 	private static final float[] CRACKS = {0.75F, 0.50F, 0.25F};

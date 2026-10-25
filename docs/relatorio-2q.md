@@ -6,8 +6,8 @@
 
 | Prioridade | Arquivo provável | Evidência e reprodução |
 |---|---|---|
-| P1 — investigar | `src/client/java/com/aquamarine/client/KrakenEffects.java` | `0035_22_kraken_jato_rugido_raios.png` mostra grandes retângulos ciano opacos cobrindo a cena durante o grupo `waterJet`/`roar`/`bolts`. Reproduzir em arena aquática com `/aquamarine kraken attack waterJet`, `roar` e `bolts`, avaliando cada efeito isoladamente; a captura atual combina os três, então ainda é necessário localizar qual efeito os produz. Dono provável: Claude (efeitos/partículas). |
-| P2 — legibilidade | `src/client/java/com/aquamarine/client/KrakenEffects.java` | Em `0026_18_ataque_pancada_aviso.png`, o aviso de `slam` fica escuro e pouco distinguível na água; aparecem principalmente as pontas dos tentáculos no enquadramento. Reproduzir `/aquamarine kraken arena` e `/aquamarine kraken attack slam` com câmera acima do chão. Dono provável: Claude (aviso/efeito); confirmar após reprodução isolada. |
+| P1 — **corrigido (2Q-fix)**: pó `TEAL_LIGHT` de 1,6 para 0,5 | `src/client/java/com/aquamarine/client/KrakenEffects.java` | `0035_22_kraken_jato_rugido_raios.png` mostra grandes retângulos ciano opacos cobrindo a cena durante o grupo `waterJet`/`roar`/`bolts`. Reproduzir em arena aquática com `/aquamarine kraken attack waterJet`, `roar` e `bolts`, avaliando cada efeito isoladamente; a captura atual combina os três, então ainda é necessário localizar qual efeito os produz. Dono provável: Claude (efeitos/partículas). |
+| P2 — **corrigido (2Q-fix)**: aviso do slam com `END_ROD`/`GLOW` | `src/client/java/com/aquamarine/client/KrakenEffects.java` | Em `0026_18_ataque_pancada_aviso.png`, o aviso de `slam` fica escuro e pouco distinguível na água; aparecem principalmente as pontas dos tentáculos no enquadramento. Reproduzir `/aquamarine kraken arena` e `/aquamarine kraken attack slam` com câmera acima do chão. Dono provável: Claude (aviso/efeito); confirmar após reprodução isolada. |
 
 ## Cobertura e limites
 

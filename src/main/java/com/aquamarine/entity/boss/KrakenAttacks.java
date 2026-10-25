@@ -464,7 +464,11 @@ public final class KrakenAttacks {
 	private void warn(ServerLevel level, Active a) {
 		float progress = a.age / (float) a.type.warnTicks();
 		switch (a.type) {
-			case SLAM -> ring(level, ParticleTypes.SQUID_INK, a.point, KrakenAttackType.SLAM_RADIUS, 16);
+			case SLAM -> {
+				// Claro e brilhante: a tinta escura sumia na água funda (relatório 2Q, P2).
+				ring(level, ParticleTypes.END_ROD, a.point, KrakenAttackType.SLAM_RADIUS, 24);
+				ring(level, ParticleTypes.GLOW, a.point, KrakenAttackType.SLAM_RADIUS * 0.5, 12);
+			}
 			case GRAB, DOUBLE_GRAB -> {
 				for (int slot : a.slots) {
 					TentacleEntity t = tentacle(level, slot);
