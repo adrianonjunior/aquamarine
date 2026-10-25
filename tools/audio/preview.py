@@ -58,13 +58,16 @@ def alt_cards():
     import json
     with open(path, encoding="utf-8") as f:
         alt = json.load(f)
+    picks_path = os.path.join(BUILD, "alt", "picks.json")
+    picks = json.load(open(picks_path, encoding="utf-8")) if os.path.exists(picks_path) else {k: "" for k in alt}
     items = []
-    for name, e in alt.items():
+    for name, why in picks.items():
+        e = alt[name]
         shutil.copyfile(os.path.join(BUILD, "alt", name + ".ogg"), os.path.join(OUT, "files", name + ".ogg"))
         shutil.copyfile(os.path.join(BUILD, "alt", name + ".png"), os.path.join(OUT, "files", name + ".png"))
         items.append(f"""
 <article class="alt">
-  <header><span class="kind">Comparação: IA local</span><h2>{html.escape(name)}</h2>
+  <header><span class="kind">Comparação: IA local</span><h2>{html.escape(name)}{(" · " + html.escape(why)) if why else ""}</h2>
   <code>{html.escape(e['prompt'])}</code></header>
   <audio controls preload="none" src="files/{name}.ogg"></audio>
   <ul class="stats"><li>{e['seconds']} s · {e['lufs']} LUFS · pico {e['true_peak']} dBTP · {e['bytes'] // 1024} KB</li>
