@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "aquamarine:deep_diving"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "aquamarine:deep_diving"
+      }
+    ]
+  }
+}

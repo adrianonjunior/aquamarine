@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "aquamarine:item/deep_diving_leggings"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:compass",
+    "minecraft:glass_pane",
+    "minecraft:copper_ingot",
+    "aquamarine:tide_crystal"
+  ],
+  "result": {
+    "id": "aquamarine:depth_gauge"
+  }
+}

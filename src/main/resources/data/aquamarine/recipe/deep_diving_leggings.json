@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "S": "aquamarine:ancient_scale",
+    "P": "aquamarine:abyssal_pearl",
+    "H": "minecraft:prismarine_shard"
+  },
+  "pattern": [
+    "SPS",
+    "H H",
+    "S S"
+  ],
+  "result": {
+    "id": "aquamarine:deep_diving_leggings"
+  }
+}

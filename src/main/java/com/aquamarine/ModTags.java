@@ -18,6 +18,9 @@ public final class ModTags {
 		/** Material de reparo da armadura de Oricálcio. */
 		public static final TagKey<Item> REPAIRS_ORICHALCUM_ARMOR = create("repairs_orichalcum_armor");
 
+		/** Material de reparo do Traje de Mergulho Profundo. */
+		public static final TagKey<Item> REPAIRS_DEEP_DIVING_ARMOR = create("repairs_deep_diving_armor");
+
 		private static TagKey<Item> create(String path) {
 			return TagKey.create(Registries.ITEM, Aquamarine.id(path));
 		}

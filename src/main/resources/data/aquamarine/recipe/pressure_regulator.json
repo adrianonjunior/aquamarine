@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "minecraft:copper_ingot",
+    "minecraft:copper_ingot",
+    "aquamarine:abyssal_pearl",
+    "aquamarine:tide_crystal",
+    "aquamarine:ancient_scale"
+  ],
+  "result": {
+    "id": "aquamarine:pressure_regulator"
+  }
+}

@@ -4,6 +4,7 @@ import com.aquamarine.Aquamarine;
 import com.aquamarine.block.AnchorBuoyBlock;
 import com.aquamarine.effect.ModEffects;
 import com.aquamarine.entity.KrakenEntity;
+import com.aquamarine.item.DiveGear;
 import com.aquamarine.item.OrichalcumEffects;
 
 import java.util.HashMap;
@@ -45,11 +46,16 @@ public final class PressureManager {
 	private static final class Entry {
 		final PressureState state = new PressureState();
 		boolean exposed;
+		/** Nível ambiental permitido pela profundidade, antes das contramedidas (atualizado de 10 em 10 ticks). */
+		int rawAmbient;
+		/** O mesmo, depois do Regulador e do Traje. */
+		int ambientTarget;
 		int damageTimer;
 		int lastSent = -1;
 	}
 
 	public static void register() {
+		DiveGear.register();
 		PayloadTypeRegistry.clientboundPlay().register(PressurePayload.TYPE, PressurePayload.CODEC);
 		ServerTickEvents.END_SERVER_TICK.register(server -> {
 			for (ServerPlayer player : server.getPlayerList().getPlayers()) {
@@ -85,7 +91,8 @@ public final class PressureManager {
 		}
 		Entry entry = STATES.get(player.getUUID());
 		ServerLevel level = player.level();
-		if (entry == null && (player.tickCount % EXPOSURE_CHECK_TICKS != 0 || nearestKraken(level, player) == null)) {
+		if (entry == null && (player.tickCount % EXPOSURE_CHECK_TICKS != 0
+			|| nearestKraken(level, player) == null && rawAmbientCap(player) == 0)) {
 			return;
 		}
 		if (entry == null) {
@@ -99,10 +106,17 @@ public final class PressureManager {
 			entry.exposed = false;
 		} else if (player.tickCount % EXPOSURE_CHECK_TICKS == 0) {
 			entry.exposed = player.isUnderWater() && nearestKraken(level, player) != null;
+			entry.rawAmbient = rawAmbientCap(player);
+			entry.ambientTarget = Math.max(0, entry.rawAmbient - DiveGear.ambientReduction(player));
 		}
+		if (AnchorBuoyBlock.isStandingOn(player)) {
+			entry.rawAmbient = 0;
+			entry.ambientTarget = 0;
+		}
+		DiveGear.wearRegulator(player, entry.rawAmbient > 0 && entry.ambientTarget < entry.rawAmbient);
 		KrakenEntity kraken = entry.exposed ? nearestKraken(level, player) : null;
 		int phase = kraken == null ? 1 : kraken.phase();
-		entry.state.tick(entry.exposed && kraken != null, ModEffects.hasTonic(player),
+		entry.state.tick(entry.exposed && kraken != null, entry.ambientTarget, ModEffects.hasTonic(player),
 			OrichalcumEffects.pressureReduction(player), phase);
 		apply(player, entry);
 
@@ -115,7 +129,7 @@ public final class PressureManager {
 		} else {
 			entry.damageTimer = 0;
 		}
-		if (lvl == 0 && !entry.exposed && entry.lastSent == 0) {
+		if (lvl == 0 && !entry.exposed && entry.rawAmbient == 0 && entry.lastSent == 0) {
 			STATES.remove(player.getUUID());
 		}
 	}
@@ -149,6 +163,16 @@ public final class PressureManager {
 		} else if (!on && attribute.hasModifier(id)) {
 			attribute.removeModifier(id);
 		}
+	}
+
+	/** Profundidade do jogador abaixo do nível do mar, só submerso (0 fora da água). */
+	public static double depth(ServerPlayer player) {
+		return player.isUnderWater() ? Math.max(0.0, player.level().getSeaLevel() - player.getY()) : 0.0;
+	}
+
+	/** Nível ambiental permitido pela profundidade, antes das contramedidas. */
+	public static int rawAmbientCap(ServerPlayer player) {
+		return PressureState.ambientCap(depth(player));
 	}
 
 	private static KrakenEntity nearestKraken(ServerLevel level, ServerPlayer player) {

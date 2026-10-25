@@ -89,6 +89,22 @@ public final class ModItems {
 	public static final Item ANCHOR_BUOY = register("anchor_buoy", AnchorBuoyItem::new,
 		new Item.Properties().useBlockDescriptionPrefix().stacksTo(16));
 
+	// Fase 3A: Pressão por profundidade
+	/** Medidor de Profundidade: na mão, o HUD mostra a profundidade e o nível de Pressão. */
+	public static final Item DEPTH_GAUGE = register("depth_gauge", Item::new, new Item.Properties().stacksTo(1));
+	/** Regulador de Pressão: na mão secundária, tira 2 níveis da Pressão ambiental; gasta 1 de durabilidade a cada 10 s ativo. */
+	public static final Item PRESSURE_REGULATOR = register("pressure_regulator", Item::new,
+		new Item.Properties().stacksTo(1).durability(DiveGear.REGULATOR_DURABILITY));
+	// Traje de Mergulho Profundo
+	public static final Item DEEP_DIVING_HELMET = register("deep_diving_helmet", Item::new,
+		new Item.Properties().humanoidArmor(ModMaterials.DEEP_DIVING_ARMOR, ArmorType.HELMET));
+	public static final Item DEEP_DIVING_CHESTPLATE = register("deep_diving_chestplate", Item::new,
+		new Item.Properties().humanoidArmor(ModMaterials.DEEP_DIVING_ARMOR, ArmorType.CHESTPLATE));
+	public static final Item DEEP_DIVING_LEGGINGS = register("deep_diving_leggings", Item::new,
+		new Item.Properties().humanoidArmor(ModMaterials.DEEP_DIVING_ARMOR, ArmorType.LEGGINGS));
+	public static final Item DEEP_DIVING_BOOTS = register("deep_diving_boots", Item::new,
+		new Item.Properties().humanoidArmor(ModMaterials.DEEP_DIVING_ARMOR, ArmorType.BOOTS));
+
 	// Invocação
 	/** Projeto do Chamariz: vem do Cofre do Templo (ainda não existe); por enquanto só criativo. */
 	public static final Item LURE_BLUEPRINT = register("lure_blueprint", Item::new,
