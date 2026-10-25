@@ -1,0 +1,34 @@
+SERVIDOR DO AQUAMARINE {{VERSAO}}  (Minecraft {{MC}} + Fabric)
+=========================================================
+
+ABRIR
+  Clique duas vezes em  INICIAR-SERVIDOR.bat
+  - Na primeira vez ele pede para aceitar a EULA da Mojang e baixa o servidor do Minecraft (precisa de internet).
+  - Se o Windows perguntar sobre o Firewall, clique em "Permitir" (senão os amigos não conseguem entrar).
+  - Quando aparecer "Done (...)! For help, type "help"", o servidor está pronto.
+  - Java: o script usa o Java 25 do seu computador ou, se não tiver, o que o Minecraft Launcher já baixou.
+    Se ele disser que não achou, jogue o Minecraft {{MC}} uma vez pelo launcher e tente de novo.
+
+ENTRAR
+  - No mesmo computador: Multijogador > Adicionar servidor > endereço  localhost
+  - Na mesma rede (Wi-Fi/cabo): use o endereço que a janela do servidor mostra (ex.: 192.168.0.10).
+  - Todos com o perfil "Aquamarine {{VERSAO}}" instalado pelo INSTALAR.bat.
+
+JOGAR PELA INTERNET (amigos em outras casas)
+  O mais simples: use um túnel grátis, como o playit.gg (instale, crie um túnel "Minecraft Java" para a
+  porta 25565 e passe aos amigos o endereço que ele der). Outra opção é liberar a porta 25565 (TCP) no roteador
+  para o seu computador e passar o seu IP público.
+
+COMANDOS (digite na janela do servidor, sem a barra)
+  op SEU_NOME        vira operador e pode usar /aquamarine no jogo
+  stop               desliga salvando o mundo (sempre desligue assim)
+  whitelist on       só entra quem você adicionar com  whitelist add NOME
+
+AJUSTES
+  - server.properties: dificuldade, número de jogadores, mensagem do servidor.
+  - Memória: no começo do iniciar-servidor.ps1 (padrão 4G).
+  - config\aquamarine.json (aparece depois da primeira vez): opções do mod, como a tempestade e a destruição
+    do mundo na luta do Kraken (krakenStorm, krakenWorldDamage) e o Alerta de Moréia (harborAlert).
+    A destruição também respeita a regra do jogo  gamerule mob_griefing false.
+
+O MUNDO fica na pasta "world" aqui dentro. Para começar um mundo novo, desligue o servidor e apague essa pasta.

@@ -139,6 +139,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		if (enabled("spawn")) {
 			OceanSpawnGameTest.run(context);
 		}
+		if (enabled("multiplayer")) {
+			MultiplayerGameTest.run(context);
+		}
 	}
 
 	private static void useLure(MinecraftServer s, BlockPos altar) {

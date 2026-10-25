@@ -20,6 +20,12 @@ conflito, vale [docs/00-decisoes.md](docs/00-decisoes.md)).
 - **Próximo (não liberado):** a Cidade Perdida de Nereia. Estado de cada faixa e o que só o Adriano
   pode testar: [docs/07-roadmap.md](docs/07-roadmap.md).
 
+## Para jogar (sem nada de programação)
+Baixe o `.zip` da release (no GitHub, aba Releases), extraia e clique duas vezes em `INSTALAR.bat`: ele cria o
+perfil "Aquamarine" no Minecraft Launcher. Para jogar junto há "Abrir para LAN" e a pasta `Servidor` pronta.
+Tudo explicado no `LEIA-ME.txt` do pacote. Como gerar uma release nova: [docs/06-tecnico.md](docs/06-tecnico.md),
+"Release para jogadores".
+
 ## Tecnologias
 Java 25, Fabric Loader + Fabric API, Gradle 9 com o plugin Loom, JUnit e Fabric Client GameTests.
 Modelos e texturas são gerados por scripts Python (Pillow) em `tools/`. Versões exatas em
@@ -28,7 +34,7 @@ Modelos e texturas são gerados por scripts Python (Pillow) em `tools/`. Versõe
 ## Como rodar
 
 **Portal de assets:** execute `.\tools\atlas\abrir.ps1` para abrir o [Atlas técnico](tools/atlas/README.md)
-com modelos 3D, animações, áudio, texturas e documentos. A proposta do Kraken fica somente no site.
+com modelos 3D, animações, áudio, texturas e documentos. O Kraken v2 do site já está no jogo.
 
 1. Instale o **JDK 25** e aponte o `JAVA_HOME` para ele (o caminho usado nesta máquina está em
    [docs/06-tecnico.md](docs/06-tecnico.md), "Ambiente local").
