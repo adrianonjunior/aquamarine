@@ -108,7 +108,7 @@ Cada linha é uma Task; "Dep." = só depois do merge validado.
 | 4 | **3E** | Claude | 3A, 3B-C, 3B-W, 3C, 3D | Vila: peças por script, Eclusa, profissões, comércio, reputação, Alerta de Moréia. Aceite: `/locate` a encontra e o comércio vende os itens da tabela | 4 h / 6 |
 | 5 | **3Q** | Codex (`medium`) | todas | QA com 3 clientes seguindo o aceite de [08-fase3.md](08-fase3.md). Relatório de bugs; não corrige código | 2 h / 12 (até 6 por ciclo) |
 
-- [ ] 3A · [ ] 3B-M1 · [ ] 3B-M2 · [ ] 3B-C · [ ] 3B-W · [ ] 3B-T · [ ] 3C · [ ] 3D · [ ] 3E · [ ] 3Q
+- [ ] 3A · [ ] 3B-M1 · [x] 3B-M2 · [ ] 3B-C · [ ] 3B-W · [ ] 3B-T · [ ] 3C · [ ] 3D · [ ] 3E · [ ] 3Q
 
 **Checklist de liberação (o orquestrador confere antes de criar a Run; nada aqui é feito antes):**
 - [ ] Entrega 2 completa: todas as faixas marcadas (inclui 2A-T com rachaduras visíveis e 2Q) e o aceite multiplayer cumprido.
