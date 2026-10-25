@@ -33,7 +33,8 @@ Algo no chat que parece o Kraken, mas não é.
 
 ## Som e música
 - A v1 usa **sons próprios** (rugido, estilhaço do escudo, avisos de ataque,
-  caminhada do Walker), sem trilha própria.
+  caminhada do Walker), sem trilha própria. **Hoje o código usa sons vanilla** no lugar deles: faltam
+  os arquivos de áudio (pergunta em aberto em [00-decisoes.md](00-decisoes.md)).
 - Música de boss própria só no polimento, depois da v1.
 
 ## Implementação

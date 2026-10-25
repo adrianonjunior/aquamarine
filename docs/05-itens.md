@@ -2,10 +2,15 @@
 
 > **Dono de:** lista final de materiais, itens, receitas e estatísticas. Tudo
 > **decidido**; números são valores iniciais a testar (ajustar aqui).
-> **Implementados (Entrega 1):** Oricálcio (minério, lingote, bloco, ferramentas,
-> armadura), Pérola Abissal, Cristal de Maré e Escama Antiga como itens, Forja
-> Abissal, Óculos de Mergulho, Chamariz Abissal (e Projeto) e Altar do Abismo.
-> O resto ainda é planejamento. Regra: todo item
+> **Implementados:** Entrega 1 (Oricálcio: minério, lingote, bloco, ferramentas, armadura;
+> Pérola Abissal, Cristal de Maré e Escama Antiga como itens; Forja Abissal; Óculos de Mergulho;
+> Chamariz Abissal e Projeto; Altar do Abismo), Entrega 2 (Tônico de Pressão, Boia de Âncora,
+> Olho do Kraken, Tinta Abissal, Coração do Kraken, Troféus) e Fase 3 (Medidor, Regulador, Traje de
+> Mergulho Profundo, Escama Elétrica, Bobina Voltaica, Chicote de Moréia, Sela de Baleia, Arpão de
+> Oricálcio, Aljava e pontas, Propulsor de Maré, blocos de trabalho da Vila, Mapa de Fossas de Moréia).
+> **Ainda planejados** (fase da Cidade Perdida): Carga de Pulso, Pilar Ressonante, Amuleto da
+> Corrente, Bússola de Maré, Mapa de Nereia, Lanterna de Coral, Arco de Coral, Sopa de Tentáculo,
+> Chave de Nereia e o Casco de Prismarinho. Regra: todo item
 > responde "o que faz na luta ou na exploração?". Decisões gerais em
 > [00-decisoes.md](00-decisoes.md).
 
@@ -55,8 +60,9 @@ Todas as receitas abaixo são na Forja Abissal, exceto quando indicado.
 | Pontas de Veneno, Fogo, Wither e Choque | Ponta + olho de aranha / pó de blaze (1 cada); 8 pontas + 1 caveira de wither esqueleto (rende 8); 4 pontas + 1 Bobina (rende 4) | Veneno I 10 s; Chama Abissal 5 s (2/s, até debaixo d'água); Wither I 8 s; descarga nos alvos molhados a 6 blocos (50%). No Kraken: tabela de [02-kraken.md](02-kraken.md) (3C) |
 | Bigorna de Maré, Mesa de Cartas Náuticas, Altar de Concha | Só na Vila (blocos; quebrar devolve o bloco) | Blocos de trabalho do Ferreiro de Maré, do Cartógrafo Náutico e do Encantador de Fossa (3E) |
 | Propulsor de Maré | 1 concha de náutilo + 2 Lingotes + 1 Cristal + 1 Bobina | Mão secundária, tecla V (segura e solta): impulso de ~16 blocos em 1,2 s, recarga 3 s, só na água; 1 Bobina = 6 cargas (+2 por nível de Sobrecarga), gasta do inventário quando acabam (3D) |
-| Bússola de Maré | 1 bússola + 1 Pérola + 1 Cristal (bancada comum) | Aponta para a Cidade Perdida mais próxima |
-| Mapa de Nereia | Cartógrafo (nível 3, por esmeraldas e uma bússola), naufrágios ou Walker | Marca a Cidade Perdida mais próxima |
+| Bússola de Maré | 1 bússola + 1 Pérola + 1 Cristal (bancada comum) | Aponta para a Cidade Perdida mais próxima (fica para a fase da Cidade Perdida) |
+| Mapa de Nereia | Cartógrafo Náutico (nível 4, por esmeraldas e uma bússola), naufrágios ou Walker | Marca a Cidade Perdida mais próxima (fica para a fase da Cidade Perdida) |
+| Mapa de Fossas de Moréia | Cartógrafo Náutico (nível 2: 12 esmeraldas + 1 bússola) | Marca a fossa mais próxima (bioma `#aquamarine_fossa_de_nereia`, hoje o oceano profundo), onde a Moréia vive (3E) |
 | Lanterna de Coral | 1 lanterna + 2 corais + 1 Cristal (bancada comum) | Luz 15 debaixo d'água; afasta a Nuvem de Tinta num raio de 4 blocos |
 | Arco de Coral | 3 corais + 3 linhas + 1 Pérola (bancada comum) | Atira normalmente debaixo d'água, sem perda de velocidade |
 | Sopa de Tentáculo | 2 Tentáculos + 1 tigela + 1 alga (bancada comum) | Respiração Aquática por 60 s |

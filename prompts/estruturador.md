@@ -1,5 +1,9 @@
 # Prompt do agente Estruturador
 
+> **Histórico (Entrega 1, executado e concluído em 24/10/2026).** Registro do que foi enviado a um agente; não é estado atual nem ordem para
+> ninguém. Estado: [CONTEXTO.md](../CONTEXTO.md) e [docs/07-roadmap.md](../docs/07-roadmap.md). Divisão de papéis
+> atual: [docs/00-decisoes.md](../docs/00-decisoes.md), linha "Agentes" (qualquer agente pode fazer qualquer faixa a pedido do Adriano).
+
 Cole o texto abaixo, inteiro, como primeira mensagem do agente. Ele não
 repete decisões do projeto: aponta para os arquivos donos de cada assunto.
 

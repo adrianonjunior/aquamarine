@@ -20,4 +20,4 @@
 
 ## Próximo passo
 
-O orquestrador abrirá Tasks para o Claude investigar os dois achados acima. O aceite multiplayer da Entrega 2 permanece pendente até o Adriano validar uma sessão real com dois clientes e as três fases.
+**Resolvido em 24/10/2026:** os dois achados foram corrigidos pela faixa 2Q-fix (`64a8724`; ver o handoff em `CONTEXTO.md`). O aceite multiplayer da Entrega 2 permanece pendente até o Adriano validar uma sessão real com dois clientes e as três fases.

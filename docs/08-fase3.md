@@ -1,8 +1,9 @@
 # Fase 3: fauna nova, equipamentos de mergulho e a Vila
 
-> ## ✅ EXECUÇÃO LIBERADA em 24/10/2026
-> Liberada pelo Adriano ("termina a fase 2 e começa a fase 3"). O aceite multiplayer
-> real da Entrega 2 segue pendente com ele. Faixas e andamento: [07-roadmap.md](07-roadmap.md).
+> ## ✅ FECHADA NAS FAIXAS em 25/10/2026
+> Liberada pelo Adriano em 24/10/2026 ("termina a fase 2 e começa a fase 3"); todas as faixas, de 3A a
+> 3E, estão na `main`, e a 3Q foi feita até onde um único cliente alcança ([relatório](relatorio-3q.md)).
+> Falta só o que o Adriano julga com jogadores reais (lista em [07-roadmap.md](07-roadmap.md)).
 
 > **Dono de:** a especificação de tudo que é da Fase 3. As **decisões** moram em
 > [00-decisoes.md](00-decisoes.md) (linhas "Fase 3: ..."); as **faixas, ondas e
@@ -172,20 +173,33 @@ nem Quebra-Carapaça. Moeda: **esmeralda** (itens comuns) e **Pérola Abissal** 
 | Encantador de Fossa | N1: Fôlego Profundo I; N2: Aclimatação I, Correnteza I; N3: Isolamento I, Fisgada I; N4: Perfurante I, Sobrecarga I; N5: níveis II e III | Âmbar-cinza, Bobina Voltaica, Escama Elétrica |
 - **Reputação:** por jogador, sobe ao vender e ao defender a Vila; abre os níveis de comércio.
 
-**Implementado na v1 (faixa 3E, 24/10/2026):** a Cúpula Central (vidro, ar por dentro, Sino,
-bancos), as três oficinas dentro dela (bloco de trabalho, baú e 2 Mergulhadores cada), dormitório com
-4 camas, estufa de algas, a Eclusa de duas portas e os baús com saque; a Pressão zera no ar do Porto.
-Trocas da tabela acima, exceto os mapas de Fossas e de Nereia e a Bússola de Maré (dependem da Fossa,
-da Cidade Perdida e do item). **Ainda não:** reputação por jogador (hoje valem os níveis do próprio
-aldeão e os preços por reputação do jogo), o Alerta de Moréia (a opção `harborAlert` já existe na
-config), o Cais, a Torre de Vigia e prédios separados por oficina.
+**Implementado (v1 em 24/10/2026, v2 em 25/10/2026):** a peça do fundo (80 x 20 x 80, `tools/gen_harbor.py`)
+tem a Cúpula Central (vidro, ar por dentro, Sino, bancos), cinco prédios de vidro ligados a ela por
+corredores (Oficina, Mercado e Santuário com bloco de trabalho, baú e **3 Mergulhadores** cada;
+Dormitórios com 6 camas; Estufa com dois tanques fechados de algas), a Eclusa de duas portas e o Cais
+(6 docas com postes para amarrar barco e baleia, e dois **elevadores de bolhas** até a superfície: areia
+das almas sobe, magma desce; o servidor refaz as colunas se a decoração do oceano as cortar). A **Torre
+de Vigia** é uma peça à parte que o jigsaw põe na superfície acima da Cúpula (farol e para-raios). A
+Pressão zera no ar do Porto. Trocas da tabela acima, com a **reputação por jogador** e o **Mapa de
+Fossas de Moréia** (aponta a fossa mais próxima, hoje o oceano profundo); a **Bússola de Maré** e o
+**Mapa de Nereia** ficam para a Cidade Perdida, que é o destino deles ([00-decisoes.md](00-decisoes.md)).
+O **Alerta de Moréia** funciona como descrito abaixo.
+
+**Reputação (valores iniciais):** cada troca com um Mergulhador soma a XP da oferta (a mesma que o
+aldeão vanilla ganharia); vencer o Alerta soma **50**. Níveis de comércio abertos: 1 com 0 pontos, 2 com
+10, 3 com 70, 4 com 150 e 5 com 250 (os limites da XP dos aldeões). As ofertas acima do nível aparecem
+esgotadas e o servidor não as vende. Vale em todos os Portos do mundo. Teste: `/aquamarine harbor
+reputation <jogador> [set <pontos>]`.
 
 **Evento "Alerta de Moréia"** (opcional, uma vez a cada 3 dias de jogo, só em noite de
 tempestade): o Sino toca; uma Moréia ataca a Cúpula; quem ajudar ganha reputação e 2 a
 4 Escamas Elétricas. Falhar não destrói a Vila. Pode ser desligado na config (`harborAlert`).
+Valores iniciais: a Moréia surge na água a 18 a 30 blocos do Sino e vai embora se ninguém a vencer em
+5 minutos; "ajudar" é feri-la (ou dar o golpe final) e estar vivo quando ela morre. Teste:
+`/aquamarine harbor alert` (perto de um Sino).
 
 ## Ordem e faixas
-Etapas e faixas (Claude e Codex, dependências, aceite e orçamentos) estão em
+Etapas e faixas (agente preferencial, dependências, aceite e orçamentos) estão em
 [07-roadmap.md](07-roadmap.md), seção "Fase 3". Resumo: 3A Pressão e Traje; 3B Moréia,
 Baleias e Bobina; 3C Munições e encantamentos; 3D Propulsor; 3E Vila; 3Q QA final.
 

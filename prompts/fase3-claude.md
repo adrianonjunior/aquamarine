@@ -1,5 +1,9 @@
 # Prompt base das faixas do Claude (Fase 3)
 
+> **Histórico (corpos das Tasks de lógica da Fase 3 (24/10/2026); faixas concluídas).** Registro do que foi enviado a um agente; não é estado atual nem ordem para
+> ninguém. Estado: [CONTEXTO.md](../CONTEXTO.md) e [docs/07-roadmap.md](../docs/07-roadmap.md). Divisão de papéis
+> atual: [docs/00-decisoes.md](../docs/00-decisoes.md), linha "Agentes" (qualquer agente pode fazer qualquer faixa a pedido do Adriano).
+
 > **BLOQUEADO** até a Fase 3 ser liberada pelo Adriano ([07-roadmap.md](../docs/07-roadmap.md),
 > "Checklist de liberação"). Usado pelo orquestrador como corpo das Tasks do **Claude**
 > (3A, 3B-C, 3B-W, 3B-T, 3C, 3D, 3E). Ele acrescenta no fim a linha da faixa vinda do

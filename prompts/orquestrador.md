@@ -1,5 +1,9 @@
 # Prompt do Codex orquestrador (Entrega 2: Kraken v1)
 
+> **Histórico (orquestrador da Entrega 2, executado em 24/10/2026).** Registro do que foi enviado a um agente; não é estado atual nem ordem para
+> ninguém. Estado: [CONTEXTO.md](../CONTEXTO.md) e [docs/07-roadmap.md](../docs/07-roadmap.md). Divisão de papéis
+> atual: [docs/00-decisoes.md](../docs/00-decisoes.md), linha "Agentes" (qualquer agente pode fazer qualquer faixa a pedido do Adriano).
+
 > **Arranque já realizado em 24/10/2026.** Este prompt é histórico: não repita
 > o registro de liberação nem reinicie faixas aceitas. Para retomar a coordenação,
 > leia [CONTEXTO.md](../CONTEXTO.md) e os marcos de

@@ -28,8 +28,8 @@
   `.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-*-sources.jar` da
   pasta onde rodou; descompacte num diretório temporário e use `grep`.
 - No Git Bash, `javap` do Windows precisa de caminhos `cygpath -w` no classpath.
-- Heredoc com Python (`python - <<EOF`) trava neste ambiente: escreva o script
-  em arquivo.
+- Heredoc com Python (`python - <<EOF`) funciona no Git Bash, mas já travou em outros
+  terminais desta máquina: se travar, escreva o script em arquivo.
 - Na 26.3 várias APIs mudaram de nome: telas usam `GuiGraphicsExtractor` e
   `extractBackground`; `Minecraft.gui.screen()` em vez de `minecraft.screen`;
   `ContainerInput` em vez de `ClickType`; `Player.drop(stack, false, Prediction.PREDICTED)`.
@@ -39,12 +39,16 @@
   de recursos: modelos, texturas, lang pt/en, receitas, camadas de equipamento;
   e a config). Item novo sem textura ou sem nome quebra o build.
 - `./gradlew runClientGameTest`: abre o jogo sozinho (`src/gametest`), cria um
-  mundo plano, monta as cenas, confere por código a Forja e o bônus da armadura
+  mundo plano (as configurações "consistentes" da Fabric: semente 1, **sem estruturas**), monta as cenas, confere por código a Forja e o bônus da armadura
   e grava screenshots em `build/run/clientGameTest/screenshots/`. Não precisa
   controlar o PC; qualquer agente pode rodar e ler os PNGs. Não roda no CI.
   Para iterar numa parte só: `AQUAMARINE_GAMETEST_ONLY=moray,whale ./gradlew runClientGameTest`
   (nomes nos `enabled(...)` de `AquamarineClientGameTest`); sem a variável roda tudo.
   O `build` não compila `src/gametest`: use `./gradlew compileGametestJava` antes.
+- A parte `worldgen` (`WorldgenGameTest`, a última) abre um **segundo mundo, normal**, com semente
+  fixa e estruturas ligadas, e confere o que só o mundo gerado prova: `/locate` do Porto, Cúpula seca,
+  Torre de Vigia, elevadores, Eclusa e Mapa de Fossas. O `/place structure` do mundo plano não registra
+  a estrutura nem aplica a decoração do oceano, então não pega esses erros.
 - `C:\Python314\python tools/gen_textures.py --preview` regera as texturas e
   grava folhas de prévia em `build/texture_preview*.png`.
 
@@ -99,15 +103,25 @@
 - Modelos de alta qualidade desde a primeira versão (ver [00-decisoes.md](00-decisoes.md)).
 - Todo item novo responde "o que faz na luta ou na exploração?" (ver [05-itens.md](05-itens.md)).
 
-## Estrutura de pacotes planejada
+## Estrutura de pacotes
 ```
-com.aquamarine
-  entity/kraken   boss, tentáculos, fases, escudo
-  event           invocação e mensagens no chat
-  item            arpão, carga de pulso
-  block           Pilar Ressonante, Forja Abissal
-  worldgen        Cidade Perdida, depois o bioma
+com.aquamarine            (src/main: comum e servidor)
+  block      blocos (Forja, Altar, Boia, troféus, blocos de trabalho da Vila)
+  command    /aquamarine kraken | moray | whale | sperm_whale | harbor
+  config     config/aquamarine.json
+  effect     efeitos (Tônico de Pressão)
+  entity     criaturas da Fase 3, views do modelo, profissões e estrutura da Vila (ModVillagers)
+  entity/boss  Kraken: fases, escudo, ataques, locomoção, barra, recompensas
+  event      invocação, aviso falso, estado salvo do Kraken
+  harbor     Porto dos Náufragos: reputação, trocas por nível, Alerta de Moréia, elevadores, mapa de bioma
+  item       itens (Oricálcio, Arpão, Aljava, Propulsor, Traje, Óculos...)
+  menu       tela da Forja Abissal
+  mixin      ganchos no jogo (tridente, aldeão, troca)
+  pressure   Pressão (estado puro + gerente no servidor)
+  recipe     receita da Forja
+com.aquamarine.client     (src/client: renderers, modelos, HUD, teclas, JEI)
 ```
+A Cidade Perdida (`worldgen`) entra quando for liberada.
 
 ## Como fazer cada parte (decidido)
 - **Barra de boss:** customizada. O servidor continua usando `ServerBossEvent`
@@ -161,7 +175,9 @@ com.aquamarine
 ## Contrato de modelos e entidades (Entrega 2)
 Dono desta regra: aqui. Existe para o **Claude** (lógica e texturas) e o **Codex**
 (modelos e animações) trabalharem em paralelo sem pisar nos mesmos arquivos.
-Divisão de papéis: [00-decisoes.md](00-decisoes.md).
+Divisão de papéis: [00-decisoes.md](00-decisoes.md). **"Arquivos do Codex" e "do Claude" dizem quem
+edita quando os dois trabalham ao mesmo tempo; quando um agente só faz as duas partes (pedido do
+Adriano), ele edita os dois lados, seguindo o mesmo contrato.**
 
 **Método de modelagem (decidido):** o Codex escreve o modelo por **script**
 (`tools/models/<criatura>/build_model.py` gera `<criatura>.bbmodel`), exporta as
@@ -233,5 +249,16 @@ só os nomes novos e as lições abaixo são específicos. Em execução desde 2
   sem XP perde a profissão antes de achar o bloco de trabalho: o NBT dá `Xp: 1`. O `/place structure`
   só põe blocos e entidades, sem registrar a estrutura (a Eclusa e o `/locate` só valem em mundo
   gerado). Trocas em `data/aquamarine/villager_trade/` (modificadores usam `type`, não `function`).
+- **Vila v2 (25/10/2026):** (1) a peça precisa de `"override_liquid_settings": "ignore_waterlogging"` no
+  pool: sem isso, num mundo gerado, bancos e baús saem alagados (estavam no lugar da água do mar) e
+  enchem a Cúpula; (2) a decoração do oceano roda depois das estruturas e põe algas no Cais, que cortam
+  as colunas de bolhas, e as colunas nem sempre começam sozinhas: `harbor/HarborElevators` refaz as
+  colunas com jogador no Porto, a partir de `HarborElevators.BASES`, que tem de bater com as bases que
+  o `gen_harbor.py` imprime; (3) a Torre de Vigia é um filho do jigsaw com projeção `terrain_matching`:
+  o jogo a põe na altura da superfície (`WORLD_SURFACE_WG`), e o bloco jigsaw do pai fica na última
+  camada da peça para o filho ser checado fora da caixa do pai; (4) as trocas por reputação são
+  mixins (`VillagerMixin`, `AbstractVillagerMixin`, `MerchantContainerMixin`, `ServerPlayerMixin`) e
+  o nível de cada oferta fica num attachment da Fabric (`HarborTrades.OFFER_LEVELS`); (5) água solta
+  dentro de uma peça com ar (algas, que são blocos de água) vaza: plantas aquáticas só em tanque fechado.
 - **Texturas das criaturas da Fase 3:** `tools/gen_creature_textures.py` pinta sobre o layout de UV
   lido do próprio `build_model.py` (rode depois dele); o da Moréia já chama o de textura no fim.

@@ -9,9 +9,10 @@
 > [CONTEXTO.md](CONTEXTO.md) e confira os marcos em [docs/07-roadmap.md](docs/07-roadmap.md)
 > antes de assumir uma faixa. Um handoff antigo não comprova o estado atual da tarefa.
 
-> **FASE ATUAL: IMPLEMENTAÇÃO LIBERADA SOMENTE PARA AS "ENTREGA 1" (concluída) E "ENTREGA 2" (Kraken v1, liberada em 24/10/2026; ver docs/07-roadmap.md).** A **Fase 3 está LIBERADA** (24/10/2026, ver docs/07-roadmap.md). Todo o resto continua em planejamento: não escreva código,
-> texturas ou modelos do mod até o Adriano liberar explicitamente. Na dúvida,
-> pergunte antes de implementar.
+> **FASE ATUAL: ENTREGA 1, ENTREGA 2 E FASE 3 IMPLEMENTADAS** (faixas fechadas em 25/10/2026; o aceite com
+> jogadores reais é do Adriano, ver docs/07-roadmap.md). **Nada além está liberado:** a Cidade Perdida e o
+> resto continuam em planejamento; não escreva código, texturas ou modelos novos até o Adriano liberar
+> explicitamente. Correções e testes do que já existe podem ser feitos a pedido dele. Na dúvida, pergunte.
 
 ## ⚠️ Vários agentes rodam ao mesmo tempo
 O Adriano mantém **diversos agentes simultâneos** neste mesmo projeto. Trabalhe
@@ -25,7 +26,8 @@ assumindo que outro agente está editando arquivos agora.
 3. **Só edite os arquivos da sua tarefa.** Arquivos compartilhados (registro de
    itens, `lang/*.json`, `fabric.mod.json`, mixins, `CONTEXTO.md`): mudanças
    pequenas, só acrescentando linhas; nunca reformate ou reordene.
-4. **Commits pequenos; `git pull --rebase` antes de `git push`.** Nunca
+4. **Commits pequenos; `git pull --rebase` antes de `git push`** (com merge local na história, use
+   `git pull --rebase=merges`, senão o rebase tenta refazer os commits da branch mergeada). Nunca
    `push --force` nem `reset --hard` em trabalho que não é seu.
 5. **Não apague nem sobrescreva arquivo de outro agente** sem ver o que há nele
    (`git log`, `git blame`).
@@ -41,6 +43,9 @@ assumindo que outro agente está editando arquivos agora.
 - **Mundo de teste e `run/`**: compartilhados; não apague saves sem avisar.
 
 ### Quem faz o quê
+Divisão **preferencial**, não exclusiva: quando o Adriano pede, qualquer agente faz uma faixa marcada
+para o outro (modelos, QA visual, 3Q...). Um .md dizer "o Codex fará" não é motivo para deixar a tarefa.
+
 | Agente | Responsabilidade |
 |---|---|
 | **Claude** | Código do mod, **texturas em pixel art**, decisões criativas pequenas, docs. |

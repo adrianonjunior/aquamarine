@@ -1,5 +1,9 @@
 # Prompt base das faixas do Codex (Entrega 2: modelagem e QA)
 
+> **Histórico (Entrega 2 (faixas de modelo), executado em 24/10/2026).** Registro do que foi enviado a um agente; não é estado atual nem ordem para
+> ninguém. Estado: [CONTEXTO.md](../CONTEXTO.md) e [docs/07-roadmap.md](../docs/07-roadmap.md). Divisão de papéis
+> atual: [docs/00-decisoes.md](../docs/00-decisoes.md), linha "Agentes" (qualquer agente pode fazer qualquer faixa a pedido do Adriano).
+
 Usado pelo orquestrador como corpo das Tasks do **Codex** (2A-M, 2D-M, 2Q). Ele
 acrescenta no fim a linha da faixa vinda de `docs/07-roadmap.md`. Faixas do Claude
 usam [kraken-v1.md](kraken-v1.md). Texto curto de propósito: o Codex gasta mais

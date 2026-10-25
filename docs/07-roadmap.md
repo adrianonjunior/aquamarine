@@ -12,7 +12,9 @@
   armadura, aba no criativo, receitas, texturas.
 - [ ] **Kraken v1 jogável**, já com modelo de alta qualidade (decisão do
   Adriano), barra customizada, escudo e efeito de Pressão, antes da cidade, para
-  sentir a luta em multiplayer.
+  sentir a luta em multiplayer. *Faixas prontas (Entrega 2); falta o aceite multiplayer real, que é do Adriano.*
+- [ ] **Fase 3** (fauna, equipamentos de mergulho e Vila). *Faixas 3A a 3E prontas e 3Q feita até onde um
+  cliente alcança; falta o aceite com 3 jogadores reais, que é do Adriano.*
 - [ ] **Cidade Perdida v1** (estrutura jigsaw).
 - [ ] Kraken completo, depois bioma e polimento.
 
@@ -55,7 +57,7 @@ mostra os itens com texturas próprias, dá para craftar e vestir a armadura e o
 (`./gradlew runClientGameTest`, screenshots em `build/run/clientGameTest/screenshots/`).
 Pendências e próximos passos: `CONTEXTO.md`, registro de handoff.
 
-## Entrega 2: Kraken v1 jogável (**liberada em 24/10/2026; em andamento**)
+## Entrega 2: Kraken v1 jogável (**liberada em 24/10/2026; faixas concluídas, aceite multiplayer com o Adriano**)
 O Adriano liberou esta entrega ao enviar o
 [prompt do orquestrador](../prompts/orquestrador.md). Objetivo: lutar contra o Kraken inteiro em multiplayer, sem a cidade;
 o teste usa um comando de depuração e uma arena de teste, e o Altar já chama o
@@ -86,14 +88,15 @@ fases em 8 a 12 minutos com equipamento do mod, sem crash e sem desync da barra.
 Ritmo e sensação de dano só o Adriano julga: vão ao relatório como "a testar pelo Adriano".
 
 
-## Fase 3: fauna, equipamentos de mergulho e Vila (**LIBERADA em 24/10/2026; em andamento**)
+## Fase 3: fauna, equipamentos de mergulho e Vila (**liberada em 24/10/2026; faixas fechadas em 25/10/2026**)
 **Liberada em 24/10/2026** pelo Adriano (as faixas da Entrega 2 estão aceitas; o aceite
 multiplayer real dela segue com ele). Execução conduzida pelo orquestrador
 ([prompt](../prompts/orquestrador-fase3.md)). Especificação:
 [08-fase3.md](08-fase3.md). Contrato de arquivos: [06-tecnico.md](06-tecnico.md), "Contrato
 de modelos e entidades (Fase 3)". Corpos das Tasks: [fase3-claude.md](../prompts/fase3-claude.md)
 e [fase3-modelagem.md](../prompts/fase3-modelagem.md). Economia: [../AGENTS.md](../AGENTS.md).
-Cada linha é uma Task; "Dep." = só depois do merge validado.
+Cada linha é uma Task; "Dep." = só depois do merge validado. "Agente" é o preferencial: qualquer
+agente pode fazer a faixa quando o Adriano pedir ([00-decisoes.md](00-decisoes.md), linha "Agentes").
 
 | Onda | Faixa | Agente | Dep. | Entrega e aceite observável | Orçamento |
 |---|---|---|---|---|---|
@@ -108,17 +111,16 @@ Cada linha é uma Task; "Dep." = só depois do merge validado.
 | 4 | **3E** | Claude | 3A, 3B-C, 3B-W, 3C, 3D | Vila: peças por script, Eclusa, profissões, comércio, reputação, Alerta de Moréia. Aceite: `/locate` a encontra e o comércio vende os itens da tabela | 4 h / 6 |
 | 5 | **3Q** | Codex (`medium`) | todas | QA com 3 clientes seguindo o aceite de [08-fase3.md](08-fase3.md). Relatório de bugs; não corrige código | 2 h / 12 (até 6 por ciclo) |
 
-- [x] 3A · [x] 3B-M1 · [x] 3B-M2 · [x] 3B-C · [x] 3B-W · [x] 3B-T · [x] 3C · [x] 3D · [ ] 3E (v1 na `main`; falta o listado em [08-fase3.md](08-fase3.md), seção 8) · [ ] 3Q (só o Adriano: 3 clientes reais)
+- [x] 3A · [x] 3B-M1 · [x] 3B-M2 · [x] 3B-C · [x] 3B-W · [x] 3B-T · [x] 3C · [x] 3D · [x] 3E (v2: reputação, Alerta, Cais, Torre, prédios) · [x] 3Q (um cliente; [relatório](relatorio-3q.md))
+- [ ] **Aceite da Fase 3 com 3 jogadores reais** (só o Adriano; roteiro em [relatorio-3q.md](relatorio-3q.md))
 
-Desde 24/10/2026 à noite as faixas seguem com **um agente único** ([prompt](../prompts/fechamento-final.md)),
-sem Run do Orca. Evidência de cada faixa: GameTests `DepthGameTest` (3A), `MorayGameTest` (3B-C),
-`WhaleGameTest` (3B-W), `GearGameTest` (3C, 3D), `HarborGameTest` (3E) e screenshots 27, 30 a 35 do
-`runClientGameTest`.
+Desde 24/10/2026 à noite as faixas seguiram com **um agente único**, sem Run do Orca
+([prompt](../prompts/fechamento-final.md); a 3E v2 e a 3Q em 25/10/2026). Evidência de cada faixa:
+GameTests `DepthGameTest` (3A), `MorayGameTest` (3B-C), `WhaleGameTest` (3B-W), `GearGameTest` (3C,
+3D), `HarborGameTest` e `WorldgenGameTest` (3E e a parte da 3Q no mundo gerado), JUnit `HarborTest`, e
+as screenshots 27 e 30 a 38 do `runClientGameTest`.
 
-**Checklist de liberação (o orquestrador confere antes de criar a Run; nada aqui é feito antes):**
-- [ ] Entrega 2 completa: todas as faixas marcadas (inclui 2A-T com rachaduras visíveis e 2Q) e o aceite multiplayer cumprido.
-- [x] Faixa de tamanho do Kraken (32 x 20, a pedido do Adriano; ver [00-decisoes.md](00-decisoes.md)) aplicada.
-- [ ] `main` limpa, `./gradlew build` e `runClientGameTest` verdes, "Em andamento" do `CONTEXTO.md` vazio.
-- [ ] Codex atualizado e conseguindo chamar o `orca` (o 0.163 falhava no IPC); disco C: com pelo menos 10 GB livres.
-- [ ] Terminais Claude e Codex aceitos no Orca (Bypass Permissions e trust), para os workers não pararem nos avisos.
-- [ ] Adriano enviou o prompt do orquestrador da Fase 3 (a liberação explícita).
+**Só o Adriano pode fechar** (Entrega 2 e Fase 3): o aceite com jogadores reais (2 clientes nas 3 fases
+do Kraken; 3 clientes no ciclo da Fase 3, sem crash nem desync), o ritmo e o dano da luta, a montaria
+pilotada por um jogador de verdade, o Propulsor e as teclas R e V na mão, a legibilidade dos avisos
+(slam, Descarga, Enrolar) e o surgimento natural das criaturas num mundo normal.

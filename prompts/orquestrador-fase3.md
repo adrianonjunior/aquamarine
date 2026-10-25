@@ -1,5 +1,9 @@
 # Prompt do orquestrador (Fase 3)
 
+> **Histórico (orquestrador da Fase 3, usado em 24/10/2026 e parado a pedido do Adriano).** Registro do que foi enviado a um agente; não é estado atual nem ordem para
+> ninguém. Estado: [CONTEXTO.md](../CONTEXTO.md) e [docs/07-roadmap.md](../docs/07-roadmap.md). Divisão de papéis
+> atual: [docs/00-decisoes.md](../docs/00-decisoes.md), linha "Agentes" (qualquer agente pode fazer qualquer faixa a pedido do Adriano).
+
 > **NÃO ENVIAR ainda.** Enviar este prompt é a **liberação explícita da Fase 3** pelo Adriano, e
 > só vale com a Entrega 2 completa. Preparado em 24/10/2026. Este arquivo não repete o plano: o
 > plano (faixas, ondas, dependências, aceite, orçamento, checklist de liberação) mora em

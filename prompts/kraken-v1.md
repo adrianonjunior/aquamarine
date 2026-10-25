@@ -1,5 +1,9 @@
 # Prompt base das faixas do Claude (Entrega 2)
 
+> **Histórico (Entrega 2 (faixas de lógica), executado em 24/10/2026).** Registro do que foi enviado a um agente; não é estado atual nem ordem para
+> ninguém. Estado: [CONTEXTO.md](../CONTEXTO.md) e [docs/07-roadmap.md](../docs/07-roadmap.md). Divisão de papéis
+> atual: [docs/00-decisoes.md](../docs/00-decisoes.md), linha "Agentes" (qualquer agente pode fazer qualquer faixa a pedido do Adriano).
+
 Usado pelo orquestrador como corpo das Tasks do **Claude** (2A-C, 2A-T, 2B, 2C,
 2D-C, 2D-T, 2E). Ele acrescenta no fim a linha da faixa vinda de
 `docs/07-roadmap.md`. Faixas do Codex usam [kraken-modelagem.md](kraken-modelagem.md).

@@ -1,5 +1,9 @@
 # Prompt base das faixas do Codex (Fase 3: modelagem e QA)
 
+> **Histórico (corpos das Tasks de modelo da Fase 3 (24/10/2026); faixas concluídas).** Registro do que foi enviado a um agente; não é estado atual nem ordem para
+> ninguém. Estado: [CONTEXTO.md](../CONTEXTO.md) e [docs/07-roadmap.md](../docs/07-roadmap.md). Divisão de papéis
+> atual: [docs/00-decisoes.md](../docs/00-decisoes.md), linha "Agentes" (qualquer agente pode fazer qualquer faixa a pedido do Adriano).
+
 > **BLOQUEADO** até a Fase 3 ser liberada pelo Adriano ([07-roadmap.md](../docs/07-roadmap.md),
 > "Checklist de liberação"). Usado pelo orquestrador como corpo das Tasks do **Codex**
 > (3B-M1, 3B-M2, 3Q). Acrescenta no fim a linha da faixa. Texto curto de propósito: o Codex
