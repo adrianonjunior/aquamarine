@@ -26,12 +26,13 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| Acesso rápido a trechos dos players de áudio do Atlas | Codex (branch codex/atlas-audio-seek) | 	ools/atlas/app.js e 	ools/atlas/style.css; nenhuma mudança no jogo | 25/10/2026 |
 | Publicar e verificar link ngrok do Atlas de amostra | Codex | Servidor Atlas 8767 e túnel ngrok | 25/10/2026 |
 | Áudio v1 (A0 aprovado): **luta do Kraken** (3 trilhas adaptativas, stingers, sons de combate) e **correção do spawn das criaturas do oceano** | Claude Opus 5.5 (worktree `aquamarine-claude-audio`, branch `claude/kraken-audio`) | Gradle na worktree; jogo só no teste final | 25/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+
+- 25/10/2026 · Codex · Players de áudio do Atlas agora mostram duração, barra arrastável para buscar qualquer posição e saltos de 15 s. Os servidores local (8766) e público estático (8767) aceitam Range HTTP, pedido parcial que permite ao navegador carregar do trecho escolhido; metadados carregados ao abrir. **Verificado nos dois servidores:** pedido bytes 1000–1999 retornou HTTP 206 e exatamente 1.000 bytes. Portal refeito com 72 áudios. Nenhuma mudança no jogo. Handoff em [ferramentas do Atlas](tools/atlas/README.md).
 
 - 25/10/2026 · Codex · Ngrok reconfigurado com o token da segunda conta autorizada pelo Adriano (credencial somente na configuração local do ngrok). Agente e servidor estático ativos; **novo bloqueio: ERR_NGROK_382**, e-mail do administrador da conta ainda não verificado. O endereço atribuído em build/atlas-public-url.txt ainda não serve o Atlas publicamente. Falta o Adriano verificar o e-mail no painel do ngrok; depois conferir novamente o acesso público.
 
