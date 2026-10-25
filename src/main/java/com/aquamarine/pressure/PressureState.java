@@ -7,7 +7,7 @@ package com.aquamarine.pressure;
 public final class PressureState {
 	public static final int MAX_LEVEL = 4;
 	/** Distância ao Kraken, em blocos, a partir da qual a Pressão sobe. */
-	public static final double RANGE = 24.0;
+	public static final double RANGE = 36.0;
 	/** Ticks submerso perto do Kraken para subir 1 nível (10 s; 6 s na fase 3). */
 	public static final int RISE_TICKS = 200;
 	public static final int RISE_TICKS_PHASE3 = 120;

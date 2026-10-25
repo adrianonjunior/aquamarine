@@ -38,7 +38,10 @@ final class AttackGameTest {
 		origin = base.offset(600, 0, 0);
 		server.runCommand("gamemode survival @a");
 		server.runCommand("difficulty normal");
-		server.runCommand(String.format("forceload add %d %d %d %d", origin.getX() - 30, origin.getZ() - 30, origin.getX() + 30, origin.getZ() + 30));
+		// A cura natural da comida entrava entre o golpe e a medida (corrida de 1 tick): as medidas de dano ficam exatas.
+		server.runCommand("gamerule natural_health_regeneration false");
+		int half = KrakenCommand.ARENA_HALF + 4;
+		server.runCommand(String.format("forceload add %d %d %d %d", origin.getX() - half, origin.getZ() - half, origin.getX() + half, origin.getZ() + half));
 		// Krakens de testes anteriores falsificariam "o mais próximo" dos comandos.
 		server.runOnServer(s -> {
 			s.overworld().getEntities(ModEntities.KRAKEN, e -> true).forEach(k -> k.discard());
@@ -266,6 +269,7 @@ final class AttackGameTest {
 			p.setHealth(20.0F);
 			p.snapTo(base.getX() + 0.5, base.getY(), base.getZ() + 0.5);
 		});
+		server.runCommand("gamerule natural_health_regeneration true");
 		context.waitTicks(10);
 	}
 

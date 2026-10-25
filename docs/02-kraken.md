@@ -28,7 +28,7 @@ invulnerabilidade com mensagem no chat e som de rugido.
 
 ## Pressão (o peso do abismo)
 Efeito próprio, **por jogador**, nível de 0 a 4.
-- **Sobe** 1 nível a cada 10 s submerso a menos de 24 blocos do Kraken (a cada
+- **Sobe** 1 nível a cada 10 s submerso a menos de 36 blocos do Kraken (a cada
   6 s na fase 3). **Desce** 1 nível a cada 5 s fora dessa condição ou em
   superfície.
 - **Efeitos:** nível 1: afunda 20% mais rápido; nível 2: nado lento e vinheta
