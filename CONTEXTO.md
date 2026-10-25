@@ -26,7 +26,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| Áudio v1: A0 entregue, **aguarda o aval do Adriano** (portão 1) | Claude Opus 5.5 (worktree `aquamarine-claude-audio`) | nenhum | 25/10/2026 |
+| Áudio v1 (A0 aprovado): **luta do Kraken** (3 trilhas adaptativas, stingers, sons de combate) e **correção do spawn das criaturas do oceano** | Claude Opus 5.5 (worktree `aquamarine-claude-audio`, branch `claude/kraken-audio`) | Gradle na worktree; jogo só no teste final | 25/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
