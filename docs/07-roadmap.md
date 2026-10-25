@@ -145,6 +145,8 @@ pequenos com aprovação do Adriano** (agentes não ouvem). Arquivos novos em `t
   Kraken e das crias, céu por fase, tempestade e destruição do ambiente ([09-audio.md](09-audio.md), "Luta do Kraken";
   [02-kraken.md](02-kraken.md), "A luta muda o mundo"). Cobre a parte do Kraken de A2 e A4. Falta o portão 4 (luta no jogo).
 - [x] **Criaturas do oceano nascendo sozinhas** (correção de 25/10/2026; [00-decisoes.md](00-decisoes.md)).
+- [x] **Release 0.4.0 para teste multiplayer** (25/10/2026): instalador, pacote de servidor e teste em servidor
+  dedicado. Falta o teste com os amigos do Adriano.
 
 ## Atlas técnico e estudo do Kraken (25/10/2026)
 

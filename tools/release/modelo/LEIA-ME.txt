@@ -1,0 +1,47 @@
+AQUAMARINE {{VERSAO}}  -  mod para Minecraft Java {{MC}}
+====================================================
+
+O QUE VOCÊ PRECISA
+  - Minecraft Java Edition original, com o Minecraft Launcher oficial.
+  - Internet na primeira vez que abrir o perfil (o launcher baixa o Fabric sozinho).
+  Não precisa instalar mais nada: o Minecraft já traz o Java dele.
+
+
+INSTALAR (cada jogador faz isso uma vez)
+  1. Feche o Minecraft Launcher.
+  2. Clique duas vezes em  INSTALAR.bat  (se o Windows avisar, clique em "Mais informações" e "Executar assim mesmo").
+  3. Abra o Minecraft Launcher, escolha o perfil "Aquamarine {{VERSAO}}" (ao lado do botão JOGAR) e jogue.
+
+  O perfil tem pasta própria (.minecraft\aquamarine): seus mundos e outros mods não são tocados.
+  Para atualizar para uma versão nova, é só rodar o INSTALAR.bat da versão nova.
+
+
+JOGAR JUNTO (todos precisam desta mesma versão {{VERSAO}})
+
+  Jeito mais fácil, mesma casa (mesmo Wi-Fi/cabo):
+    1. Um jogador abre um mundo, aperta ESC e clica em "Abrir para LAN".
+    2. Os outros vão em Multijogador: o mundo aparece sozinho na lista.
+
+  Com servidor (o mundo fica ligado mesmo quem criou saindo):
+    1. Abra a pasta  Servidor  e clique duas vezes em  INICIAR-SERVIDOR.bat
+    2. Aceite a EULA da Mojang quando ele perguntar (só na primeira vez).
+    3. Quando aparecer "Done", o servidor está pronto. A janela mostra o endereço para os amigos.
+    Detalhes, jogar pela internet e comandos: Servidor\LEIA-ME-SERVIDOR.txt
+
+
+PARA TESTAR RÁPIDO (precisa ser operador: no servidor, digite  op SEU_NOME  na janela dele)
+  /aquamarine kraken arena     cria uma arena de água com o Kraken na sua frente
+  /aquamarine whale            chama uma Baleia-de-Nereia
+  /aquamarine whale tame       doma a baleia mais perto (coloque a Sela de Baleia nela e monte com o botão direito;
+                               quem domou pilota, e mais dois amigos vão de passageiros)
+  /aquamarine moray            chama uma Moréia Tempestuosa
+  /aquamarine harbor alert     dispara o Alerta de Moréia no Porto mais perto
+  No Criativo, todos os itens do mod estão na aba "Aquamarine".
+
+
+SE ALGO DER ERRADO
+  - O perfil "Aquamarine" não aparece: feche o launcher (também perto do relógio) e rode o INSTALAR.bat de novo.
+  - "Incompatible mods" / "mod mismatch" ao entrar num servidor: alguém está com outra versão.
+    Todos devem instalar este mesmo pacote {{VERSAO}}.
+  - O jogo ficou pesado: o perfil já usa 4 GB de memória; feche outros programas.
+  - Para desinstalar: apague o perfil "Aquamarine" no launcher (aba Instalações) e a pasta .minecraft\aquamarine.

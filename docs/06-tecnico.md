@@ -53,8 +53,31 @@
   de mobs ligado, acelera o tempo com `/tick sprint` e conta baleias e Moréias (média e máximo no log,
   linha "Densidade do oceano"). A parte `worldfx` (`KrakenWorldGameTest`) confere recife morto e crateras;
   a música por fase, o céu e a tempestade são conferidos na parte `kraken`.
+- A parte `multiplayer` (`MultiplayerGameTest`) sobe um **servidor dedicado de verdade** e conecta o cliente pela
+  rede (API `worldBuilder().createServer()` do teste de cliente da Fabric): entrada com registros sincronizados,
+  música da luta por fase no cliente, céu, chuva, pacote do servidor (Pressão), pacote do cliente (Propulsor),
+  vitória e a baleia andando com o piloto. Pega o que o singleplayer esconde.
 - `C:\Python314\python tools/gen_textures.py --preview` regera as texturas e
   grava folhas de prévia em `build/texture_preview*.png`.
+
+## Release para jogadores
+Pacote para quem só tem o Minecraft: `./gradlew build` e depois `C:\Python314\python tools/release/montar_release.py`
+(versões lidas do `gradle.properties`). Sai `build/release/Aquamarine-<versão>.zip` com:
+- `INSTALAR.bat` → `arquivos/instalar.ps1`: faz o que o instalador oficial do Fabric faz, **sem Java** (grava o perfil
+  de versão do Fabric Loader, baixado do meta.fabricmc.net ou a cópia do pacote, e um `.jar` vazio em `versions/`),
+  cria o perfil "Aquamarine <versão>" no `launcher_profiles.json` com **pasta própria** (`.minecraft/aquamarine`,
+  4 GB) e copia os mods; guarda a lista de perfis antiga em `launcher_profiles.json.antes-do-aquamarine`;
+- `mods/`: o jar do mod e a Fabric API exata do `gradle.properties`;
+- `Servidor/`: `INICIAR-SERVIDOR.bat` → `iniciar-servidor.ps1` acha um Java 25 (do sistema, do `JAVA_HOME` ou o que
+  o Minecraft Launcher baixou), pede a EULA uma vez, copia os mods do pacote e abre o lançador de servidor da Fabric
+  (que baixa o servidor do Minecraft); `server.properties` com **`white-list=false`** (o 26.3 cria servidores com a
+  lista ligada) e `allow-flight=true` (os empurrões do Kraken não derrubam ninguém por "voar");
+- `LEIA-ME.txt` e `Servidor/LEIA-ME-SERVIDOR.txt` para o jogador, em português.
+Modelos em `tools/release/modelo/` (`{{VERSAO}}`, `{{MC}}`, `{{LOADER}}`, `{{ICONE}}`): `.bat` só em ASCII com CRLF,
+`.ps1` e `.txt` em UTF-8 com BOM (o PowerShell 5.1 do Windows só lê acentos assim). Antes de publicar: a parte
+`multiplayer` do `runClientGameTest`, o instalador numa `.minecraft` falsa (`instalar.ps1 -MinecraftDir <pasta>`) e o
+pacote de servidor ligado de verdade com um cliente entrando (`runClient --args="--quickPlayMultiplayer localhost:<porta>"`,
+com `skipMultiplayerWarning:true` no `run/options.txt` e `online-mode=false` só no servidor de teste).
 
 ## Como adicionar conteúdo (estrutura da Entrega 1)
 - **Item:** campo em `item/ModItems` com `register(...)` (entra sozinho na aba
@@ -260,6 +283,11 @@ só os nomes novos e as lições abaixo são específicos. Em execução desde 2
   respeita o fim exato do Vorbis, então camadas do mesmo tamanho voltam juntas; o canal do jogo enfileira
   4 blocos do tamanho que o fluxo devolver; (5) cores do céu, névoa, água, nuvens e luz vêm do
   `EnvironmentAttributeProbe.getValue` (atributos `visual/*`): um mixin no retorno tinge tudo de uma vez.
+- **Lições do multiplayer (release 0.4.0):** (1) **montaria anda no cliente do piloto** (`isLocalClientAuthoritative`):
+  tudo o que `getControllingPassenger` usa tem de estar sincronizado; a baleia decidia pelo dono, que só o servidor
+  conhecia, e ninguém a movia (nem no singleplayer); agora dono e regra da config vão em `SynchedEntityData`;
+  (2) servidor novo do 26.3 nasce com `white-list=true`; (3) o JEI só lê receitas do servidor integrado (no
+  multiplayer as da Forja não aparecem nele, sem erro).
 - **Kraken v2 e tamanho (25/10/2026):** o modelo do jogo saiu de `tools/models/kraken/build_model.py` (rodar com
   um Python que tenha Pillow; ele copia os templates de `java/`, gera o `KrakenAnimations.java` e refaz a textura):
   7 juntas por braço (`arm_N_segment_0` a `_6`; as duas últimas finas), mandíbula e bico na `jaw_hinge` e as abas

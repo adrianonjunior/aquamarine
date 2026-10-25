@@ -62,6 +62,13 @@ public class WhaleEntity extends AbstractWhaleEntity implements WhaleView {
 	private static final EntityDataAccessor<Boolean> DATA_SADDLED = SynchedEntityData.defineId(WhaleEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_TAMED = SynchedEntityData.defineId(WhaleEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_SURFACING = SynchedEntityData.defineId(WhaleEntity.class, EntityDataSerializers.BOOLEAN);
+	/**
+	 * Quem pilota precisa ser conhecido dos dois lados: no 26.3 a montaria anda no cliente do piloto (como o cavalo),
+	 * e com o dono só no servidor nenhum dos dois movia a baleia. Dono como texto ("" = sem dono) e a regra
+	 * {@code whaleOwnerOnlyPilots} da config do servidor.
+	 */
+	private static final EntityDataAccessor<String> DATA_OWNER = SynchedEntityData.defineId(WhaleEntity.class, EntityDataSerializers.STRING);
+	private static final EntityDataAccessor<Boolean> DATA_OWNER_PILOTS = SynchedEntityData.defineId(WhaleEntity.class, EntityDataSerializers.BOOLEAN);
 
 	private UUID owner;
 	private int fed;
@@ -90,6 +97,8 @@ public class WhaleEntity extends AbstractWhaleEntity implements WhaleView {
 		builder.define(DATA_SADDLED, false);
 		builder.define(DATA_TAMED, false);
 		builder.define(DATA_SURFACING, false);
+		builder.define(DATA_OWNER, "");
+		builder.define(DATA_OWNER_PILOTS, true);
 	}
 
 	// ---- Contrato WhaleView ----
@@ -134,13 +143,18 @@ public class WhaleEntity extends AbstractWhaleEntity implements WhaleView {
 		return owner;
 	}
 
+	private void setOwner(UUID owner) {
+		this.owner = owner;
+		entityData.set(DATA_OWNER, owner == null ? "" : owner.toString());
+	}
+
 	public boolean isSurfacing() {
 		return entityData.get(DATA_SURFACING);
 	}
 
 	/** Doma direto (comandos e testes). */
 	public void tame(Player player) {
-		owner = player.getUUID();
+		setOwner(player.getUUID());
 		entityData.set(DATA_TAMED, true);
 		setPersistenceRequired();
 		level().broadcastEntityEvent(this, (byte) 7);
@@ -212,9 +226,9 @@ public class WhaleEntity extends AbstractWhaleEntity implements WhaleView {
 
 	// ---- Montaria ----
 
-	/** Só o dono pilota (config {@code whaleOwnerOnlyPilots}); qualquer um pode ser passageiro. */
+	/** Só o dono pilota (config {@code whaleOwnerOnlyPilots} do servidor); qualquer um pode ser passageiro. */
 	public boolean canPilot(Player player) {
-		return !AquamarineConfig.get().whaleOwnerOnlyPilots || player.getUUID().equals(owner);
+		return !entityData.get(DATA_OWNER_PILOTS) || player.getUUID().toString().equals(entityData.get(DATA_OWNER));
 	}
 
 	@Override
@@ -296,6 +310,10 @@ public class WhaleEntity extends AbstractWhaleEntity implements WhaleView {
 	public void tick() {
 		super.tick();
 		if (level() instanceof ServerLevel level) {
+			boolean ownerPilots = AquamarineConfig.get().whaleOwnerOnlyPilots;
+			if (entityData.get(DATA_OWNER_PILOTS) != ownerPilots) {
+				entityData.set(DATA_OWNER_PILOTS, ownerPilots);
+			}
 			tickBreath(level);
 			if (isVehicle() && tickCount % 20 == 0) {
 				// Bolha de ar: quem monta respira debaixo d'água (a Pressão cai 1 nível no PressureManager).
@@ -401,7 +419,7 @@ public class WhaleEntity extends AbstractWhaleEntity implements WhaleView {
 		entityData.set(DATA_TAMED, input.getBooleanOr("Tamed", false));
 		setSaddled(input.getBooleanOr("Saddled", false));
 		String id = input.getStringOr("Owner", "");
-		owner = id.isEmpty() ? null : UUID.fromString(id);
+		setOwner(id.isEmpty() ? null : UUID.fromString(id));
 		fed = input.getIntOr("Fed", 0);
 		foodNeeded = input.getIntOr("FoodNeeded", 0);
 		breath = input.getIntOr("Breath", 0);

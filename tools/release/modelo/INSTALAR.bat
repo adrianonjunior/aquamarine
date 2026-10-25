@@ -1,0 +1,6 @@
+@echo off
+chcp 65001 >nul
+title Instalar Aquamarine
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0arquivos\instalar.ps1"
+echo.
+pause
