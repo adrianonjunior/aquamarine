@@ -1,11 +1,8 @@
 # Fase 3: fauna nova, equipamentos de mergulho e a Vila
 
-> ## ⛔ EXECUÇÃO BLOQUEADA (preparação liberada em 24/10/2026)
-> **Preparar** (specs, contrato, prompts, checklist) está liberado. **Não inicie Tasks,
-> worktrees nem agentes, e não produza código, texturas ou modelos** antes de duas
-> condições: (1) a **Entrega 2 completa**, com todas as faixas marcadas em
-> [07-roadmap.md](07-roadmap.md) e o aceite cumprido; (2) o **Adriano liberar a Fase 3
-> explicitamente**, enviando o [prompt do orquestrador](../prompts/orquestrador-fase3.md).
+> ## ✅ EXECUÇÃO LIBERADA em 24/10/2026
+> Liberada pelo Adriano ("termina a fase 2 e começa a fase 3"). O aceite multiplayer
+> real da Entrega 2 segue pendente com ele. Faixas e andamento: [07-roadmap.md](07-roadmap.md).
 
 > **Dono de:** a especificação de tudo que é da Fase 3. As **decisões** moram em
 > [00-decisoes.md](00-decisoes.md) (linhas "Fase 3: ..."); as **faixas, ondas e

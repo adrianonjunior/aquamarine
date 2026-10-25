@@ -86,11 +86,10 @@ fases em 8 a 12 minutos com equipamento do mod, sem crash e sem desync da barra.
 Ritmo e sensação de dano só o Adriano julga: vão ao relatório como "a testar pelo Adriano".
 
 
-## Fase 3: fauna, equipamentos de mergulho e Vila (**PREPARADA; execução bloqueada**)
-**Preparação liberada em 24/10/2026; execução bloqueada.** Nenhum agente inicia Tasks,
-worktrees ou implementação desta seção antes de (1) a Entrega 2 estar completa (todas as
-faixas acima marcadas, aceite cumprido) e (2) o Adriano liberar a Fase 3 enviando o
-[prompt do orquestrador](../prompts/orquestrador-fase3.md). Especificação:
+## Fase 3: fauna, equipamentos de mergulho e Vila (**LIBERADA em 24/10/2026; em andamento**)
+**Liberada em 24/10/2026** pelo Adriano (as faixas da Entrega 2 estão aceitas; o aceite
+multiplayer real dela segue com ele). Execução conduzida pelo orquestrador
+([prompt](../prompts/orquestrador-fase3.md)). Especificação:
 [08-fase3.md](08-fase3.md). Contrato de arquivos: [06-tecnico.md](06-tecnico.md), "Contrato
 de modelos e entidades (Fase 3)". Corpos das Tasks: [fase3-claude.md](../prompts/fase3-claude.md)
 e [fase3-modelagem.md](../prompts/fase3-modelagem.md). Economia: [../AGENTS.md](../AGENTS.md).
