@@ -26,6 +26,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| Áudio v1, lote A0 (pipeline em `tools/audio/` e prova de qualidade de 6 amostras; depois para no portão do Adriano) | Claude Opus 5.5 (worktree `aquamarine-claude-audio`) | GPU (MusicGen local), jogo só no fim | 25/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
