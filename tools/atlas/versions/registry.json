@@ -1,0 +1,58 @@
+[
+  {
+    "id": "kraken",
+    "version": "v1",
+    "label": "Atual no mod · v1",
+    "date": "2026-10-25",
+    "file": "kraken-v1.json"
+  },
+  {
+    "id": "kraken",
+    "version": "v2",
+    "label": "Proposta v2 · só no site",
+    "date": "2026-10-25",
+    "file": "kraken-v2.json"
+  },
+  {
+    "id": "tentacle",
+    "version": "v1",
+    "label": "Atual no mod · v1",
+    "date": "2026-10-25",
+    "file": "tentacle-v1.json"
+  },
+  {
+    "id": "young_kraken",
+    "version": "v1",
+    "label": "Atual no mod · v1",
+    "date": "2026-10-25",
+    "file": "young_kraken-v1.json"
+  },
+  {
+    "id": "kraken_egg",
+    "version": "v1",
+    "label": "Atual no mod · v1",
+    "date": "2026-10-25",
+    "file": "kraken_egg-v1.json"
+  },
+  {
+    "id": "moray",
+    "version": "v1",
+    "label": "Atual no mod · v1",
+    "date": "2026-10-25",
+    "file": "moray-v1.json"
+  },
+  {
+    "id": "whale",
+    "version": "v1",
+    "label": "Atual no mod · v1",
+    "date": "2026-10-25",
+    "file": "whale-v1.json"
+  },
+  {
+    "id": "sperm_whale",
+    "version": "v1",
+    "label": "Atual no mod · v1",
+    "date": "2026-10-25",
+    "file": "sperm_whale-v1.json"
+  }
+]

@@ -9,6 +9,7 @@ Decisões do Adriano de 24/10/2026, com as atualizações datadas em cada linha.
 ## Decididas
 | Assunto | Decisão |
 |---|---|
+| Atlas técnico e Kraken v2 | Liberados pelo Adriano em 25/10/2026: portal HTML local unificando modelos, animações, áudio, texturas e documentação; melhorar movimentos e estrutura do Kraken **somente na prévia**, sem integrar ao jogo. Preservar todos os modelos e versões no histórico. Operação em [../tools/atlas/README.md](../tools/atlas/README.md). |
 | Onde a luta acontece | Superfície **e** fundo, por fase. Efeito de **peso** que afunda o jogador (detalhes em [02-kraken.md](02-kraken.md)). |
 | Itens da cidade | Úteis, **não obrigatórios**. Sem eles o jogador não teria motivo para explorar a cidade. |
 | Dificuldade do Kraken | Um pouco mais difícil que o Warden. |

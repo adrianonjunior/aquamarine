@@ -26,6 +26,10 @@ Modelos e texturas são gerados por scripts Python (Pillow) em `tools/`. Versõe
 `gradle.properties`; ambiente validado em [docs/06-tecnico.md](docs/06-tecnico.md).
 
 ## Como rodar
+
+**Portal de assets:** execute `.\tools\atlas\abrir.ps1` para abrir o [Atlas técnico](tools/atlas/README.md)
+com modelos 3D, animações, áudio, texturas e documentos. A proposta do Kraken fica somente no site.
+
 1. Instale o **JDK 25** e aponte o `JAVA_HOME` para ele (o caminho usado nesta máquina está em
    [docs/06-tecnico.md](docs/06-tecnico.md), "Ambiente local").
 2. Na raiz do repositório:

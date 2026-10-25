@@ -141,3 +141,12 @@ pequenos com aprovação do Adriano** (agentes não ouvem). Arquivos novos em `t
 | A5 | Mixagem final, orçamento de 70 MB, verificação em `runClientGameTest` | Medidores verdes e build verde | Aceite no jogo |
 
 - [ ] A0 (entregue em 25/10/2026; aguarda o aval do Adriano) · [ ] A1 · [ ] A2 · [ ] A3 · [ ] A4 · [ ] A5
+
+## Atlas técnico e estudo do Kraken (25/10/2026)
+
+- [x] Portal HTML local unificado: sete rigs, suas animações, áudio existente, texturas e documentação.
+- [x] Kraken v2 exclusivo da prévia, com 16 movimentos e estrutura articulada; referência v1 preservada.
+- [x] Histórico de oito versões, exportação, atualização do áudio em produção e verificação no navegador.
+- [ ] Aceite artístico do Kraken v2 pelo Adriano. Integração no jogo não autorizada nesta faixa.
+
+Uso, limites e evidências: [Atlas técnico](../tools/atlas/README.md).
