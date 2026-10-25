@@ -38,9 +38,9 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 
-## Registro de handoff- 25/10/2026 · Codex Astra (3B-M2) · **Pronto para integração:** views (`WhaleView`, `SpermWhaleView`), modelos, animações, renderers genéricos, scripts `.bbmodel`/UV e placeholders temporários na `main` (`9184dc6`, `53c4629`, `a64193d`). `./gradlew build --quiet` passou; os modelos têm 34/32 cubos, rigs de 8/7 ossos e 5/4 animações. **Não testado no jogo:** spawn, animações e visibilidade da Sela, pois entidades/comandos só chegam em 3B-W; visual a verificar após 3B-W. **Próximo:** 3B-W integrar as entidades/views; então rodar `runClientGameTest`, registrar até 6 screenshots e substituir os UVs com a textura 3B-T.
+## Registro de handoff
 
-
+- 25/10/2026 · Codex Astra (3B-M2) · **Pronto para integração:** views (`WhaleView`, `SpermWhaleView`), modelos, animações, renderers genéricos, scripts `.bbmodel`/UV e placeholders temporários na `main` (`9184dc6`, `53c4629`, `a64193d`). `./gradlew build --quiet` passou; os modelos têm 34/32 cubos, rigs de 8/7 ossos e 5/4 animações. **Não testado no jogo:** spawn, animações e visibilidade da Sela, pois entidades/comandos só chegam em 3B-W; visual a verificar após 3B-W. **Próximo:** 3B-W integrar as entidades/views; então rodar `runClientGameTest`, registrar até 6 screenshots e substituir os UVs com a textura 3B-T.
 
 - 24/10/2026 · Orquestrador · **Entrega 2 completa nas faixas** (2A–2Q aceitas; 2Q-fix `64a8724`, build verde). **Pendente com o Adriano:** aceite multiplayer real (2 clientes, 3 fases), sensação de dano/ritmo e legibilidade do aviso do slam com a câmera normal. **Fase 3 liberada** (`ccee430`) por pedido do Adriano. **Onda 1 rodando (mesma Run `run_a6bda8ca6927`):** 3A (Claude, `ctx_e6a27537c07c`, terminal/worktree 2B, branch `claude/3A`), 3B-M2 (Codex medium, `ctx_ed1dda7e6bf4`, worktree 2D-M, branch `codex/3B-M2`), 3B-M1 (Codex high, `ctx_2a4c060d5656`, worktree nova 3B-M1). **Próximo:** quando 3B-M1 mergear as views, iniciar 3B-C (deps 3A, 3B-M1); quando 3B-M2 mergear, 3B-W (deps 3A, 3B-M2); depois 3B-T, 3C, 3D, 3E, 3Q.
 
