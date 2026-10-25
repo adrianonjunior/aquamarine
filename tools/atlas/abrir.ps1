@@ -26,8 +26,8 @@ if ($atlasStatus) {
     if (!$atlasRunning) { throw 'A porta está sendo usada por outro servidor. Use -Port 8767.' }
 }
 if (!$atlasRunning) {
-    $atlasServerArgs = @('"' + (Join-Path $PSScriptRoot 'serve.py') + '"', '--port', "$Port")
-    if ($AudioRoot) { $atlasServerArgs += @('--audio-root', '"' + (Resolve-Path $AudioRoot).Path + '"') }
+    $atlasServerArgs = @(('"' + (Join-Path $atlasScriptDirectory 'serve.py') + '"'), '--port', "$Port")
+    if ($AudioRoot) { $atlasServerArgs += @('--audio-root', ('"' + (Resolve-Path $AudioRoot).Path + '"')) }
     $atlasProcess = Start-Process -FilePath $atlasPython -ArgumentList $atlasServerArgs -WindowStyle Hidden -PassThru -WorkingDirectory $atlasRoot -RedirectStandardOutput (Join-Path $atlasRoot 'build/atlas-server.log') -RedirectStandardError (Join-Path $atlasRoot 'build/atlas-server.err.log')
     $atlasProcess.Id | Set-Content (Join-Path $atlasRoot 'build/atlas-server.pid')
     $atlasReady = $false

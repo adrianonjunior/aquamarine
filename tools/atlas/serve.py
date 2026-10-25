@@ -13,6 +13,8 @@ def main():
     parser.add_argument("--port",type=int,default=8766)
     parser.add_argument("--audio-root",type=Path)
     args = parser.parse_args()
+    if args.audio_root and not (args.audio_root / "tools/audio/manifest.json").is_file():
+        parser.error("A pasta de áudio não contém tools/audio/manifest.json")
     if not (OUT/"index.html").exists():
         build(args.audio_root)
     lock = threading.Lock()
