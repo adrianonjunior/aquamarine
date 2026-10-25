@@ -210,5 +210,14 @@
   "entity.aquamarine.villager.tide_smith": "Ferreiro de Maré",
   "entity.aquamarine.villager.nautical_cartographer": "Cartógrafo Náutico",
   "entity.aquamarine.villager.abyss_enchanter": "Encantador de Fossa",
-  "item.aquamarine.harbor_map": "Mapa da Vila"
+  "item.aquamarine.harbor_map": "Mapa da Vila",
+  "item.aquamarine.trench_map": "Mapa de Fossas de Moréia",
+  "message.aquamarine.harbor.tier_up": "Sua reputação no Porto subiu: agora você é %s com os Mergulhadores.",
+  "message.aquamarine.harbor.alert": "O Sino do Porto toca: uma Moréia ataca a Cúpula!",
+  "message.aquamarine.harbor.alert_won": "A Moréia caiu. Os Mergulhadores agradecem com %s Escamas Elétricas (+%s de reputação).",
+  "message.aquamarine.harbor.alert_lost": "A Moréia desistiu da Cúpula e voltou para as fossas.",
+  "commands.aquamarine.harbor.alert": "Alerta de Moréia: a Moréia surgiu em %s %s %s",
+  "commands.aquamarine.harbor.no_bell": "Nenhum Sino do Porto num raio de 48 blocos",
+  "commands.aquamarine.harbor.no_water": "Sem água aberta em volta da Cúpula para a Moréia",
+  "commands.aquamarine.harbor.reputation": "Reputação de %s no Porto: %s pontos (nível %s)"
 }

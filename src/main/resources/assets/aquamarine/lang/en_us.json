@@ -210,5 +210,14 @@
   "entity.aquamarine.villager.tide_smith": "Tide Smith",
   "entity.aquamarine.villager.nautical_cartographer": "Nautical Cartographer",
   "entity.aquamarine.villager.abyss_enchanter": "Trench Enchanter",
-  "item.aquamarine.harbor_map": "Harbor Map"
+  "item.aquamarine.harbor_map": "Harbor Map",
+  "item.aquamarine.trench_map": "Moray Trench Map",
+  "message.aquamarine.harbor.tier_up": "Your Harbor reputation rose: you are now %s with the Divers.",
+  "message.aquamarine.harbor.alert": "The Harbor Bell rings: a Moray is attacking the Dome!",
+  "message.aquamarine.harbor.alert_won": "The Moray fell. The Divers thank you with %s Electric Scales (+%s reputation).",
+  "message.aquamarine.harbor.alert_lost": "The Moray gave up on the Dome and went back to the trenches.",
+  "commands.aquamarine.harbor.alert": "Moray Alert: the Moray appeared at %s %s %s",
+  "commands.aquamarine.harbor.no_bell": "No Harbor Bell within 48 blocks",
+  "commands.aquamarine.harbor.no_water": "No open water around the Dome for the Moray",
+  "commands.aquamarine.harbor.reputation": "%s's Harbor reputation: %s points (tier %s)"
 }

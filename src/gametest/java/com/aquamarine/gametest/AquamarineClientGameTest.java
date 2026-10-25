@@ -130,6 +130,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 				KrakenVisualGameTest.run(context, world, server, base);
 			}
 		}
+		if (enabled("worldgen")) {
+			WorldgenGameTest.run(context);
+		}
 	}
 
 	private static void useLure(MinecraftServer s, BlockPos altar) {

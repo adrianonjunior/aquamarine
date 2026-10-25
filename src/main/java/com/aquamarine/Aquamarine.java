@@ -2,6 +2,7 @@ package com.aquamarine;
 
 import com.aquamarine.block.ModBlocks;
 import com.aquamarine.command.CreatureCommand;
+import com.aquamarine.command.HarborCommand;
 import com.aquamarine.command.KrakenCommand;
 import com.aquamarine.config.AquamarineConfig;
 import com.aquamarine.effect.ModEffects;
@@ -9,6 +10,9 @@ import com.aquamarine.entity.ModEntities;
 import com.aquamarine.entity.ModVillagers;
 import com.aquamarine.entity.boss.AquamarineBossBar;
 import com.aquamarine.event.KrakenSummoning;
+import com.aquamarine.harbor.BiomeMapFunction;
+import com.aquamarine.harbor.HarborAlert;
+import com.aquamarine.harbor.HarborElevators;
 import com.aquamarine.item.ModCreativeTab;
 import com.aquamarine.item.HarpoonEffects;
 import com.aquamarine.item.ModComponents;
@@ -42,6 +46,9 @@ public class Aquamarine implements ModInitializer {
 		ModCreativeTab.register();
 		ModEntities.register();
 		ModVillagers.register();
+		BiomeMapFunction.register();
+		HarborAlert.register();
+		HarborElevators.register();
 		AquamarineBossBar.registerPayloads();
 		OrichalcumEffects.register();
 		ModEffects.register();
@@ -51,6 +58,7 @@ public class Aquamarine implements ModInitializer {
 		KrakenSummoning.register();
 		KrakenCommand.register();
 		CreatureCommand.register();
+		HarborCommand.register();
 		LOGGER.info("Aquamarine carregado.");
 	}
 

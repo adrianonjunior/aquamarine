@@ -1,0 +1,41 @@
+{
+  "gives": {
+    "id": "minecraft:map"
+  },
+  "max_uses": 12,
+  "reputation_discount": 0.05,
+  "wants": {
+    "id": "minecraft:emerald",
+    "count": 12
+  },
+  "xp": 10,
+  "additional_wants": {
+    "id": "minecraft:compass"
+  },
+  "given_item_modifier": [
+    {
+      "type": "aquamarine:biome_map",
+      "decoration": "minecraft:red_x",
+      "destination": "#minecraft:aquamarine_fossa_de_nereia",
+      "search_radius": 3200
+    },
+    {
+      "type": "minecraft:set_name",
+      "name": {
+        "translate": "item.aquamarine.trench_map"
+      },
+      "target": "item_name"
+    },
+    {
+      "type": "minecraft:filtered",
+      "item_filter": {
+        "predicates": {
+          "minecraft:map_id": {}
+        }
+      },
+      "on_fail": {
+        "type": "minecraft:discard"
+      }
+    }
+  ]
+}

@@ -3,6 +3,7 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "override_liquid_settings": "ignore_waterlogging",
         "location": "aquamarine:harbor/porto",
         "processors": "minecraft:empty",
         "projection": "rigid"
