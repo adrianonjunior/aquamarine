@@ -2,10 +2,11 @@
 import argparse
 import json
 import threading
-from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from http.server import ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
 from build import ROOT, OUT, build
+from range_handler import RangeRequestHandler
 
 
 def main():
@@ -19,7 +20,7 @@ def main():
         build(args.audio_root)
     lock = threading.Lock()
 
-    class Handler(SimpleHTTPRequestHandler):
+    class Handler(RangeRequestHandler):
         def __init__(self,*a,**kw):
             super().__init__(*a,directory=str(OUT),**kw)
 

@@ -12,4 +12,10 @@ main{max-width:1800px;margin:auto;padding:30px 32px 48px}h1,h2,h3,p{margin-top:0
 h1,h2,h3{font-family:"Chakra Petch","Segoe UI",sans-serif;font-weight:500}
 .touch-hint{display:none}.scroll-hint{font-size:11px;margin:0;padding:0 18px 12px;color:var(--muted)}
 .orbit-hint{font-size:12px;line-height:1.45;bottom:9px;max-width:calc(100% - 36px)}
+.audio-seek-controls{display:grid;grid-template-columns:auto minmax(80px,1fr) auto auto;align-items:center;gap:9px;margin:10px 0 16px}
+.audio-seek-controls .skip-audio{padding:6px 9px;font-size:11px;color:var(--ink);white-space:nowrap}
+.audio-seek-controls input[type=range]{width:100%;min-width:0;padding:0;cursor:pointer;accent-color:var(--accent)}
+.audio-seek-controls input[type=range]:disabled{cursor:wait;opacity:.45}
+.audio-clock{font:11px Consolas,monospace;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+@media(max-width:640px){.audio-seek-controls{grid-template-columns:auto minmax(60px,1fr) auto}.audio-clock{grid-column:1/-1;text-align:right}}
 @media(max-width:640px){.mouse-hint{display:none}.touch-hint{display:inline}.orbit-hint{font-size:11px}}

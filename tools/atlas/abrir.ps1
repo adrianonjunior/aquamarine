@@ -36,6 +36,24 @@ if (!$atlasRunning) {
     }
     if (!$atlasReady) { throw 'O servidor não iniciou; veja build/atlas-server.err.log.' }
 }
+$atlasPublicRunning = $false
+try {
+    $atlasPublicResponse = Invoke-WebRequest "http://127.0.0.1:8767" -TimeoutSec 2
+    $atlasPublicRunning = $atlasPublicResponse.Content.Contains('Observatório de criaturas')
+    if (!$atlasPublicRunning) { throw 'A porta 8767 está sendo usada por outro site.' }
+} catch {
+    if ($_.Exception.Message -like '*está sendo usada*') { throw }
+}
+if (!$atlasPublicRunning) {
+    $atlasPublicArgs = @(('"' + (Join-Path $atlasScriptDirectory 'serve_public.py') + '"'), '--port', '8767', '--directory', ('"' + (Join-Path $atlasRoot 'build/atlas') + '"'))
+    $atlasPublicProcess = Start-Process -FilePath $atlasPython -ArgumentList $atlasPublicArgs -WindowStyle Hidden -PassThru -WorkingDirectory $atlasRoot -RedirectStandardOutput (Join-Path $atlasRoot 'build/atlas-public.log') -RedirectStandardError (Join-Path $atlasRoot 'build/atlas-public.err.log')
+    $atlasPublicProcess.Id | Set-Content (Join-Path $atlasRoot 'build/atlas-public.pid')
+    $atlasPublicReady = $false
+    for ($attempt=0; $attempt -lt 20; $attempt++) {
+        try { $publicCheck = Invoke-WebRequest "http://127.0.0.1:8767" -TimeoutSec 1; if ($publicCheck.Content.Contains('Observatório de criaturas')) { $atlasPublicReady=$true; break } } catch { Start-Sleep -Milliseconds 200 }
+    }
+    if (!$atlasPublicReady) { throw 'O servidor público estático não iniciou; veja build/atlas-public.err.log.' }
+}
 $atlasUrl = "http://127.0.0.1:$Port"
 Write-Output $atlasUrl
 if (!$SemAbrir) { Start-Process $atlasUrl }

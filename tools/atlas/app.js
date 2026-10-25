@@ -23,6 +23,7 @@ const descriptions = {
  ambush:'O corpo se comprime para baixo e os tentáculos mergulham em um golpe curto e violento.'
 };
 const fmt = (n, digits=2) => Number(n).toLocaleString('pt-BR',{minimumFractionDigits:digits,maximumFractionDigits:digits});
+const audioClock = seconds => {seconds=Number.isFinite(seconds)?Math.floor(seconds):0;return `${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`;};
 const el = (tag, className, text) => { const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node; };
 const dl = (target, rows) => {target.replaceChildren();for(const [key,value] of rows)target.append(el('dt','',key),el('dd','',String(value)));};
 let model=data.models[0], clipName='idle', time=0, playing=!matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -266,7 +267,17 @@ function audioList(){
   document.querySelectorAll('audio').forEach(a=>a.pause());
   $('audio-list').replaceChildren(...entries.map(a=>{
     const article=el('article','audio-card');article.append(el('h2','',a.description||a.name),el('p','kind',({sfx:'Efeito sonoro',music:'Música',stem:'Camada de música adaptativa',ambience:'Ambiência',comparison:'Comparação · IA local'})[a.kind]||a.kind),el('code','path',a.file||a.name));
-    if(a.available){const player=el('audio');player.controls=true;player.preload='none';player.src=a.src;player.setAttribute('aria-label',a.description||a.name);player.addEventListener('play',()=>document.querySelectorAll('audio').forEach(other=>{if(other!==player)other.pause();}));article.append(player);
+    if(a.available){
+      const player=el('audio');player.controls=true;player.preload='metadata';player.src=a.src;player.setAttribute('aria-label',a.description||a.name);player.addEventListener('play',()=>document.querySelectorAll('audio').forEach(other=>{if(other!==player)other.pause();}));article.append(player);
+      const seekControls=el('div','audio-seek-controls'),back=el('button','skip-audio','−15 s'),forward=el('button','skip-audio','+15 s'),seek=el('input','audio-seek');
+      back.type=forward.type='button';seek.type='range';seek.min='0';seek.max='1000';seek.step='1';seek.value='0';seek.setAttribute('aria-label',`Buscar trecho: ${a.description||a.name}`);seek.disabled=true;
+      const clock=el('output','audio-clock','0:00 / 0:00');
+      const syncSeek=()=>{const duration=Number.isFinite(player.duration)?player.duration:0;seek.disabled=!duration;seek.value=duration?String(Math.round(player.currentTime/duration*1000)):'0';clock.textContent=`${audioClock(player.currentTime)} / ${audioClock(duration)}`;};
+      for(const event of ['loadedmetadata','durationchange','timeupdate','seeked'])player.addEventListener(event,syncSeek);
+      back.onclick=()=>{if(Number.isFinite(player.duration))player.currentTime=Math.max(0,player.currentTime-15);};
+      forward.onclick=()=>{if(Number.isFinite(player.duration))player.currentTime=Math.min(player.duration,player.currentTime+15);};
+      seek.oninput=()=>{if(Number.isFinite(player.duration)){player.currentTime=Number(seek.value)/1000*player.duration;syncSeek();}};
+      seekControls.append(back,seek,forward,clock);article.append(seekControls);
       if(a.mixes?.length){const label=el('label','','Mixagem de audição'),select=el('select');for(const mix of a.mixes){const option=el('option','',({full:'Completa',respiro:'Respiro · sem breaks',sem_gloria:'Sem glória · base + breaks'})[mix.id]||mix.id);option.value=mix.src;select.append(option);}select.value=a.src;select.onchange=()=>{player.pause();player.src=select.value;player.load();};label.append(select);article.append(label);}}
     else article.append(el('p','','Arquivo de áudio não encontrado neste catálogo. Atualize após a entrega do áudio.'));
     if(a.listen_for)article.append(el('p','',`Ouça: ${a.listen_for}`));

@@ -29,6 +29,9 @@ são locais. O build usa Python com Pillow, Node e as dependências fixadas no l
   pinça aproxima, dois dedos movem. Com foco no canvas: setas giram, `+`/`-` aproximam, `F` enquadra,
   espaço pausa. Enquadrar considera toda a animação para não cortar tentáculos.
 - A linha do tempo permite pausar uma pose; há velocidade, repetição e marcador de fim do aviso.
+- Os players de áudio mostram duração e posição, deixam arrastar até um trecho e têm saltos de 15 s.
+  Os servidores local e público aceitam pedidos HTTP Range, para o navegador buscar bytes do ponto
+  solicitado sem carregar o arquivo desde o começo. `preload=metadata` carrega a duração ao abrir.
 - Textura, UV, volume neutro, malha, ossos, grade e Sela ajudam na inspeção. A camada contínua do
   Kraken é opcional e corresponde à fase 1. Ela é separada dos clipes.
 - Áudio reúne o manifesto e as comparações MusicGen da prévia original, incluindo medidas,
