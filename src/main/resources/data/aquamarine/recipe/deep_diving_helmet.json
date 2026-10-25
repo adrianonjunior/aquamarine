@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "S": "aquamarine:ancient_scale",
+    "P": "aquamarine:abyssal_pearl",
+    "H": "minecraft:prismarine_shard"
+  },
+  "pattern": [
+    "SSS",
+    "SPS"
+  ],
+  "result": {
+    "id": "aquamarine:deep_diving_helmet"
+  }
+}

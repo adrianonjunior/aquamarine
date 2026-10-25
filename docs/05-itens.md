@@ -43,6 +43,9 @@ Todas as receitas abaixo são na Forja Abissal, exceto quando indicado.
 | Amuleto da Corrente | 3 Escamas + 2 Cascos + 1 Pérola | Na mão secundária: imunidade ao puxão do Redemoinho |
 | Tônico de Pressão | 1 garrafa d'água + 1 Cristal + 2 algas (bancada comum) | 5 min: máximo da Pressão −2 e solta de agarrões 50% mais rápido |
 | Boia de Âncora | 1 barril + 2 lingotes de cobre + 1 cristal de prismarinho (bancada comum) | Bloco que forma uma plataforma 3x3 por 90 s na superfície; zera a Pressão de quem pisa; o Kraken pode destruí-la; recarga de 30 s por jogador |
+| Medidor de Profundidade | bússola + painel de vidro + lingote de cobre + 1 Cristal (sem forma, bancada comum) | Na mão (qualquer uma), o HUD mostra a profundidade e o nível de Pressão (Fase 3A) |
+| Regulador de Pressão | 2 lingotes de cobre + 1 Pérola + 1 Cristal + 1 Escama Antiga (sem forma) | Mão secundária: Pressão da profundidade −2 níveis; 1 de durabilidade (600) a cada 10 s ativo; não afeta a Pressão do Kraken (3A) |
+| Traje de Mergulho Profundo (4 peças) | Escama Antiga + Pérola Abissal + estilhaço de prismarinho (bancada comum; o Casco de Prismarinho ainda não existe) | Defesa 2/6/5/2. +45 s de Reserva de Ar por peça (180 s com o conjunto), gasta depois do fôlego; Pressão da profundidade −1 nível com 2 peças e −2 com 4. Isolamento elétrico entra com a Moréia (3B) |
 | Bússola de Maré | 1 bússola + 1 Pérola + 1 Cristal (bancada comum) | Aponta para a Cidade Perdida mais próxima |
 | Mapa de Nereia | Cartógrafo (nível 3, por esmeraldas e uma bússola), naufrágios ou Walker | Marca a Cidade Perdida mais próxima |
 | Lanterna de Coral | 1 lanterna + 2 corais + 1 Cristal (bancada comum) | Luz 15 debaixo d'água; afasta a Nuvem de Tinta num raio de 4 blocos |

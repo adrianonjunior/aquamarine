@@ -28,6 +28,20 @@ public final class ModMaterials {
 	public static final ResourceKey<EquipmentAsset> DIVING_GOGGLES_ASSET =
 		ResourceKey.create(EquipmentAssets.ROOT_ID, Aquamarine.id("diving_goggles"));
 
+	public static final ResourceKey<EquipmentAsset> DEEP_DIVING_ASSET =
+		ResourceKey.create(EquipmentAssets.ROOT_ID, Aquamarine.id("deep_diving"));
+
+	/** Traje de Mergulho Profundo: defesa 2/6/5/2, sem resistência; o valor dele é o ar e a Pressão. */
+	public static final ArmorMaterial DEEP_DIVING_ARMOR = new ArmorMaterial(
+		25,
+		Map.of(ArmorType.HELMET, 2, ArmorType.CHESTPLATE, 6, ArmorType.LEGGINGS, 5, ArmorType.BOOTS, 2, ArmorType.BODY, 9),
+		12,
+		SoundEvents.ARMOR_EQUIP_TURTLE,
+		0.0F,
+		0.0F,
+		ModTags.Items.REPAIRS_DEEP_DIVING_ARMOR,
+		DEEP_DIVING_ASSET);
+
 	/** Defesa 3/7/5/3, resistência 2, durabilidade 35 (multiplicador). */
 	public static final ArmorMaterial ORICHALCUM_ARMOR = new ArmorMaterial(
 		35,

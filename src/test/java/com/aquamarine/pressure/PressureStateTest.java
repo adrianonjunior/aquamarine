@@ -81,4 +81,87 @@ class PressureStateTest {
 		}
 		assertEquals(0.0, PressureState.gravityBonus(0));
 	}
+
+	private static void runAmbient(PressureState s, int ticks, boolean krakenExposed, int ambientTarget, boolean tonic) {
+		for (int i = 0; i < ticks; i++) {
+			s.tick(krakenExposed, ambientTarget, tonic, 0, 1);
+		}
+	}
+
+	@Test
+	void niveisAmbientaisPorProfundidade() {
+		assertEquals(0, PressureState.ambientCap(0));
+		assertEquals(0, PressureState.ambientCap(29.9));
+		assertEquals(1, PressureState.ambientCap(30));
+		assertEquals(1, PressureState.ambientCap(49.9));
+		assertEquals(2, PressureState.ambientCap(50));
+		assertEquals(2, PressureState.ambientCap(69.9));
+		assertEquals(3, PressureState.ambientCap(70));
+		assertEquals(3, PressureState.ambientCap(500));
+	}
+
+	@Test
+	void fonteAmbientalSobeNasMesmasRegrasEPara3() {
+		PressureState s = new PressureState();
+		runAmbient(s, 199, false, 3, false);
+		assertEquals(0, s.level());
+		runAmbient(s, 1, false, 3, false);
+		assertEquals(1, s.level());
+		runAmbient(s, 5000, false, 3, false);
+		assertEquals(3, s.level(), "a Pressão ambiental nunca chega a 4 sozinha");
+		assertEquals(0, s.krakenLevel());
+	}
+
+	@Test
+	void fonteAmbientalDesceQuandoAlvoCai() {
+		PressureState s = new PressureState();
+		runAmbient(s, 700, false, 3, false);
+		assertEquals(3, s.level());
+		runAmbient(s, 100, false, 1, false);
+		assertEquals(2, s.level());
+		runAmbient(s, 100, false, 1, false);
+		assertEquals(1, s.level());
+		runAmbient(s, 400, false, 1, false);
+		assertEquals(1, s.level(), "no alvo, o nível fica");
+		runAmbient(s, 100, false, 0, false);
+		assertEquals(0, s.level());
+	}
+
+	@Test
+	void nivelFinalEOMaiorDasFontesENaoASoma() {
+		PressureState s = new PressureState();
+		runAmbient(s, 700, false, 3, false);
+		assertEquals(3, s.level());
+		runAmbient(s, 400, true, 3, false);
+		assertEquals(3, s.level(), "Kraken em 2 e ambiental em 3: vale 3, não 5");
+		runAmbient(s, 400, true, 3, false);
+		assertEquals(4, s.level());
+		assertEquals(3, s.ambientLevel());
+		assertEquals(4, s.krakenLevel());
+		// saindo do alcance do Kraken, volta ao ambiental
+		runAmbient(s, 100, false, 3, false);
+		assertEquals(3, s.level());
+	}
+
+	@Test
+	void tonicoLimitaAsDuasFontes() {
+		PressureState s = new PressureState();
+		runAmbient(s, 900, true, 3, false);
+		assertEquals(4, s.level());
+		runAmbient(s, 1, true, 3, true);
+		assertEquals(2, s.level());
+		assertEquals(2, s.ambientLevel());
+	}
+
+	@Test
+	void alturaSemKrakenNaoMudaALuta() {
+		// sem fonte ambiental (alvo 0) o comportamento é exatamente o da Entrega 2
+		PressureState s = new PressureState();
+		PressureState old = new PressureState();
+		for (int i = 0; i < 900; i++) {
+			s.tick(true, 0, false, 0, 1);
+			old.tick(true, false, 0, 1);
+			assertEquals(old.level(), s.level());
+		}
+	}
 }
