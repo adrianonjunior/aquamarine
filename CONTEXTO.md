@@ -38,7 +38,9 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 
-## Registro de handoff
+## Registro de handoff
+
+- 24/10/2026 · Orquestrador · 2P aceita (Kraken 32 x 20, 2A-T aceita), Opus entregou o Kraken vivo (`6325941`, locomoção, ondulação, avisos maiores) e a 2Q (Codex) publicou `docs/relatorio-2q.md` (`0ab8f06`): 2 achados em `KrakenEffects.java` (P1 retângulos ciano em waterJet/roar/bolts; P2 aviso do slam ilegível), enviados ao Opus (`aquamarine-45`) para correção. Build verde na main. **Falta para fechar a Entrega 2:** correção dos 2 achados e o **aceite multiplayer real com 2 clientes e as 3 fases (só o Adriano)**. Fase 3 só depois (`prompts/orquestrador-fase3.md`).
 
 - 24/10/2026 · Codex Astra (2Q) · QA visual registrado em [relatorio-2q.md](docs/relatorio-2q.md): GameTest terminou sem falha/crash; capturas cobrem ataques em grupos, rachaduras 2/3 e nado. Há dois achados de efeitos/legibilidade para Tasks do Claude; FakePlayer simulou segundo jogador no servidor, mas multiplayer real e sincronização da barra entre clientes ficam para validação do Adriano.
 
