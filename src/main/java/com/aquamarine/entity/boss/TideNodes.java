@@ -8,10 +8,10 @@ package com.aquamarine.entity.boss;
 public final class TideNodes {
 	public static final int BASE_COUNT = 4;
 	public static final int MAX_COUNT = 8;
-	/** Lado da hitbox cúbica de cada nó, já na escala do Kraken final. */
-	public static final double SIZE = 1.5 * 4.0;
-	/** Os offsets abaixo foram desenhados para 8 x 6 blocos; o Kraken final (32 x 20) é 4 vezes maior. */
-	public static final double WORLD_SCALE = 4.0;
+	/** Os offsets abaixo foram desenhados para um corpo de 8 x 6 blocos e crescem com o modelo. */
+	public static final double WORLD_SCALE = KrakenStats.MODEL_SCALE;
+	/** Lado da hitbox cúbica de cada nó (cresce menos que o corpo: o ponto fraco continua pedindo mira). */
+	public static final double SIZE = 1.5 * WORLD_SCALE * 0.75;
 
 	public record Offset(double x, double y, double z) {}
 

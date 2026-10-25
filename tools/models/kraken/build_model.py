@@ -31,6 +31,13 @@ SIZE = 128
 HEIGHT = 256
 UUID_COUNTER = 0
 
+# v2 (Atlas, integrada em 25/10/2026): dobradiça da mandíbula, rolagem das abas e as pontas 5 e 6 dos braços
+# (distância da junta anterior, largura, comprimento), dobradas TIP_PITCH graus.
+JAW_HINGE = (0, -13, 8)
+FIN_ROLL = 12
+TIP_SEGMENTS = ((6, 1.05, 5.2), (4.5, .65, 4.0))
+TIP_PITCH = -5
+
 # Cascas das rachaduras (crack_75/50/25): cobrem coroa, elevação e placa do manto, um pouco infladas.
 CRACK_INFLATE = 0.12
 CRACK_SHELLS = (
@@ -91,8 +98,9 @@ def create_model(clips: dict) -> None:
     groups: dict[str, dict] = {}
     elements: list[dict] = []
 
-    def group(name: str, origin: tuple[float, float, float], parent: str = "root") -> dict:
-        node = {"name": name, "uuid": uid(), "origin": list(origin), "rotation": [0, 0, 0], "children": []}
+    def group(name: str, origin: tuple[float, float, float], parent: str = "root",
+              rotation: tuple[float, float, float] = (0, 0, 0)) -> dict:
+        node = {"name": name, "uuid": uid(), "origin": list(origin), "rotation": list(rotation), "children": []}
         groups[name] = node
         (groups[parent]["children"] if parent in groups else outliner).append(node)
         return node
@@ -110,10 +118,19 @@ def create_model(clips: dict) -> None:
         elements.append(box(name, (0, -24, -1), bounds, uv, "mantle", CRACK_INFLATE))
     elements.extend([
         box("head_shell", (0, -15, 1), (-7, -7, -8, 14, 13, 16), (0, 60), "head"),
-        box("jaw", (0, -15, 1), (-5, 2, 7, 10, 3, 5), (60, 60), "head"),
+        # v2: a mandíbula e o bico giram na dobradiça (jaw_hinge), atrás do queixo.
+        box("jaw", JAW_HINGE, (-5, 0, 0, 10, 3, 5), (60, 60), "jaw_hinge"),
     ])
     group("mantle", (0, -24, -1))
     group("head", (0, -15, 1))
+    group("jaw_hinge", JAW_HINGE, "head")
+    for side in (-1, 1):
+        # v2: abas laterais do manto (reaproveitam as ilhas de UV das cristas).
+        fin = "mantle_fin_left" if side < 0 else "mantle_fin_right"
+        fin_origin = (side * 9, -27, -3)
+        group(fin, fin_origin, "mantle", (0, 0, side * FIN_ROLL))
+        elements.append(box(fin, fin_origin, (-5 if side < 0 else 0, -1, -7, 5, 2, 16), (80, 0), fin))
+        elements.append(box(fin + "_edge", fin_origin, (-8 if side < 0 else 4, 0, -4, 4, 1.5, 10), (80, 22), fin))
     for side in (-1, 1):
         side_name = "left" if side < 0 else "right"
         elements.append(box(f"eye_socket_{side_name}", (side * 4.2, -16, 8.2), (-2, -2, 0, 4, 4, 2), (80, 48), "head"))
@@ -121,7 +138,7 @@ def create_model(clips: dict) -> None:
         for gill in range(4):
             elements.append(box(f"gill_{side_name}_{gill}", (side * (5 + gill * .35), -13, -3 + gill * 2),
                                 (0, 0, 0, 1, 4, 1), (104, 48), "head"))
-    elements.append(box("beak", (0, -11, 11), (-2, 0, 0, 4, 3, 4), (112, 56), "head"))
+    elements.append(box("beak", (0, -11, 11), (-2, 0, 0, 4, 3, 4), (112, 56), "jaw_hinge"))
 
     for arm_index in range(8):
         angle = 360.0 * arm_index / 8.0
@@ -142,6 +159,15 @@ def create_model(clips: dict) -> None:
                 elements.append(box(f"arm_{arm_index}_{joint}_sucker_{sucker}",
                                     (joint_origin[0], joint_origin[1] + taper / 2, joint_origin[2] + 1 + sucker * 2),
                                     (-1, 0, -1, 2, 1, 2), (96, 92), joint_name))
+        # v2: duas pontas finas e flexíveis (7 juntas por braço).
+        tip_z = origin[2] + 4 * 6
+        for joint, (offset, width, length) in zip((5, 6), TIP_SEGMENTS):
+            tip_z += offset
+            joint_name = f"arm_{arm_index}_segment_{joint}"
+            joint_origin = (origin[0], origin[1], tip_z)
+            group(joint_name, joint_origin, f"arm_{arm_index}_segment_{joint - 1}", (TIP_PITCH, 0, 0))
+            elements.append(box(joint_name, joint_origin, (-width / 2, -width / 2, 0, width, width, length), (72, 92), joint_name))
+            elements.append(box(f"{joint_name}_sucker", joint_origin, (-.4, width / 2, 1.2, .8, .5, .8), (96, 92), joint_name))
 
     for item in elements:
         outliner_group = item.pop("_group")
@@ -216,18 +242,24 @@ def animations_java(clips: dict) -> str:
     for name, seconds in kraken_animations.WARN.items():
         lines.append(f"\tpublic static final float {java_name(name)}_IMPACT = {fmt(seconds)};")
     lines.append("")
+    # Um método por clipe: a v2 tem milhares de chaves, e tudo no inicializador estático passa dos 64 KB
+    # de bytecode que a JVM aceita por método.
+    for name in clips:
+        lines.append(f"\tpublic static final AnimationDefinition {java_name(name)} = {name}();")
+    lines.append("")
     for name, clip in clips.items():
-        lines.append(f"\tpublic static final AnimationDefinition {java_name(name)} = "
-                     f"AnimationDefinition.Builder.withLength({fmt(clip.length)}){'.looping()' if clip.loop else ''}")
+        lines.append(f"\tprivate static AnimationDefinition {name}() {{")
+        lines.append(f"\t\treturn AnimationDefinition.Builder.withLength({fmt(clip.length)}){'.looping()' if clip.loop else ''}")
         for (bone, channel), track in clip.tracks.items():
             keys = []
             for time in sorted(track):
                 (x, y, z), mode = track[time]
                 keys.append(f"k({fmt(time)}, {vec[channel]}({fmt(x)}, {fmt(y)}, {fmt(z)}), {interp[mode]})")
-            lines.append(f"\t\t.addAnimation(\"{bone}\", new AnimationChannel({target[channel]},")
+            lines.append(f"\t\t\t.addAnimation(\"{bone}\", new AnimationChannel({target[channel]},")
             for i, key in enumerate(keys):
-                lines.append(f"\t\t\t{key}{',' if i < len(keys) - 1 else '))'}")
-        lines.append("\t\t.build();")
+                lines.append(f"\t\t\t\t{key}{',' if i < len(keys) - 1 else '))'}")
+        lines.append("\t\t\t.build();")
+        lines.append("\t}")
         lines.append("")
     lines += [
         "\t/** Duração do clipe em segundos (as partículas sabem quando ele acabou). */",

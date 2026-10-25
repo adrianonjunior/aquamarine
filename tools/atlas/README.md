@@ -1,7 +1,8 @@
 # Atlas técnico Aquamarine
 
-Portal local em HTML: modelos completos em 3D, animações, áudio, texturas e documentos. A proposta
-do Kraken é **exclusiva do site**. Nenhum Java, modelo ou textura consumido pelo jogo é modificado.
+Portal local em HTML: modelos completos em 3D, animações, áudio, texturas e documentos. Nenhum Java,
+modelo ou textura consumido pelo jogo é modificado pelo site. A proposta v2 do Kraken nasceu aqui e foi
+**integrada ao jogo** em 25/10/2026 (a pedido do Adriano): o site agora mostra o rig de produção.
 
 ## Abrir
 
@@ -23,7 +24,7 @@ são locais. O build usa Python com Pillow, Node e as dependências fixadas no l
 
 ## Usar
 
-- Escolha criatura à esquerda e movimento à direita. O Kraken abre na proposta v2.
+- Escolha criatura à esquerda e movimento à direita. O Kraken abre no rig de produção (a v2 integrada).
 - **Modelo + animações** alterna versões preservadas. Nenhuma seleção altera o mod.
 - Arraste para girar, use a roda para zoom e o botão direito para mover. No celular: um dedo gira,
   pinça aproxima, dois dedos movem. Com foco no canvas: setas giram, `+`/`-` aproximam, `F` enquadra,
@@ -42,16 +43,19 @@ são locais. O build usa Python com Pillow, Node e as dependências fixadas no l
 ## Histórico permanente de modelos
 
 `versions/registry.json` registra cada versão; os JSONs guardam **rig, cubos, textura e keyframes**.
-Os sete modelos atuais são v1; o Kraken tem também a proposta v2. O seletor lê o registro completo.
+Os modelos atuais são v1, menos o Kraken, que no jogo já é a v2; a v1 dele segue no registro. O seletor lê o
+registro completo.
 **Nunca sobrescreva uma versão publicada.** Exporte o JSON pelo site, atribua um novo `version` e registre:
 
 ```powershell
 python tools/atlas/register_version.py --source caminho/kraken-v3.json --label 'Proposta v3 · só no site'
 ```
 
-O comando recusa IDs já existentes. Regerar o site não modifica esses snapshots. O estudo v2 é
-reproduzível em `../models/kraken/kraken_preview_v2.py` (movimentos) e `catalog.py::kraken_proposal`
-(estrutura). O gerador do jogo **não importa** essa proposta. Se ela evoluir, registre v3, sem apagar v2.
+O comando recusa IDs já existentes. Regerar o site não modifica esses snapshots. O estudo v2 original
+continua em `../models/kraken/kraken_preview_v2.py` (movimentos) e `catalog.py::kraken_proposal` (estrutura),
+mas o gerador do jogo agora tem a v2 dele mesmo (`kraken_animations.py`: `refine` e `rig_tracks`;
+`build_model.py`: juntas 5 e 6, `jaw_hinge` e abas). Quando o rig de produção já tem `jaw_hinge`, o catálogo usa
+o rig e os clipes de produção e não monta proposta. Uma v3 futura se registra sem apagar v1 e v2.
 `reference_v1.json` preserva os clipes do Kraken na data desta entrega.
 
 ## Gerar e validar

@@ -48,7 +48,7 @@ import net.minecraft.world.phys.Vec3;
  * {@code /aquamarine kraken attack <nome>} usa {@link #force}.
  */
 public final class KrakenAttacks {
-	private static final double RING_RADIUS = 18.0;
+	private static final double RING_RADIUS = 28.0;
 	private static final SoundEvent[] NO_SOUND = {};
 
 	/** Um ataque em fase de aviso. */

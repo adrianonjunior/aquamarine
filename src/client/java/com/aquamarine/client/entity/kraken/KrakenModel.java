@@ -13,8 +13,13 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
 
-/** Faceted deep-sea Kraken: armored mantle, luminous eyes, gills and eight articulated arms. */
+/**
+ * Faceted deep-sea Kraken: armored mantle, luminous eyes, gills and eight articulated arms.
+ * V2 (25/10/2026): mandíbula na dobradiça {@code jaw_hinge}, abas do manto e 7 juntas por braço (as duas
+ * últimas finas e flexíveis), iguais a tools/models/kraken/build_model.py.
+ */
 public final class KrakenModel extends EntityModel<KrakenRenderState> {
 	public static final ModelLayerLocation LAYER = new ModelLayerLocation(Aquamarine.id("kraken"), "main");
 
@@ -22,8 +27,10 @@ public final class KrakenModel extends EntityModel<KrakenRenderState> {
 	private final ModelPart mantle;
 	private final ModelPart head;
 	private final ModelPart[] arms = new ModelPart[8];
-	/** segments[braço][junta], de arm_N_segment_0 (raiz) a arm_N_segment_4 (ponta). */
-	private final ModelPart[][] segments = new ModelPart[8][5];
+	/** Juntas por braço: 5 grossas e as 2 pontas finas da v2. */
+	public static final int JOINTS = 7;
+	/** segments[braço][junta], de arm_N_segment_0 (raiz) a arm_N_segment_6 (ponta). */
+	private final ModelPart[][] segments = new ModelPart[8][JOINTS];
 	private final ModelPart[] eyes = new ModelPart[2];
 	private final ModelPart[] cracks = new ModelPart[3];
 	private final KeyframeAnimation idle;
@@ -72,7 +79,7 @@ public final class KrakenModel extends EntityModel<KrakenRenderState> {
 		for (int i = 0; i < this.arms.length; i++) {
 			this.arms[i] = root.getChild("arm_" + i);
 			ModelPart part = this.arms[i];
-			for (int joint = 0; joint < 5; joint++) {
+			for (int joint = 0; joint < JOINTS; joint++) {
 				part = part.getChild("arm_" + i + "_segment_" + joint);
 				this.segments[i][joint] = part;
 			}
@@ -104,9 +111,11 @@ public final class KrakenModel extends EntityModel<KrakenRenderState> {
 			.addBox(-10.0F, -5.0F, -12.0F, 20.0F, 8.0F, 24.0F, shell), PartPose.ZERO);
 
 		PartDefinition head = root.addOrReplaceChild("head", CubeListBuilder.create()
-			.texOffs(0, 60).addBox(-7.0F, -7.0F, -8.0F, 14.0F, 13.0F, 16.0F, none)
-			.texOffs(60, 60).addBox(-5.0F, 2.0F, 7.0F, 10.0F, 3.0F, 5.0F, none),
+			.texOffs(0, 60).addBox(-7.0F, -7.0F, -8.0F, 14.0F, 13.0F, 16.0F, none),
 			PartPose.offset(0.0F, -15.0F, 1.0F));
+		// Mandíbula e bico giram juntos na dobradiça atrás do queixo.
+		PartDefinition jaw = head.addOrReplaceChild("jaw_hinge", CubeListBuilder.create()
+			.texOffs(60, 60).addBox(-5.0F, 0.0F, 0.0F, 10.0F, 3.0F, 5.0F, none), PartPose.offset(0.0F, 2.0F, 7.0F));
 		for (int side : new int[] {-1, 1}) {
 			String suffix = side < 0 ? "left" : "right";
 			head.addOrReplaceChild("eye_socket_" + suffix, CubeListBuilder.create().texOffs(80, 48)
@@ -121,8 +130,15 @@ public final class KrakenModel extends EntityModel<KrakenRenderState> {
 					PartPose.offset(side * (5.0F + gill * 0.35F), 2.0F, -4.0F + gill * 2.0F));
 			}
 		}
-		head.addOrReplaceChild("beak", CubeListBuilder.create().texOffs(112, 56)
-			.addBox(-2.0F, 0.0F, 0.0F, 4.0F, 3.0F, 4.0F, none), PartPose.offset(0.0F, 4.0F, 10.0F));
+		jaw.addOrReplaceChild("beak", CubeListBuilder.create().texOffs(112, 56)
+			.addBox(-2.0F, 0.0F, 0.0F, 4.0F, 3.0F, 4.0F, none), PartPose.offset(0.0F, 2.0F, 3.0F));
+		for (int side : new int[] {-1, 1}) {
+			// Abas laterais do manto (as ilhas de UV são as das cristas).
+			mantle.addOrReplaceChild(side < 0 ? "mantle_fin_left" : "mantle_fin_right", CubeListBuilder.create()
+				.texOffs(80, 0).addBox(side < 0 ? -5.0F : 0.0F, -1.0F, -7.0F, 5.0F, 2.0F, 16.0F, none)
+				.texOffs(80, 22).addBox(side < 0 ? -8.0F : 4.0F, 0.0F, -4.0F, 4.0F, 1.5F, 10.0F, none),
+				PartPose.offsetAndRotation(side * 9.0F, -3.0F, -2.0F, 0.0F, 0.0F, side * 12.0F * Mth.DEG_TO_RAD));
+		}
 
 		for (int i = 0; i < 8; i++) {
 			float angle = (float) (Math.PI * 2.0 * i / 8.0);
@@ -147,6 +163,16 @@ public final class KrakenModel extends EntityModel<KrakenRenderState> {
 						.texOffs(96, 92).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 1.0F, 2.0F, none),
 						PartPose.offset(0.0F, taper / 2.0F, 1.0F + sucker * 2.0F));
 				}
+			}
+			// Pontas finas da v2: {distância da junta anterior, largura, comprimento}, dobradas 5 graus.
+			float[][] tips = {{6.0F, 1.05F, 5.2F}, {4.5F, 0.65F, 4.0F}};
+			for (int k = 0; k < tips.length; k++) {
+				float width = tips[k][1];
+				segment = segment.addOrReplaceChild("arm_" + i + "_segment_" + (5 + k), CubeListBuilder.create()
+					.texOffs(72, 92).addBox(-width / 2.0F, -width / 2.0F, 0.0F, width, width, tips[k][2], none),
+					PartPose.offsetAndRotation(0.0F, 0.0F, tips[k][0], -5.0F * Mth.DEG_TO_RAD, 0.0F, 0.0F));
+				segment.addOrReplaceChild("sucker_0", CubeListBuilder.create().texOffs(96, 92)
+					.addBox(-0.4F, 0.0F, 0.0F, 0.8F, 0.5F, 0.8F, none), PartPose.offset(0.0F, width / 2.0F, 1.2F));
 			}
 		}
 		return LayerDefinition.create(mesh, 128, 256);
@@ -205,9 +231,10 @@ public final class KrakenModel extends EntityModel<KrakenRenderState> {
 		float amp = (0.08F + 0.05F * swim) * agitation;
 		float stroke = swim * 0.4F * (float) Math.sin(t * 0.22F);
 		for (int i = 0; i < this.segments.length; i++) {
-			for (int joint = 0; joint < 5; joint++) {
+			for (int joint = 0; joint < JOINTS; joint++) {
 				ModelPart segment = this.segments[i][joint];
-				float reach = 0.45F + 0.3F * joint;
+				// As pontas finas seguem a onda com menos força que a 4 multiplicada (não chicoteiam).
+				float reach = 0.45F + 0.3F * Math.min(joint, 4) + 0.15F * Math.max(0, joint - 4);
 				segment.xRot += amp * reach * (float) Math.sin(t * freq - joint * 0.9F + i * 0.785F);
 				segment.yRot += amp * 0.6F * reach * (float) Math.cos(t * freq * 0.7F - joint * 0.8F + i * 1.3F);
 				if (joint == 0) {

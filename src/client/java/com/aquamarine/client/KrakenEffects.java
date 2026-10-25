@@ -3,6 +3,7 @@ package com.aquamarine.client;
 import com.aquamarine.client.entity.kraken.KrakenAnimations;
 import com.aquamarine.client.entity.kraken.KrakenRenderer;
 import com.aquamarine.entity.KrakenEntity;
+import com.aquamarine.entity.boss.KrakenStats;
 import com.aquamarine.sound.ModSounds;
 
 import java.util.HashMap;
@@ -44,6 +45,8 @@ public final class KrakenEffects {
 	private static final BlockParticleOption SHARD = new BlockParticleOption(ParticleTypes.BLOCK,
 		Blocks.SEA_LANTERN.defaultBlockState());
 	private static final float[] CRACKS = {0.75F, 0.50F, 0.25F};
+	/** Comprimento do braço em pixels do modelo, da raiz à ponta (7 juntas). */
+	private static final double ARM_LENGTH = 39.0;
 
 	private static final Map<Integer, Track> TRACKS = new HashMap<>();
 	/** Partículas emitidas por animação desde o início do cliente (o teste de cliente confere). */
@@ -432,14 +435,15 @@ public final class KrakenEffects {
 
 		/** Ponto do modelo (pixels; y para baixo, pés em 24, +z para a frente). */
 		Vec3 at(double x, double y, double z) {
-			return origin.add(right.scale(x * scale)).add(0, (24 - y) * scale, 0).add(forward.scale(z * scale));
+			return origin.add(right.scale(x * scale)).add(0, (24 - y) * scale - KrakenStats.MODEL_DROP, 0).add(forward.scale(z * scale));
 		}
 
 		/** Ponto ao longo do braço {@code arm} ({@code f} 0 a 1), erguido {@code lift} graus acima do horizontal. */
 		Vec3 arm(int arm, float f, float lift) {
 			double angle = Math.PI * 2 * arm / 8.0;
-			double reach = 4 + f * 31 * Math.cos(Math.toRadians(lift));
-			double up = f * 31 * Math.sin(Math.toRadians(lift));
+			// Braço da v2: 5 juntas de 6 px e as pontas de 6 e 4,5 px.
+			double reach = 4 + f * ARM_LENGTH * Math.cos(Math.toRadians(lift));
+			double up = f * ARM_LENGTH * Math.sin(Math.toRadians(lift));
 			return at(Math.sin(angle) * (8 + reach), -10 - up, Math.cos(angle) * (7 + reach));
 		}
 

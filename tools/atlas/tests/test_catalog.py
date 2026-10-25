@@ -37,9 +37,12 @@ class CatalogTest(unittest.TestCase):
                     for a,b in zip(keys[0][1],keys[-1][1]):
                         self.assertAlmostEqual(a,b,places=5,msg=(name,t["bone"]))
 
-    def test_proposal_is_separate_and_all_bones_resolve(self):
-        self.assertGreater(len(self.kraken["proposal"]["bones"]),len(self.kraken["bones"]))
-        self.assertNotIn("jaw_hinge",[b["name"] for b in self.kraken["bones"]])
+    def test_v2_integrated_and_all_bones_resolve(self):
+        # A v2 entrou no jogo em 25/10/2026: o rig de produção já tem as partes dela, sem proposta separada.
+        names={b["name"] for b in self.kraken["bones"]}
+        self.assertTrue({"jaw_hinge","mantle_fin_left","mantle_fin_right"}<=names)
+        self.assertTrue(all(f"arm_{i}_segment_6" in names for i in range(8)))
+        self.assertIsNone(self.kraken["proposal"])
         for m in self.models:
             for rig in [m]+([m["proposal"]] if m["proposal"] else []):
                 names={"root"}
@@ -63,12 +66,18 @@ class CatalogTest(unittest.TestCase):
         self.assertEqual(len(registry),8)
         for m in self.models:
             old=json.loads((BASE/"versions"/f"{m['id']}-v1.json").read_text(encoding="utf-8"))
+            if m["id"]=="kraken":
+                # A v1 segue preservada no registro; o rig atual é a v2 integrada (contém todos os ossos da v1).
+                self.assertEqual(old["clips"],m["baseline"])
+                self.assertTrue({b["name"] for b in old["bones"]}<{b["name"] for b in m["bones"]})
+                continue
             self.assertEqual(old["bones"],m["bones"])
             self.assertEqual(old["cubes"],m["cubes"])
-            self.assertEqual(old["clips"],m["baseline"] if m["id"]=="kraken" else m["clips"])
+            self.assertEqual(old["clips"],m["clips"])
         new=json.loads((BASE/"versions/kraken-v2.json").read_text(encoding="utf-8"))
-        self.assertEqual(new["bones"],self.kraken["proposal"]["bones"])
-        self.assertEqual(new["clips"],self.kraken["clips"])
+        self.assertEqual({b["name"] for b in new["bones"]},{b["name"] for b in self.kraken["bones"]})
+        self.assertEqual({n:(c["length"],c["loop"]) for n,c in new["clips"].items()},
+                         {n:(c["length"],c["loop"]) for n,c in self.kraken["clips"].items()})
 
     def test_adaptive_audio_manifest_without_single_file(self):
         import build

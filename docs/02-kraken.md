@@ -12,7 +12,7 @@
 - O Chamariz Abissal, montado no Altar da Praça Central, só funciona se houver
   água aberta com 30 blocos de profundidade num raio de 48 blocos; senão a
   mensagem "As águas são rasas demais..." aparece e o Chamariz não é gasto.
-- O Kraken surge dentro dessa água e a arena é o raio de 32 blocos ao redor
+- O Kraken surge dentro dessa água e a arena é o raio de 48 blocos ao redor
   dele (a mesma regra de "sair da arena" do plano).
 
 ## Fases
@@ -91,10 +91,10 @@ clareza). Dano base com netherite: 4 a 5 golpes até curar.
 |---|---|---|---|---|
 | Pancada | 1-3 | Tentáculo se ergue com sombra na água por 1,5 s | 12 de dano e onda que vira barcos | Desviar do círculo de sombra |
 | Agarrão | 1-3 | Tentáculo brilha roxo por 1,5 s e emite som agudo | Prende e arrasta ao fundo (6 de dano por segundo) | Cortar o tentáculo, Tônico de Pressão (solta 50% mais rápido) |
-| Nuvem de Tinta | 1-3 | Água escurece em espiral por 2 s | Cegueira numa nuvem de 16 blocos por 12 s | Armadura de Oricálcio completa enxerga; óculos não |
-| Redemoinho | 2-3 | Som grave por 2 s e espiral de partículas | Puxa quem está num raio de 16 blocos | Amuleto da Corrente, sair do raio |
+| Nuvem de Tinta | 1-3 | Água escurece em espiral por 2 s | Cegueira numa nuvem de 24 blocos por 12 s | Armadura de Oricálcio completa enxerga; óculos não |
+| Redemoinho | 2-3 | Som grave por 2 s e espiral de partículas | Puxa quem está num raio de 24 blocos | Amuleto da Corrente, sair do raio |
 | Crias de Kraken | 2-3 | Ovos brilham 2 s | Invoca `3 + n ÷ 2` Crias (4 de dano cada, 8 de vida) | Matar rápido; têm pouca vida |
-| Jato de Água | 2-3 | Fileira de bolhas por 1,2 s | 10 de dano em linha de 24 blocos | Sair da linha |
+| Jato de Água | 2-3 | Fileira de bolhas por 1,2 s | 10 de dano em linha de 36 blocos | Sair da linha |
 | Rugido Abissal | 2-3 | Corpo se contrai por 1,5 s | Onda de choque que quebra blocos de 1 camada (só com `mob_griefing`) e derruba de barcos (6 de dano) | Estar no fundo ou fora de barcos |
 | Raios Guiados | 3 | Céu escurece e uma marca azul no jogador por 2 s | 14 de dano, segue o alvo | Ficar submerso; a marca expira |
 | Emboscada por Baixo | 3 | Bolhas no fundo por 2 s | Tentáculos emergem do chão em área de 6 blocos | Sair da área |
@@ -109,11 +109,11 @@ servidor), `TentacleEntity`, `YoungKrakenEntity`. Teste: `/aquamarine kraken att
 - **Pancada:** círculo de 3 blocos; a onda vira barcos e derruba Boias num raio de 6.
 - **Agarrão:** 5 s (100 ticks), 6 de dano por segundo; o Tônico dobra a soltura; cortar o tentáculo solta. Agarrão
   Duplo: 10 de dano por segundo; com um tentáculo cortado fica pela metade e solta o dobro mais rápido.
-- **Tinta:** raio de 16 do Kraken, cegueira de 12 s; a armadura de Oricálcio completa protege.
-- **Redemoinho:** puxa por 5 s num raio de 16, velocidade 0,1 por tick (dá para nadar para fora); o Amuleto da
+- **Tinta:** raio de 24 do Kraken, cegueira de 12 s; a armadura de Oricálcio completa protege.
+- **Redemoinho:** puxa por 5 s num raio de 24, velocidade 0,1 por tick (dá para nadar para fora); o Amuleto da
   Corrente (Entrega 3) protege se existir o item `aquamarine:current_amulet`.
-- **Jato:** linha de 24 blocos, o alvo é travado ao fim do aviso começar. **Rugido:** quebra blocos de dureza até
-  0,5 num raio de 12 (no máximo 500 por golpe) e derruba as Boias; quem estiver em barco leva 6 e cai.
+- **Jato:** linha de 36 blocos, o alvo é travado ao fim do aviso começar. **Rugido:** quebra blocos de dureza até
+  0,5 num raio de 18 (no máximo 500 por golpe) e derruba as Boias; quem estiver em barco leva 6 e cai.
 - **Raios:** 1 + n÷3 jogadores marcados; 14 de dano só em quem está fora da água. **Emboscada:** 10 de dano em
   6 blocos e arremesso para cima. **Crias:** no máximo 16 vivas.
 - Atordoamento e troca de fase cancelam avisos e soltam quem estava preso.
@@ -125,7 +125,7 @@ servidor), `TentacleEntity`, `YoungKrakenEntity`. Teste: `/aquamarine kraken att
 - **Alvo (aggro):** quem causou mais dano ao escudo nos últimos 10 s (decai
   com o tempo). Em multiplayer isso cria papéis: um chama atenção, outro
   quebra o escudo.
-- **Fuga e abandono:** se nenhum jogador estiver na arena (32 blocos) por 30 s,
+- **Fuga e abandono:** se nenhum jogador estiver na arena (48 blocos) por 30 s,
   o Kraken mergulha e recupera 10% da vida; se continuar assim por 3 minutos, a
   luta termina com "O Kraken retorna às profundezas..." (sem drops).
 - **Contra "torres" e trapaças:** quebra barcos e blocos frágeis (vidro,
@@ -165,7 +165,7 @@ vitória de cada jogador), 1.000 de XP e um troféu. O Coração libera os itens
 pós-boss (lista em [05-itens.md](05-itens.md)).
 
 **Como é entregue (2E, valores iniciais):** a recompensa é **pessoal**, entregue direto
-no inventário (o que não couber cai aos pés) de cada jogador que estava na arena (32 blocos)
+no inventário (o que não couber cai aos pés) de cada jogador que estava na arena (48 blocos)
 ou causou dano e está a até 128 blocos na morte. Cada um recebe 1 Olho, 2 a 4 Tinta Abissal,
 1.000 de XP (cada um, não dividido), 1 Troféu do Kraken (no modo `abissal`, o Troféu Dourado do
 Abismo no lugar) e, se for a primeira vitória dele (`KrakenWorldData`), o Coração.

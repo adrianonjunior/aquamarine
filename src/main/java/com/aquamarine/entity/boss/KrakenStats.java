@@ -11,6 +11,16 @@ public final class KrakenStats {
 	/** Escudo base por fase (índice 0 = fase 1). */
 	public static final float[] SHIELD_BY_PHASE = {400.0F, 600.0F, 800.0F};
 	public static final float ABYSSAL_MULTIPLIER = 1.5F;
+	/**
+	 * Tamanho (docs/00-decisoes.md, "Tamanho do Kraken"): escala do modelo sobre os pixels do KrakenModel.
+	 * Na 8, com os braços de 7 juntas, o corpo tem ~41 blocos de largura e ~25 de altura.
+	 */
+	public static final float MODEL_SCALE = 8.0F;
+	/**
+	 * Quanto o modelo desce (blocos) para a ponta dos braços em repouso ficar nos pés da entidade: a hitbox
+	 * começa ali, e o Kraken que nasce 24 blocos abaixo da superfície fica com a coroa rente à água.
+	 */
+	public static final float MODEL_DROP = 5.4F;
 
 	/** {@code f = 1 + 0,3 × (n − 1)}, com {@code n} limitado a {@code cap} e no mínimo 1. */
 	public static float scale(int players, int cap) {

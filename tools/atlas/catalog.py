@@ -120,6 +120,8 @@ def kraken_rig():
             if re.fullmatch(r"arm_\d", n):
                 arm = int(n[-1])
                 rotation = [math.degrees(-.18 if arm % 2 == 0 else -.34), arm * 45, 0]
+            elif re.search(r"_segment_[56]$", n) or n.startswith("mantle_fin_"):
+                rotation = list(node["rotation"])  # partes da v2: o .bbmodel já traz a pose
             elif "_segment_" in n and not n.endswith("_0"):
                 rotation = [math.degrees(-.12), 0, 0]
             bones.append(bone(n, parent, [p[i] - origin[i] for i in range(3)], rotation))
@@ -225,12 +227,17 @@ def kraken_proposal(bones, cubes, clips):
 def models():
     sys.path.insert(0, str(MODELS / "kraken"))
     anim = module(MODELS / "kraken/kraken_preview_v2.py")
+    production = module(MODELS / "kraken/kraken_animations.py")
     result = []
     for kind, name in NAMES.items():
         bones, cubes, size = kraken_rig() if kind == "kraken" else large_rig(kind) if kind in ("moray","whale","sperm_whale") else small_rig(kind)
         folder = MODELS / kind if kind in ("kraken","moray","whale","sperm_whale") else MODELS / "spawnlings" / kind
-        clips = clips_data(anim.build_all()) if kind == "kraken" else java_animations(kind)
-        proposal = kraken_proposal(bones,cubes,clips) if kind=="kraken" else None
+        # A v2 entrou no jogo em 25/10/2026: com o rig de produção já articulado, ele e os clipes de produção
+        # são o Kraken atual, e a proposta separada deixa de existir (a v1 segue no histórico de versões).
+        integrated = kind == "kraken" and any(b["name"] == "jaw_hinge" for b in bones)
+        clips = (clips_data(production.build_all()) if integrated else clips_data(anim.build_all())) if kind == "kraken" \
+            else java_animations(kind)
+        proposal = kraken_proposal(bones,cubes,clips) if kind=="kraken" and not integrated else None
         ids = {b["name"] for b in (proposal["bones"] if proposal else bones)} | {"root"}
         for clip in clips.values():
             assert all(t["bone"] in ids for t in clip["tracks"]), kind

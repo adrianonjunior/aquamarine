@@ -36,7 +36,7 @@ import net.minecraft.world.level.block.Blocks;
  */
 public final class KrakenCommand {
 	/** Arena de teste: piscina de vidro 45 x 40 x 45, grande o bastante para a arena de 32 blocos. */
-	public static final int ARENA_HALF = 32;
+	public static final int ARENA_HALF = 48;
 	public static final int ARENA_DEPTH = 64;
 
 	public static void register() {
@@ -177,7 +177,7 @@ public final class KrakenCommand {
 		ServerLevel level = source.getLevel();
 		BlockPos origin = BlockPos.containing(source.getPosition());
 		buildArena(level, origin);
-		BlockPos center = origin.offset(0, ARENA_DEPTH - 15, 0);
+		BlockPos center = origin.offset(0, ARENA_DEPTH - 26, 0);
 		KrakenSummoning.spawnAt(level, center, origin);
 		source.sendSuccess(() -> Component.translatable("commands.aquamarine.kraken.arena"), true);
 		return 1;

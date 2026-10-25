@@ -151,6 +151,7 @@ pequenos com aprovação do Adriano** (agentes não ouvem). Arquivos novos em `t
 - [x] Portal HTML local unificado: sete rigs, suas animações, áudio existente, texturas e documentação.
 - [x] Kraken v2 exclusivo da prévia, com 16 movimentos e estrutura articulada; referência v1 preservada.
 - [x] Histórico de oito versões, exportação, atualização do áudio em produção e verificação no navegador.
-- [ ] Aceite artístico do Kraken v2 pelo Adriano. Integração no jogo não autorizada nesta faixa.
+- [x] Kraken v2 **integrado ao jogo** a pedido do Adriano (25/10/2026), junto com o Kraken 2 vezes maior
+  ([00-decisoes.md](00-decisoes.md), "Tamanho do Kraken"). Falta o aceite no jogo.
 
 Uso, limites e evidências: [Atlas técnico](../tools/atlas/README.md).

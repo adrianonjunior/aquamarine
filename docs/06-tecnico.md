@@ -260,6 +260,13 @@ só os nomes novos e as lições abaixo são específicos. Em execução desde 2
   respeita o fim exato do Vorbis, então camadas do mesmo tamanho voltam juntas; o canal do jogo enfileira
   4 blocos do tamanho que o fluxo devolver; (5) cores do céu, névoa, água, nuvens e luz vêm do
   `EnvironmentAttributeProbe.getValue` (atributos `visual/*`): um mixin no retorno tinge tudo de uma vez.
+- **Kraken v2 e tamanho (25/10/2026):** o modelo do jogo saiu de `tools/models/kraken/build_model.py` (rodar com
+  um Python que tenha Pillow; ele copia os templates de `java/`, gera o `KrakenAnimations.java` e refaz a textura):
+  7 juntas por braço (`arm_N_segment_0` a `_6`; as duas últimas finas), mandíbula e bico na `jaw_hinge` e as abas
+  `mantle_fin_left/right`. O `KrakenAnimations` tem **um método por clipe**: a v2 tem ~8.700 chaves, e tudo no
+  inicializador estático passa dos 64 KB de bytecode por método da JVM. O tamanho mora em `KrakenStats`
+  (`MODEL_SCALE` 8 e `MODEL_DROP` 5,4); renderer, partículas (`KrakenEffects`) e Nós de Maré leem dali, e o
+  renderer alarga a caixa de corte para os braços erguidos não sumirem.
 - **Corpo da Moréia:** `MorayEntity.PART_OFFSETS` (blocos atrás da cabeça) acompanha os segmentos
   de `tools/models/moray/build_model.py`; quem mudar um muda o outro.
 - **Vila (3E):** a peça do Porto sai de `tools/gen_harbor.py` (NBT de estrutura escrito à mão);

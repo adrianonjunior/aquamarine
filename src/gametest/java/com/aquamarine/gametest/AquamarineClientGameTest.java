@@ -243,7 +243,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 
 	/** A água leva o jogador para baixo; reposiciona de frente para o Kraken antes de cada foto. */
 	private static void aimAtKraken(ClientGameTestContext context, TestServerContext server, BlockPos origin) {
-		tp(server, origin.getX() + 0.5, origin.getY() + 36, origin.getZ() + 9.0, 180, 42);
+		tp(server, origin.getX() + 0.5, origin.getY() + 42, origin.getZ() + 18.0, 180, 42);
 		context.waitTicks(3);
 	}
 

@@ -1,6 +1,7 @@
 package com.aquamarine.client.entity.kraken;
 
 import com.aquamarine.Aquamarine;
+import com.aquamarine.entity.boss.KrakenStats;
 import com.aquamarine.entity.boss.KrakenView;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -19,6 +20,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.phys.AABB;
 
 /** Renderer is generic so it compiles before the parallel 2A-C entity reaches main. */
 public final class KrakenRenderer<T extends Mob> extends MobRenderer<T, KrakenRenderState, KrakenModel> {
@@ -26,10 +28,12 @@ public final class KrakenRenderer<T extends Mob> extends MobRenderer<T, KrakenRe
 	/** Só as partes que brilham (rachaduras, olhos, ventosas), desenhadas com luz própria por cima. */
 	private static final Identifier GLOW_TEXTURE = Aquamarine.id("textures/entity/kraken/kraken_glow.png");
 	/**
-	 * Escala do modelo sobre a escala da entidade. O polimento de tamanho (24 x 16 blocos) muda só isto;
-	 * as partículas do Kraken (KrakenEffects) usam o mesmo valor e acompanham sozinhas.
+	 * Escala do modelo sobre a escala da entidade ({@link KrakenStats#MODEL_SCALE}); as partículas do Kraken
+	 * (KrakenEffects) e os Nós de Maré usam o mesmo valor e acompanham sozinhos.
 	 */
-	public static final float MODEL_SCALE = 4.0F;
+	public static final float MODEL_SCALE = KrakenStats.MODEL_SCALE;
+	/** Folga da caixa de corte: braços erguidos passam bem acima da hitbox e não podem sumir da tela. */
+	private static final double CULLING_MARGIN = 14.0;
 	private static final int FULL_BRIGHT = 0xF000F0;
 	/** Luz mínima de bloco no corpo (0 a 15). */
 	private static final int MIN_LIGHT = 9;
@@ -72,6 +76,8 @@ public final class KrakenRenderer<T extends Mob> extends MobRenderer<T, KrakenRe
 
 	@Override
 	protected void scale(KrakenRenderState state, PoseStack poseStack) {
+		// O eixo y aqui já está invertido: descer é y positivo. Ponta dos braços nos pés da entidade.
+		poseStack.translate(0.0F, KrakenStats.MODEL_DROP, 0.0F);
 		poseStack.scale(MODEL_SCALE, MODEL_SCALE, MODEL_SCALE);
 		// O modelo tem os olhos e o bico em +z; no jogo a frente da entidade é -z. Gira para encarar o alvo.
 		poseStack.rotateDegrees(Axis.YP, 180.0F);
@@ -81,6 +87,11 @@ public final class KrakenRenderer<T extends Mob> extends MobRenderer<T, KrakenRe
 	@Override
 	protected int getBlockLightLevel(T entity, BlockPos pos) {
 		return Math.max(MIN_LIGHT, super.getBlockLightLevel(entity, pos));
+	}
+
+	@Override
+	protected AABB getBoundingBoxForCulling(T entity, float partialTicks) {
+		return super.getBoundingBoxForCulling(entity, partialTicks).inflate(CULLING_MARGIN);
 	}
 
 	@Override

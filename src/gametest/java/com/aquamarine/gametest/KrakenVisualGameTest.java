@@ -33,7 +33,7 @@ import net.minecraft.world.phys.Vec3;
  */
 final class KrakenVisualGameTest {
 	/** Distância entre os Krakens da fileira (blocos). */
-	private static final int GAP = 36;
+	private static final int GAP = 64;
 	/** Os Krakens na ordem em que surgiram (esquerda para a direita); eles se movem, então a ordem fica fixa aqui. */
 	private static final List<UUID> ROW = new ArrayList<>();
 

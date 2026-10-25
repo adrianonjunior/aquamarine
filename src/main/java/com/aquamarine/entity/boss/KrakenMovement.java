@@ -13,10 +13,10 @@ import net.minecraft.world.phys.Vec3;
  * clientes pelo rastreio normal da entidade.
  */
 public final class KrakenMovement {
-	/** Distância horizontal máxima do centro (blocos); com o corpo de 32 x 20 cabe na arena de 64. */
-	public static final double LEASH = 12.0;
+	/** Distância horizontal máxima do centro (blocos); com o corpo de ~41 blocos cabe na arena de 96. */
+	public static final double LEASH = 16.0;
 	/** Raio da volta em torno do centro quando está circulando. */
-	public static final double ORBIT_RADIUS = 8.0;
+	public static final double ORBIT_RADIUS = 12.0;
 	/** Giro máximo do corpo por tick (graus). */
 	private static final float TURN = 2.5F;
 

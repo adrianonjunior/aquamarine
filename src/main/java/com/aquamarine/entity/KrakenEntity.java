@@ -61,7 +61,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 public class KrakenEntity extends Mob implements KrakenView {
 	/** Vida máxima do atributo do jogo (a escala interna; a vida real é {@link #realHealth()}). */
 	public static final float HEALTH_UNITS = 1000.0F;
-	public static final int ARENA_RADIUS = 32;
+	public static final int ARENA_RADIUS = 48;
 	/** Alcance (em blocos) do olhar do atacante ao testar acerto num Nó de Maré. */
 	public static final double NODE_REACH = 8.0;
 	public static final int MESSAGE_RADIUS = 128;
@@ -373,7 +373,8 @@ public class KrakenEntity extends Mob implements KrakenView {
 		List<Vec3> centers = new java.util.ArrayList<>(count);
 		for (int i = 0; i < count; i++) {
 			TideNodes.Offset o = TideNodes.rotate(TideNodes.offset(phase(), i, count), getYRot());
-			centers.add(position().add(o.x() * TideNodes.WORLD_SCALE, o.y() * TideNodes.WORLD_SCALE, o.z() * TideNodes.WORLD_SCALE));
+			centers.add(position().add(o.x() * TideNodes.WORLD_SCALE, o.y() * TideNodes.WORLD_SCALE - KrakenStats.MODEL_DROP,
+				o.z() * TideNodes.WORLD_SCALE));
 		}
 		return centers;
 	}
