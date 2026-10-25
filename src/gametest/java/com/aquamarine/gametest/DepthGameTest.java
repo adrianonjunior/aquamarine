@@ -32,6 +32,8 @@ final class DepthGameTest {
 	static void run(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos base) {
 		BlockPos o = base.offset(0, 0, 300);
 		int top = o.getY() + SIZE - 2;
+		// O mundo plano não tem mar: o teste põe o nível do mar 75 blocos acima de onde o jogador fica.
+		PressureManager.setTestSeaLevel(o.getY() + 8 + 75);
 		server.runCommand("gamemode survival @a");
 		server.runCommand(String.format("forceload add %d %d %d %d", o.getX() - 16, o.getZ() - 16, o.getX() + 16, o.getZ() + 16));
 		context.waitTicks(20);
@@ -136,6 +138,7 @@ final class DepthGameTest {
 			player.removeAllEffects();
 			PressureManager.reset(player);
 		});
+		PressureManager.setTestSeaLevel(null);
 		context.waitTicks(5);
 		tp(server, base.getX() + 0.5, base.getY(), base.getZ() + 0.5, 0, 0);
 	}

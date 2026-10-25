@@ -2,6 +2,7 @@ package com.aquamarine.client.pressure;
 
 import com.aquamarine.Aquamarine;
 import com.aquamarine.item.ModItems;
+import com.aquamarine.pressure.PressureManager;
 import com.aquamarine.pressure.PressurePayload;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -98,7 +99,7 @@ public final class PressureHud {
 
 	/** Profundidade abaixo do nível do mar, em blocos, arredondada para baixo (0 acima dele). */
 	public static int depth(Minecraft mc) {
-		return mc.player == null || mc.level == null ? 0 : Math.max(0, (int) (mc.level.getSeaLevel() - mc.player.getY()));
+		return mc.player == null || mc.level == null ? 0 : Math.max(0, (int) (PressureManager.seaLevel(mc.level) - mc.player.getY()));
 	}
 
 	/** Medidor de Profundidade (docs/08-fase3.md, seção 1): com o item em qualquer mão, mostra profundidade e Pressão. */
@@ -108,7 +109,7 @@ public final class PressureHud {
 			return;
 		}
 		Component text = Component.translatable("hud.aquamarine.depth_gauge", depth(mc), level);
-		int color = level >= 4 ? 0xFF5555 : level >= 2 ? 0xFFD76A : 0x9FF0E0;
+		int color = level >= 4 ? 0xFFFF5555 : level >= 2 ? 0xFFFFD76A : 0xFF9FF0E0;
 		graphics.centeredText(mc.font, text, graphics.guiWidth() / 2, graphics.guiHeight() - 62, color);
 	}
 

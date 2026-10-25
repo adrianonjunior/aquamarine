@@ -125,6 +125,25 @@ class ResourceConsistencyTest {
 		assertTrue(missing.isEmpty(), "Receitas com resultado inexistente: " + missing);
 	}
 
+	/** O jogo recusa o mundo inteiro se uma receita com forma tiver símbolo sobrando ou faltando na chave. */
+	@Test
+	void shapedRecipeKeysMatchPattern() throws IOException {
+		List<String> wrong = new ArrayList<>();
+		for (Path recipe : jsonFiles(DATA.resolve("recipe"))) {
+			JsonObject json = read(recipe);
+			if (!json.has("pattern")) {
+				continue;
+			}
+			Set<String> used = new TreeSet<>();
+			json.getAsJsonArray("pattern").forEach(row -> row.getAsString().chars()
+				.filter(c -> c != ' ').forEach(c -> used.add(String.valueOf((char) c))));
+			if (!used.equals(new TreeSet<>(json.getAsJsonObject("key").keySet()))) {
+				wrong.add(recipe.getFileName().toString());
+			}
+		}
+		assertTrue(wrong.isEmpty(), "Receitas com chave e padrão diferentes: " + wrong);
+	}
+
 	/**
 	 * Convenção dos biomas: cada bioma do mod tem a tag {@code minecraft:aquamarine_<nome>}, para
 	 * achar com {@code /locate biome #aquamarine_<nome>} (sem namespace o jogo usa minecraft).

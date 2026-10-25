@@ -24,6 +24,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.Level;
 
 /**
  * Pressão (docs/02-kraken.md): nível 0 a 4 por jogador, calculado no servidor. Sobe submerso a
@@ -165,9 +166,22 @@ public final class PressureManager {
 		}
 	}
 
+	/** Nível do mar fixo para os GameTests (o mundo plano não tem mar); {@code null} usa o do mundo. */
+	private static Integer testSeaLevel;
+
+	/** Só para testes: troca o nível do mar da Pressão ambiental ({@code null} volta ao do mundo). */
+	public static void setTestSeaLevel(Integer seaLevel) {
+		testSeaLevel = seaLevel;
+	}
+
+	/** Nível do mar usado pela Pressão ambiental e pelo Medidor. */
+	public static int seaLevel(Level level) {
+		return testSeaLevel != null ? testSeaLevel : level.getSeaLevel();
+	}
+
 	/** Profundidade do jogador abaixo do nível do mar, só submerso (0 fora da água). */
 	public static double depth(ServerPlayer player) {
-		return player.isUnderWater() ? Math.max(0.0, player.level().getSeaLevel() - player.getY()) : 0.0;
+		return player.isUnderWater() ? Math.max(0.0, seaLevel(player.level()) - player.getY()) : 0.0;
 	}
 
 	/** Nível ambiental permitido pela profundidade, antes das contramedidas. */
