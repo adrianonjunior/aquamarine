@@ -140,4 +140,4 @@ pequenos com aprovação do Adriano** (agentes não ouvem). Arquivos novos em `t
 | A4 | Música: temas, stems do Kraken e stingers, gatilhos no cliente | Temas tocam na situação certa; luta com camadas por fase | Prévia + jogo |
 | A5 | Mixagem final, orçamento de 70 MB, verificação em `runClientGameTest` | Medidores verdes e build verde | Aceite no jogo |
 
-- [ ] A0 · [ ] A1 · [ ] A2 · [ ] A3 · [ ] A4 · [ ] A5
+- [ ] A0 (entregue em 25/10/2026; aguarda o aval do Adriano) · [ ] A1 · [ ] A2 · [ ] A3 · [ ] A4 · [ ] A5
