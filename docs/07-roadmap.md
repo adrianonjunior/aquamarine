@@ -77,9 +77,9 @@ validado das faixas listadas. Orçamento = tempo / screenshots (ver economia).
 | 3 | **2D-C** | Claude | 2A-C, 2B, 2C | 8 tentáculos e os 10 ataques com avisos. Aceite: cada ataque dispara por comando com seu aviso; GameTest de dano | 3 h / 3 |
 | 3 | **2D-T** | Claude | 2D-M | Texturas do tentáculo, da Cria e dos ovos. Aceite: screenshot de cada | 1 h / 3 |
 | 3 | **2E** | Claude | 2A-C | Aviso falso, tremor de tela, silêncio do oceano, drops, troféu, primeira vitória. Aceite: GameTest dos drops e do gatilho | 2 h / 2 |
-| 4 | **2Q** | Codex (`medium`) | todas | QA visual com 2 clientes: invocar, 3 fases, 1 screenshot por ataque. Aceite: relatório de bugs por prioridade; não corrige código, abre Task para o dono | 2 h / 12 (até 6 por ciclo) |
+| 4 | **2Q** | Codex (`medium`) | todas | QA visual: invocar, 3 fases, screenshots dos ataques. Aceite: relatório de bugs por prioridade; não corrige código, abre Task para o dono | 2 h / 12 (até 6 por ciclo) |
 
-- [x] 2A-M · [x] 2A-C · [x] 2A-T · [x] 2B · [x] 2C · [x] 2D-M · [x] 2D-C · [x] 2D-T · [x] 2E · [ ] 2Q
+- [x] 2A-M · [x] 2A-C · [x] 2A-T · [x] 2B · [x] 2C · [x] 2D-M · [x] 2D-C · [x] 2D-T · [x] 2E · [x] 2Q
 
 **Aceite da Entrega 2:** 2 ou mais jogadores invocam o Kraken e vencem as 3
 fases em 8 a 12 minutos com equipamento do mod, sem crash e sem desync da barra.
