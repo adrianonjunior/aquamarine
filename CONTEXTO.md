@@ -37,6 +37,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| Fechamento final: Fase 3 + revisão ([prompt](prompts/fechamento-final.md)) | Claude Opus 5.5 (agente único) | jogo, Gradle, `main` | 24/10/2026 |
 
 ## Registro de handoff
 
