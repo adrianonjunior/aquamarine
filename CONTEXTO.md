@@ -35,6 +35,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| Fechamento da Fase 3: resto da 3E (reputação, Alerta de Moréia, Cais, Torre, prédios), 3Q simulada, organização dos .md | Claude Opus 5.5 (agente único, worktree `aquamarine-claude-fechamento-f3`) | jogo, Gradle na worktree | 25/10/2026 |
 
 ## Registro de handoff
 
