@@ -113,7 +113,7 @@
 
 ## 6. Baleias
 - **Baleia-de-Nereia** (passiva, 200 de vida, ~16 blocos, bioluminescente): nada em grupos de
-  1 a 3 onde a coluna d'água tem 14 blocos ou mais (peso 8 no oceano fundo, 3 no comum; até 6 numa área
+  1 a 3 onde a coluna d'água tem 14 blocos ou mais (peso 8 no oceano fundo, 3 no comum; até 4 numa área
   de 16 x 16 chunks; nunca a menos de 6 blocos da superfície; a selvagem não some sozinha a menos de 64 blocos
   de alguém). **Canta** de longe (som e partículas); seguir o
   canto indica a Cidade Perdida (rota para a mais próxima, sem substituir a Bússola).
