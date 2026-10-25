@@ -26,6 +26,8 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| Acesso rápido a trechos dos players de áudio do Atlas | Codex (branch codex/atlas-audio-seek) | 	ools/atlas/app.js e 	ools/atlas/style.css; nenhuma mudança no jogo | 25/10/2026 |
+| Publicar e verificar link ngrok do Atlas de amostra | Codex | Servidor Atlas 8767 e túnel ngrok | 25/10/2026 |
 | Áudio v1 (A0 aprovado): **luta do Kraken** (3 trilhas adaptativas, stingers, sons de combate) e **correção do spawn das criaturas do oceano** | Claude Opus 5.5 (worktree `aquamarine-claude-audio`, branch `claude/kraken-audio`) | Gradle na worktree; jogo só no teste final | 25/10/2026 |
 
 ## Registro de handoff
