@@ -37,6 +37,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| 3B-M2 | Codex | jogo + Gradle | 24/10/2026 |
 
 ## Registro de handoff
 
