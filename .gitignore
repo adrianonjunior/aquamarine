@@ -55,3 +55,7 @@ __pycache__/
 # pasta local de mods para testes manuais
 
 mods/
+
+# Áudio: ambientes Python locais e prévias
+tools/audio/.venv*/
+tools/audio/__pycache__/

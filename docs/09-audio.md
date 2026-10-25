@@ -99,8 +99,25 @@ Máquina do Adriano: RTX 3050 (6 GB), ffmpeg instalado, Python 3.14 sem scipy.
   o agente lê). A qualidade subjetiva é **do Adriano**, em audições com portões (abaixo).
   Um gerador de prévia (`build/audio-preview/index.html`, local) lista tudo com players.
 
+## Pipeline (lote A0, 25/10/2026)
+Em `tools/audio/` (ambientes Python locais em `tools/audio/.venv*`, fora do git):
+- `dsp.py`: a biblioteca de síntese (osciladores sem aliasing, ruídos, filtros fixos e variáveis,
+  formantes de voz e coro, síntese modal de sinos, vidro, marimba e casco, Karplus-Strong, bolhas de
+  Minnaert, reverb por convolução com IR gerada, compressor, limitador e camadas **circulares** para
+  laços perfeitos).
+- `master.py`: alvo de loudness por tipo, pico real, `.ogg`, medidas (`ebur128`), espectrograma,
+  emenda do laço e `manifest.json` (script, semente, medidas e licença de cada som).
+- `a0.py`: as 6 amostras da prova de qualidade; `preview.py --open`: a prévia em
+  `build/audio-preview/index.html`.
+- `musicgen_alt.py` + `alt_finish.py`: peças de IA local (MusicGen estéreo pequeno, na GPU) só para
+  comparar; não entram no mod sem aval.
+- Rodar: `tools/audio/.venv/Scripts/python tools/audio/a0.py` (todas) ou com nomes (`roar harbor`).
+
 ## Padrões técnicos
 - Formato `.ogg` (Vorbis). **Efeitos posicionais em mono**; música e camadas globais em estéreo.
+- **Laços** (camadas e temas): a mixagem é circular e o `.ogg` leva **2 s a mais**, iguais ao começo;
+  o tocador do jogo começa a próxima volta 2 s antes do fim e cruza esse trecho (as bordas do
+  Vorbis estragam um laço "colado"). O manifesto guarda `loop_overlap_s`.
 - Alvos: ambiência −26 a −24 LUFS; efeitos com pico em −3 dBFS; música −18 LUFS integrado.
 - **Orçamento total de áudio:** até 70 MB. Efeitos q4; música q3.
 - Registro: `ModSounds` (eventos), `assets/aquamarine/sounds.json`, `subtitles.*` em
