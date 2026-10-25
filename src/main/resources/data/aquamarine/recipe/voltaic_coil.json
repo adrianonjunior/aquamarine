@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "aquamarine:electric_scale",
+    "minecraft:copper_ingot",
+    "aquamarine:tide_crystal"
+  ],
+  "result": {
+    "id": "aquamarine:voltaic_coil"
+  }
+}

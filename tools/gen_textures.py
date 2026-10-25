@@ -134,23 +134,25 @@ INGOT = [
     "................",
     "................",
     "................",
-    "........45......",
-    "......4GGG5.....",
-    "....4GGGGGGG4...",
-    "..4GGGGGGGGGG2..",
-    ".5GGGGGGGGGGG2..",
-    ".3GGGGGGGGGG2...",
-    ".23GGGGGGGG2....",
-    "..223GGGGG2.....",
-    "....223GG2......",
-    "......222.......",
+    "................",
+    ".....5555555552.",
+    "....54444444422.",
+    "...544444444222.",
+    "...33333333322..",
+    "...3333333332...",
+    "...222222222....",
+    "................",
+    "................",
+    "................",
+    "................",
+    "................",
 ]
 
 
 def ingot():
-    img = render(INGOT)
-    # pátina verde-água num canto e brilho no topo
-    for x, y, ch in ((9, 11, "t"), (10, 10, "u"), (8, 12, "t"), (7, 5, "5"), (8, 5, "5"), (6, 6, "5")):
+    img = render(INGOT, outline=True)
+    # brilho no topo e pátina verde-água no canto da frente
+    for x, y, ch in ((6, 6, "w"), (7, 6, "5"), (5, 7, "5"), (9, 9, "t"), (10, 9, "u"), (11, 8, "t")):
         img.putpixel((x, y), FIXED[ch])
     return img
 
@@ -325,36 +327,28 @@ def pickaxe():
 
 def axe():
     rows = blank()
-    handle(rows, (2, 13), (10, 5))
-    head = [
-        (7, 2), (8, 2), (9, 2),
-        (6, 3), (7, 3), (8, 3), (9, 3), (10, 3),
-        (5, 4), (6, 4), (7, 4), (8, 4), (9, 4),
-        (5, 5), (6, 5), (7, 5), (8, 5),
-        (5, 6), (6, 6), (7, 6),
-        (6, 7),
-    ]
+    handle(rows, (2, 13), (11, 4))
+    blade = {1: range(6, 9), 2: range(5, 10), 3: range(4, 11), 4: range(3, 10), 5: range(3, 9), 6: range(4, 8), 7: range(5, 7)}
+    head = [(x, y) for y, xs in blade.items() for x in xs]
     put_all(rows, head, "3")
-    put_all(rows, [(7, 2), (6, 3), (5, 4), (5, 5), (5, 6)], "5")
-    put_all(rows, [(8, 2), (7, 3), (6, 4), (6, 5), (6, 6), (6, 7)], "4")
-    put_all(rows, [(9, 3), (10, 3), (9, 4), (8, 5), (7, 6)], "2")
-    put_all(rows, [(11, 2), (12, 3), (11, 4)], "u")
-    put_all(rows, [(12, 2)], "t")
-    put_all(rows, [(11, 3)], "r")
+    put_all(rows, [(min(xs), y) for y, xs in blade.items()], "5")
+    put_all(rows, [(min(xs) + 1, y) for y, xs in blade.items() if len(xs) > 3], "4")
+    put_all(rows, [(max(xs), y) for y, xs in blade.items()], "2")
+    put_all(rows, [(11, 2), (12, 3), (12, 2)], "2")
+    put_all(rows, [(10, 3), (9, 4)], "u")
     return render(rows)
 
 
 def shovel():
     rows = blank()
     handle(rows, (2, 13), (9, 6))
-    head = [(11, 1), (12, 1), (10, 2), (11, 2), (12, 2), (13, 2), (10, 3), (11, 3), (12, 3), (13, 3), (14, 3),
-            (11, 4), (12, 4), (13, 4), (14, 4), (12, 5), (13, 5), (10, 5)]
-    put_all(rows, head, "3")
-    put_all(rows, [(11, 1), (10, 2), (10, 3), (12, 1)], "5")
-    put_all(rows, [(11, 2), (11, 3), (12, 2)], "4")
-    put_all(rows, [(14, 3), (14, 4), (13, 5), (12, 5), (13, 4)], "2")
-    put_all(rows, [(10, 5), (10, 4)], "u")
-    put_all(rows, [(12, 3)], "y")
+    blade = [(x, y) for y in range(0, 8) for x in range(8, 16) if abs(x - 12) + abs(y - 3) <= 3]
+    put_all(rows, blade, "3")
+    put_all(rows, [(x, y) for x, y in blade if (x - 12) + (y - 3) <= -2], "5")
+    put_all(rows, [(x, y) for x, y in blade if (x - 12) + (y - 3) >= 2], "2")
+    put_all(rows, [(12, 3), (11, 3), (12, 2)], "4")
+    put_all(rows, [(10, 5)], "4")
+    put_all(rows, [(13, 4)], "u")
     return render(rows)
 
 
@@ -375,14 +369,15 @@ def hoe():
 HELMET = [
     "................",
     "................",
-    ".......TT.......",
-    ".....GGTTGG.....",
-    "...GGGGTTGGGG...",
+    ".....GGGGGG.....",
+    "...GGGGGGGGGG...",
     "..GGGGGGGGGGGG..",
     "..GGGGGGGGGGGG..",
-    "..TTTTTTTTTTTT..",
-    "..GGG......GGG..",
-    "..GGG......GGG..",
+    ".GGGGGGGGGGGGGG.",
+    ".GTTTTTTTTTTTTG.",
+    ".GGGG......GGGG.",
+    ".GGG........GGG.",
+    ".GGG........GGG.",
     "..GG........GG..",
 ]
 
@@ -901,15 +896,16 @@ BLUEPRINT = [
     "................",
     ".mjjjjjjjjjjjjm.",
     ".hhhhhhhhhhhhhh.",
-    "..dddddddddddd..",
-    "..dcvvvvvvvvcd..",
-    "..dcvccyyccvcd..",
-    "..dcvcyrryccvd..",
-    "..dcvccyyccvcd..",
-    "..dcvvvvvvvvcd..",
-    "..dccccccccccd..",
-    "..dcuuuucqrrcd..",
-    "..dddddddqqqdd..",
+    "..eeeeeeeeeeee..",
+    "..ewwwwwwwwwwe..",
+    "..eweeeeeeeewe..",
+    "..eweeeyyeeewe..",
+    "..eweeyrryeewe..",
+    "..eweeeyyeeewe..",
+    "..eweeeqqeeewe..",
+    "..eweeeeeeeewe..",
+    "..ewwwwwwwwwwe..",
+    "..eeeeeeeeeeee..",
     ".mjjjjjjjjjjjjm.",
     ".hhhhhhhhhhhhhh.",
 ]
@@ -1197,6 +1193,9 @@ def pressure_tonic_icon():
                 img.putpixel((x, y), RAMPS["T"][2])
     img.putpixel((8, 7), RAMPS["T"][5])
     img.putpixel((8, 8), RAMPS["T"][5])
+    return img
+
+
 # ---------------------------------------------------------------- recompensas do Kraken (2E)
 
 def kraken_eye():

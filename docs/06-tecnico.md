@@ -41,6 +41,9 @@
   mundo plano, monta as cenas, confere por código a Forja e o bônus da armadura
   e grava screenshots em `build/run/clientGameTest/screenshots/`. Não precisa
   controlar o PC; qualquer agente pode rodar e ler os PNGs. Não roda no CI.
+  Para iterar numa parte só: `AQUAMARINE_GAMETEST_ONLY=moray,whale ./gradlew runClientGameTest`
+  (nomes nos `enabled(...)` de `AquamarineClientGameTest`); sem a variável roda tudo.
+  O `build` não compila `src/gametest`: use `./gradlew compileGametestJava` antes.
 - `C:\Python314\python tools/gen_textures.py --preview` regera as texturas e
   grava folhas de prévia em `build/texture_preview*.png`.
 
@@ -195,8 +198,8 @@ sobre o UV), classes Java no pacote do cliente acima. O renderer do Codex começ
 ## Contrato de modelos e entidades (Fase 3)
 Dono desta regra: aqui. Vale a mesma divisão e o mesmo método da Entrega 2 (seção acima:
 script gera o modelo, Codex nos arquivos de modelo, Claude na lógica e nas texturas);
-só os nomes novos e as lições abaixo são específicos. **Ainda não é executável**: a Fase 3
-está bloqueada ([07-roadmap.md](07-roadmap.md)).
+só os nomes novos e as lições abaixo são específicos. Em execução desde 24/10/2026
+([07-roadmap.md](07-roadmap.md)).
 
 | Criatura | Faixa do modelo | View (código comum) | Animações (`AnimationState`) | Pasta e pacote |
 |---|---|---|---|---|
@@ -216,3 +219,13 @@ está bloqueada ([07-roadmap.md](07-roadmap.md)).
   escuras sob a água não leem: pense em cores claras/bioluminescentes e em enquadramento dos
   screenshots; (4) o `runClientGameTest` precisa de câmera acima do chão e de arena aquática;
   (5) o recurso "jogo" é exclusivo, e o disco C: precisa de espaço livre para builds.
+- **Lições da Fase 3:** (1) o jogo só trata como multiparte o Ender Dragon; o corpo da Moréia
+  são entidades comuns `MorayPartEntity` (não salvas, posição calculada da dona no cliente e no
+  servidor, dano repassado com `is()` apontando para a dona); (2) o `/fill` aceita no máximo
+  32.768 blocos: arenas grandes de teste vão em camadas; (3) mob criado longe do jogador some pelo
+  despawn: nos testes, `setPersistenceRequired()`; (4) o `FakePlayer` da Fabric não monta nada;
+  (5) cor de texto no HUD é ARGB: sem `0xFF` no alfa o texto some.
+- **Corpo da Moréia:** `MorayEntity.PART_OFFSETS` (blocos atrás da cabeça) acompanha os segmentos
+  de `tools/models/moray/build_model.py`; quem mudar um muda o outro.
+- **Texturas das criaturas da Fase 3:** `tools/gen_creature_textures.py` pinta sobre o layout de UV
+  lido do próprio `build_model.py` (rode depois dele); o da Moréia já chama o de textura no fim.

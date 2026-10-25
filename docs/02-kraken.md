@@ -67,6 +67,9 @@ da cidade, mas é bem mais demorado. Valores do plano oficial mantidos.
 | Armas comuns (espada, machado, arco, besta, tridente) | 25% do dano |
 | Ferramentas e armas de Oricálcio (tag `aquamarine:shield_breakers`) | 60% do dano |
 | Arpão de Oricálcio | dano triplo (300% do dano base); prende o tentáculo por 3 s |
+| Arpão com ponta de Fogo (Fase 3C) | o triplo + 10% do dano base (×3) |
+| Arpão com ponta de Choque (Fase 3C) | o triplo + 40% do dano base (×3); a melhor ponta contra o escudo |
+| Arpão com ponta de Veneno ou de Wither (Fase 3C) | só o triplo: o Kraken não pega veneno nem wither |
 | Carga de Pulso | 100 de dano fixo no escudo, em área de 4 blocos |
 | Pilar Ressonante | com Cristais de Maré, pulso a cada 15 s que tira 5% do escudo; até 3 ativos |
 | Encantamento Quebra-Carapaça | +10% por nível (até 3) sobre qualquer fonte |

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "T": "aquamarine:orichalcum_harpoon_tip",
+    "B": "aquamarine:voltaic_coil"
+  },
+  "pattern": [
+    " T ",
+    "TBT",
+    " T "
+  ],
+  "result": {
+    "id": "aquamarine:shock_harpoon_tip",
+    "count": 4
+  }
+}

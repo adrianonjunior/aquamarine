@@ -38,6 +38,7 @@ public class TentacleEntity extends Mob implements TentacleView {
 	private int slot;
 	/** Em um ataque (não pode ser escolhido para outro). */
 	private boolean busy;
+	private int pinnedTicks;
 
 	public TentacleEntity(EntityType<? extends TentacleEntity> type, Level level) {
 		super(type, level);
@@ -125,8 +126,19 @@ public class TentacleEntity extends Mob implements TentacleView {
 		return slot;
 	}
 
+	/** Ocupado num ataque ou preso pelo Arpão (não ataca nem acompanha o corpo). */
 	public boolean isBusy() {
-		return busy;
+		return busy || pinnedTicks > 0;
+	}
+
+	/** O Arpão prende o tentáculo (docs/02-kraken.md): fica parado por {@code ticks}. */
+	public void pin(int ticks) {
+		pinnedTicks = Math.max(pinnedTicks, ticks);
+		setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+	}
+
+	public boolean isPinned() {
+		return pinnedTicks > 0;
 	}
 
 	public void setBusy(boolean busy) {
@@ -136,6 +148,10 @@ public class TentacleEntity extends Mob implements TentacleView {
 	@Override
 	protected void customServerAiStep(ServerLevel level) {
 		super.customServerAiStep(level);
+		if (pinnedTicks > 0) {
+			pinnedTicks--;
+			setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+		}
 		if (owner != null && (!(level.getEntity(owner) instanceof KrakenEntity kraken) || !kraken.isAlive())) {
 			discard();
 		}

@@ -1,7 +1,10 @@
 package com.aquamarine.entity;
 
 import com.aquamarine.Aquamarine;
+import com.aquamarine.ModTags;
 
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 
 import net.minecraft.core.Registry;
@@ -9,7 +12,11 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 /** Tipos de entidade do mod. Renderizadores ficam em AquamarineClient. */
 public final class ModEntities {
@@ -47,11 +54,50 @@ public final class ModEntities {
 	public static final EntityType<KrakenEggEntity> KRAKEN_EGG = Registry.register(BuiltInRegistries.ENTITY_TYPE, KRAKEN_EGG_KEY,
 		EntityType.Builder.of(KrakenEggEntity::new, MobCategory.MISC).sized(0.8F, 1.0F).fireImmune().clientTrackingRange(10).build(KRAKEN_EGG_KEY));
 
+	private static final ResourceKey<EntityType<?>> MORAY_KEY =
+		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("moray"));
+	private static final ResourceKey<EntityType<?>> MORAY_PART_KEY =
+		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("moray_part"));
+
+	/** Moréia Tempestuosa (docs/08-fase3.md): a caixa é a cabeça; o corpo são as partes abaixo. */
+	public static final EntityType<MorayEntity> MORAY = Registry.register(BuiltInRegistries.ENTITY_TYPE, MORAY_KEY,
+		EntityType.Builder.of(MorayEntity::new, MobCategory.MONSTER).sized(1.6F, 1.6F).eyeHeight(0.8F)
+			.clientTrackingRange(10).build(MORAY_KEY));
+
+	/** Trecho do corpo da Moréia (caixa de colisão); não é salvo nem invocável. */
+	public static final EntityType<MorayPartEntity> MORAY_PART = Registry.register(BuiltInRegistries.ENTITY_TYPE, MORAY_PART_KEY,
+		EntityType.Builder.<MorayPartEntity>of(MorayPartEntity::new, MobCategory.MISC).sized(1.2F, 1.2F).noSave().noSummon()
+			.clientTrackingRange(10).updateInterval(2).build(MORAY_PART_KEY));
+
+	private static final ResourceKey<EntityType<?>> WHALE_KEY =
+		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("whale"));
+	private static final ResourceKey<EntityType<?>> SPERM_WHALE_KEY =
+		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("sperm_whale"));
+
+	/** Baleia-de-Nereia (docs/08-fase3.md): montaria de 3 jogadores. A caixa cobre o tronco, não as nadadeiras. */
+	public static final EntityType<WhaleEntity> WHALE = Registry.register(BuiltInRegistries.ENTITY_TYPE, WHALE_KEY,
+		EntityType.Builder.of(WhaleEntity::new, MobCategory.WATER_CREATURE).sized(6.0F, 5.0F).eyeHeight(3.0F)
+			.clientTrackingRange(12).build(WHALE_KEY));
+
+	/** Cachalote (docs/08-fase3.md): neutro, onda sonora quando atacado. */
+	public static final EntityType<SpermWhaleEntity> SPERM_WHALE = Registry.register(BuiltInRegistries.ENTITY_TYPE, SPERM_WHALE_KEY,
+		EntityType.Builder.of(SpermWhaleEntity::new, MobCategory.WATER_CREATURE).sized(5.5F, 5.0F).eyeHeight(3.0F)
+			.clientTrackingRange(12).build(SPERM_WHALE_KEY));
+
 	public static void register() {
 		FabricDefaultAttributeRegistry.register(KRAKEN, KrakenEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(BOSS_DUMMY, BossDummy.createAttributes());
 		FabricDefaultAttributeRegistry.register(TENTACLE, TentacleEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(YOUNG_KRAKEN, YoungKrakenEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(MORAY, MorayEntity.createAttributes());
+		SpawnPlacements.register(MORAY, SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, MorayEntity::checkSpawn);
+		BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_OCEAN), MobCategory.MONSTER, MORAY, 2, 1, 1);
+		FabricDefaultAttributeRegistry.register(WHALE, WhaleEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(SPERM_WHALE, SpermWhaleEntity.createAttributes());
+		SpawnPlacements.register(WHALE, SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, AbstractWhaleEntity::checkSpawn);
+		SpawnPlacements.register(SPERM_WHALE, SpawnPlacementTypes.IN_WATER, Heightmap.Types.OCEAN_FLOOR, AbstractWhaleEntity::checkSpawn);
+		BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_DEEP_OCEAN), MobCategory.WATER_CREATURE, WHALE, 2, 1, 3);
+		BiomeModifications.addSpawn(BiomeSelectors.tag(ModTags.Biomes.MORAY_TRENCHES), MobCategory.WATER_CREATURE, SPERM_WHALE, 1, 1, 1);
 	}
 
 	private ModEntities() {}

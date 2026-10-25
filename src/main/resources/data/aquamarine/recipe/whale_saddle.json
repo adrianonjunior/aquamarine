@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": "minecraft:leather",
+    "S": "aquamarine:ancient_scale",
+    "P": "aquamarine:abyssal_pearl"
+  },
+  "pattern": [
+    "LSL",
+    "LPL",
+    " S "
+  ],
+  "result": {
+    "id": "aquamarine:whale_saddle"
+  }
+}

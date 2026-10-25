@@ -61,6 +61,16 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		ModItems.ANCIENT_SCALE, ModItems.ORICHALCUM_SWORD, ModItems.ORICHALCUM_PICKAXE, ModItems.ORICHALCUM_AXE,
 		ModItems.ORICHALCUM_SHOVEL, ModItems.DIVING_GOGGLES);
 
+	/**
+	 * Só para iterar mais rápido: {@code AQUAMARINE_GAMETEST_ONLY=moray,whale ./gradlew runClientGameTest}
+	 * roda só essas partes (nomes nos {@code enabled(...)} abaixo). Sem a variável, roda tudo.
+	 */
+	private static final String ONLY = System.getenv("AQUAMARINE_GAMETEST_ONLY");
+
+	private static boolean enabled(String name) {
+		return ONLY == null || ONLY.isBlank() || List.of(ONLY.split(",")).contains(name);
+	}
+
 	@Override
 	public void runTest(ClientGameTestContext context) {
 		try (TestSingleplayerContext world = context.worldBuilder().create()) {
@@ -74,17 +84,48 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 				.get(TagKey.create(Registries.BIOME, Identifier.withDefaultNamespace("aquamarine_fossa_de_nereia")))
 				.map(set -> set.size() > 0).orElse(false)), "a tag #aquamarine_fossa_de_nereia não carregou");
 
-			showcase(context, world, server, base);
-			creativeTab(context, world);
-			forge(context, world, server, base);
-			underwater(context, world, server, base);
-			bossBar(context, world, server, base);
-			altar(context, world, server, base);
-			kraken(context, world, server, base);
-			PressureGameTest.run(context, world, server, base);
-			DepthGameTest.run(context, world, server, base);
-			AttackGameTest.run(context, world, server, base);
-			KrakenVisualGameTest.run(context, world, server, base);
+			if (enabled("showcase")) {
+				showcase(context, world, server, base);
+			}
+			if (enabled("creative")) {
+				creativeTab(context, world);
+			}
+			if (enabled("forge")) {
+				forge(context, world, server, base);
+			}
+			if (enabled("underwater")) {
+				underwater(context, world, server, base);
+			}
+			if (enabled("bossbar")) {
+				bossBar(context, world, server, base);
+			}
+			if (enabled("altar")) {
+				altar(context, world, server, base);
+			}
+			if (enabled("kraken")) {
+				kraken(context, world, server, base);
+			}
+			if (enabled("pressure")) {
+				PressureGameTest.run(context, world, server, base);
+			}
+			if (enabled("depth")) {
+				DepthGameTest.run(context, world, server, base);
+			}
+			if (enabled("moray")) {
+				MorayGameTest.run(context, world, server, base);
+			}
+			if (enabled("whale")) {
+				WhaleGameTest.run(context, world, server, base);
+			}
+			if (enabled("gear")) {
+				GearGameTest.run(context, world, server, base);
+			}
+			if (enabled("attack")) {
+				AttackGameTest.run(context, world, server, base);
+			}
+			if (enabled("visual")) {
+				KrakenVisualGameTest.run(context, world, server, base);
+			}
 		}
 	}
 

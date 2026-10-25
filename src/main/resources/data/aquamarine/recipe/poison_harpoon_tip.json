@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "aquamarine:orichalcum_harpoon_tip",
+    "minecraft:spider_eye"
+  ],
+  "result": {
+    "id": "aquamarine:poison_harpoon_tip"
+  }
+}

@@ -25,6 +25,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TridentItem;
+import net.minecraft.world.item.component.Weapon;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.block.Block;
@@ -104,6 +106,40 @@ public final class ModItems {
 		new Item.Properties().humanoidArmor(ModMaterials.DEEP_DIVING_ARMOR, ArmorType.LEGGINGS));
 	public static final Item DEEP_DIVING_BOOTS = register("deep_diving_boots", Item::new,
 		new Item.Properties().humanoidArmor(ModMaterials.DEEP_DIVING_ARMOR, ArmorType.BOOTS));
+
+	// Fase 3B: Moréia Tempestuosa
+	/** Escama Elétrica: cai da Moréia; cria a Bobina Voltaica e o Chicote de Moréia. */
+	public static final Item ELECTRIC_SCALE = register("electric_scale", Item::new, new Item.Properties().rarity(Rarity.UNCOMMON));
+	/** Bobina Voltaica: bateria consumível (6 cargas do Propulsor; vira munição de Choque). */
+	public static final Item VOLTAIC_COIL = register("voltaic_coil", Item::new, new Item.Properties());
+	/** Chicote de Moréia: 7 de dano, rápido, alcance 3,5 e corrente nos alvos molhados (Forja Abissal). */
+	public static final Item MORAY_WHIP = register("moray_whip", MorayWhipItem::new, MorayWhipItem.properties());
+
+	// Fase 3B: Baleias
+	/** Sela de Baleia: sem ela não se monta a Baleia-de-Nereia domada. */
+	public static final Item WHALE_SADDLE = register("whale_saddle", Item::new, new Item.Properties().stacksTo(1));
+
+	// Fase 3C: Arpão e munições
+	/** Arpão de Oricálcio: arremesso do tridente, dano triplo no escudo do Kraken, prende o tentáculo 3 s. */
+	public static final Item ORICHALCUM_HARPOON = register("orichalcum_harpoon", TridentItem::new, new Item.Properties()
+		.rarity(Rarity.RARE)
+		.durability(400)
+		.attributes(TridentItem.createAttributes())
+		.component(DataComponents.TOOL, TridentItem.createToolProperties())
+		.enchantable(1)
+		.component(DataComponents.WEAPON, new Weapon(1)));
+	/** Aljava de Arpões: guarda até 4 tipos de ponta; R troca a escolhida. */
+	public static final Item HARPOON_QUIVER = register("harpoon_quiver", HarpoonQuiverItem::new, new Item.Properties());
+	/** Ponta simples de Oricálcio: base das pontas especiais. */
+	public static final Item ORICHALCUM_HARPOON_TIP = register("orichalcum_harpoon_tip", Item::new, new Item.Properties());
+	public static final Item POISON_HARPOON_TIP = register("poison_harpoon_tip", Item::new, new Item.Properties());
+	public static final Item FIRE_HARPOON_TIP = register("fire_harpoon_tip", Item::new, new Item.Properties());
+	public static final Item WITHER_HARPOON_TIP = register("wither_harpoon_tip", Item::new, new Item.Properties().rarity(Rarity.UNCOMMON));
+	public static final Item SHOCK_HARPOON_TIP = register("shock_harpoon_tip", Item::new, new Item.Properties().rarity(Rarity.UNCOMMON));
+
+	// Fase 3D
+	/** Propulsor de Maré: mão secundária, tecla V; 1 Bobina = 6 cargas. */
+	public static final Item TIDE_THRUSTER = register("tide_thruster", TideThrusterItem::new, new Item.Properties());
 
 	// Invocação
 	/** Projeto do Chamariz: vem do Cofre do Templo (ainda não existe); por enquanto só criativo. */

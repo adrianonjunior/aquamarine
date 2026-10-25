@@ -1,5 +1,7 @@
 package com.aquamarine.item;
 
+import com.aquamarine.Aquamarine;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -7,6 +9,8 @@ import java.util.UUID;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -14,6 +18,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 /**
  * Equipamento de mergulho da Fase 3A (docs/08-fase3.md, seções 1 e 2): Regulador de Pressão,
@@ -29,6 +35,8 @@ public final class DiveGear {
 	public static final int AIR_PER_PIECE = 45 * 20;
 	/** Ticks de Reserva de Ar recuperados por tick fora da água. */
 	private static final int REFILL_PER_TICK = 6;
+
+	public static final ResourceKey<Enchantment> ACCLIMATION = ResourceKey.create(Registries.ENCHANTMENT, Aquamarine.id("acclimation"));
 
 	private static final EquipmentSlot[] ARMOR_SLOTS = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
@@ -71,7 +79,21 @@ public final class DiveGear {
 
 	/** Níveis ambientais a menos pelas contramedidas deste equipamento (Regulador e Traje). */
 	public static int ambientReduction(LivingEntity entity) {
-		return (hasRegulator(entity) ? REGULATOR_LEVELS : 0) + suitPressureLevels(suitPieces(entity));
+		return (hasRegulator(entity) ? REGULATOR_LEVELS : 0) + suitPressureLevels(suitPieces(entity)) + acclimationLevels(entity);
+	}
+
+	/**
+	 * Aclimatação: −1 nível de Pressão ambiental por nível, somando as peças de armadura. Vale só para
+	 * a profundidade, para não esvaziar a Pressão da luta (docs/00-decisoes.md).
+	 */
+	public static int acclimationLevels(LivingEntity entity) {
+		return entity.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(ACCLIMATION).map(holder -> {
+			int levels = 0;
+			for (EquipmentSlot slot : ARMOR_SLOTS) {
+				levels += EnchantmentHelper.getItemEnchantmentLevel(holder, entity.getItemBySlot(slot));
+			}
+			return levels;
+		}).orElse(0);
 	}
 
 	/** Gasta a durabilidade do Regulador enquanto ele reduz uma Pressão ambiental real. */

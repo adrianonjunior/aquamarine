@@ -70,7 +70,9 @@
   | Descarga em Cadeia | Faíscas azuis crescentes por 1,5 s | 8 de dano e Lentidão a **todos na água** num raio de 12 | Sair da água, barco, bloco seco, Isolamento |
   | Enrolar | Cauda brilha 1 s | Prende; 3 de dano por segundo, 4 s | Atacar o rabo (hitbox da cauda, 30 de vida) |
 - **Fraquezas:** o rabo (dano ×1,5); fica atordoada 3 s ao tomar Choque dos seus próprios raios.
-  Imune a dano elétrico.
+  Imune a dano elétrico. Leitura implementada: qualquer dano elétrico de fora (ponta de Choque,
+  corrente do Chicote) não fere e atordoa 3 s, com 8 s até poder ser atordoada de novo; acertar
+  30 de dano no rabo durante o Enrolar solta o alvo.
 - **Drops:** 2 + `n ÷ 2` **Escamas Elétricas** (máximo 6), afetadas por Saque, mais 40 XP.
 - **Itens que a Escama cria:**
 

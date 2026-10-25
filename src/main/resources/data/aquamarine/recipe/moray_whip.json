@@ -1,0 +1,17 @@
+{
+  "type": "aquamarine:abyssal_forging",
+  "category": "equipment",
+  "key": {
+    "B": "aquamarine:voltaic_coil",
+    "I": "aquamarine:orichalcum_ingot",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    " BB",
+    "IB ",
+    "SI "
+  ],
+  "result": {
+    "id": "aquamarine:moray_whip"
+  }
+}

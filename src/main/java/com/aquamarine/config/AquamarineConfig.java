@@ -31,6 +31,10 @@ public final class AquamarineConfig {
 	public int scalingCap = 12;
 	/** Liga ou desliga o surgimento natural do Walker. */
 	public boolean naturalWalkers = true;
+	/** Só o dono da Baleia-de-Nereia pilota; os outros só vão de passageiro. */
+	public boolean whaleOwnerOnlyPilots = true;
+	/** Evento "Alerta de Moréia" da Vila (uma vez a cada 3 dias de jogo, em noite de tempestade). */
+	public boolean harborAlert = true;
 
 	public static AquamarineConfig get() {
 		return instance;

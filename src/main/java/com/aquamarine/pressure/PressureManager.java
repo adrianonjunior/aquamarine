@@ -4,6 +4,7 @@ import com.aquamarine.Aquamarine;
 import com.aquamarine.block.AnchorBuoyBlock;
 import com.aquamarine.effect.ModEffects;
 import com.aquamarine.entity.KrakenEntity;
+import com.aquamarine.entity.WhaleEntity;
 import com.aquamarine.item.DiveGear;
 import com.aquamarine.item.OrichalcumEffects;
 
@@ -108,7 +109,8 @@ public final class PressureManager {
 		} else if (player.tickCount % EXPOSURE_CHECK_TICKS == 0) {
 			entry.exposed = player.isUnderWater() && nearestKraken(level, player) != null;
 			entry.rawAmbient = rawAmbientCap(player);
-			entry.ambientTarget = Math.max(0, entry.rawAmbient - DiveGear.ambientReduction(player));
+			int bubble = player.getVehicle() instanceof WhaleEntity ? 1 : 0;
+			entry.ambientTarget = Math.max(0, entry.rawAmbient - DiveGear.ambientReduction(player) - bubble);
 		}
 		if (AnchorBuoyBlock.isStandingOn(player)) {
 			entry.rawAmbient = 0;

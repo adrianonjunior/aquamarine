@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "aquamarine:orichalcum_harpoon_tip",
+    "minecraft:blaze_powder"
+  ],
+  "result": {
+    "id": "aquamarine:fire_harpoon_tip"
+  }
+}

@@ -1,6 +1,7 @@
 package com.aquamarine;
 
 import com.aquamarine.block.ModBlocks;
+import com.aquamarine.command.CreatureCommand;
 import com.aquamarine.command.KrakenCommand;
 import com.aquamarine.config.AquamarineConfig;
 import com.aquamarine.effect.ModEffects;
@@ -8,7 +9,10 @@ import com.aquamarine.entity.ModEntities;
 import com.aquamarine.entity.boss.AquamarineBossBar;
 import com.aquamarine.event.KrakenSummoning;
 import com.aquamarine.item.ModCreativeTab;
+import com.aquamarine.item.HarpoonEffects;
+import com.aquamarine.item.ModComponents;
 import com.aquamarine.item.ModItems;
+import com.aquamarine.item.TideThrusterItem;
 import com.aquamarine.item.OrichalcumEffects;
 import com.aquamarine.menu.ModMenus;
 import com.aquamarine.pressure.PressureManager;
@@ -30,6 +34,7 @@ public class Aquamarine implements ModInitializer {
 		AquamarineConfig.load();
 		// Ordem importa: blocos antes dos itens de bloco.
 		ModBlocks.register();
+		ModComponents.register();
 		ModItems.register();
 		ModRecipes.register();
 		ModMenus.register();
@@ -39,8 +44,11 @@ public class Aquamarine implements ModInitializer {
 		OrichalcumEffects.register();
 		ModEffects.register();
 		PressureManager.register();
+		HarpoonEffects.register();
+		TideThrusterItem.register();
 		KrakenSummoning.register();
 		KrakenCommand.register();
+		CreatureCommand.register();
 		LOGGER.info("Aquamarine carregado.");
 	}
 

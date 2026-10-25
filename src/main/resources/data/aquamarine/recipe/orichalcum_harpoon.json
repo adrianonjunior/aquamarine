@@ -1,0 +1,17 @@
+{
+  "type": "aquamarine:abyssal_forging",
+  "category": "equipment",
+  "key": {
+    "I": "aquamarine:orichalcum_ingot",
+    "C": "aquamarine:tide_crystal",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    " IC",
+    " SI",
+    "I  "
+  ],
+  "result": {
+    "id": "aquamarine:orichalcum_harpoon"
+  }
+}

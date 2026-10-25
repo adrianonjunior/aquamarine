@@ -1,8 +1,11 @@
 package com.aquamarine;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.structure.Structure;
 
 /** Tags do mod. Os arquivos ficam em {@code data/aquamarine/tags/}. */
 public final class ModTags {
@@ -26,6 +29,24 @@ public final class ModTags {
 		}
 
 		private Items() {}
+	}
+
+	public static final class Biomes {
+		/**
+		 * Fossas onde a Moréia surge sem tempestade. É a tag da Fossa de Nereia
+		 * ({@code /locate biome #aquamarine_fossa_de_nereia}), por enquanto o oceano profundo.
+		 */
+		public static final TagKey<Biome> MORAY_TRENCHES = TagKey.create(Registries.BIOME,
+			Identifier.withDefaultNamespace("aquamarine_fossa_de_nereia"));
+
+		private Biomes() {}
+	}
+
+	public static final class Structures {
+		/** Cidades Perdidas: o canto da Baleia-de-Nereia aponta a mais próxima (vazia até a Cidade existir). */
+		public static final TagKey<Structure> LOST_CITY = TagKey.create(Registries.STRUCTURE, Aquamarine.id("lost_city"));
+
+		private Structures() {}
 	}
 
 	private ModTags() {}
