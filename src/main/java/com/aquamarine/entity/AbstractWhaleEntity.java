@@ -33,8 +33,8 @@ public abstract class AbstractWhaleEntity extends PathfinderMob {
 	public static final int SPAWN_DEPTH = 6;
 	/** Coluna d'água mínima no lugar (nível do mar menos o fundo): o oceano fundo tem uns 30 blocos, o comum 15 a 20. */
 	public static final int MIN_WATER_DEPTH = 14;
-	/** No máximo 2 grupos (6 baleias) numa área de 16 x 16 chunks. */
-	public static final int MAX_PER_AREA = 6;
+	/** No máximo 4 baleias (e cachalotes) numa área de 16 x 16 chunks: sobra vaga para a Moréia, que divide a categoria. */
+	public static final int MAX_PER_AREA = 4;
 	/** Distância em que a baleia selvagem não some sozinha. */
 	public static final double KEEP_NEAR = 64.0;
 
