@@ -26,12 +26,12 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| Áudio v1: A0 entregue, **aguarda o aval do Adriano** (portão 1); MusicGen local ainda baixando para a comparação | Claude Opus 5.5 (worktree `aquamarine-claude-audio`) | GPU | 25/10/2026 |
+| Áudio v1: A0 entregue, **aguarda o aval do Adriano** (portão 1) | Claude Opus 5.5 (worktree `aquamarine-claude-audio`) | nenhum | 25/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
 
-- 25/10/2026 · Claude Opus 5.5 (áudio) · **Áudio v1, lote A0 entregue** (portão 1 aberto). Pipeline em `tools/audio/` (síntese original por código, finalização com medidas, laços circulares com 2 s de sobra cruzada, prévia HTML, manifesto) e as 6 amostras: `ambient/depth_2`, `entity/whale/song1`, `entity/kraken/roar1`, `item/thruster/fire1`, `music/harbor`, `music/stinger_summon`. **Medido:** loudness nos alvos, pico real ≤ −2,8 dBTP, sem saturação, emendas ≈1 (inaudíveis). **Não avaliado:** a qualidade subjetiva (agentes não ouvem). **Falta:** o aval do Adriano em `build/audio-preview/index.html`; a comparação com MusicGen local entra na mesma página quando o modelo terminar de baixar. Os sons ainda não estão registrados (`sounds.json`, `ModSounds`): isso é o A1.
+- 25/10/2026 · Claude Opus 5.5 (áudio) · **Áudio v1, lote A0 entregue** (portão 1 aberto). Pipeline em `tools/audio/` (síntese original por código, finalização com medidas, laços circulares com 2 s de sobra cruzada, prévia HTML, manifesto) e as 6 amostras: `ambient/depth_2`, `entity/whale/song1`, `entity/kraken/roar1`, `item/thruster/fire1`, `music/harbor`, `music/stinger_summon`. **Medido:** loudness nos alvos, pico real ≤ −2,8 dBTP, sem saturação, emendas ≈1 (inaudíveis). **Não avaliado:** a qualidade subjetiva (agentes não ouvem). **Falta:** o aval do Adriano em `build/audio-preview/index.html`; na mesma página, 3 peças do MusicGen local (as melhores de 6 tentativas) para comparar com a síntese; as outras 3 vieram fracas (ruído, só grave, fina). Os sons ainda não estão registrados (`sounds.json`, `ModSounds`): isso é o A1.
 
 - 25/10/2026 · Claude Opus 5.5 (agente único de fechamento, sem Orca) · **Fase 3 fechada nas faixas.**
   3E v2: reputação por jogador (XP das trocas; níveis 10/70/150/250; Mergulhadores com todas as trocas e
