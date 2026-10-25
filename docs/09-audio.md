@@ -90,7 +90,7 @@ Máquina do Adriano: RTX 3050 (6 GB), ffmpeg instalado, Python 3.14 sem scipy.
    sintética, sequenciamento de notas em código. Reproduzível por semente.
 2. **IA local opcional**, só para textura e matéria-prima (AudioGen/MusicGen pequenos,
    Stable Audio Open), se couber na GPU; clipes curtos, **sempre curados e pós-processados**.
-   Conferir a licença dos pesos antes de qualquer publicação (uso atual: privado, com amigos).
+   Conferir a licença dos pesos antes de redistribuir modelos ou áudio gerado por IA.
 3. **Skills externas** (ex.: `build-sfx`, `audiocraft-audio-generation`): ler o `SKILL.md` e
    o código antes de instalar; só instalar se funcionar offline e sem custo.
 4. **Pós-produção com ffmpeg:** EQ, compressão, reverb por convolução, loop sem emenda

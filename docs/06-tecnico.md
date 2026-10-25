@@ -195,7 +195,7 @@ A Cidade Perdida (`worldgen`) entra quando for liberada.
 ## Ferramentas
 - IntelliJ IDEA Community com o plugin Minecraft Development.
 - Blockbench para modelos e texturas.
-- Git + GitHub: repositório privado `adrianonjunior/aquamarine` (conta `adrianonjunior`).
+- Git + GitHub: repositório público `adrianonjunior/aquamarine` (conta `adrianonjunior`).
 - Testes no jogo: `runClient` do Loom; comandos `/summon aquamarine:kraken`
   e `/kill` para iterar rápido.
 - Testes automáticos: Fabric GameTests para o escudo (absorve o dano e quebra

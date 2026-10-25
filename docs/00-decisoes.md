@@ -10,6 +10,7 @@ Decisões do Adriano de 24/10/2026, com as atualizações datadas em cada linha.
 | Assunto | Decisão |
 |---|---|
 | Atlas técnico e Kraken v2 | Liberados pelo Adriano em 25/10/2026: portal HTML local unificando modelos, animações, áudio, texturas e documentação; melhorar movimentos e estrutura do Kraken **somente na prévia**, sem integrar ao jogo. Preservar todos os modelos e versões no histórico. Operação em [../tools/atlas/README.md](../tools/atlas/README.md). **Kraken v2 integrado ao jogo** a pedido do Adriano em 25/10/2026 ("atualize suas animações, o Codex já terminou"): 7 juntas por braço, mandíbula, abas e os 16 movimentos refinados agora saem do gerador (`tools/models/kraken/`); a v1 segue no histórico do Atlas. |
+| Publicação | Repositório `adrianonjunior/aquamarine` público no GitHub por pedido do Adriano em 25/10/2026. |
 | Onde a luta acontece | Superfície **e** fundo, por fase. Efeito de **peso** que afunda o jogador (detalhes em [02-kraken.md](02-kraken.md)). |
 | Itens da cidade | Úteis, **não obrigatórios**. Sem eles o jogador não teria motivo para explorar a cidade. |
 | Dificuldade do Kraken | Um pouco mais difícil que o Warden. |
@@ -21,7 +22,6 @@ Decisões do Adriano de 24/10/2026, com as atualizações datadas em cada linha.
 | Aviso falso | Mantido: mensagens de invocação aparecem no chat, mas o Kraken não vem. Desligável na config. |
 | Barra de vida | Barra de boss **customizada e bonita** (detalhes em [02-kraken.md](02-kraken.md)). |
 | Nomes dos itens | Português no jogo, com tradução inglesa. |
-| Publicação | Só com amigos por enquanto. Repositório privado `adrianonjunior/aquamarine`. |
 | Agentes | Vários em paralelo, normalmente no **Orca** (regras em [../AGENTS.md](../AGENTS.md)). Divisão **preferencial**: **Claude** = código, texturas em pixel art e decisões criativas; **Codex** = modelagem 3D, animações, testes visuais, screenshots e controle do PC; um orquestrador pode coordenar as faixas pelo Orca. **Desde 25/10/2026 a divisão não é exclusiva:** quando o Adriano pede, qualquer agente faz uma faixa marcada para o outro (inclusive modelos, QA visual e a 3Q). Um documento dizer "o Codex fará" não impede ninguém. |
 | Modelagem 3D | Modelos feitos por script (`.bbmodel` gerado, exportado para Java), conferindo no jogo; Blockbench só para ajustes. Contrato de arquivos em [06-tecnico.md](06-tecnico.md). Decidido em 24/10/2026; quem modela pode ser qualquer agente (linha "Agentes"). |
 | Tamanho do Kraken | **2 vezes maior** a pedido do Adriano (25/10/2026, "deixe o kraken muito maior"; antes 32 x 20): escala do modelo **8** (`KrakenStats.MODEL_SCALE`), corpo de **~41 x 25 blocos** com os braços de 7 juntas, hitbox 36 x 24 e o modelo descido 5,4 blocos (`MODEL_DROP`) para a ponta dos braços ficar nos pés da entidade; nasce 24 blocos abaixo da superfície com a coroa rente à água. Crescem junto: arena 48 blocos, Nós de Maré x8 (lado 9), anel dos tentáculos 28, passeio 16 (volta de 12), Tinta e Redemoinho 24, Jato 36, Rugido 18, Pressão a 36 blocos e a arena de teste 96 x 96. |

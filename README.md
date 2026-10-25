@@ -1,8 +1,8 @@
 # AQUAMARINE
 
 Mod Fabric para Minecraft Java 26.3: explore a Cidade Perdida de Nereia, desça ao fundo do mar
-sentindo a Pressão e enfrente o Kraken. Repositório privado, para jogar com amigos (multiplayer é
-prioridade: toda a lógica roda no servidor).
+sentindo a Pressão e enfrente o Kraken. Código aberto no GitHub; multiplayer é prioridade e toda a
+lógica roda no servidor.
 
 Plano oficial: https://claude.ai/artifact/M68jvjvKRddKZMxq3yEQjT (pode estar desatualizado; em
 conflito, vale [docs/00-decisoes.md](docs/00-decisoes.md)).

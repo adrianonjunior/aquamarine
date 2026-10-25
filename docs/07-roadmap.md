@@ -4,7 +4,7 @@
 > tarefas em andamento (isso fica em [../CONTEXTO.md](../CONTEXTO.md)). Marque o
 > checkbox aqui quando um marco terminar.
 
-- [x] Repositório privado com esqueleto Fabric 26.3.
+- [x] Repositório público com esqueleto Fabric 26.3.
 - [x] JDK 25 instalado; build e `runClient` funcionam.
 - [ ] Ciclo **manual** de screenshot: print no jogo (F2) lido de `run/screenshots`.
   Capturas automatizadas do `runClientGameTest` já foram verificadas na Entrega 1.
