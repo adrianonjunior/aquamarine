@@ -1,9 +1,10 @@
 param([string]$AudioRoot = '', [int]$Port = 8766, [switch]$SemAbrir)
 $ErrorActionPreference = 'Stop'
+$atlasScriptDirectory = $PSScriptRoot
 $atlasRoot = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $atlasPython = if (Test-Path 'C:/Python314/python.exe') { 'C:/Python314/python.exe' } else { (Get-Command python.exe).Source }
 if (!(Test-Path (Join-Path $PSScriptRoot 'node_modules/three/package.json'))) {
-    & npm ci --prefix $PSScriptRoot --no-audit --no-fund
+    & npm ci --prefix $atlasScriptDirectory --no-audit --no-fund
     if ($LASTEXITCODE -ne 0) { throw 'Não foi possível instalar as dependências do Atlas.' }
 }
 # Importação explícita da worktree de áudio conhecida, quando ela ainda está em produção.
