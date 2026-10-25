@@ -145,3 +145,12 @@ pequenos com aprovação do Adriano** (agentes não ouvem). Arquivos novos em `t
   Kraken e das crias, céu por fase, tempestade e destruição do ambiente ([09-audio.md](09-audio.md), "Luta do Kraken";
   [02-kraken.md](02-kraken.md), "A luta muda o mundo"). Cobre a parte do Kraken de A2 e A4. Falta o portão 4 (luta no jogo).
 - [x] **Criaturas do oceano nascendo sozinhas** (correção de 25/10/2026; [00-decisoes.md](00-decisoes.md)).
+
+## Atlas técnico e estudo do Kraken (25/10/2026)
+
+- [x] Portal HTML local unificado: sete rigs, suas animações, áudio existente, texturas e documentação.
+- [x] Kraken v2 exclusivo da prévia, com 16 movimentos e estrutura articulada; referência v1 preservada.
+- [x] Histórico de oito versões, exportação, atualização do áudio em produção e verificação no navegador.
+- [ ] Aceite artístico do Kraken v2 pelo Adriano. Integração no jogo não autorizada nesta faixa.
+
+Uso, limites e evidências: [Atlas técnico](../tools/atlas/README.md).

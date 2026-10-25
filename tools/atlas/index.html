@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09191f">
+  <title>Aquamarine · Atlas técnico</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%236ee4cf' d='M20 2 36 28 20 38 4 28z'/%3E%3Cpath fill='%2309191f' d='m20 10 9 16-9 6-9-6z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="data.js"></script><script defer src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Pular para o conteúdo</a>
+<header class="masthead">
+  <a class="brand" href="#modelos" aria-label="Aquamarine, início"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 36 28 20 37 4 28Z M20 12 28 26 20 31 12 26Z"/></svg><span>AQUAMARINE<small>Atlas técnico</small></span></a>
+  <nav aria-label="Seções do atlas">
+    <a href="#modelos" data-page="modelos" aria-current="page">Modelos & animações</a>
+    <a href="#audio" data-page="audio">Áudio</a><a href="#texturas" data-page="texturas">Texturas</a><a href="#documentacao" data-page="documentacao">Documentação</a>
+  </nav>
+  <span class="local-status"><i></i> Arquivo do projeto</span>
+</header>
+<main id="main">
+  <section id="modelos" class="page">
+    <div class="page-heading"><div><h1>Observatório de criaturas</h1><p>Explore os modelos. Veja cada movimento de perto.</p></div><span class="proposal">Kraken v2 · proposta só no site</span></div>
+    <div class="workspace">
+      <aside class="creatures" aria-label="Catálogo de criaturas"><h2>Criaturas <span id="mob-count"></span></h2><div id="mob-list"></div><p class="aside-note">Todos os rigs próprios do mod.<br>O Kraken abre com a proposta v2.</p></aside>
+      <div class="viewer-column">
+        <div class="stage-top"><div><h2 id="model-name">Kraken</h2><span id="model-kind">O terror das profundezas</span></div><label id="version-label">Modelo + animações<select id="version"><option value="v2">Proposta v2 · só no site</option><option value="v1">Atual no mod · v1</option></select></label></div>
+        <div id="viewport" role="region" aria-label="Visualizador 3D. Arraste para girar e use a roda para aproximar.">
+          <canvas id="scene" tabindex="0" aria-label="Modelo 3D interativo; setas giram, mais e menos alteram o zoom"></canvas>
+          <div class="stage-tools"><button id="fit" title="Enquadrar todo o movimento (F)">Enquadrar</button><button id="front">Frente</button><button id="side">Lado</button><button id="top">Topo</button></div>
+          <div class="stage-caption"><span id="stage-clip">Repouso</span><span id="stage-version">PROPOSTA V2</span></div>
+          <p id="viewer-error" role="alert" hidden></p>
+          <p class="orbit-hint"><span class="mouse-hint">Arraste para girar · roda para aproximar · botão direito para mover</span><span class="touch-hint">Um dedo gira · dois dedos movem · pinça aproxima</span></p>
+        </div>
+        <div class="transport">
+          <div class="timeline-row"><label for="timeline" class="sr-only">Posição na animação</label><div class="timeline-track"><input id="timeline" type="range" min="0" max="4" step="0.001" value="0"><span id="impact-marker" hidden></span></div><output id="time">0,00 / 4,00 s</output></div>
+          <div class="transport-controls"><button id="play" class="primary">Pausar</button><button id="restart" title="Voltar ao início">Reiniciar</button><label>Velocidade<select id="speed"><option value="0.25">0,25×</option><option value="0.5">0,5×</option><option value="1" selected>1×</option><option value="1.5">1,5×</option><option value="2">2×</option></select></label><label class="check"><input id="repeat" type="checkbox" checked> Repetir</label><span id="motion-state">Laço contínuo</span></div>
+        </div>
+        <div class="view-options"><label>Visual<select id="material"><option value="texture">Textura do mod</option><option value="uv">Mapa UV</option><option value="clay">Volume neutro</option><option value="wire">Malha</option></select></label><label class="check"><input id="grid" type="checkbox" checked> Grade</label><label class="check"><input id="rig" type="checkbox"> Ossos</label><label id="saddle-label" class="check" hidden><input id="saddle" type="checkbox"> Sela</label><label id="alive-label" class="check"><input id="alive" type="checkbox"> Movimento contínuo do jogo</label></div>
+        <details class="technical"><summary>Dados técnicos e histórico de versões</summary><dl id="model-info"></dl><p>Prévia dos rigs e keyframes. Partículas, deslocamento da entidade, IA e iluminação do Minecraft não são simulados. A grade usa pixels do modelo (16 px = 1 bloco antes da escala do renderer).</p><p id="model-note"></p><button id="download-model">Baixar modelo + animações (.json)</button><p id="version-history"></p></details>
+      </div>
+      <aside class="inspector"><div class="inspector-heading"><h2>Animações <span id="clip-count"></span></h2><label class="sr-only" for="clip-search">Buscar animação</label><input id="clip-search" type="search" placeholder="Buscar movimento…"></div><div id="clip-list" aria-label="Escolher animação"></div><p class="scroll-hint">Role a lista para ver todos os movimentos.</p><div class="clip-description"><h3 id="clip-title"></h3><p id="clip-description"></p><dl id="clip-info"></dl><button id="jump-impact" hidden>Ir ao fim do aviso</button></div></aside>
+    </div>
+  </section>
+  <section id="audio" class="page" hidden>
+    <div class="page-heading"><div><h1>Biblioteca sonora</h1><p>Os áudios e as comparações da prévia original, agora no Atlas.</p></div><button id="refresh">Atualizar catálogo</button></div>
+    <div class="filterbar"><label>Buscar áudio<input id="audio-search" type="search" placeholder="Kraken, ambiente, música…"></label><label>Categoria<select id="audio-kind"><option value="all">Todas</option><option value="sfx">Efeitos</option><option value="music">Música</option><option value="stem">Camadas adaptativas</option><option value="ambience">Ambiência</option><option value="comparison">Comparações IA</option></select></label><span id="audio-count" role="status"></span></div>
+    <p class="section-note" id="audio-status">Use fones ou caixas de som para avaliar. As medidas não substituem sua audição.</p>
+    <div id="audio-list" class="audio-list"></div>
+  </section>
+  <section id="texturas" class="page" hidden>
+    <div class="page-heading"><div><h1>Arquivo de texturas</h1><p>Pixel art original, mapas de entidade e recursos de interface.</p></div><span id="texture-count"></span></div>
+    <div class="filterbar"><label>Buscar textura<input id="texture-search" type="search" placeholder="Nome ou caminho do arquivo…"></label><label>Pasta<select id="texture-group"><option value="all">Todas as pastas</option></select></label><label>Escala de visualização<select id="texture-size"><option value="100">100 px</option><option value="180" selected>180 px</option><option value="280">280 px</option></select></label></div>
+    <div id="texture-list" class="texture-list"></div>
+  </section>
+  <section id="documentacao" class="page" hidden>
+    <div class="page-heading"><div><h1>Documentação do projeto</h1><p>Uma cópia de consulta dos documentos técnicos deste catálogo.</p></div></div>
+    <div class="docs-layout"><aside><label for="doc-select">Documento</label><select id="doc-select"></select><p>As fontes da verdade continuam em <code>docs/</code>. Atualize o catálogo para incorporar novas entregas.</p><p>Mergulhadores usam o modelo e as animações de aldeão do Minecraft. O dummy de teste e as partes de colisão não têm rig próprio.</p></aside><article id="doc-content"></article></div>
+  </section>
+</main>
+<footer><span>Aquamarine · Laboratório de assets</span><span id="build-info"></span><a href="licenses/three.txt">Three.js · MIT</a></footer>
+<noscript>Ative o JavaScript para usar o catálogo e o visualizador de modelos.</noscript>
+</body></html>

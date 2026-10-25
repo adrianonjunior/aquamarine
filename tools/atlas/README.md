@@ -1,0 +1,87 @@
+# Atlas técnico Aquamarine
+
+Portal local em HTML: modelos completos em 3D, animações, áudio, texturas e documentos. A proposta
+do Kraken é **exclusiva do site**. Nenhum Java, modelo ou textura consumido pelo jogo é modificado.
+
+## Abrir
+
+Na raiz do projeto, em PowerShell:
+
+```powershell
+.\tools\atlas\abrir.ps1
+```
+
+O atalho gera o catálogo, inicia o servidor local em segundo plano (sem janelas de terminal) e abre
+`http://127.0.0.1:8766`. O botão **Atualizar catálogo**, na biblioteca sonora, relê os recursos.
+O atalho encontra a worktree irmã `aquamarine-claude-audio` enquanto ela existir; para escolher outra,
+use `-AudioRoot caminho`. Outra porta: `-Port 8767`. Sem abrir navegador: `-SemAbrir`.
+
+Também funciona abrindo **`build/atlas/index.html` diretamente**, sem internet ou servidor. Esse é
+um snapshot: para atualizar, rode o atalho de novo. Pode copiar a pasta `build/atlas` inteira.
+Somente a primeira instalação precisa de internet (npm). Depois, todos os scripts, texturas e fontes
+são locais. O build usa Python com Pillow, Node e as dependências fixadas no lockfile.
+
+## Usar
+
+- Escolha criatura à esquerda e movimento à direita. O Kraken abre na proposta v2.
+- **Modelo + animações** alterna versões preservadas. Nenhuma seleção altera o mod.
+- Arraste para girar, use a roda para zoom e o botão direito para mover. No celular: um dedo gira,
+  pinça aproxima, dois dedos movem. Com foco no canvas: setas giram, `+`/`-` aproximam, `F` enquadra,
+  espaço pausa. Enquadrar considera toda a animação para não cortar tentáculos.
+- A linha do tempo permite pausar uma pose; há velocidade, repetição e marcador de fim do aviso.
+- Os players de áudio mostram duração e posição, deixam arrastar até um trecho e têm saltos de 15 s.
+  Os servidores local e público aceitam pedidos HTTP Range, para o navegador buscar bytes do ponto
+  solicitado sem carregar o arquivo desde o começo. `preload=metadata` carrega a duração ao abrir.
+- Textura, UV, volume neutro, malha, ossos, grade e Sela ajudam na inspeção. A camada contínua do
+  Kraken é opcional e corresponde à fase 1. Ela é separada dos clipes.
+- Áudio reúne o manifesto e as comparações MusicGen da prévia original, incluindo medidas,
+  espectrogramas, licença e download. Laços usam a audição de 3 voltas quando ela existe; caso
+  contrário o site informa que o arquivo tem sobra e o player não simula o crossfade.
+- Texturas têm busca, filtro por pasta e PNG original. Documentação é uma cópia legível dos `.md`.
+
+## Histórico permanente de modelos
+
+`versions/registry.json` registra cada versão; os JSONs guardam **rig, cubos, textura e keyframes**.
+Os sete modelos atuais são v1; o Kraken tem também a proposta v2. O seletor lê o registro completo.
+**Nunca sobrescreva uma versão publicada.** Exporte o JSON pelo site, atribua um novo `version` e registre:
+
+```powershell
+python tools/atlas/register_version.py --source caminho/kraken-v3.json --label 'Proposta v3 · só no site'
+```
+
+O comando recusa IDs já existentes. Regerar o site não modifica esses snapshots. O estudo v2 é
+reproduzível em `../models/kraken/kraken_preview_v2.py` (movimentos) e `catalog.py::kraken_proposal`
+(estrutura). O gerador do jogo **não importa** essa proposta. Se ela evoluir, registre v3, sem apagar v2.
+`reference_v1.json` preserva os clipes do Kraken na data desta entrega.
+
+## Gerar e validar
+
+```powershell
+npm ci --prefix tools/atlas --no-audit --no-fund
+python tools/atlas/build.py --audio-root ../aquamarine-claude-audio
+python tools/atlas/tests/test_catalog.py
+node tools/atlas/tests/browser.mjs
+```
+
+O teste de navegador usa Edge instalado, em modo headless. `ATLAS_URL` permite testar a mesma página
+via HTTP; por padrão testa `file://`. Evidências em `build/atlas-qa/` (não versionadas).
+Ele percorre todas as versões registradas: nesta entrega são 8 versões e 61 clipes, incluindo os
+16 originais do Kraken. Revisão visual e proveniência em [DESIGN.md](DESIGN.md).
+O build falha em formatos de animação Java desconhecidos para não exibir silenciosamente dados incompletos.
+Não é necessário compilar o mod para trabalhar no Atlas.
+
+## Proveniência e limites
+
+- Texturas e mapas UV são cópias dos recursos do próprio projeto; não foram gerados PNGs novos.
+- Rig do Kraken: caixas do `.bbmodel`, pose radial e UV cúbico do Java. Baleias/Moréia: geradores do
+  projeto. Criaturas pequenas: adaptadores explícitos do Java. Clipes atuais vêm do Java ou do
+  gerador do Kraken, não das aproximações presentes em alguns `.bbmodel` antigos.
+- A v2 acrescenta mandíbula, abas e duas juntas por tentáculo, reaproveitando as ilhas da textura
+  existente. Ajustes de textura podem ser feitos depois do aceite da estrutura.
+- Partículas, IA, deslocamento da entidade, escala do renderer, iluminação e efeitos de combate não
+  são reproduzidos. A grade usa pixels do modelo, antes da escala de mundo.
+- Mergulhadores são aldeões vanilla; dummy e partes de colisão não têm rig visual próprio. Estão
+  documentados, sem inventar modelos ou animações para eles.
+- Fontes: [Chakra Petch, Google Fonts](https://github.com/google/fonts/tree/main/ofl/chakrapetch),
+  licença OFL em `fonts/OFL.txt`. Three.js 0.186.1, MIT; licença copiada no site.
+- O servidor só escuta em `127.0.0.1`. Logs e PID ficam em `build/atlas-server.*`.

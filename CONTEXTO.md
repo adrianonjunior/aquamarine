@@ -26,10 +26,19 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
-| Áudio v1: A0 entregue, **aguarda o aval do Adriano** (portão 1) | Claude Opus 5.5 (worktree `aquamarine-claude-audio`) | nenhum | 25/10/2026 |
+| Publicar e verificar link ngrok do Atlas de amostra | Codex | Servidor Atlas 8767 e túnel ngrok | 25/10/2026 |
+| Áudio v1 (A0 aprovado): **luta do Kraken** (3 trilhas adaptativas, stingers, sons de combate) e **correção do spawn das criaturas do oceano** | Claude Opus 5.5 (worktree `aquamarine-claude-audio`, branch `claude/kraken-audio`) | Gradle na worktree; jogo só no teste final | 25/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+
+- 25/10/2026 · Codex · Players de áudio do Atlas agora mostram duração, barra arrastável para buscar qualquer posição e saltos de 15 s. Os servidores local (8766) e público estático (8767) aceitam Range HTTP, pedido parcial que permite ao navegador carregar do trecho escolhido; metadados carregados ao abrir. **Verificado nos dois servidores:** pedido bytes 1000–1999 retornou HTTP 206 e exatamente 1.000 bytes. Portal refeito com 72 áudios. Nenhuma mudança no jogo. Handoff em [ferramentas do Atlas](tools/atlas/README.md).
+
+- 25/10/2026 · Codex · Ngrok reconfigurado com o token da segunda conta autorizada pelo Adriano (credencial somente na configuração local do ngrok). Agente e servidor estático ativos; **novo bloqueio: ERR_NGROK_382**, e-mail do administrador da conta ainda não verificado. O endereço atribuído em build/atlas-public-url.txt ainda não serve o Atlas publicamente. Falta o Adriano verificar o e-mail no painel do ngrok; depois conferir novamente o acesso público.
+
+- 25/10/2026 · Codex · Compartilhamento do Atlas por ngrok solicitado: agente instalado em LocalAppData/Programs/ngrok e autenticação configurada fora do repositório. Servidor estático separado pronto em 127.0.0.1:8767, sem API de atualização (PID em build/atlas-public.pid). **Bloqueio:** ERR_NGROK_334; domínio da conta já serve “Central Ecommerce”, não o Atlas. Túnel existente preservado. Falta liberar o domínio ou usar outra conta; nenhum link público do Atlas foi criado.
+
+- 25/10/2026 · Codex · **Atlas técnico entregue na main**, retomado do agente anterior: sete rigs, 45 clipes no catálogo e oito versões preservadas (61 clipes contando a v1 do Kraken); Kraken v2 com mandíbula, abas e sete juntas por braço, exclusivo do site. Áudio original e entregas em andamento do Claude importados em leitura, 80 texturas e documentos no mesmo portal dark. Abrir com `tools/atlas/abrir.ps1` ou `build/atlas/index.html`; servidor local em http://127.0.0.1:8766. **Testado:** seis testes do catálogo, todas as versões no Edge, desktop/celular, áudio decodificado e atualização via HTTP. Nenhum arquivo de jogo alterado. **Falta:** avaliação artística e audição do Adriano; integração do Kraken v2 no jogo não autorizada. Uso e limites: [tools/atlas/README.md](tools/atlas/README.md).
 
 - 25/10/2026 · Claude Opus 5.5 (áudio) · **Áudio v1, lote A0 entregue** (portão 1 aberto). Pipeline em `tools/audio/` (síntese original por código, finalização com medidas, laços circulares com 2 s de sobra cruzada, prévia HTML, manifesto) e as 6 amostras: `ambient/depth_2`, `entity/whale/song1`, `entity/kraken/roar1`, `item/thruster/fire1`, `music/harbor`, `music/stinger_summon`. **Medido:** loudness nos alvos, pico real ≤ −2,8 dBTP, sem saturação, emendas ≈1 (inaudíveis). **Não avaliado:** a qualidade subjetiva (agentes não ouvem). **Falta:** o aval do Adriano em `build/audio-preview/index.html`; na mesma página, 3 peças do MusicGen local (as melhores de 6 tentativas) para comparar com a síntese; as outras 3 vieram fracas (ruído, só grave, fina). Os sons ainda não estão registrados (`sounds.json`, `ModSounds`): isso é o A1.
 
