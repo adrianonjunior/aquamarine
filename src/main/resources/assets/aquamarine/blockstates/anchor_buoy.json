@@ -1,7 +1,40 @@
 {
   "variants": {
-    "": {
-      "model": "aquamarine:block/anchor_buoy"
+    "center=false,stage=0,waterlogged=false": {
+      "model": "aquamarine:block/anchor_buoy_deck"
+    },
+    "center=true,stage=0,waterlogged=false": {
+      "model": "aquamarine:block/anchor_buoy_center_green"
+    },
+    "center=false,stage=1,waterlogged=false": {
+      "model": "aquamarine:block/anchor_buoy_deck"
+    },
+    "center=true,stage=1,waterlogged=false": {
+      "model": "aquamarine:block/anchor_buoy_center_yellow"
+    },
+    "center=false,stage=2,waterlogged=false": {
+      "model": "aquamarine:block/anchor_buoy_deck"
+    },
+    "center=true,stage=2,waterlogged=false": {
+      "model": "aquamarine:block/anchor_buoy_center_red"
+    },
+    "center=false,stage=0,waterlogged=true": {
+      "model": "aquamarine:block/anchor_buoy_deck"
+    },
+    "center=true,stage=0,waterlogged=true": {
+      "model": "aquamarine:block/anchor_buoy_center_green"
+    },
+    "center=false,stage=1,waterlogged=true": {
+      "model": "aquamarine:block/anchor_buoy_deck"
+    },
+    "center=true,stage=1,waterlogged=true": {
+      "model": "aquamarine:block/anchor_buoy_center_yellow"
+    },
+    "center=false,stage=2,waterlogged=true": {
+      "model": "aquamarine:block/anchor_buoy_deck"
+    },
+    "center=true,stage=2,waterlogged=true": {
+      "model": "aquamarine:block/anchor_buoy_center_red"
     }
   }
 }

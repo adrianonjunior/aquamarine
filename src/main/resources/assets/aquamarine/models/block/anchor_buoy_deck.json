@@ -1,0 +1,175 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "deck": "aquamarine:block/anchor_buoy_deck",
+    "float": "aquamarine:block/anchor_buoy_float",
+    "stripes": "aquamarine:block/anchor_buoy_stripes",
+    "metal": "aquamarine:block/anchor_buoy_metal",
+    "lamp": "aquamarine:block/anchor_buoy_lamp_green",
+    "bell": "aquamarine:block/chart_table_brass",
+    "particle": "aquamarine:block/anchor_buoy_deck"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        13,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#deck"
+        },
+        "south": {
+          "texture": "#deck"
+        },
+        "east": {
+          "texture": "#deck"
+        },
+        "west": {
+          "texture": "#deck"
+        },
+        "up": {
+          "texture": "#deck"
+        },
+        "down": {
+          "texture": "#deck"
+        }
+      }
+    },
+    {
+      "from": [
+        1,
+        6,
+        1
+      ],
+      "to": [
+        6,
+        13,
+        6
+      ],
+      "faces": {
+        "north": {
+          "texture": "#float"
+        },
+        "south": {
+          "texture": "#float"
+        },
+        "east": {
+          "texture": "#float"
+        },
+        "west": {
+          "texture": "#float"
+        },
+        "up": {
+          "texture": "#float"
+        },
+        "down": {
+          "texture": "#float"
+        }
+      }
+    },
+    {
+      "from": [
+        10,
+        6,
+        1
+      ],
+      "to": [
+        15,
+        13,
+        6
+      ],
+      "faces": {
+        "north": {
+          "texture": "#float"
+        },
+        "south": {
+          "texture": "#float"
+        },
+        "east": {
+          "texture": "#float"
+        },
+        "west": {
+          "texture": "#float"
+        },
+        "up": {
+          "texture": "#float"
+        },
+        "down": {
+          "texture": "#float"
+        }
+      }
+    },
+    {
+      "from": [
+        1,
+        6,
+        10
+      ],
+      "to": [
+        6,
+        13,
+        15
+      ],
+      "faces": {
+        "north": {
+          "texture": "#float"
+        },
+        "south": {
+          "texture": "#float"
+        },
+        "east": {
+          "texture": "#float"
+        },
+        "west": {
+          "texture": "#float"
+        },
+        "up": {
+          "texture": "#float"
+        },
+        "down": {
+          "texture": "#float"
+        }
+      }
+    },
+    {
+      "from": [
+        10,
+        6,
+        10
+      ],
+      "to": [
+        15,
+        13,
+        15
+      ],
+      "faces": {
+        "north": {
+          "texture": "#float"
+        },
+        "south": {
+          "texture": "#float"
+        },
+        "east": {
+          "texture": "#float"
+        },
+        "west": {
+          "texture": "#float"
+        },
+        "up": {
+          "texture": "#float"
+        },
+        "down": {
+          "texture": "#float"
+        }
+      }
+    }
+  ],
+  "ambientocclusion": false
+}

@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
       "model": "aquamarine:block/tide_anvil"
+    },
+    "facing=east": {
+      "model": "aquamarine:block/tide_anvil",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "aquamarine:block/tide_anvil",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "aquamarine:block/tide_anvil",
+      "y": 270
     }
   }
 }

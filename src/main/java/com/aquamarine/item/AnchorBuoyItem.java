@@ -64,8 +64,9 @@ public class AnchorBuoyItem extends BlockItem {
 			for (int dz = -1; dz <= 1; dz++) {
 				BlockPos pos = center.offset(dx, 0, dz);
 				if (level.getBlockState(pos).is(Blocks.WATER) && level.getFluidState(pos).isSource()) {
-					level.setBlockAndUpdate(pos, ModBlocks.ANCHOR_BUOY.defaultBlockState());
-					level.scheduleTick(pos, ModBlocks.ANCHOR_BUOY, AnchorBuoyBlock.LIFETIME_TICKS);
+					boolean middle = dx == 0 && dz == 0;
+					level.setBlockAndUpdate(pos, AnchorBuoyBlock.placed(middle));
+					level.scheduleTick(pos, ModBlocks.ANCHOR_BUOY, AnchorBuoyBlock.firstTick(middle));
 					placed++;
 				}
 			}

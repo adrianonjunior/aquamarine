@@ -15,6 +15,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * Blocos do mod. Os itens de bloco são registrados em {@link com.aquamarine.item.ModItems}.
@@ -43,26 +45,36 @@ public final class ModBlocks {
 	/** Plataforma da Boia de Âncora: dura 90 s e zera a Pressão de quem pisa (docs/05-itens.md). */
 	public static final Block ANCHOR_BUOY = register("anchor_buoy", AnchorBuoyBlock::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).instrument(NoteBlockInstrument.BASS)
-			.strength(0.5F, 3600000.0F).sound(SoundType.WOOD).noLootTable());
-	/** Troféu do Kraken: decorativo, cabeça do Kraken sobre um pedestal. */
-	public static final Block KRAKEN_TROPHY = register("kraken_trophy", Block::new,
+			.strength(0.5F, 3600000.0F).sound(SoundType.WOOD).noLootTable().noOcclusion()
+			.lightLevel(state -> state.getValue(AnchorBuoyBlock.CENTER) ? 10 : 0));
+	// Formatos dos modelos 3D da Fase 4 (frente para o norte; FacingShapeBlock gira para as outras direções).
+	private static final VoxelShape TROPHY_SHAPE = Shapes.or(Block.box(1, 0, 1, 15, 2, 15), Block.box(3, 2, 3, 13, 4, 13),
+		Block.box(4.5, 4, 4.5, 11.5, 15, 11.5));
+	private static final VoxelShape ANVIL_SHAPE = Shapes.or(Block.box(2, 0, 2, 14, 4, 14), Block.box(4, 4, 3, 12, 5, 13),
+		Block.box(6, 5, 4, 10, 10, 12), Block.box(3, 10, 0, 13, 16, 16));
+	private static final VoxelShape TABLE_SHAPE = Block.box(0, 0, 0, 16, 14, 16);
+	private static final VoxelShape ALTAR_SHAPE = Shapes.or(Block.box(1, 0, 1, 15, 3, 15), Block.box(3, 3, 3, 13, 9, 13),
+		Block.box(2, 9, 2, 14, 10.5, 14), Block.box(4, 10.5, 5, 12, 14, 12));
+
+	/** Troféu do Kraken: estatueta do Kraken com os tentáculos enrolados num pedestal. */
+	public static final Block KRAKEN_TROPHY = register("kraken_trophy", p -> new FacingShapeBlock(p, TROPHY_SHAPE),
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).instrument(NoteBlockInstrument.BASEDRUM)
 			.requiresCorrectToolForDrops().strength(3.0F, 1200.0F).sound(SoundType.DEEPSLATE_TILES).lightLevel(state -> 4).noOcclusion());
 
-	/** Troféu Dourado do Abismo: recompensa exclusiva do modo abissal. */
-	public static final Block GOLDEN_ABYSS_TROPHY = register("golden_abyss_trophy", Block::new,
+	/** Troféu Dourado do Abismo: a mesma estatueta em ouro, com cristais; recompensa exclusiva do modo abissal. */
+	public static final Block GOLDEN_ABYSS_TROPHY = register("golden_abyss_trophy", p -> new FacingShapeBlock(p, TROPHY_SHAPE),
 		BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).instrument(NoteBlockInstrument.BELL)
 			.requiresCorrectToolForDrops().strength(3.0F, 1200.0F).sound(SoundType.METAL).lightLevel(state -> 8).noOcclusion());
 
 	// Fase 3E: blocos de trabalho dos Mergulhadores do Porto dos Náufragos
-	public static final Block TIDE_ANVIL = register("tide_anvil", Block::new,
+	public static final Block TIDE_ANVIL = register("tide_anvil", p -> new FacingShapeBlock(p, ANVIL_SHAPE),
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).requiresCorrectToolForDrops().strength(5.0F, 1200.0F)
-			.sound(SoundType.ANVIL));
-	public static final Block CHART_TABLE = register("chart_table", Block::new,
-		BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.5F).sound(SoundType.WOOD));
-	public static final Block SHELL_ALTAR = register("shell_altar", Block::new,
+			.sound(SoundType.ANVIL).noOcclusion());
+	public static final Block CHART_TABLE = register("chart_table", p -> new FacingShapeBlock(p, TABLE_SHAPE),
+		BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.5F).sound(SoundType.WOOD).noOcclusion());
+	public static final Block SHELL_ALTAR = register("shell_altar", p -> new FacingShapeBlock(p, ALTAR_SHAPE),
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PINK).requiresCorrectToolForDrops().strength(3.0F)
-			.lightLevel(state -> 7).sound(SoundType.CORAL_BLOCK));
+			.lightLevel(state -> 7).sound(SoundType.CORAL_BLOCK).noOcclusion());
 
 	private static Block register(String name, Function<BlockBehaviour.Properties, Block> factory, BlockBehaviour.Properties properties) {
 		ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Aquamarine.id(name));

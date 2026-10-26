@@ -36,49 +36,10 @@ GAUGE = [
 ]
 GAUGE_NEEDLE = {(8, 4): "z", (8, 5): "z", (7, 6): "z", (7, 7): "z", (6, 8): "r", (9, 8): "r"}
 
-REGULATOR = [
-    "................",
-    ".....RRRRRR.....",
-    "....RR.RR.RR....",
-    "....RRRRRRRR....",
-    "....RR.RR.RR....",
-    ".....RRRRRR.....",
-    ".......hh.......",
-    ".....SSSSSS.....",
-    "....SSSSSSSS....",
-    "....SSwwwSSS....",
-    "....SwwwwwSS....",
-    "....SSwwwSSS....",
-    "....SSSSSSSS....",
-    ".....SSSSSS.....",
-    "......hhhh......",
-    "................",
-]
-
-
 # Fase 3B: rampas novas (elétrico e cobre) para a Escama, a Bobina e o Chicote.
 gt.RAMPS["E"] = [gt.hexc("0a1f3a"), gt.hexc("123a66"), gt.hexc("1d5d94"), gt.hexc("2f86bf"), gt.hexc("62bde6"), gt.hexc("c6f4ff")]
 gt.RAMPS["R"] = [gt.hexc("3a0c10"), gt.hexc("6a1820"), gt.hexc("982630"), gt.hexc("c43c40"), gt.hexc("e86a60"), gt.hexc("ffb0a0")]
 gt.RAMPS["C"] = [gt.hexc("3a1a0c"), gt.hexc("6a3018"), gt.hexc("9a4a24"), gt.hexc("c56a36"), gt.hexc("e8955a"), gt.hexc("ffd2a8")]
-
-COIL = [
-    "................",
-    "......yvvy......",
-    ".....aaaaaa.....",
-    "....aCCCCCCa....",
-    "....akkkkkka....",
-    "....aCCCCCCa....",
-    "....akkkkkka....",
-    "....aCCCCCCa....",
-    "....akkkkkka....",
-    "....aCCCCCCa....",
-    "....akkkkkka....",
-    "....aCCCCCCa....",
-    ".....aaaaaa.....",
-    "......yvvy......",
-    "................",
-    "................",
-]
 
 WHIP = [
     "................",
@@ -107,14 +68,6 @@ def electric_scale():
         img.putpixel((x, y), gt.RAMPS["G"][5] if y % 2 else gt.RAMPS["G"][4])
     for x, y in ((4, 3), (5, 3), (3, 4)):
         img.putpixel((x, y), gt.RAMPS["E"][5])
-    return img
-
-
-def voltaic_coil():
-    """Fio de cobre enrolado num núcleo, com terminais de cristal e faíscas dos lados."""
-    img = gt.render(COIL)
-    for x, y in ((12, 4), (13, 5), (12, 6), (2, 8), (3, 9), (2, 10)):
-        img.putpixel((x, y), gt.RAMPS["T"][5])
     return img
 
 
@@ -173,161 +126,11 @@ HARPOON = [
     "................",
 ]
 
-QUIVER = [
-    "................",
-    "........5..5....",
-    ".......545.45...",
-    "......HH5HH5H...",
-    ".....HHHHHHHHH..",
-    ".....HSSSSSSHH..",
-    "....HHSSqSSSH...",
-    "....HHSSSSSHH...",
-    "...HHSSSSSSH....",
-    "...HHSSSSSHH....",
-    "..HHSSSSSSH.....",
-    "..HHHHHHHHH.....",
-    "...HHHHHHH......",
-    "................",
-    "................",
-    "................",
-]
-
-TIP = [
-    "................",
-    "................",
-    "................",
-    "..........55....",
-    ".........5445...",
-    "........54GG4...",
-    ".........GGGG...",
-    "........GGG.4...",
-    ".......GGG......",
-    "......XXG.......",
-    ".....XX.........",
-    "....XX..........",
-    "...XX...........",
-    "................",
-    "................",
-    "................",
-]
-
-THRUSTER = [
-    "................",
-    "....GGGGGG......",
-    "...GTTTTTTGG....",
-    "..GTTyvvyTTTG...",
-    "..GTyvvvvyTTTG..",
-    "..GTvvwwvvTTTGG.",
-    "..GTvvwwvvTTTGuy",
-    "..GTyvvvvyTTTGG.",
-    "..GTTyvvyTTTG...",
-    "...GTTTTTTGG....",
-    "....GGEEGG......",
-    ".....EEEE.......",
-    "................",
-    "................",
-    "................",
-    "................",
-]
-
-
 def harpoon():
     img = gt.render(HARPOON)
     for x, y in ((13, 1), (12, 2)):
         img.putpixel((x, y), gt.RAMPS["T"][5])
     return img
-
-
-def quiver():
-    return gt.render(QUIVER)
-
-
-def tip_icon(shaft, accent):
-    """Ponta Abissal com a haste colorida pela munição."""
-    rows = [r.replace("X", shaft) for r in TIP]
-    img = gt.render(rows)
-    if accent:
-        for x, y in ((11, 5), (10, 4), (12, 7)):
-            img.putpixel((x, y), accent)
-    return img
-
-
-def thruster():
-    return gt.render(THRUSTER)
-
-
-# Fase 3E: blocos de trabalho da Vila e o escafandro dos Mergulhadores (camada de profissão 64x64).
-def workstation(seed, top_rows, side_ch, band_ch, accent):
-    """Bloco de trabalho: lados de pedra escura com faixa da profissão; topo desenhado à mão."""
-    side = gt.render(["".join(side_ch for _ in range(16))] * 16, outline=False)
-    px = side.load()
-    for x in range(16):
-        for y in (3, 4, 11, 12):
-            px[x, y] = gt.FIXED[band_ch] if y in (3, 12) else gt.RAMPS["G"][3]
-    for x in range(1, 16, 5):
-        for y in range(5, 11):
-            px[x, y] = gt.RAMPS["B"][1]
-    px[7, 7] = accent
-    px[8, 8] = accent
-    top = gt.render(top_rows, outline=False)
-    bottom = gt.render(["".join(side_ch for _ in range(16))] * 16, outline=False)
-    return top, side, bottom
-
-
-ANVIL_TOP = [
-    "BBBBBBBBBBBBBBBB",
-    "BGGGGGGGGGGGGGGB",
-    "BGEEEEEEEEEEEEGB",
-    "BGEEEEEEEEEEEEGB",
-    "BGEETTTTTTTTEEGB",
-    "BGEETTTTTTTTEEGB",
-    "BGEETTTTTTTTEEGB",
-    "BGEETTTTTTTTEEGB",
-    "BGEETTTTTTTTEEGB",
-    "BGEETTTTTTTTEEGB",
-    "BGEETTTTTTTTEEGB",
-    "BGEETTTTTTTTEEGB",
-    "BGEEEEEEEEEEEEGB",
-    "BGEEEEEEEEEEEEGB",
-    "BGGGGGGGGGGGGGGB",
-    "BBBBBBBBBBBBBBBB",
-]
-CHART_TOP = [
-    "HHHHHHHHHHHHHHHH",
-    "HmmmmmmmmmmmmmmH",
-    "HmeeeeeeeeeeeemH",
-    "HmeeeeceeeeeeemH",
-    "HmeeecceeeeeeemH",
-    "HmeeeeeeeeyeeemH",
-    "HmeeeeeeeyyyeemH",
-    "HmeeeeeeeeyeeemH",
-    "HmeecceeeeeeeemH",
-    "HmeeeceeeeeeeemH",
-    "HmeeeeeeeqqeeemH",
-    "HmeeeeeeeqreeemH",
-    "HmeeeeeeeeeeeemH",
-    "HmmmmmmmmmmmmmmH",
-    "HHHHHHHHHHHHHHHH",
-    "HHHHHHHHHHHHHHHH",
-]
-ALTAR_TOP = [
-    "PPPPPPPPPPPPPPPP",
-    "PSSSSSSSSSSSSSSP",
-    "PSSSSSSqqSSSSSSP",
-    "PSSSSSqrrqSSSSSP",
-    "PSSSSqrssrqSSSSP",
-    "PSSSqrsssssrqSSP",
-    "PSSqrssyysssrqSP",
-    "PSSqrssyysssrqSP",
-    "PSSSqrsssssrqSSP",
-    "PSSSSqrssrqSSSSP",
-    "PSSSSSqrrqSSSSSP",
-    "PSSSSSSqqSSSSSSP",
-    "PSSSSSSSSSSSSSSP",
-    "PSSSSSSSSSSSSSSP",
-    "PSSSSSSSSSSSSSSP",
-    "PPPPPPPPPPPPPPPP",
-]
 
 
 def diver_overlay(coat, accent):
@@ -401,31 +204,15 @@ def suit_layers():
 def main():
     out = {
         "item/depth_gauge": gt.armor_icon(GAUGE, GAUGE_NEEDLE),
-        "item/pressure_regulator": gt.render(REGULATOR),
         "item/deep_diving_helmet": gt.render(DIVE_HELMET),
         "item/deep_diving_chestplate": suit_icon(gt.CHEST, {(7, 5): "y", (8, 5): "v"}),
         "item/deep_diving_leggings": suit_icon(gt.LEGS),
         "item/deep_diving_boots": suit_icon(gt.BOOTS),
         "item/electric_scale": electric_scale(),
-        "item/voltaic_coil": voltaic_coil(),
         "item/moray_whip": moray_whip(),
         "item/whale_saddle": whale_saddle(),
         "item/abyssal_harpoon": harpoon(),
-        "item/harpoon_quiver": quiver(),
-        "item/abyssal_harpoon_tip": tip_icon("h", None),
-        "item/poison_harpoon_tip": tip_icon("P", gt.hexc("7cd04a")),
-        "item/fire_harpoon_tip": tip_icon("R", gt.hexc("6ad4ff")),
-        "item/wither_harpoon_tip": tip_icon("B", gt.hexc("2a2a30")),
-        "item/shock_harpoon_tip": tip_icon("E", gt.RAMPS["T"][5]),
-        "item/tide_thruster": thruster(),
-    }
-    for name, rows, side, band, accent in (("tide_anvil", ANVIL_TOP, "a", "u", gt.RAMPS["T"][5]),
-                                           ("chart_table", CHART_TOP, "h", "m", gt.FIXED["y"]),
-                                           ("shell_altar", ALTAR_TOP, "p", "r", gt.FIXED["s"])):
-        top, block_side, bottom = workstation(name, rows, side, band, accent)
-        out[f"block/{name}_top"] = top
-        out[f"block/{name}_side"] = block_side
-        out[f"block/{name}_bottom"] = bottom
+        }
     for name, coat, accent in (("tide_smith", gt.hexc("2a6e5f"), gt.RAMPS["G"][4]),
                                ("nautical_cartographer", gt.hexc("2c5a8e"), gt.FIXED["y"]),
                                ("abyss_enchanter", gt.hexc("50348f"), gt.FIXED["s"])):

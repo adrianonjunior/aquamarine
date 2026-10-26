@@ -15,7 +15,7 @@
 | 4A | Cria, Ovo e Tentáculo do Kraken: modelos e texturas refeitos | ✅ **feito** (25/10/2026) | §1 |
 | 4B | Oricálcio vira **Abissal** (minério, lingote, ferramentas, armadura, pontas, arpão) | ✅ **feito** (26/10/2026) | §2 |
 | 4C | Kraken: hitbox por tentáculo e na cabeça, cabeça sólida, muito mais movimento | a fazer | §3 |
-| 4D | Retexturas da oficina, das pontas, dos itens de mergulho e dos troféus; rework da Boia de Âncora | a fazer | §4, §5 |
+| 4D | Retexturas da oficina, das pontas, dos itens de mergulho e dos troféus; rework da Boia de Âncora | ✅ **feito** (26/10/2026) | §4, §5 |
 | 4E | Blocos de construção aquáticos e vidros quase quebrados para todos os vidros | a fazer | §6, §7 |
 | 4F | **Neutrônio**: minério novo, cadeia de processos, equipamento com bônus na água, visual estilo Avaritia | a fazer | §8 |
 | 4G | **Cavitador de Neutrônio**: arma de longo alcance debaixo d'água com modelo 3D e partículas | a fazer | §9 |
@@ -85,7 +85,7 @@ quase não se desloca.
 - Aceite (GameTest): flecha na cabeça causa mais dano que no braço; um jogador posto dentro da cabeça sai em até 1 s;
   o Kraken muda de posição pelo menos 3 vezes por minuto de luta. Nada disso pode quebrar a parte `multiplayer`.
 
-## 4. Retexturas (4D)
+## 4. Retexturas (4D, feito)
 Pixel art do mod, legível em 16 x 16 e com silhueta clara. Quando a forma do bloco pede (uma bigorna não é um cubo),
 o modelo também ganha forma.
 - **Blocos de trabalho da Vila:** Bigorna de Maré (corpo de bigorna, ferro com cracas e corais), Mesa de Cartas
@@ -94,11 +94,15 @@ o modelo também ganha forma.
   detalhe próprios.
 - **Itens de mergulho:** Bobina Voltaica, Regulador de Pressão, Aljava de Arpões e Propulsor de Maré.
 - **Troféus:** Troféu do Kraken e Troféu Dourado do Abismo como estatuetas 3D num pedestal, no lugar do cubo texturizado.
+- **Como foi feito:** `tools/gen_phase4_art.py` grava texturas, modelos (peças com giro livre, que o 26.3 aceita),
+  estados e ícones; os blocos usam `FacingShapeBlock` (viram para quem coloca e colidem no formato do modelo). Os
+  geradores antigos deixaram de escrever esses arquivos. Conferido na parte `blocks` do `runClientGameTest`.
 
-## 5. Boia de Âncora: rework (4D)
+## 5. Boia de Âncora: rework (4D, feito)
 - Modelo 3D de boia: casco com faixas vermelhas e brancas, sino, corrente e lanterna no topo. A lanterna pisca e muda
   de cor conforme o tempo restante (verde, amarelo, vermelho).
-- A plataforma 3 x 3 passa a ser de tábuas sobre flutuadores (blocos próprios) e balança com a água.
+- A plataforma 3 x 3 passa a ser de tábuas sobre flutuadores, com a água em volta (o bloco aceita água dentro).
+  O meio tem a boia e colide também no mastro; o sino toca quando a lanterna muda de cor (som provisório do jogo).
 - Quando o Kraken a destrói, há efeito visível (estilhaços e espirro d'água).
 - Regras iguais às de hoje ([05-itens.md](05-itens.md)): 90 s, Pressão zerada, recarga de 30 s.
 

@@ -1,6 +1,7 @@
 package com.aquamarine.gametest;
 
 import com.aquamarine.Aquamarine;
+import com.aquamarine.block.AnchorBuoyBlock;
 import com.aquamarine.block.ModBlocks;
 import com.aquamarine.client.compat.jei.AquamarineJeiPlugin;
 import com.aquamarine.client.screen.AbyssalForgeScreen;
@@ -557,9 +558,11 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 				ModBlocks.ABYSSAL_ALTAR, ModBlocks.ANCHOR_BUOY, ModBlocks.KRAKEN_TROPHY,
 				ModBlocks.GOLDEN_ABYSS_TROPHY, ModBlocks.TIDE_ANVIL, ModBlocks.CHART_TABLE, ModBlocks.SHELL_ALTAR};
 			for (int i = 0; i < blocks.length; i++) {
-				BlockState state = blocks[i].defaultBlockState();
+				BlockState state = blocks[i] == ModBlocks.ANCHOR_BUOY
+					? AnchorBuoyBlock.placed(true).setValue(AnchorBuoyBlock.WATERLOGGED, false) : blocks[i].defaultBlockState();
 				if (state.hasProperty(HorizontalDirectionalBlock.FACING)) {
-					state = state.setValue(HorizontalDirectionalBlock.FACING, i % 2 == 0 ? Direction.NORTH : Direction.EAST);
+					// A câmera olha do sul: os pares mostram a frente (sul) e o lado (leste).
+					state = state.setValue(HorizontalDirectionalBlock.FACING, i % 2 == 0 ? Direction.SOUTH : Direction.EAST);
 				}
 				level.setBlockAndUpdate(row.east(i * 2), state);
 			}

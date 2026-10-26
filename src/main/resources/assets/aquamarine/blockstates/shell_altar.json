@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
       "model": "aquamarine:block/shell_altar"
+    },
+    "facing=east": {
+      "model": "aquamarine:block/shell_altar",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "aquamarine:block/shell_altar",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "aquamarine:block/shell_altar",
+      "y": 270
     }
   }
 }

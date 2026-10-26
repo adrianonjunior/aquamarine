@@ -1155,26 +1155,6 @@ def tonic():
     return render(TONIC)
 
 
-def anchor_buoy_block():
-    """Boia de Âncora: casco laranja com faixas brancas, argolas Abissais nos cantos."""
-    img = Image.new("RGBA", (16, 16))
-    orange = [hexc("c2531c"), hexc("e0702a"), hexc("f08a3c")]
-    white = [hexc("cfd8dc"), hexc("f1f5f7")]
-    dark = hexc("5a2a12")
-    rnd = random.Random(88)
-    for y in range(16):
-        for x in range(16):
-            band = (x // 4) % 2 == 0
-            base = white[rnd.randint(0, 1)] if band else orange[rnd.randint(0, 2)]
-            img.putpixel((x, y), base)
-    for i in range(16):
-        for p in ((i, 0), (i, 15), (0, i), (15, i)):
-            img.putpixel(p, dark)
-    for p in ((1, 1), (14, 1), (1, 14), (14, 14), (2, 1), (1, 2), (13, 1), (14, 2), (2, 14), (1, 13), (13, 14), (14, 13)):
-        img.putpixel(p, RAMPS["G"][3])
-    return img
-
-
 def pressure_tonic_icon():
     """Ícone do efeito (18x18): gota de pressão sobre fundo azul profundo."""
     img = Image.new("RGBA", (18, 18), (0, 0, 0, 0))
@@ -1273,29 +1253,6 @@ def kraken_heart():
     return img
 
 
-def kraken_trophy(golden):
-    """Textura do troféu: pedra do Abismo com relevo de olho; dourada no modo abissal."""
-    img = Image.new("RGBA", (16, 16))
-    B, G, P, T = RAMPS["B"], RAMPS["G"], RAMPS["P"], RAMPS["T"]
-    ramp = G if golden else B
-    noise_fill(img, (0, 0, 16, 16), [ramp[2], ramp[3], ramp[3], ramp[4]], [3, 5, 5, 1], 91 if golden else 90)
-    for i in range(16):
-        img.putpixel((i, 0), ramp[5] if golden else G[4])
-        img.putpixel((i, 15), ramp[1])
-        img.putpixel((0, i), ramp[4])
-        img.putpixel((15, i), ramp[1])
-    for y in range(16):
-        for x in range(16):
-            dx, dy = x - 7.5, y - 7.5
-            d = math.hypot(dx, dy)
-            if 3.3 <= d < 4.6:
-                img.putpixel((x, y), G[4] if not golden else B[3])
-            elif d < 3.3:
-                img.putpixel((x, y), P[4] if abs(dx + 0.5) >= 0.9 else hexc("0a0614"))
-    img.putpixel((6, 6), hexc("ffffff"))
-    return img
-
-
 def main():
     out = {}
     out["item/abyssal_ingot"] = ingot()
@@ -1325,12 +1282,9 @@ def main():
     out["block/abyssal_altar_column"] = altar_column()
     out["block/abyssal_altar_bottom"] = forge_bricks(71)
     out["item/pressure_tonic"] = tonic()
-    out["block/anchor_buoy"] = anchor_buoy_block()
     out["item/kraken_eye"] = kraken_eye()
     out["item/abyssal_ink"] = abyssal_ink()
     out["item/kraken_heart"] = kraken_heart()
-    out["block/kraken_trophy"] = kraken_trophy(False)
-    out["block/golden_abyss_trophy"] = kraken_trophy(True)
     for rel, img in out.items():
         save(img, rel + ".png")
     layers = [

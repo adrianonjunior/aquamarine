@@ -165,7 +165,8 @@ Especificação, ordem e painel do que já foi feito: [10-fase4.md](10-fase4.md)
   filhote visível; v2 no Atlas). Testado na parte `spawnlings` do `runClientGameTest`.
 - [x] **4B** Oricálcio → Abissal, com apelido dos IDs antigos (mundos salvos abrem com os itens convertidos).
 - [ ] **4C** Kraken: partes de colisão por tentáculo e cabeça, cabeça sólida, movimento constante.
-- [ ] **4D** Retexturas (oficina da Vila, pontas, itens de mergulho, troféus) e rework da Boia de Âncora.
+- [x] **4D** Retexturas (oficina da Vila, pontas, itens de mergulho, troféus) e rework da Boia de Âncora: modelos 3D
+  com frente e colisão no formato, lanterna da Boia que muda de cor com o tempo.
 - [ ] **4E** Blocos de construção aquáticos e vidros rachados.
 - [ ] **4F** Neutrônio: minério, cadeia de processos, equipamento com bônus na água, visual estilo Avaritia.
 - [ ] **4G** Cavitador de Neutrônio: modelo 3D, pulso de cavitação, lançador de arpões, partículas.

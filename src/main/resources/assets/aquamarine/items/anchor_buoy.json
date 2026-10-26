@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "aquamarine:block/anchor_buoy"
+    "model": "aquamarine:item/anchor_buoy"
   }
 }
