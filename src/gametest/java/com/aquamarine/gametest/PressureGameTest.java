@@ -30,7 +30,7 @@ import net.minecraft.world.level.block.Blocks;
 
 /**
  * Teste da faixa 2B (Pressão): níveis 0 a 4 por tempo perto do Kraken, efeitos de cada nível e
- * contramedidas (armadura de Oricálcio, Tônico, Boia de Âncora). Chamado por
+ * contramedidas (armadura Abissal, Tônico, Boia de Âncora). Chamado por
  * {@link AquamarineClientGameTest}; 2 screenshots.
  */
 final class PressureGameTest {
@@ -113,10 +113,10 @@ final class PressureGameTest {
 		// Armadura completa: ganho 60% menor (200 ticks viram 500).
 		server.runOnServer(s -> {
 			ServerPlayer player = player(s);
-			player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.ORICHALCUM_HELMET));
-			player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.ORICHALCUM_CHESTPLATE));
-			player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ModItems.ORICHALCUM_LEGGINGS));
-			player.setItemSlot(EquipmentSlot.FEET, new ItemStack(ModItems.ORICHALCUM_BOOTS));
+			player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.ABYSSAL_HELMET));
+			player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.ABYSSAL_CHESTPLATE));
+			player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ModItems.ABYSSAL_LEGGINGS));
+			player.setItemSlot(EquipmentSlot.FEET, new ItemStack(ModItems.ABYSSAL_BOOTS));
 			player.snapTo(o.getX() + 0.5, o.getY() + 8, o.getZ() + 0.5);
 			PressureManager.reset(player);
 		});

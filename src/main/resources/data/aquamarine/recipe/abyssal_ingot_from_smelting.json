@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "group": "abyssal_ingot",
+  "ingredient": "aquamarine:abyssal_ore",
+  "result": {
+    "id": "aquamarine:abyssal_ingot"
+  },
+  "experience": 2.0,
+  "cookingtime": 200
+}

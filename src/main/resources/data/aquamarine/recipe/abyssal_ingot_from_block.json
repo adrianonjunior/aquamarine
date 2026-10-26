@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "abyssal_ingot",
+  "ingredients": [
+    "aquamarine:abyssal_block"
+  ],
+  "result": {
+    "id": "aquamarine:abyssal_ingot",
+    "count": 9
+  }
+}

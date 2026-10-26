@@ -11,7 +11,7 @@ import com.aquamarine.entity.ModEntities;
 import com.aquamarine.entity.TentacleEntity;
 import com.aquamarine.entity.YoungKrakenEntity;
 import com.aquamarine.sound.ModSounds;
-import com.aquamarine.item.OrichalcumEffects;
+import com.aquamarine.item.AbyssalEffects;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -606,7 +606,7 @@ public final class KrakenAttacks {
 	private void strikeInk(ServerLevel level) {
 		for (ServerPlayer p : level.getEntitiesOfClass(ServerPlayer.class, kraken.getBoundingBox().inflate(KrakenAttackType.INK_RADIUS),
 			p -> p.isAlive() && !p.isSpectator() && p.distanceTo(kraken) <= KrakenAttackType.INK_RADIUS)) {
-			if (!OrichalcumEffects.hasFullSet(p)) {
+			if (!AbyssalEffects.hasFullSet(p)) {
 				p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, KrakenAttackType.INK_BLIND_TICKS, 0));
 			}
 		}

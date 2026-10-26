@@ -78,7 +78,7 @@ Hoje o código usa sons do jogo no lugar destes; o produtor faz um **audit** (`g
   Ermitão, Cria. Os arquivos já entram; os eventos ficam prontos para quando existirem.
 - **Itens e blocos:** Forja Abissal, Altar, Chamariz, Óculos (por/tirar), Propulsor
   (carregar e disparar), Arpão (cada ponta), Bobina, Medidor, Regulador, Boia de Âncora,
-  Tônico, Sela, armadura de Oricálcio e Traje ao equipar.
+  Tônico, Sela, armadura Abissal e Traje ao equipar.
 - **Interface:** quebra de escudo na barra, mensagens da invocação, conquista de troféu,
   comércio da Vila, Sino do Porto, Alerta de Moréia.
 - Cada som frequente tem **3 variações** (mais pitch aleatório na `sounds.json`).

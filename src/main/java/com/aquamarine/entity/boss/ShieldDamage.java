@@ -9,8 +9,8 @@ public final class ShieldDamage {
 		/** Espada, machado, arco, besta, tridente e o que não tem item especial. */
 		COMMON(0.25F, true),
 		/** Ferramentas e armas da tag {@code aquamarine:shield_breakers}. */
-		ORICHALCUM(0.60F, true),
-		/** Arpão de Oricálcio (tag {@code aquamarine:harpoons}). */
+		ABYSSAL(0.60F, true),
+		/** Arpão Abissal (tag {@code aquamarine:harpoons}). */
 		HARPOON(3.0F, true),
 		/** Carga de Pulso: dano fixo, em área. */
 		PULSE(0.0F, false),

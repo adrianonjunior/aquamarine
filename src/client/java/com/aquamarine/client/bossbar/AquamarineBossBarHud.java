@@ -23,7 +23,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
 
 /**
- * Barra de vida customizada (docs/02-kraken.md): moldura de coral e Oricálcio, vida azul
+ * Barra de vida customizada (docs/02-kraken.md): moldura de coral e Abissal, vida azul
  * profunda com brilho verde-água, escudo de cristal com rachaduras em 75/50/25% e estilhaços
  * ao quebrar, marcadores de fase, barra fantasma do dano recente e pulso roxo na fase 3 ou
  * enquanto o escudo regenera. Texturas: textures/gui/boss_bar.png (tools/gen_textures.py).

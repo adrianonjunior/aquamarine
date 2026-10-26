@@ -6,7 +6,7 @@ Uso (na raiz do repositório):
     C:\\Python314\\python tools/gen_phase3_textures.py --preview  # também salva build/phase3_preview.png
 
 Reaproveita as funções de tools/gen_textures.py (mesma paleta e mesmo sombreamento). O Traje usa a
-rampa verde-escama "S" no lugar do dourado do Oricálcio, para as duas armaduras não se confundirem.
+rampa verde-escama "S" no lugar do dourado do metal Abissal, para as duas armaduras não se confundirem.
 """
 import os
 import sys
@@ -243,7 +243,7 @@ def quiver():
 
 
 def tip_icon(shaft, accent):
-    """Ponta de Oricálcio com a haste colorida pela munição."""
+    """Ponta Abissal com a haste colorida pela munição."""
     rows = [r.replace("X", shaft) for r in TIP]
     img = gt.render(rows)
     if accent:
@@ -389,11 +389,11 @@ def suit_icon(rows, gem=None):
 
 
 def suit_layers():
-    """Camadas 64x32 do Traje: as placas do Oricálcio repintadas com a rampa de escama."""
+    """Camadas 64x32 do Traje: as placas do metal Abissal repintadas com a rampa de escama."""
     saved = gt.RAMPS["G"]
     gt.RAMPS["G"] = gt.RAMPS["S"]
     try:
-        return gt.orichalcum_layer(), gt.orichalcum_leggings_layer()
+        return gt.abyssal_layer(), gt.abyssal_leggings_layer()
     finally:
         gt.RAMPS["G"] = saved
 
@@ -410,9 +410,9 @@ def main():
         "item/voltaic_coil": voltaic_coil(),
         "item/moray_whip": moray_whip(),
         "item/whale_saddle": whale_saddle(),
-        "item/orichalcum_harpoon": harpoon(),
+        "item/abyssal_harpoon": harpoon(),
         "item/harpoon_quiver": quiver(),
-        "item/orichalcum_harpoon_tip": tip_icon("h", None),
+        "item/abyssal_harpoon_tip": tip_icon("h", None),
         "item/poison_harpoon_tip": tip_icon("P", gt.hexc("7cd04a")),
         "item/fire_harpoon_tip": tip_icon("R", gt.hexc("6ad4ff")),
         "item/wither_harpoon_tip": tip_icon("B", gt.hexc("2a2a30")),

@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "aquamarine:orichalcum_ore",
-    "aquamarine:orichalcum_block"
+    "aquamarine:abyssal_ore",
+    "aquamarine:abyssal_block"
   ]
 }

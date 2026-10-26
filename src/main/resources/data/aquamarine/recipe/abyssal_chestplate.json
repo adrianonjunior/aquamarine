@@ -1,0 +1,16 @@
+{
+  "type": "aquamarine:abyssal_forging",
+  "category": "equipment",
+  "key": {
+    "I": "aquamarine:abyssal_ingot",
+    "S": "aquamarine:ancient_scale"
+  },
+  "pattern": [
+    "ISI",
+    "III",
+    "ISI"
+  ],
+  "result": {
+    "id": "aquamarine:abyssal_chestplate"
+  }
+}

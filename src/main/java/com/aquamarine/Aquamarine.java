@@ -18,7 +18,7 @@ import com.aquamarine.item.HarpoonEffects;
 import com.aquamarine.item.ModComponents;
 import com.aquamarine.item.ModItems;
 import com.aquamarine.item.TideThrusterItem;
-import com.aquamarine.item.OrichalcumEffects;
+import com.aquamarine.item.AbyssalEffects;
 import com.aquamarine.menu.ModMenus;
 import com.aquamarine.pressure.PressureManager;
 import com.aquamarine.recipe.ModRecipes;
@@ -52,7 +52,7 @@ public class Aquamarine implements ModInitializer {
 		HarborAlert.register();
 		HarborElevators.register();
 		AquamarineBossBar.registerPayloads();
-		OrichalcumEffects.register();
+		AbyssalEffects.register();
 		ModEffects.register();
 		PressureManager.register();
 		HarpoonEffects.register();

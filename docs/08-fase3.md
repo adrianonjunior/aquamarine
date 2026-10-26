@@ -18,10 +18,10 @@
 |---|---|
 | Pressão ambiental | Mesmo efeito **Pressão** da luta ([02-kraken.md](02-kraken.md)), com uma segunda fonte. O nível aplicado é o **maior** das fontes, não a soma, e as contramedidas valem para as duas |
 | Propulsor de Maré | Item **anterior ao boss**. O **Manto de Tinta** ([05-itens.md](05-itens.md)) segue como versão de luxo pós-boss |
-| Munições do Arpão | Extensão do **Arpão de Oricálcio**. Os números contra o escudo entram na tabela de dano de [02-kraken.md](02-kraken.md) ao implementar (faixa 3C) |
+| Munições do Arpão | Extensão do **Arpão Abissal**. Os números contra o escudo entram na tabela de dano de [02-kraken.md](02-kraken.md) ao implementar (faixa 3C) |
 | Moréia Tempestuosa | **Nova** criatura; a Enguia Elétrica comum da cidade continua |
 | Escama Elétrica | Material novo; não substitui a Escama Antiga |
-| Vila | Complementa a Cidade Perdida; vende o que as outras criam. Nunca vende Oricálcio, armaduras de boss, Arpão nem Quebra-Carapaça (regra do Walker) |
+| Vila | Complementa a Cidade Perdida; vende o que as outras criam. Nunca vende Abissal, armaduras de boss, Arpão nem Quebra-Carapaça (regra do Walker) |
 
 ## 1. Pressão por profundidade
 - **Fontes:** `ambiental` (profundidade) e `kraken` ([02-kraken.md](02-kraken.md)).
@@ -39,7 +39,7 @@
 
   Sobe e desce nas mesmas regras de tempo da luta; **nunca chega a 4** sozinha
   (o 4 é exclusivo do Kraken).
-- **Contramedidas:** armadura de Oricálcio e Tônico de Pressão (já existem), mais:
+- **Contramedidas:** armadura Abissal e Tônico de Pressão (já existem), mais:
   - **Medidor de Profundidade** (item): mostra no HUD profundidade e nível de Pressão.
     Receita: bússola + vidro + cobre + 1 Cristal.
   - **Regulador de Pressão** (mão secundária): −2 níveis ambientais; gasta 1 de
@@ -54,7 +54,7 @@
   como ar extra consumido depois do ar normal; **não** dá Respiração Aquática infinita.
 - **Isolamento:** −40% de dano elétrico por peça (−100% de choque de Descarga no conjunto).
 - **Pressão ambiental:** −1 nível com 2 peças ou mais, −2 com o conjunto completo.
-- Sem o bônus de nado do Oricálcio. Misturar peças: cada uma vale sozinha; o bônus do
+- Sem o bônus de nado do metal Abissal. Misturar peças: cada uma vale sozinha; o bônus do
   conjunto exige as 4. O Capacete aceita Fôlego Profundo (Seção 7).
 - Camada `humanoid` 64x32 e item como as armaduras de [05-itens.md](05-itens.md).
 
@@ -82,7 +82,7 @@
   | Item | Receita | Efeito |
   |---|---|---|
   | Bobina Voltaica | 1 Escama Elétrica + 1 Lingote de Cobre + 1 Cristal (bancada) | Bateria consumível: 1 Bobina = 6 cargas do Propulsor |
-  | Chicote de Moréia | 3 Bobinas + 2 Lingotes de Oricálcio + 1 vareta (Forja Abissal) | Arma de corpo a corpo: 7 de dano, ataque rápido, alcance 3,5; **corrente** nos alvos molhados a 4 blocos (50% do dano); durabilidade 450 |
+  | Chicote de Moréia | 3 Bobinas + 2 Lingotes Abissais + 1 vareta (Forja Abissal) | Arma de corpo a corpo: 7 de dano, ataque rápido, alcance 3,5; **corrente** nos alvos molhados a 4 blocos (50% do dano); durabilidade 450 |
 
 ## 4. Propulsor de Maré
 - **Mão secundária**; só funciona **debaixo d'água ou na superfície**. Tecla própria
@@ -91,14 +91,14 @@
   Cada impulso gasta 1 carga; **1 Bobina Voltaica = 6 cargas** (guardadas no item).
 - **Uso no boss:** cobre a janela de aviso dos ataques (1,2 a 2 s). Não atravessa o
   escudo do Kraken nem tira a Pressão.
-- **Receita:** 1 Concha de Náutilo + 2 Lingotes de Oricálcio + 1 Cristal + 1 Bobina.
+- **Receita:** 1 Concha de Náutilo + 2 Lingotes Abissais + 1 Cristal + 1 Bobina.
 - Encantamento próprio: **Sobrecarga** (Seção 7).
 - **Visual:** rastro de bolhas e luz verde-água; som de turbina abafada.
 
 ## 5. Arpão com munições
 - **Aljava de Arpões** (item): guarda até 4 tipos de ponta; alterna com `R` (configurável).
   Receita: 2 couro + 3 Escamas Antigas + 1 Pérola.
-- Pontas (feitas com 1 ponta simples de Oricálcio + ingrediente, bancada comum):
+- Pontas (feitas com 1 ponta simples Abissais + ingrediente, bancada comum):
 
   | Ponta | Ingrediente | Efeito |
   |---|---|---|
@@ -167,7 +167,7 @@ Cidade Perdida; peças geradas por script do Claude em `tools/`, ver [00-decisoe
 
 **Habitantes:** os **Mergulhadores** (aldeões com escafandro, em skin própria sobre o modelo
 vanilla), em 3 profissões novas com blocos de trabalho próprios (Bigorna de Maré, Mesa de
-Cartas Náuticas, Altar de Concha). Nunca vendem Oricálcio, armaduras de boss, o Arpão
+Cartas Náuticas, Altar de Concha). Nunca vendem Abissal, armaduras de boss, o Arpão
 nem Quebra-Carapaça. Moeda: **esmeralda** (itens comuns) e **Pérola Abissal** (raros).
 
 | Profissão | Vende (por nível) | Compra |

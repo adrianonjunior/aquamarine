@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": "aquamarine:orichalcum_block",
+    "B": "aquamarine:abyssal_block",
     "F": "minecraft:furnace",
     "S": "aquamarine:ancient_scale",
     "O": "minecraft:obsidian"

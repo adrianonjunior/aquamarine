@@ -7,7 +7,7 @@ import com.aquamarine.entity.KrakenEntity;
 import com.aquamarine.entity.ModVillagers;
 import com.aquamarine.entity.WhaleEntity;
 import com.aquamarine.item.DiveGear;
-import com.aquamarine.item.OrichalcumEffects;
+import com.aquamarine.item.AbyssalEffects;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +30,7 @@ import net.minecraft.world.level.Level;
 
 /**
  * Pressão (docs/02-kraken.md): nível 0 a 4 por jogador, calculado no servidor. Sobe submerso a
- * menos de {@link PressureState#RANGE} blocos de um {@link KrakenEntity}; a armadura de Oricálcio
+ * menos de {@link PressureState#RANGE} blocos de um {@link KrakenEntity}; a armadura Abissal
  * reduz o ganho, o Tônico limita o máximo e a Boia de Âncora zera. O nível vai ao próprio jogador
  * por {@link PressurePayload} (vinheta e som no cliente).
  */
@@ -125,7 +125,7 @@ public final class PressureManager {
 		KrakenEntity kraken = entry.exposed ? nearestKraken(level, player) : null;
 		int phase = kraken == null ? 1 : kraken.phase();
 		entry.state.tick(entry.exposed && kraken != null, entry.ambientTarget, ModEffects.hasTonic(player),
-			OrichalcumEffects.pressureReduction(player), phase);
+			AbyssalEffects.pressureReduction(player), phase);
 		apply(player, entry);
 
 		int lvl = entry.state.level();

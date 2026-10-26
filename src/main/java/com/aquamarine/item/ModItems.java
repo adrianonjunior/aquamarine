@@ -39,9 +39,9 @@ public final class ModItems {
 	private static final List<Item> TAB_ORDER = new ArrayList<>();
 
 	// Materiais
-	public static final Item ORICHALCUM_ORE = registerBlock(ModBlocks.ORICHALCUM_ORE, new Item.Properties());
-	public static final Item ORICHALCUM_INGOT = register("orichalcum_ingot", Item::new, new Item.Properties());
-	public static final Item ORICHALCUM_BLOCK = registerBlock(ModBlocks.ORICHALCUM_BLOCK, new Item.Properties());
+	public static final Item ABYSSAL_ORE = registerBlock(ModBlocks.ABYSSAL_ORE, new Item.Properties());
+	public static final Item ABYSSAL_INGOT = register("abyssal_ingot", Item::new, new Item.Properties());
+	public static final Item ABYSSAL_BLOCK = registerBlock(ModBlocks.ABYSSAL_BLOCK, new Item.Properties());
 	public static final Item ABYSSAL_PEARL = register("abyssal_pearl", Item::new, new Item.Properties().rarity(Rarity.UNCOMMON));
 	public static final Item TIDE_CRYSTAL = register("tide_crystal", Item::new, new Item.Properties());
 	public static final Item ANCIENT_SCALE = register("ancient_scale", Item::new, new Item.Properties().rarity(Rarity.UNCOMMON));
@@ -49,27 +49,27 @@ public final class ModItems {
 	// Bancada
 	public static final Item ABYSSAL_FORGE = registerBlock(ModBlocks.ABYSSAL_FORGE, new Item.Properties());
 
-	// Ferramentas e arma de Oricálcio (mesmas bases das de diamante; o material dá o resto)
-	public static final Item ORICHALCUM_SWORD = register("orichalcum_sword", Item::new,
-		new Item.Properties().sword(ModMaterials.ORICHALCUM_TOOL, 3.0F, -2.4F));
-	public static final Item ORICHALCUM_PICKAXE = register("orichalcum_pickaxe", Item::new,
-		new Item.Properties().pickaxe(ModMaterials.ORICHALCUM_TOOL, 1.0F, -2.8F));
-	public static final Item ORICHALCUM_AXE = register("orichalcum_axe", Item::new,
-		new Item.Properties().axe(ModMaterials.ORICHALCUM_TOOL, 5.0F, -3.0F));
-	public static final Item ORICHALCUM_SHOVEL = register("orichalcum_shovel", Item::new,
-		new Item.Properties().shovel(ModMaterials.ORICHALCUM_TOOL, 1.5F, -3.0F));
-	public static final Item ORICHALCUM_HOE = register("orichalcum_hoe", Item::new,
-		new Item.Properties().hoe(ModMaterials.ORICHALCUM_TOOL, -3.0F, 0.0F));
+	// Ferramentas e arma Abissal (mesmas bases das de diamante; o material dá o resto)
+	public static final Item ABYSSAL_SWORD = register("abyssal_sword", Item::new,
+		new Item.Properties().sword(ModMaterials.ABYSSAL_TOOL, 3.0F, -2.4F));
+	public static final Item ABYSSAL_PICKAXE = register("abyssal_pickaxe", Item::new,
+		new Item.Properties().pickaxe(ModMaterials.ABYSSAL_TOOL, 1.0F, -2.8F));
+	public static final Item ABYSSAL_AXE = register("abyssal_axe", Item::new,
+		new Item.Properties().axe(ModMaterials.ABYSSAL_TOOL, 5.0F, -3.0F));
+	public static final Item ABYSSAL_SHOVEL = register("abyssal_shovel", Item::new,
+		new Item.Properties().shovel(ModMaterials.ABYSSAL_TOOL, 1.5F, -3.0F));
+	public static final Item ABYSSAL_HOE = register("abyssal_hoe", Item::new,
+		new Item.Properties().hoe(ModMaterials.ABYSSAL_TOOL, -3.0F, 0.0F));
 
-	// Armadura de Oricálcio
-	public static final Item ORICHALCUM_HELMET = register("orichalcum_helmet", Item::new,
-		new Item.Properties().humanoidArmor(ModMaterials.ORICHALCUM_ARMOR, ArmorType.HELMET));
-	public static final Item ORICHALCUM_CHESTPLATE = register("orichalcum_chestplate", Item::new,
-		new Item.Properties().humanoidArmor(ModMaterials.ORICHALCUM_ARMOR, ArmorType.CHESTPLATE));
-	public static final Item ORICHALCUM_LEGGINGS = register("orichalcum_leggings", Item::new,
-		new Item.Properties().humanoidArmor(ModMaterials.ORICHALCUM_ARMOR, ArmorType.LEGGINGS));
-	public static final Item ORICHALCUM_BOOTS = register("orichalcum_boots", Item::new,
-		new Item.Properties().humanoidArmor(ModMaterials.ORICHALCUM_ARMOR, ArmorType.BOOTS));
+	// Armadura Abissal
+	public static final Item ABYSSAL_HELMET = register("abyssal_helmet", Item::new,
+		new Item.Properties().humanoidArmor(ModMaterials.ABYSSAL_ARMOR, ArmorType.HELMET));
+	public static final Item ABYSSAL_CHESTPLATE = register("abyssal_chestplate", Item::new,
+		new Item.Properties().humanoidArmor(ModMaterials.ABYSSAL_ARMOR, ArmorType.CHESTPLATE));
+	public static final Item ABYSSAL_LEGGINGS = register("abyssal_leggings", Item::new,
+		new Item.Properties().humanoidArmor(ModMaterials.ABYSSAL_ARMOR, ArmorType.LEGGINGS));
+	public static final Item ABYSSAL_BOOTS = register("abyssal_boots", Item::new,
+		new Item.Properties().humanoidArmor(ModMaterials.ABYSSAL_ARMOR, ArmorType.BOOTS));
 
 	// Exploração
 	/** Óculos de Mergulho: slot da cabeça; o efeito (menos névoa na água) é só do cliente. */
@@ -120,8 +120,8 @@ public final class ModItems {
 	public static final Item WHALE_SADDLE = register("whale_saddle", Item::new, new Item.Properties().stacksTo(1));
 
 	// Fase 3C: Arpão e munições
-	/** Arpão de Oricálcio: arremesso do tridente, dano triplo no escudo do Kraken, prende o tentáculo 3 s. */
-	public static final Item ORICHALCUM_HARPOON = register("orichalcum_harpoon", TridentItem::new, new Item.Properties()
+	/** Arpão Abissal: arremesso do tridente, dano triplo no escudo do Kraken, prende o tentáculo 3 s. */
+	public static final Item ABYSSAL_HARPOON = register("abyssal_harpoon", TridentItem::new, new Item.Properties()
 		.rarity(Rarity.RARE)
 		.durability(400)
 		.attributes(TridentItem.createAttributes())
@@ -130,8 +130,8 @@ public final class ModItems {
 		.component(DataComponents.WEAPON, new Weapon(1)));
 	/** Aljava de Arpões: guarda até 4 tipos de ponta; R troca a escolhida. */
 	public static final Item HARPOON_QUIVER = register("harpoon_quiver", HarpoonQuiverItem::new, new Item.Properties());
-	/** Ponta simples de Oricálcio: base das pontas especiais. */
-	public static final Item ORICHALCUM_HARPOON_TIP = register("orichalcum_harpoon_tip", Item::new, new Item.Properties());
+	/** Ponta Abissal: base das pontas especiais. */
+	public static final Item ABYSSAL_HARPOON_TIP = register("abyssal_harpoon_tip", Item::new, new Item.Properties());
 	public static final Item POISON_HARPOON_TIP = register("poison_harpoon_tip", Item::new, new Item.Properties());
 	public static final Item FIRE_HARPOON_TIP = register("fire_harpoon_tip", Item::new, new Item.Properties());
 	public static final Item WITHER_HARPOON_TIP = register("wither_harpoon_tip", Item::new, new Item.Properties().rarity(Rarity.UNCOMMON));
@@ -183,8 +183,16 @@ public final class ModItems {
 		return Collections.unmodifiableList(TAB_ORDER);
 	}
 
+	/** Itens que se chamavam {@code orichalcum_*} até a Fase 4 (o Oricálcio virou Abissal). */
+	private static final String[] RENAMED = {"ore", "ingot", "block", "sword", "pickaxe", "axe", "shovel", "hoe", "helmet",
+		"chestplate", "leggings", "boots", "harpoon", "harpoon_tip"};
+
 	public static void register() {
-		// Carrega a classe; os campos estáticos fazem o registro.
+		// Carrega a classe; os campos estáticos fazem o registro. O ID antigo vira apelido do novo: os mundos
+		// salvos antes da Fase 4 abrem com os itens já Abissais.
+		for (String name : RENAMED) {
+			BuiltInRegistries.ITEM.addAlias(Aquamarine.id("orichalcum_" + name), Aquamarine.id("abyssal_" + name));
+		}
 	}
 
 	private ModItems() {}

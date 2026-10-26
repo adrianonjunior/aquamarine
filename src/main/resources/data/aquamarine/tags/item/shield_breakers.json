@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "aquamarine:orichalcum_sword",
-    "aquamarine:orichalcum_pickaxe",
-    "aquamarine:orichalcum_axe",
-    "aquamarine:orichalcum_shovel",
-    "aquamarine:orichalcum_hoe"
+    "aquamarine:abyssal_sword",
+    "aquamarine:abyssal_pickaxe",
+    "aquamarine:abyssal_axe",
+    "aquamarine:abyssal_shovel",
+    "aquamarine:abyssal_hoe"
   ]
 }

@@ -90,7 +90,7 @@ com `skipMultiplayerWarning:true` no `run/options.txt` e `online-mode=false` só
 - **Tags:** chaves em `ModTags`; JSON em `data/aquamarine/tags/`.
 - **Config:** campos públicos em `config/AquamarineConfig` (gravados em
   `config/aquamarine.json`; campos novos entram sozinhos no arquivo).
-- **Efeitos de Oricálcio:** `item/OrichalcumEffects` (`armorPieces`,
+- **Efeitos Abissais:** `item/AbyssalEffects` (`armorPieces`,
   `hasFullSet`, `PRESSURE_REDUCTION_PER_PIECE` para a Pressão).
 - **Descrição do item:** `tooltip.aquamarine.<item>` (e `.2`, `.3`) nos dois
   `lang`; aparece no tooltip e na página de informação do JEI
@@ -141,7 +141,7 @@ com.aquamarine            (src/main: comum e servidor)
   entity/boss  Kraken: fases, escudo, ataques, locomoção, barra, recompensas
   event      invocação, aviso falso, estado salvo do Kraken
   harbor     Porto dos Náufragos: reputação, trocas por nível, Alerta de Moréia, elevadores, mapa de bioma
-  item       itens (Oricálcio, Arpão, Aljava, Propulsor, Traje, Óculos...)
+  item       itens (Abissal, Arpão, Aljava, Propulsor, Traje, Óculos...)
   menu       tela da Forja Abissal
   mixin      ganchos no jogo (tridente, aldeão, troca)
   pressure   Pressão (estado puro + gerente no servidor)

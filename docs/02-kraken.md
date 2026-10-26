@@ -34,7 +34,7 @@ Efeito próprio, **por jogador**, nível de 0 a 4.
 - **Efeitos:** nível 1: afunda 20% mais rápido; nível 2: nado lento e vinheta
   azul; nível 3: afunda com força e perde velocidade de ataque; nível 4: é
   puxado até o fundo, tela escura nas bordas e 1 coração de dano a cada 2 s.
-- **Contramedidas:** cada peça de armadura de Oricálcio reduz o ganho em 15%
+- **Contramedidas:** cada peça de armadura Abissal reduz o ganho em 15%
   (conjunto completo: 60% mais lento); Tônico de Pressão reduz o máximo em 2
   níveis por 5 minutos; pisar numa Boia de Âncora zera o nível; o Amuleto da
   Corrente não afeta a Pressão, só o puxão do redemoinho.
@@ -65,8 +65,8 @@ da cidade, mas é bem mais demorado. Valores do plano oficial mantidos.
 | Fonte | Dano no escudo |
 |---|---|
 | Armas comuns (espada, machado, arco, besta, tridente) | 25% do dano |
-| Ferramentas e armas de Oricálcio (tag `aquamarine:shield_breakers`) | 60% do dano |
-| Arpão de Oricálcio | dano triplo (300% do dano base); prende o tentáculo por 3 s |
+| Ferramentas e armas Abissais (tag `aquamarine:shield_breakers`) | 60% do dano |
+| Arpão Abissal | dano triplo (300% do dano base); prende o tentáculo por 3 s |
 | Arpão com ponta de Fogo (Fase 3C) | o triplo + 10% do dano base (×3) |
 | Arpão com ponta de Choque (Fase 3C) | o triplo + 40% do dano base (×3); a melhor ponta contra o escudo |
 | Arpão com ponta de Veneno ou de Wither (Fase 3C) | só o triplo: o Kraken não pega veneno nem wither |
@@ -91,7 +91,7 @@ clareza). Dano base com netherite: 4 a 5 golpes até curar.
 |---|---|---|---|---|
 | Pancada | 1-3 | Tentáculo se ergue com sombra na água por 1,5 s | 12 de dano e onda que vira barcos | Desviar do círculo de sombra |
 | Agarrão | 1-3 | Tentáculo brilha roxo por 1,5 s e emite som agudo | Prende e arrasta ao fundo (6 de dano por segundo) | Cortar o tentáculo, Tônico de Pressão (solta 50% mais rápido) |
-| Nuvem de Tinta | 1-3 | Água escurece em espiral por 2 s | Cegueira numa nuvem de 24 blocos por 12 s | Armadura de Oricálcio completa enxerga; óculos não |
+| Nuvem de Tinta | 1-3 | Água escurece em espiral por 2 s | Cegueira numa nuvem de 24 blocos por 12 s | Armadura Abissal completa enxerga; óculos não |
 | Redemoinho | 2-3 | Som grave por 2 s e espiral de partículas | Puxa quem está num raio de 24 blocos | Amuleto da Corrente, sair do raio |
 | Crias de Kraken | 2-3 | Ovos brilham 2 s | Invoca `3 + n ÷ 2` Crias (4 de dano cada, 8 de vida) | Matar rápido; têm pouca vida |
 | Jato de Água | 2-3 | Fileira de bolhas por 1,2 s | 10 de dano em linha de 36 blocos | Sair da linha |
@@ -109,7 +109,7 @@ servidor), `TentacleEntity`, `YoungKrakenEntity`. Teste: `/aquamarine kraken att
 - **Pancada:** círculo de 3 blocos; a onda vira barcos e derruba Boias num raio de 6.
 - **Agarrão:** 5 s (100 ticks), 6 de dano por segundo; o Tônico dobra a soltura; cortar o tentáculo solta. Agarrão
   Duplo: 10 de dano por segundo; com um tentáculo cortado fica pela metade e solta o dobro mais rápido.
-- **Tinta:** raio de 24 do Kraken, cegueira de 12 s; a armadura de Oricálcio completa protege.
+- **Tinta:** raio de 24 do Kraken, cegueira de 12 s; a armadura Abissal completa protege.
 - **Redemoinho:** puxa por 5 s num raio de 24, velocidade 0,1 por tick (dá para nadar para fora); o Amuleto da
   Corrente (Entrega 3) protege se existir o item `aquamarine:current_amulet`.
 - **Jato:** linha de 36 blocos, o alvo é travado ao fim do aviso começar. **Rugido:** quebra blocos de dureza até

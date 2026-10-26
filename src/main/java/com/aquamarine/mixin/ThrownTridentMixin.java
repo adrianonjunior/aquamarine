@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.world.entity.projectile.arrow.ThrownTrident;
 import net.minecraft.world.phys.EntityHitResult;
 
-/** Ganchos do Arpão de Oricálcio no tridente do jogo: efeitos no acerto e a volta da Fisgada. */
+/** Ganchos do Arpão Abissal no tridente do jogo: efeitos no acerto e a volta da Fisgada. */
 @Mixin(ThrownTrident.class)
 public abstract class ThrownTridentMixin {
 	@Inject(method = "onHitEntity", at = @At("TAIL"))

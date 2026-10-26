@@ -22,21 +22,21 @@
 |---|---|
 | Praça Central | Altar do Abismo, onde o Chamariz Abissal é montado |
 | Templo Afundado | Cofre com a Chave de Nereia e o Projeto do Chamariz; guardado por Sentinelas |
-| Forja Abissal | Bancada para itens de Oricálcio e da luta, mais baús de ferramentas |
+| Forja Abissal | Bancada para itens Abissais e da luta, mais baús de ferramentas |
 | Biblioteca em ruínas | Livros de história com dicas do Kraken; livros do Quebra-Carapaça |
-| Minas de Oricálcio | Único lugar com o minério |
+| Minas Abissais | Único lugar com o minério |
 | Cratera | Bacia aberta ao lado da cidade: a arena do Kraken (ver [02-kraken.md](02-kraken.md)) |
 
 ## Loot
 | Local | Conteúdo |
 |---|---|
 | Baús da borda | Escama Antiga (1 a 2), cobre, ferro, fragmentos de prismarinho, livros comuns |
-| Baús do meio | Escama Antiga (2 a 4), Cristal de Maré (1 a 3), Lanterna de Coral, 10% de chance de 1 Lingote de Oricálcio |
+| Baús do meio | Escama Antiga (2 a 4), Cristal de Maré (1 a 3), Lanterna de Coral, 10% de chance de 1 Lingote Abissal |
 | Cofre do Templo | Chave de Nereia (1 por jogador e mundo) e Projeto do Chamariz |
 | Biblioteca | 1 a 2 livros de história; 15% de chance de livro Quebra-Carapaça I ou II |
 | Templo (baú raro) | 5% de chance de livro Quebra-Carapaça III |
-| Forja | 1 Forja Abissal pronta e Lingotes de Oricálcio (1 a 3) |
-| Minas | Veias de Oricálcio por todas as galerias |
+| Forja | 1 Forja Abissal pronta e Lingotes Abissais (1 a 3) |
+| Minas | Veias Abissais por todas as galerias |
 
 ## Bioma Fossa de Nereia
 - Achar com `/locate biome #aquamarine_fossa_de_nereia` (por enquanto a tag
@@ -63,7 +63,7 @@ versão.
 1. **"A Fundação de Nereia":** a cidade foi criada pelas Nereidas para estudar o mar.
 2. **"O Despertar"**: o Kraken surgiu e ameaçou a cúpula.
 3. **"Cristais de Maré":** Nereia selou o Kraken com cristais; por isso o cristal enfraquece a carapaça.
-4. **"Diário do Ferreiro":** como forjar Oricálcio e o Arpão, e que a água escura pesa no corpo (Pressão).
+4. **"Diário do Ferreiro":** como forjar Abissal e o Arpão, e que a água escura pesa no corpo (Pressão).
 5. **"O Último Aviso":** o Kraken tem pontos fracos nos nós de cristal da carapaça e odeia a luz do coral.
 
 ## Walker
@@ -91,7 +91,7 @@ por troca; estoque independente por jogador)
   prismarinho.
 - **Vende:** Tônico de Pressão, Boia de Âncora, Bússola de Maré, Lanterna de
   Coral, Mapa de Nereia e, raramente, livros de história.
-- **Nunca vende:** Oricálcio, armaduras, Arpão, Carga de Pulso nem Pilar
+- **Nunca vende:** Abissal, armaduras, Arpão, Carga de Pulso nem Pilar
   Ressonante: esses vêm só da cidade.
 - 3 a 5 trocas por noite; a Bússola e o Mapa são raros (no máximo 1 por noite).
 

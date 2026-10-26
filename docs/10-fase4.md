@@ -13,7 +13,7 @@
 | # | Item | Estado | Onde |
 |---|---|---|---|
 | 4A | Cria, Ovo e Tentáculo do Kraken: modelos e texturas refeitos | ✅ **feito** (25/10/2026) | §1 |
-| 4B | Oricálcio vira **Abissal** (minério, lingote, ferramentas, armadura, pontas, arpão) | a fazer | §2 |
+| 4B | Oricálcio vira **Abissal** (minério, lingote, ferramentas, armadura, pontas, arpão) | ✅ **feito** (26/10/2026) | §2 |
 | 4C | Kraken: hitbox por tentáculo e na cabeça, cabeça sólida, muito mais movimento | a fazer | §3 |
 | 4D | Retexturas da oficina, das pontas, dos itens de mergulho e dos troféus; rework da Boia de Âncora | a fazer | §4, §5 |
 | 4E | Blocos de construção aquáticos e vidros quase quebrados para todos os vidros | a fazer | §6, §7 |
@@ -28,14 +28,14 @@ Ordem: 4A já entrou; 4B vem antes do resto porque o nome novo aparece em quase 
 - Corrigir a textura da Cria, do Ovo e do Tentáculo (capturas no Atlas). Depois: "o modelo não foi bem feito, faça de novo".
 - Kraken: hitboxes melhores, "o ideal é colocar individualmente por tentáculos e melhorar a da cabeça"; "fazer ele se
   mexer muito mais, no momento ele é estático"; "dá pra entrar na cabeça do Kraken e ficar lá, quero impedir isso".
-- Refazer as texturas: Bigorna de Maré, Mesa de Cartas Náuticas, Altar de Concha, pontas de Oricálcio (todas), Bobina
+- Refazer as texturas: Bigorna de Maré, Mesa de Cartas Náuticas, Altar de Concha, pontas Abissais (todas), Bobina
   Voltaica, Regulador de Pressão, Aljava de Arpões, Propulsor de Maré e troféus. Rework na Boia de Âncora.
 - Blocos de construção estilo aquático; variações de vidros quase quebrados para todos os vidros.
 - Oricálcio passa a se chamar **Abissal** (abyssal ore, abyssal ingot...).
 - Minério novo, **Neutrônio**, azul ciano: série de processos de grande dificuldade, melhor que netherite, vários bônus
   na água. Depois: "dê um ar mais sobrenatural pro neutronium, estilo Avaritia mod, a armadura e variáveis também".
 - Arma subaquática de Neutrônio que dá dano a distância debaixo d'água ("em cima da água ela funciona como lançador de",
-  frase cortada: lida como **lançador de arpões**, ver [00-decisoes.md](00-decisoes.md), "Em aberto"); modelagem 3D de
+  frase cortada: **lançador de arpões**, confirmado pelo Adriano em 26/10/2026); modelagem 3D de
   qualidade impecável, partículas e efeitos com maestria.
 - Sons de qualidade para tudo isso, mas só depois.
 
@@ -57,15 +57,17 @@ e um `rig.json`, que o Atlas lê (o site mostra o modelo que está no jogo, sem 
 - Atlas: as três estão registradas como **v2** (a v1 segue no histórico de versões).
 - Testado no jogo pela parte `spawnlings` do `runClientGameTest` (capturas de frente, costas e de perto).
 
-## 2. Oricálcio → Abissal (4B)
+## 2. Oricálcio → Abissal (4B, feito)
 - Nomes: Minério Abissal, Lingote Abissal, Bloco Abissal, Espada/Picareta/Machado/Pá/Enxada Abissal, Capacete/Peitoral/
   Calças/Botas Abissais, Arpão Abissal, Ponta Abissal. Em inglês: Abyssal Ore, Abyssal Ingot etc.
-- IDs: `orichalcum_*` vira `abyssal_*` (não colidem com `abyssal_forge` nem com `abyssal_altar`). Os IDs antigos ficam
-  como **alias** de registro, para os mundos da release 0.4.0 (o mundo LAN de teste incluído) abrirem com os itens
-  convertidos.
-- Mudam também classes, texturas, receitas, loot, tags, conquistas, JEI, descrições, docs e o Atlas. A cor muda: o
-  metal dourado de Atlântida passa a dourado escurecido com veios azul-abissais. A ponta ganha textura nova em §4.
-- Aceite: build e suíte de GameTest verdes; um mundo salvo com itens de Oricálcio abre com os itens Abissais.
+- IDs: `orichalcum_*` virou `abyssal_*` (não colide com `abyssal_forge` nem com `abyssal_altar`). Os IDs antigos ficaram
+  como **apelido** de registro (`addAlias` da Fabric em `ModItems` e `ModBlocks`): os mundos da release 0.4.0, o mundo
+  LAN de teste incluído, abrem com os itens e os blocos já Abissais.
+- Mudaram também classes, texturas (renomeadas), receitas, loot, tags, descrições e docs vivos (o histórico guarda o
+  nome antigo). A cor **continua dourada**: o ciano é do Neutrônio, e os dois níveis não se confundem. A ponta ganha
+  textura nova em §4.
+- Teste: a parte `forge` do `runClientGameTest` lê um item salvo como `aquamarine:orichalcum_pickaxe` e confere que
+  ele abre como Picareta Abissal, e que `orichalcum_ore` aponta para o Minério Abissal.
 
 ## 3. Kraken: partes, cabeça sólida e movimento (4C)
 Hoje o Kraken é uma caixa só (36 x 24 blocos). Dá para ficar dentro do modelo, na cabeça, sem ser atingido. E ele

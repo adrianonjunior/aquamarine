@@ -15,7 +15,7 @@ import org.joml.Vector3fc;
 /**
  * Efeito dos Óculos de Mergulho (docs/05-itens.md): só visual e só no cliente. Sem visão
  * noturna. A Nuvem de Tinta do Kraken, quando existir, deve ter névoa própria que este efeito
- * não toca (só o conjunto de Oricálcio enxerga através dela).
+ * não toca (só o conjunto Abissal enxerga através dela).
  */
 public final class DivingGogglesVision {
 	/**

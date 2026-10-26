@@ -8,7 +8,7 @@
 - [x] JDK 25 instalado; build e `runClient` funcionam.
 - [ ] Ciclo **manual** de screenshot: print no jogo (F2) lido de `run/screenshots`.
   Capturas automatizadas do `runClientGameTest` já foram verificadas na Entrega 1.
-- [x] **Marco 2, Materiais:** minério de Oricálcio, lingote, ferramentas,
+- [x] **Marco 2, Materiais:** minério Abissal, lingote, ferramentas,
   armadura, aba no criativo, receitas, texturas.
 - [ ] **Kraken v1 jogável**, já com modelo de alta qualidade (decisão do
   Adriano), barra customizada, escudo e efeito de Pressão, antes da cidade, para
@@ -36,7 +36,7 @@ commit e linha no handoff do `CONTEXTO.md`.
 - [x] GameTest ou teste mínimo rodando no `gradlew build`; CI do GitHub continua verde.
 
 **B. Materiais (Marco 2) e Forja Abissal**
-- [x] Minério de Oricálcio (**sem gerar no mundo**; só creative e comandos),
+- [x] Minério Abissal (**sem gerar no mundo**; só creative e comandos),
   lingote, bloco, ferramentas, armadura com bônus de conjunto, Forja Abissal e
   receitas, conforme [05-itens.md](05-itens.md). Pérola Abissal e Cristal de
   Maré como itens. Texturas em pixel art.
@@ -73,7 +73,7 @@ validado das faixas listadas. Orçamento = tempo / screenshots (ver economia).
 | 1 | **2A-M** | Codex (`high`) | nenhuma | Primeiro commit: `KrakenView` + `uv.png` na `main` em ~30 min. Depois o modelo completo e animações do contrato. Aceite: modelo aparece no jogo com o gabarito e todas as animações disparam por comando | 3 h / 6 |
 | 1 | **2A-C** | Claude | nenhuma | `KrakenEntity` (vida e escudo por fase, escala `f`, transição, aggro, fuga, abandono), ligação com a barra existente, `spawnKraken`, `/aquamarine kraken`, arena de teste. Aceite: GameTest de fases e escala verde; barra mostra a vida real | 3 h / 3 |
 | 2 | **2A-T** | Claude | 2A-M, 2A-C | Textura pixel art do Kraken por script, usando o renderer real já registrado. Aceite: screenshot das 3 fases com rachaduras | 1 h / 4 |
-| 2 | **2B** | Claude | 2A-C | Pressão (0-4), Tônico, Boia de Âncora, `OrichalcumEffects`, vinheta e som. Aceite: GameTest dos níveis e contramedidas | 2 h / 2 |
+| 2 | **2B** | Claude | 2A-C | Pressão (0-4), Tônico, Boia de Âncora, `AbyssalEffects`, vinheta e som. Aceite: GameTest dos níveis e contramedidas | 2 h / 2 |
 | 2 | **2C** | Claude | 2A-C | Carapaça, Nós de Maré, tabela de dano por fonte, armas, atordoamento. Aceite: GameTest do escudo (absorve, quebra, regenera) | 2 h / 2 |
 | 2 | **2D-M** | Codex (`medium`) | 2A-M | Modelos e animações do tentáculo, da Cria e dos ovos (`TentacleView`, `YoungKrakenView`). Aceite: aparecem no jogo por comando | 2 h / 4 |
 | 3 | **2D-C** | Claude | 2A-C, 2B, 2C | 8 tentáculos e os 10 ataques com avisos. Aceite: cada ataque dispara por comando com seu aviso; GameTest de dano | 3 h / 3 |
@@ -163,7 +163,7 @@ Especificação, ordem e painel do que já foi feito: [10-fase4.md](10-fase4.md)
 
 - [x] **4A** Cria, Ovo e Tentáculo refeitos (gerador único com Java, texturas, brilho, UV e rig do site; ovo com
   filhote visível; v2 no Atlas). Testado na parte `spawnlings` do `runClientGameTest`.
-- [ ] **4B** Oricálcio → Abissal, com alias dos IDs antigos.
+- [x] **4B** Oricálcio → Abissal, com apelido dos IDs antigos (mundos salvos abrem com os itens convertidos).
 - [ ] **4C** Kraken: partes de colisão por tentáculo e cabeça, cabeça sólida, movimento constante.
 - [ ] **4D** Retexturas (oficina da Vila, pontas, itens de mergulho, troféus) e rework da Boia de Âncora.
 - [ ] **4E** Blocos de construção aquáticos e vidros rachados.

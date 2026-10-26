@@ -25,6 +25,8 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContex
 
 import net.minecraft.client.CameraType;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
+import com.google.gson.JsonParser;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -55,12 +57,12 @@ import net.minecraft.world.phys.Vec3;
  * Teste de cliente da Entrega 1: abre um mundo plano, monta cenas e tira screenshots em
  * {@code build/run/clientGameTest/screenshots/}. Rodar com {@code ./gradlew runClientGameTest}
  * (abre uma janela do jogo; não roda no CI). Também confere por código a Forja, a receita
- * exclusiva e o bônus do conjunto de Oricálcio.
+ * exclusiva e o bônus do conjunto Abissal.
  */
 public class AquamarineClientGameTest implements FabricClientGameTest {
-	private static final List<Item> HOTBAR = List.of(ModItems.ORICHALCUM_INGOT, ModItems.ABYSSAL_PEARL, ModItems.TIDE_CRYSTAL,
-		ModItems.ANCIENT_SCALE, ModItems.ORICHALCUM_SWORD, ModItems.ORICHALCUM_PICKAXE, ModItems.ORICHALCUM_AXE,
-		ModItems.ORICHALCUM_SHOVEL, ModItems.DIVING_GOGGLES);
+	private static final List<Item> HOTBAR = List.of(ModItems.ABYSSAL_INGOT, ModItems.ABYSSAL_PEARL, ModItems.TIDE_CRYSTAL,
+		ModItems.ANCIENT_SCALE, ModItems.ABYSSAL_SWORD, ModItems.ABYSSAL_PICKAXE, ModItems.ABYSSAL_AXE,
+		ModItems.ABYSSAL_SHOVEL, ModItems.DIVING_GOGGLES);
 
 	/**
 	 * Só para iterar mais rápido: {@code AQUAMARINE_GAMETEST_ONLY=moray,whale ./gradlew runClientGameTest}
@@ -494,9 +496,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 
 	private static void setArmor(ServerPlayer player, Item head) {
 		player.setItemSlot(EquipmentSlot.HEAD, head == null ? ItemStack.EMPTY : new ItemStack(head));
-		player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.ORICHALCUM_CHESTPLATE));
-		player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ModItems.ORICHALCUM_LEGGINGS));
-		player.setItemSlot(EquipmentSlot.FEET, new ItemStack(ModItems.ORICHALCUM_BOOTS));
+		player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.ABYSSAL_CHESTPLATE));
+		player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ModItems.ABYSSAL_LEGGINGS));
+		player.setItemSlot(EquipmentSlot.FEET, new ItemStack(ModItems.ABYSSAL_BOOTS));
 	}
 
 	/** Vitrine: blocos (com troféus e blocos de trabalho do Porto), suportes de armadura vestidos e a barra de itens. */
@@ -505,8 +507,8 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			ServerLevel level = s.overworld();
 			BlockState forge = ModBlocks.ABYSSAL_FORGE.defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, Direction.NORTH);
 			level.setBlockAndUpdate(base.offset(-2, 0, 5), forge);
-			level.setBlockAndUpdate(base.offset(0, 0, 5), ModBlocks.ORICHALCUM_ORE.defaultBlockState());
-			level.setBlockAndUpdate(base.offset(2, 0, 5), ModBlocks.ORICHALCUM_BLOCK.defaultBlockState());
+			level.setBlockAndUpdate(base.offset(0, 0, 5), ModBlocks.ABYSSAL_ORE.defaultBlockState());
+			level.setBlockAndUpdate(base.offset(2, 0, 5), ModBlocks.ABYSSAL_BLOCK.defaultBlockState());
 			// Troféus do Kraken (2E) e blocos de trabalho dos Mergulhadores (3E), para ver no mundo.
 			level.setBlockAndUpdate(base.offset(-4, 0, 5), ModBlocks.KRAKEN_TROPHY.defaultBlockState());
 			level.setBlockAndUpdate(base.offset(4, 0, 5), ModBlocks.GOLDEN_ABYSS_TROPHY.defaultBlockState());
@@ -514,8 +516,8 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			level.setBlockAndUpdate(base.offset(0, 0, 7), ModBlocks.CHART_TABLE.defaultBlockState());
 			level.setBlockAndUpdate(base.offset(2, 0, 7), ModBlocks.SHELL_ALTAR.defaultBlockState());
 
-			spawnStand(level, base.offset(-1, 0, 3), ModItems.ORICHALCUM_HELMET, ModItems.ORICHALCUM_SWORD);
-			spawnStand(level, base.offset(1, 0, 3), ModItems.DIVING_GOGGLES, ModItems.ORICHALCUM_PICKAXE);
+			spawnStand(level, base.offset(-1, 0, 3), ModItems.ABYSSAL_HELMET, ModItems.ABYSSAL_SWORD);
+			spawnStand(level, base.offset(1, 0, 3), ModItems.DIVING_GOGGLES, ModItems.ABYSSAL_PICKAXE);
 
 			ServerPlayer player = player(s);
 			for (int i = 0; i < HOTBAR.size(); i++) {
@@ -528,19 +530,19 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		shot(context, "01_vitrine");
 
 		// Jogador vestindo a armadura completa, câmera de frente, vitrine ao fundo.
-		server.runOnServer(s -> setArmor(player(s), ModItems.ORICHALCUM_HELMET));
+		server.runOnServer(s -> setArmor(player(s), ModItems.ABYSSAL_HELMET));
 		tp(server, base.getX() + 0.5, base.getY(), base.getZ() - 1.5, 180, 10);
 		context.runOnClient(mc -> mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT));
 		context.waitTicks(25);
 		shot(context, "02_jogador_armadura");
 		check(server.computeOnServer(s -> player(s).getAttribute(Attributes.WATER_MOVEMENT_EFFICIENCY)
-			.hasModifier(Aquamarine.id("orichalcum_set_swim"))), "bônus de nado do conjunto completo não aplicado");
+			.hasModifier(Aquamarine.id("abyssal_set_swim"))), "bônus de nado do conjunto completo não aplicado");
 
 		server.runOnServer(s -> setArmor(player(s), ModItems.DIVING_GOGGLES));
 		context.waitTicks(25);
 		shot(context, "03_jogador_oculos");
 		check(!server.computeOnServer(s -> player(s).getAttribute(Attributes.WATER_MOVEMENT_EFFICIENCY)
-			.hasModifier(Aquamarine.id("orichalcum_set_swim"))), "bônus de nado continuou sem o capacete");
+			.hasModifier(Aquamarine.id("abyssal_set_swim"))), "bônus de nado continuou sem o capacete");
 		context.runOnClient(mc -> mc.options.setCameraType(CameraType.FIRST_PERSON));
 	}
 
@@ -551,7 +553,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		server.runOnServer(s -> {
 			ServerLevel level = s.overworld();
 			BlockPos row = base.offset(-9, 0, 8);
-			Block[] blocks = {ModBlocks.ORICHALCUM_ORE, ModBlocks.ORICHALCUM_BLOCK, ModBlocks.ABYSSAL_FORGE,
+			Block[] blocks = {ModBlocks.ABYSSAL_ORE, ModBlocks.ABYSSAL_BLOCK, ModBlocks.ABYSSAL_FORGE,
 				ModBlocks.ABYSSAL_ALTAR, ModBlocks.ANCHOR_BUOY, ModBlocks.KRAKEN_TROPHY,
 				ModBlocks.GOLDEN_ABYSS_TROPHY, ModBlocks.TIDE_ANVIL, ModBlocks.CHART_TABLE, ModBlocks.SHELL_ALTAR};
 			for (int i = 0; i < blocks.length; i++) {
@@ -605,9 +607,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		stand.setShowArms(true);
 		stand.setNoBasePlate(true);
 		stand.setItemSlot(EquipmentSlot.HEAD, new ItemStack(head));
-		stand.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.ORICHALCUM_CHESTPLATE));
-		stand.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ModItems.ORICHALCUM_LEGGINGS));
-		stand.setItemSlot(EquipmentSlot.FEET, new ItemStack(ModItems.ORICHALCUM_BOOTS));
+		stand.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.ABYSSAL_CHESTPLATE));
+		stand.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ModItems.ABYSSAL_LEGGINGS));
+		stand.setItemSlot(EquipmentSlot.FEET, new ItemStack(ModItems.ABYSSAL_BOOTS));
 		stand.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(hand));
 		level.addFreshEntity(stand);
 	}
@@ -645,18 +647,24 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			BlockState state = level.getBlockState(forgePos);
 			player.openMenu(state.getMenuProvider(level, forgePos));
 			check(player.containerMenu instanceof AbyssalForgeMenu, "a Forja não abriu o menu certo");
-			ItemStack ingot = new ItemStack(ModItems.ORICHALCUM_INGOT);
+			ItemStack ingot = new ItemStack(ModItems.ABYSSAL_INGOT);
 			ItemStack stick = new ItemStack(Items.STICK);
 			ItemStack[] grid = {ingot, ingot, ingot, ItemStack.EMPTY, stick, ItemStack.EMPTY, ItemStack.EMPTY, stick, ItemStack.EMPTY};
 			for (int i = 0; i < grid.length; i++) {
 				player.containerMenu.getSlot(1 + i).set(grid[i].copy());
 			}
 			player.containerMenu.broadcastChanges();
-			check(player.containerMenu.getSlot(0).getItem().is(ModItems.ORICHALCUM_PICKAXE), "a Forja não montou a picareta");
+			check(player.containerMenu.getSlot(0).getItem().is(ModItems.ABYSSAL_PICKAXE), "a Forja não montou a picareta");
 
 			CraftingInput input = CraftingInput.of(3, 3, List.of(grid));
 			check(s.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, input, level).isEmpty(),
-				"a picareta de Oricálcio não deveria sair da bancada comum");
+				"a picareta Abissal não deveria sair da bancada comum");
+			// Mundos de antes da Fase 4: o item salvo como orichalcum_* abre como Abissal, e o bloco também.
+			ItemStack old = ItemStack.CODEC.parse(JsonOps.INSTANCE,
+				JsonParser.parseString("{\"id\":\"aquamarine:orichalcum_pickaxe\",\"count\":1}")).getOrThrow();
+			check(old.is(ModItems.ABYSSAL_PICKAXE), "item antigo de Oricálcio não abriu como Abissal: " + old);
+			check(BuiltInRegistries.BLOCK.getValue(Aquamarine.id("orichalcum_ore")) == ModBlocks.ABYSSAL_ORE,
+				"o bloco antigo de Oricálcio não virou Abissal");
 		});
 		context.waitForScreen(AbyssalForgeScreen.class);
 		context.waitTicks(5);
@@ -665,7 +673,7 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		server.runOnServer(s -> {
 			ServerPlayer player = player(s);
 			player.containerMenu.clicked(0, 0, ContainerInput.QUICK_MOVE, player);
-			check(player.getInventory().contains(new ItemStack(ModItems.ORICHALCUM_PICKAXE)), "a picareta não foi para o inventário");
+			check(player.getInventory().contains(new ItemStack(ModItems.ABYSSAL_PICKAXE)), "a picareta não foi para o inventário");
 			for (int i = 1; i <= 9; i++) {
 				check(player.containerMenu.getSlot(i).getItem().isEmpty(), "ingrediente sobrou na grade (slot " + i + ")");
 			}

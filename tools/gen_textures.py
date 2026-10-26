@@ -13,7 +13,7 @@ Como funciona:
 - Ruído usa semente fixa: rodar de novo gera os mesmos PNGs.
 
 Paleta do mod (docs/01-visao-e-riscos.md): azul profundo, verde-água, roxo
-bioluminescente e dourado gasto do Oricálcio.
+bioluminescente e dourado gasto do metal Abissal.
 """
 import math
 import os
@@ -34,7 +34,7 @@ def hexc(h, a=255):
 
 # Rampas: [contorno, sombra funda, sombra, base, luz, brilho]
 RAMPS = {
-    "G": [hexc("3a240e"), hexc("6e4a1a"), hexc("9a6c26"), hexc("c79634"), hexc("e8c25a"), hexc("fff0a8")],  # Oricálcio
+    "G": [hexc("3a240e"), hexc("6e4a1a"), hexc("9a6c26"), hexc("c79634"), hexc("e8c25a"), hexc("fff0a8")],  # Abissal (ex-Abissal)
     "T": [hexc("0c3436"), hexc("17605e"), hexc("238579"), hexc("33aa96"), hexc("6fdcc4"), hexc("c4fff0")],  # verde-água
     "P": [hexc("1e1036"), hexc("362064"), hexc("50348f"), hexc("7552c8"), hexc("a888ff"), hexc("e6d8ff")],  # roxo
     "B": [hexc("060d18"), hexc("0d1b30"), hexc("142a48"), hexc("1d3d66"), hexc("2c5a8e"), hexc("4a86bf")],  # azul profundo
@@ -524,7 +524,7 @@ def deep_stone(seed):
 
 
 def nugget(img, x, y, shape):
-    """Pepita de Oricálcio com bisel (shape: lista de strings com 'G')."""
+    """Pepita Abissal com bisel (shape: lista de strings com 'G')."""
     sub = render(shape, w=len(shape[0]), h=len(shape), outline=True)
     for j in range(sub.size[1]):
         for i in range(sub.size[0]):
@@ -533,7 +533,7 @@ def nugget(img, x, y, shape):
                 img.putpixel(((x + i) % 16, (y + j) % 16), c)
 
 
-def orichalcum_ore():
+def abyssal_ore():
     img = deep_stone(7)
     nugget(img, 1, 1, ["GG.", "GGG", ".G."])
     nugget(img, 9, 2, [".GG", "GGG"])
@@ -547,7 +547,7 @@ def orichalcum_ore():
     return img
 
 
-def orichalcum_block():
+def abyssal_block():
     img = Image.new("RGBA", (16, 16))
     G = RAMPS["G"]
     noise_fill(img, (0, 0, 16, 16), [G[3], G[3], G[4]], [5, 3, 1], 11)
@@ -598,7 +598,7 @@ def forge_bricks(seed):
 def forge_side():
     img = forge_bricks(21)
     G, T = RAMPS["G"], RAMPS["T"]
-    # cinta de Oricálcio no topo e na base
+    # cinta Abissal no topo e na base
     for x in range(16):
         img.putpixel((x, 0), G[4])
         img.putpixel((x, 1), G[3])
@@ -653,7 +653,7 @@ def forge_top():
         img.putpixel((0, i), G[3])
         img.putpixel((i, 15), G[1])
         img.putpixel((15, i), G[2])
-    # bigorna de Oricálcio no centro, com grade 3x3 gravada
+    # bigorna Abissal no centro, com grade 3x3 gravada
     for y in range(4, 12):
         for x in range(4, 12):
             img.putpixel((x, y), G[3])
@@ -691,7 +691,7 @@ LEG = {"top": (4, 16, 4, 4), "bottom": (8, 16, 4, 4), "right": (0, 20, 4, 12), "
 
 
 def plate(img, box, rows=None, seed=0, trim_rows=(), gem=None):
-    """Pinta uma face de armadura: placa de Oricálcio com bisel e textura de metal batido.
+    """Pinta uma face de armadura: placa Abissal com bisel e textura de metal batido.
 
     rows: intervalo de linhas (relativo à face) a cobrir; None = face inteira.
     trim_rows: linhas (relativas) pintadas com friso verde-água.
@@ -720,7 +720,7 @@ def plate(img, box, rows=None, seed=0, trim_rows=(), gem=None):
         img.putpixel((x0 + gx + 1, y0 + gy + 1), RAMPS["P"][2])
 
 
-def orichalcum_layer():
+def abyssal_layer():
     img = Image.new("RGBA", (64, 32), (0, 0, 0, 0))
     # capacete: cobre a cabeça, com abertura para o rosto na frente
     for k, box in HEAD.items():
@@ -767,7 +767,7 @@ def orichalcum_layer():
     return img
 
 
-def orichalcum_leggings_layer():
+def abyssal_leggings_layer():
     img = Image.new("RGBA", (64, 32), (0, 0, 0, 0))
     for k, box in BODY.items():
         if k in ("right", "front", "left", "back"):
@@ -846,7 +846,7 @@ def gui_forge():
             slot(7 + c * 18, 83 + r * 18)
     for c in range(9):
         slot(7 + c * 18, 141)
-    # seta de Oricálcio com núcleo verde-água
+    # seta Abissal com núcleo verde-água
     arrow = [
         "..........G.....",
         "..........GG....",
@@ -937,7 +937,7 @@ def altar_column():
     for y in range(16):
         for x in range(16):
             img.putpixel((x, y), flutes[x % 4])
-    for x in range(16):  # anéis de Oricálcio no alto e embaixo da coluna
+    for x in range(16):  # anéis Abissais no alto e embaixo da coluna
         img.putpixel((x, 4), G[4])
         img.putpixel((x, 5), G[2])
         img.putpixel((x, 10), G[4])
@@ -1156,7 +1156,7 @@ def tonic():
 
 
 def anchor_buoy_block():
-    """Boia de Âncora: casco laranja com faixas brancas, argolas de Oricálcio nos cantos."""
+    """Boia de Âncora: casco laranja com faixas brancas, argolas Abissais nos cantos."""
     img = Image.new("RGBA", (16, 16))
     orange = [hexc("c2531c"), hexc("e0702a"), hexc("f08a3c")]
     white = [hexc("cfd8dc"), hexc("f1f5f7")]
@@ -1298,22 +1298,22 @@ def kraken_trophy(golden):
 
 def main():
     out = {}
-    out["item/orichalcum_ingot"] = ingot()
+    out["item/abyssal_ingot"] = ingot()
     out["item/abyssal_pearl"] = pearl()
     out["item/tide_crystal"] = crystal()
     out["item/ancient_scale"] = scale()
-    out["item/orichalcum_sword"] = sword()
-    out["item/orichalcum_pickaxe"] = pickaxe()
-    out["item/orichalcum_axe"] = axe()
-    out["item/orichalcum_shovel"] = shovel()
-    out["item/orichalcum_hoe"] = hoe()
-    out["item/orichalcum_helmet"] = armor_icon(HELMET, {(7, 5): "r", (8, 5): "q"})
-    out["item/orichalcum_chestplate"] = armor_icon(CHEST, {(7, 5): "r", (8, 5): "q"})
-    out["item/orichalcum_leggings"] = armor_icon(LEGS)
-    out["item/orichalcum_boots"] = armor_icon(BOOTS)
+    out["item/abyssal_sword"] = sword()
+    out["item/abyssal_pickaxe"] = pickaxe()
+    out["item/abyssal_axe"] = axe()
+    out["item/abyssal_shovel"] = shovel()
+    out["item/abyssal_hoe"] = hoe()
+    out["item/abyssal_helmet"] = armor_icon(HELMET, {(7, 5): "r", (8, 5): "q"})
+    out["item/abyssal_chestplate"] = armor_icon(CHEST, {(7, 5): "r", (8, 5): "q"})
+    out["item/abyssal_leggings"] = armor_icon(LEGS)
+    out["item/abyssal_boots"] = armor_icon(BOOTS)
     out["item/diving_goggles"] = goggles_icon()
-    out["block/orichalcum_ore"] = orichalcum_ore()
-    out["block/orichalcum_block"] = orichalcum_block()
+    out["block/abyssal_ore"] = abyssal_ore()
+    out["block/abyssal_block"] = abyssal_block()
     out["block/abyssal_forge_side"] = forge_side()
     out["block/abyssal_forge_front"] = forge_front()
     out["block/abyssal_forge_top"] = forge_top()
@@ -1334,8 +1334,8 @@ def main():
     for rel, img in out.items():
         save(img, rel + ".png")
     layers = [
-        save(orichalcum_layer(), "entity/equipment/humanoid/orichalcum.png"),
-        save(orichalcum_leggings_layer(), "entity/equipment/humanoid_leggings/orichalcum.png"),
+        save(abyssal_layer(), "entity/equipment/humanoid/abyssal.png"),
+        save(abyssal_leggings_layer(), "entity/equipment/humanoid_leggings/abyssal.png"),
         save(goggles_layer(), "entity/equipment/humanoid/diving_goggles.png"),
     ]
     gui = save(gui_forge(), "gui/container/abyssal_forge.png")

@@ -8,12 +8,12 @@ Plano oficial: https://claude.ai/artifact/M68jvjvKRddKZMxq3yEQjT (pode estar des
 conflito, vale [docs/00-decisoes.md](docs/00-decisoes.md)).
 
 ## O que tem no mod
-- **Entrega 1:** Oricálcio (minério, ferramentas, armadura), Forja Abissal, Óculos de Mergulho, aba
+- **Entrega 1:** Abissal (minério, ferramentas, armadura), Forja Abissal, Óculos de Mergulho, aba
   criativa e plugin do JEI.
 - **Entrega 2:** o Kraken (3 fases, escudo com Nós de Maré, tentáculos, Crias, barra de boss
   própria), a Pressão, a invocação no Altar do Abismo e as recompensas.
 - **Fase 3:** Pressão por profundidade com Medidor, Regulador e Traje de Mergulho Profundo; Moréia
-  Tempestuosa e Escama Elétrica; Baleia-de-Nereia (montaria de 3) e Cachalote; Arpão de Oricálcio com
+  Tempestuosa e Escama Elétrica; Baleia-de-Nereia (montaria de 3) e Cachalote; Arpão Abissal com
   Aljava e 4 pontas; 7 encantamentos; Propulsor de Maré; a Vila subaquática (Porto dos Náufragos), com
   Cúpula, cinco prédios, Cais com elevadores de bolhas, Torre de Vigia, Mergulhadores em 3 profissões,
   reputação por jogador e o Alerta de Moréia.

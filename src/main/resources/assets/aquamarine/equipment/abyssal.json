@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "aquamarine:abyssal"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "aquamarine:abyssal"
+      }
+    ]
+  }
+}

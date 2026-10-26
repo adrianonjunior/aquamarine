@@ -94,8 +94,8 @@ final class HarborGameTest {
 				check(levels != null && levels.size() == offers.size(), "Porto: níveis das trocas não guardados em " + v);
 				for (MerchantOffer offer : v.getOffers()) {
 					ItemStack result = offer.getResult();
-					check(!result.is(ModTags.Items.HARPOONS) && !result.is(ModItems.ORICHALCUM_INGOT) && !result.is(ModItems.ORICHALCUM_HELMET)
-						&& !result.is(ModItems.ORICHALCUM_CHESTPLATE), "Porto: troca proibida " + result);
+					check(!result.is(ModTags.Items.HARPOONS) && !result.is(ModItems.ABYSSAL_INGOT) && !result.is(ModItems.ABYSSAL_HELMET)
+						&& !result.is(ModItems.ABYSSAL_CHESTPLATE), "Porto: troca proibida " + result);
 					ItemEnchantments stored = result.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
 					check(stored.keySet().stream().noneMatch(h -> h.is(ResourceKey.create(Registries.ENCHANTMENT, Aquamarine.id("shell_breaker")))),
 						"Porto: Quebra-Carapaça não se vende");

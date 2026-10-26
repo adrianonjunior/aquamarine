@@ -120,7 +120,7 @@ final class GearGameTest {
 			check(p.getInventory().countItem(ModItems.POISON_HARPOON_TIP) == 0, "Aljava: as pontas deviam sair do inventário");
 			HarpoonQuiverItem.cycle(p);
 			check(HarpoonQuiverItem.contents(HarpoonQuiverItem.find(p)).selectedTip() == HarpoonTip.SHOCK, "Aljava: R devia pular para o Choque");
-			ThrownTrident trident = new ThrownTrident(level, p, new ItemStack(ModItems.ORICHALCUM_HARPOON));
+			ThrownTrident trident = new ThrownTrident(level, p, new ItemStack(ModItems.ABYSSAL_HARPOON));
 			check(HarpoonEffects.loadTip(trident, p) == HarpoonTip.SHOCK, "Arpão: devia carregar a ponta escolhida");
 			check(HarpoonQuiverItem.contents(HarpoonQuiverItem.find(p)).count(HarpoonTip.SHOCK) == 1, "Arpão: devia gastar 1 ponta");
 		});
@@ -165,7 +165,7 @@ final class GearGameTest {
 			ServerPlayer p = player(s);
 			List<Pig> pigs = level.getEntitiesOfClass(Pig.class, new net.minecraft.world.phys.AABB(o).inflate(12), e -> e.isAlive())
 				.stream().sorted(java.util.Comparator.comparingDouble(e -> e.getZ())).toList();
-			ItemStack harpoon = new ItemStack(ModItems.ORICHALCUM_HARPOON);
+			ItemStack harpoon = new ItemStack(ModItems.ABYSSAL_HARPOON);
 			harpoon.enchant(enchantment(s, "hook"), 2);
 			harpoon.enchant(enchantment(s, "piercing_harpoon"), 1);
 			Pig first = pigs.get(0);
@@ -196,7 +196,7 @@ final class GearGameTest {
 			TentacleEntity tentacle = ModEntities.TENTACLE.create(level, EntitySpawnReason.COMMAND);
 			tentacle.snapTo(o.getX() + 4.5, o.getY() + 2, o.getZ() + 4.5, 0, 0);
 			level.addFreshEntity(tentacle);
-			HarpoonEffects.onHit(new ThrownTrident(level, p, new ItemStack(ModItems.ORICHALCUM_HARPOON)), tentacle);
+			HarpoonEffects.onHit(new ThrownTrident(level, p, new ItemStack(ModItems.ABYSSAL_HARPOON)), tentacle);
 			check(tentacle.isPinned() && tentacle.isBusy(), "Arpão: devia prender o tentáculo");
 		});
 		server.runCommand("kill @e[type=aquamarine:kraken]");
@@ -216,7 +216,7 @@ final class GearGameTest {
 			helmet.enchant(enchantment(s, "deep_breath"), 3);
 			ItemStack chest = new ItemStack(ModItems.DEEP_DIVING_CHESTPLATE);
 			chest.enchant(enchantment(s, "isolation"), 3);
-			ItemStack boots = new ItemStack(ModItems.ORICHALCUM_BOOTS);
+			ItemStack boots = new ItemStack(ModItems.ABYSSAL_BOOTS);
 			boots.enchant(enchantment(s, "current"), 3);
 			p.setItemSlot(EquipmentSlot.HEAD, helmet);
 			p.setItemSlot(EquipmentSlot.CHEST, chest);

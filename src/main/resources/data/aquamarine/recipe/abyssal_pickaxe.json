@@ -1,0 +1,16 @@
+{
+  "type": "aquamarine:abyssal_forging",
+  "category": "equipment",
+  "key": {
+    "#": "aquamarine:abyssal_ingot",
+    "|": "minecraft:stick"
+  },
+  "pattern": [
+    "###",
+    " | ",
+    " | "
+  ],
+  "result": {
+    "id": "aquamarine:abyssal_pickaxe"
+  }
+}

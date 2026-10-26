@@ -28,7 +28,7 @@ import net.minecraft.world.level.block.Blocks;
 
 /**
  * Teste da faixa 2D-C: os 8 tentáculos, os 10 ataques (aviso e golpe, por comando ou código),
- * o dano de cada um e as contramedidas (cortar o tentáculo, Tônico, armadura de Oricálcio,
+ * o dano de cada um e as contramedidas (cortar o tentáculo, Tônico, armadura Abissal,
  * submergir). Chamado por {@link AquamarineClientGameTest}; 3 screenshots.
  */
 final class AttackGameTest {
@@ -102,17 +102,17 @@ final class AttackGameTest {
 		context.waitTicks(60);
 		check(server.computeOnServer(s -> kraken(s).attacks().grabbedCount()) == 0, "Agarrão com Tônico: devia soltar em ~2,5 s");
 
-		// Nuvem de Tinta: cegueira, exceto com a armadura de Oricálcio completa (óculos não bastam).
+		// Nuvem de Tinta: cegueira, exceto com a armadura Abissal completa (óculos não bastam).
 		reset(server);
 		attack(server, KrakenAttackType.INK);
 		context.waitTicks(45);
 		check(server.computeOnServer(s -> player(s).hasEffect(MobEffects.BLINDNESS)), "Tinta: devia cegar");
 		reset(server);
 		server.runOnServer(s -> {
-			player(s).setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.ORICHALCUM_HELMET));
-			player(s).setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.ORICHALCUM_CHESTPLATE));
-			player(s).setItemSlot(EquipmentSlot.LEGS, new ItemStack(ModItems.ORICHALCUM_LEGGINGS));
-			player(s).setItemSlot(EquipmentSlot.FEET, new ItemStack(ModItems.ORICHALCUM_BOOTS));
+			player(s).setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.ABYSSAL_HELMET));
+			player(s).setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.ABYSSAL_CHESTPLATE));
+			player(s).setItemSlot(EquipmentSlot.LEGS, new ItemStack(ModItems.ABYSSAL_LEGGINGS));
+			player(s).setItemSlot(EquipmentSlot.FEET, new ItemStack(ModItems.ABYSSAL_BOOTS));
 		});
 		attack(server, KrakenAttackType.INK);
 		context.waitTicks(45);

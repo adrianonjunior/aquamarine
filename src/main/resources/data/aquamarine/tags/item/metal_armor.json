@@ -21,9 +21,9 @@
     "minecraft:copper_chestplate",
     "minecraft:copper_leggings",
     "minecraft:copper_boots",
-    "aquamarine:orichalcum_helmet",
-    "aquamarine:orichalcum_chestplate",
-    "aquamarine:orichalcum_leggings",
-    "aquamarine:orichalcum_boots"
+    "aquamarine:abyssal_helmet",
+    "aquamarine:abyssal_chestplate",
+    "aquamarine:abyssal_leggings",
+    "aquamarine:abyssal_boots"
   ]
 }

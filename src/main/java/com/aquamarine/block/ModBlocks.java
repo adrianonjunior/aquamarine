@@ -20,17 +20,17 @@ import net.minecraft.world.level.material.MapColor;
  * Blocos do mod. Os itens de bloco são registrados em {@link com.aquamarine.item.ModItems}.
  */
 public final class ModBlocks {
-	/** Minério de Oricálcio. Não gera no mundo nesta versão: só a Cidade Perdida o terá. */
-	public static final Block ORICHALCUM_ORE = register("orichalcum_ore",
+	/** Minério Abissal. Não gera no mundo nesta versão: só a Cidade Perdida o terá. */
+	public static final Block ABYSSAL_ORE = register("abyssal_ore",
 		p -> new DropExperienceBlock(UniformInt.of(3, 7), p),
 		BlockBehaviour.Properties.of().mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM)
 			.requiresCorrectToolForDrops().strength(5.0F, 9.0F).sound(SoundType.DEEPSLATE));
 
-	public static final Block ORICHALCUM_BLOCK = register("orichalcum_block", Block::new,
+	public static final Block ABYSSAL_BLOCK = register("abyssal_block", Block::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).instrument(NoteBlockInstrument.BELL)
 			.requiresCorrectToolForDrops().strength(6.0F, 12.0F).sound(SoundType.METAL));
 
-	/** Bancada das receitas de Oricálcio e dos itens da luta. Brilha de leve, como coral vivo. */
+	/** Bancada das receitas Abissais e dos itens da luta. Brilha de leve, como coral vivo. */
 	public static final Block ABYSSAL_FORGE = register("abyssal_forge", AbyssalForgeBlock::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).instrument(NoteBlockInstrument.BASEDRUM)
 			.requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.DEEPSLATE_BRICKS).lightLevel(state -> 7));
@@ -70,7 +70,11 @@ public final class ModBlocks {
 	}
 
 	public static void register() {
-		// Carrega a classe; os campos estáticos fazem o registro.
+		// Carrega a classe; os campos estáticos fazem o registro. Minério e bloco se chamavam orichalcum_* até a
+		// Fase 4: o ID antigo vira apelido e os blocos já colocados nos mundos continuam lá.
+		for (String name : new String[] {"ore", "block"}) {
+			BuiltInRegistries.BLOCK.addAlias(Aquamarine.id("orichalcum_" + name), Aquamarine.id("abyssal_" + name));
+		}
 	}
 
 	private ModBlocks() {}

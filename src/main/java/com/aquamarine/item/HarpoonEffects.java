@@ -35,7 +35,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Arpão de Oricálcio no servidor (docs/08-fase3.md, seção 5; docs/02-kraken.md): o arremesso é o do
+ * Arpão Abissal no servidor (docs/08-fase3.md, seção 5; docs/02-kraken.md): o arremesso é o do
  * tridente do jogo com o nosso item; aqui a ponta escolhida na Aljava é gasta ao arremessar e aplicada
  * no acerto, junto com Fisgada, Perfurante e a trava de 3 s no tentáculo. O acerto chega pelo
  * {@code ThrownTridentMixin}.

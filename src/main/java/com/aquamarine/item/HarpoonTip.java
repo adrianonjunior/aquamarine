@@ -5,7 +5,7 @@ import java.util.Locale;
 import net.minecraft.world.item.Item;
 
 /**
- * Pontas do Arpão de Oricálcio (docs/08-fase3.md, seção 5), na ordem da Aljava. {@code krakenBonus}:
+ * Pontas do Arpão Abissal (docs/08-fase3.md, seção 5), na ordem da Aljava. {@code krakenBonus}:
  * fração do dano base somada no escudo do Kraken (o triplo do Arpão continua valendo);
  * {@code affectsKraken}: veneno e wither não pegam no Kraken.
  */

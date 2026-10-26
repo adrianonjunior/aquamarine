@@ -468,7 +468,7 @@ public class KrakenEntity extends Mob implements KrakenView {
 			return ShieldDamage.Source.HARPOON;
 		}
 		if (weapon != null && weapon.is(ModTags.Items.SHIELD_BREAKERS)) {
-			return ShieldDamage.Source.ORICHALCUM;
+			return ShieldDamage.Source.ABYSSAL;
 		}
 		return ShieldDamage.Source.COMMON;
 	}

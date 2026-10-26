@@ -13,7 +13,7 @@ class ShieldDamageTest {
 	@Test
 	void tableBySource() {
 		assertEquals(2.5F, amount(ShieldDamage.Source.COMMON, 10, 0, false, false), 1e-5);
-		assertEquals(6.0F, amount(ShieldDamage.Source.ORICHALCUM, 10, 0, false, false), 1e-5);
+		assertEquals(6.0F, amount(ShieldDamage.Source.ABYSSAL, 10, 0, false, false), 1e-5);
 		assertEquals(30.0F, amount(ShieldDamage.Source.HARPOON, 10, 0, false, false), 1e-5);
 		assertEquals(100.0F, amount(ShieldDamage.Source.PULSE, 0, 0, false, false), 1e-5);
 		assertEquals(20.0F, amount(ShieldDamage.Source.PILLAR, 0, 0, false, false), 1e-5);

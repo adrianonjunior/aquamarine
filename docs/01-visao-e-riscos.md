@@ -15,7 +15,7 @@ e enfrenta o Kraken.
   sofrendo muito).
 - **O oceano como arena.** O Minecraft é ruim de combate na água: o jogador é
   lento, vê pouco e não pula. Isso é um problema e uma oportunidade. O mod
-  precisa dar ao jogador meios de se mover bem (armadura de Oricálcio, Tônico,
+  precisa dar ao jogador meios de se mover bem (armadura Abissal, Tônico,
   plataformas temporárias) em vez de só punir.
 - **Clareza.** Boss difícil só é divertido se o jogador entende por que
   morreu. Cada ataque forte precisa de um aviso visual e sonoro (tentáculo
@@ -38,8 +38,8 @@ e enfrenta o Kraken.
 
 ## Tom e estética
 - Paleta: azul profundo, verde-água, roxo bioluminescente, dourado gasto do
-  Oricálcio.
+  Abissal.
 - Inspiração de clima: Atlântida, ruínas gregas afundadas, o medo do
   desconhecido do fundo do mar (sem virar terror).
 - O nome "Nereia" vem das Nereidas, ninfas do mar gregas. Combina com
-  "Oricálcio", que é o metal lendário de Atlântida no Platão.
+  "Abissal", que é o metal lendário de Atlântida no Platão.

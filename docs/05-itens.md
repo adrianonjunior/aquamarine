@@ -2,12 +2,12 @@
 
 > **Dono de:** lista final de materiais, itens, receitas e estatísticas. Tudo
 > **decidido**; números são valores iniciais a testar (ajustar aqui).
-> **Implementados:** Entrega 1 (Oricálcio: minério, lingote, bloco, ferramentas, armadura;
+> **Implementados:** Entrega 1 (Abissal: minério, lingote, bloco, ferramentas, armadura;
 > Pérola Abissal, Cristal de Maré e Escama Antiga como itens; Forja Abissal; Óculos de Mergulho;
 > Chamariz Abissal e Projeto; Altar do Abismo), Entrega 2 (Tônico de Pressão, Boia de Âncora,
 > Olho do Kraken, Tinta Abissal, Coração do Kraken, Troféus) e Fase 3 (Medidor, Regulador, Traje de
 > Mergulho Profundo, Escama Elétrica, Bobina Voltaica, Chicote de Moréia, Sela de Baleia, Arpão de
-> Oricálcio, Aljava e pontas, Propulsor de Maré, blocos de trabalho da Vila, Mapa de Fossas de Moréia).
+> Abissal, Aljava e pontas, Propulsor de Maré, blocos de trabalho da Vila, Mapa de Fossas de Moréia).
 > **Ainda planejados** (fase da Cidade Perdida): Carga de Pulso, Pilar Ressonante, Amuleto da
 > Corrente, Bússola de Maré, Mapa de Nereia, Lanterna de Coral, Arco de Coral, Sopa de Tentáculo,
 > Chave de Nereia e o Casco de Prismarinho. Regra: todo item
@@ -17,8 +17,8 @@
 ## Materiais
 | Material | Origem | Usado em |
 |---|---|---|
-| Minério de Oricálcio | Minas de Oricálcio (só na cidade) | Lingote de Oricálcio |
-| Lingote de Oricálcio | Fundir o minério | Ferramentas, armadura, Arpão, Pilar, Forja |
+| Minério Abissal | Minas Abissais (só na cidade) | Lingote Abissal |
+| Lingote Abissal | Fundir o minério | Ferramentas, armadura, Arpão, Pilar, Forja |
 | Pérola Abissal | Sentinelas Afundadas (1 a 2, afetada por Saque); também Walker | Chamariz, Amuleto, Bússola |
 | Cristal de Maré | Cristais na Fossa de Nereia (minerar com picareta) | Cargas de Pulso, Pilar, Tônico, Arpão |
 | Escama Antiga | Baús da cidade | Armadura, Amuleto da Corrente |
@@ -31,8 +31,8 @@
 | Escama Elétrica | Moréia Tempestuosa (2 + jogadores ÷ 2, máximo 6, afetada por Saque) | Bobina Voltaica, Chicote de Moréia (Fase 3B) |
 
 ## Bancada: Forja Abissal
-Receitas de Oricálcio e de itens da luta usam a **Forja Abissal**. Existem
-algumas prontas na cidade e ela também pode ser feita: 2 Blocos de Oricálcio +
+Receitas Abissais e de itens da luta usam a **Forja Abissal**. Existem
+algumas prontas na cidade e ela também pode ser feita: 2 Blocos Abissais +
 2 Escamas Antigas + 1 fornalha + 1 bloco de obsidiana (bancada comum).
 A Forja tem grade 3x3 e também aceita as receitas da bancada comum; as receitas
 dela usam o tipo `aquamarine:abyssal_forging` (JSON igual ao `crafting_shaped`).
@@ -43,7 +43,7 @@ Todas as receitas abaixo são na Forja Abissal, exceto quando indicado.
 | Item | Receita | Efeito |
 |---|---|---|
 | Chamariz Abissal | Projeto do Chamariz + 4 Pérolas + 2 Cristais + 1 Lingote; usado no Altar do Abismo | Invoca o Kraken; consumido ao invocar (implementado; o Projeto por enquanto só no criativo) |
-| Arpão de Oricálcio | 3 Lingotes + 1 Cristal + 1 vareta (implementado na 3C, arremesso do tridente) | Arremessável; dano triplo no escudo; prende o tentáculo por 3 s; volta com Lealdade ou é recolhido |
+| Arpão Abissal | 3 Lingotes + 1 Cristal + 1 vareta (implementado na 3C, arremesso do tridente) | Arremessável; dano triplo no escudo; prende o tentáculo por 3 s; volta com Lealdade ou é recolhido |
 | Carga de Pulso | 1 Cristal + 1 pólvora + 1 Pérola (rende 2) | Granada submarina; 100 de dano fixo no escudo em área de 4 blocos |
 | Pilar Ressonante | 4 Cristais + 2 Lingotes + 1 bloco de prismarinho | Bloco; perto da arena, a cada 15 s tira 5% do escudo; até 3 ativos |
 | Amuleto da Corrente | 3 Escamas + 2 Cascos + 1 Pérola | Na mão secundária: imunidade ao puxão do Redemoinho |
@@ -53,10 +53,10 @@ Todas as receitas abaixo são na Forja Abissal, exceto quando indicado.
 | Regulador de Pressão | 2 lingotes de cobre + 1 Pérola + 1 Cristal + 1 Escama Antiga (sem forma) | Mão secundária: Pressão da profundidade −2 níveis; 1 de durabilidade (600) a cada 10 s ativo; não afeta a Pressão do Kraken (3A) |
 | Traje de Mergulho Profundo (4 peças) | Escama Antiga + Pérola Abissal + estilhaço de prismarinho (bancada comum; o Casco de Prismarinho ainda não existe) | Defesa 2/6/5/2. +45 s de Reserva de Ar por peça (180 s com o conjunto), gasta depois do fôlego; Pressão da profundidade −1 nível com 2 peças e −2 com 4. Isolamento: −40% de dano elétrico por peça (imune com o conjunto) |
 | Bobina Voltaica | 1 Escama Elétrica + 1 lingote de cobre + 1 Cristal (sem forma, bancada comum) | Bateria: 6 cargas do Propulsor; vira ponta de Choque do Arpão (3B) |
-| Chicote de Moréia | 3 Bobinas + 2 Lingotes de Oricálcio + 1 vareta | 7 de dano, ataque rápido (2/s), alcance 3,5; corrente elétrica nos alvos molhados a 4 blocos (50% do dano); durabilidade 450 (3B) |
+| Chicote de Moréia | 3 Bobinas + 2 Lingotes Abissais + 1 vareta | 7 de dano, ataque rápido (2/s), alcance 3,5; corrente elétrica nos alvos molhados a 4 blocos (50% do dano); durabilidade 450 (3B) |
 | Sela de Baleia | 4 couro + 2 Escamas Antigas + 1 Pérola (bancada comum) | Numa Baleia-de-Nereia domada: montaria de 3 jogadores; a baleia deixa a sela ao morrer (3B) |
 | Aljava de Arpões | 3 couro + 2 Escamas Antigas + 1 Pérola (bancada comum) | Guarda até 64 pontas de cada tipo; usar recolhe as pontas do inventário, agachado devolve; R troca a ponta; o Arpão gasta 1 por arremesso (3C) |
-| Ponta de Oricálcio | 1 Lingote de Oricálcio + 1 pederneira, rende 4 (bancada comum) | Base das pontas especiais (3C) |
+| Ponta Abissal | 1 Lingote Abissal + 1 pederneira, rende 4 (bancada comum) | Base das pontas especiais (3C) |
 | Pontas de Veneno, Fogo, Wither e Choque | Ponta + olho de aranha / pó de blaze (1 cada); 8 pontas + 1 caveira de wither esqueleto (rende 8); 4 pontas + 1 Bobina (rende 4) | Veneno I 10 s; Chama Abissal 5 s (2/s, até debaixo d'água); Wither I 8 s; descarga nos alvos molhados a 6 blocos (50%). No Kraken: tabela de [02-kraken.md](02-kraken.md) (3C) |
 | Bigorna de Maré, Mesa de Cartas Náuticas, Altar de Concha | Só na Vila (blocos; quebrar devolve o bloco) | Blocos de trabalho do Ferreiro de Maré, do Cartógrafo Náutico e do Encantador de Fossa (3E) |
 | Propulsor de Maré | 1 concha de náutilo + 2 Lingotes + 1 Cristal + 1 Bobina | Mão secundária, tecla V (segura e solta): impulso de ~16 blocos em 1,2 s, recarga 3 s, só na água; 1 Bobina = 6 cargas (+2 por nível de Sobrecarga), gasta do inventário quando acabam (3D) |
@@ -69,7 +69,7 @@ Todas as receitas abaixo são na Forja Abissal, exceto quando indicado.
 | Óculos de Mergulho | Couro + painel de vidro + cobre (bancada comum), ver abaixo | Menos névoa debaixo d'água |
 | Encantamento Quebra-Carapaça | Só em livros de baús da Biblioteca e do Templo (níveis 1 a 3) | +10% de dano em escudos de boss por nível |
 
-## Armadura e ferramentas de Oricálcio
+## Armadura e ferramentas Abissais
 - **Armadura** (levemente abaixo da netherite): capacete 5 Lingotes + 1 Escama;
   peitoral 7 + 2 (8 + 2 não cabe na grade 3x3); calças 7 + 2; botas 4 + 1.
   Defesa 3/7/5/3, resistência 2, durabilidade 35 (multiplicador), resistência a
@@ -77,18 +77,18 @@ Todas as receitas abaixo são na Forja Abissal, exceto quando indicado.
 - **Bônus do conjunto completo:** nado 25% mais rápido (atributo
   `water_movement_efficiency` +0,33, a calibrar no jogo), enxerga através da
   Nuvem de Tinta e a Pressão sobe 60% mais devagar (15% por peça; a Nuvem e a
-  Pressão leem `OrichalcumEffects` quando existirem).
+  Pressão leem `AbyssalEffects` quando existirem).
 - **Ferramentas e arma** (picareta, machado, pá, enxada, espada): nível um pouco
   abaixo da netherite (durabilidade 1800, velocidade 8,5, minera o mesmo que
   diamante), espada com 7 de dano; minerar debaixo d'água sem a
   penalidade da água ("Maré"). Todas na tag `aquamarine:shield_breakers`
   (60% de dano no escudo).
-- Capacete de Oricálcio e Óculos de Mergulho disputam o slot da cabeça.
+- Capacete Abissal e Óculos de Mergulho disputam o slot da cabeça.
 
 ## Óculos de Mergulho
 - Efeito só **visual e de cliente**: aumenta bastante o alcance de visão debaixo
   d'água e deixa a água mais clara enquanto equipados. Sem visão noturna.
-- Não enxergam através da **Nuvem de Tinta**: só o conjunto de Oricálcio.
+- Não enxergam através da **Nuvem de Tinta**: só o conjunto Abissal.
 - Visual: armação de latão envelhecido, lentes verde-água, tira azul de couro.
 
 ## Itens pós-boss (feitos com o Coração do Kraken)
@@ -105,5 +105,5 @@ Todos os itens em português no jogo, com tradução em inglês; nada de texto f
 no código.
 
 ## Descartado
-- Ferramentas de Oricálcio como "só efeito Maré sem dano de escudo" (agora têm 60%).
+- Ferramentas Abissais como "só efeito Maré sem dano de escudo" (agora têm 60%).
 - Itens puramente decorativos além dos troféus (ficam para depois do lançamento).

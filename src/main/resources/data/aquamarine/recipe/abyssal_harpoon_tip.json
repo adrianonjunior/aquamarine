@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "aquamarine:abyssal_ingot",
+    "minecraft:flint"
+  ],
+  "result": {
+    "id": "aquamarine:abyssal_harpoon_tip",
+    "count": 4
+  }
+}
