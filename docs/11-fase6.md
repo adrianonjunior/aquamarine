@@ -14,7 +14,7 @@
 
 | # | Faixa | Estado | Depende de | Pergunta |
 |---|---|---|---|---|
-| **6A** | **Kraken renovado (principal):** 3 modelos novos para escolher, colisão por parte, tentáculos que não brotam do nada, movimento dinâmico. **Absorve a antiga 4C** | a liberar | 6A2 e 6A4 esperam a escolha do modelo (6A1) | F6-1 |
+| **6A** | **Kraken renovado (principal):** 3 modelos novos para escolher, colisão por parte, tentáculos que não brotam do nada, movimento dinâmico. **Absorve a antiga 4C** | **6A1 e 6A3 feitas** (26/10); 6A2 e 6A4 esperam a escolha | 6A2 e 6A4 esperam a escolha do modelo (6A1) | F6-1 |
 | 6B | Fauna: colisão da baleia e do cachalote, carne de baleia | a liberar | nenhuma | F6-6 |
 | 6C | Vila: skins 3D dos Mergulhadores, funções das mesas de trabalho | a liberar | nenhuma | F6-8 |
 | 6D | Materiais e armas: Aurium, Forja Abissal nova, projétil 3D do Cavitador | a liberar | nenhuma | F6-2, F6-7 |
@@ -53,6 +53,19 @@ que "estão brotando no meio do mar do nada". Fazer o mob se mexer mais e ser ma
     [06-tecnico.md](06-tecnico.md), "Contrato de modelos e entidades (Entrega 2)".
   - **Aceite:** as três aparecem no Atlas e o Adriano escolhe uma. A escolhida vira o modelo do jogo pelo gerador; a v2 e
     as outras ficam no histórico.
+  - **Feito (26/10/2026).** Gerador `tools/models/kraken_v3/build_candidates.py` (molde da Cria v2: mesmas rampas, box-UV,
+    camada `_glow` e formato de clipe), registrado no Atlas como `kraken/v3a`, `v3b` e `v3c`:
+    - **v3a · Lula-colosso:** corpo deitado como torpedo, manto longo com faixas de fotóforos e colar aceso, barbatana em
+      ponta de flecha, coroa de 8 braços para a frente, 2 tentáculos de caça com clava de ganchos, olhos enormes.
+    - **v3b · Vampiro-abissal:** cúpula alta e larga, duas barbatanas de orelha que remam, 8 braços em guarda-chuva ligados
+      por membrana, espinhos nas costas e lanternas acesas nas pontas, 2 filamentos de caça.
+    - **v3c · Amonita-colosso:** concha em espiral de 18 câmaras nas costas (costelas, sutura acesa, espinhos na quilha,
+      borda de nácar que brilha), capuz duro sobre a cabeça, 8 braços em leque e 2 tentáculos de caça.
+    - Os três rigs têm os ossos do contrato de clipes (corpo, cabeça, mandíbula, manto que respira, barbatanas, pálpebras
+      escondidas no olho, 8 braços de 6 juntas, 2 tentáculos de caça com clava); 6 clipes cada: `idle` (com piscada),
+      `swim`, `slam`, `roar`, `grab` e `death`. Os outros 10 da `KrakenView` saem quando a escolhida entrar no jogo.
+    - O Atlas acende o `_glow` no modo Textura e usa o UV de cada versão; `tools/atlas/tests/candidates.mjs` grava vistas de
+      frente, lado, topo e costas para comparar. Testado: `tools/atlas/tests` (catálogo e navegador, 14 versões e 92 clipes).
 - **6A2 · Colisão e hitboxes (antiga 4C, parte 1).** A especificação continua em [10-fase4.md](10-fase4.md), §3 (partes por
   cabeça, núcleo, manto e braços; dano por parte; cabeça e manto sólidos). Só começa **depois de 6A1**, porque as partes
   seguem as juntas do rig escolhido.
@@ -62,6 +75,13 @@ que "estão brotando no meio do mar do nada". Fazer o mob se mexer mais e ser ma
     (a) a raiz do tentáculo nasce de algo visível (leito, ou o corpo do Kraken); (b) a subida é anunciada (bolhas, sombra) e
     animada, em vez de aparecer.
   - **Aceite:** em captura, nenhum tentáculo surge sem raiz visível nem aviso; os ataques e o ciclo de corte seguem iguais.
+  - **Feito (26/10/2026), hipótese confirmada:** o tentáculo do ataque era posto 1 bloco abaixo do jogador, no meio da água, e
+    o que voltava do ataque era teletransportado para a casa no anel e reaparecia de repente. Agora (`KrakenAttacks`):
+    (a) a raiz pousa no leito quando ele está perto (até 8 blocos sob o alvo, 16 sob a casa) e o chão se rompe em
+    partículas do próprio bloco; (b) sem leito perto, uma sombra de tinta e uma coluna de bolhas sobem do fundo antes do
+    clipe `rise`, e a raiz ferve durante o aviso; (c) depois do ataque o tentáculo afunda onde está (`release`, 1,1 s) e
+    só então volta para casa, subindo de novo com aviso; os ociosos acompanham o corpo pousados no leito. Testado: parte
+    `attack` do `runClientGameTest` (asserção nova: o tentáculo do agarrão nasce do leito; captura `18b_tentaculo_raiz`).
 - **6A4 · Movimento dinâmico (antiga 4C, parte 2).** Manto que respira, braços que ondulam, cabeça que acompanha o alvo, órbita,
   investidas curtas e mergulho para reaparecer em outro ponto ([10-fase4.md](10-fase4.md), §3, "Movimento constante" e
   "Deslocamento"). Depende de 6A1.
