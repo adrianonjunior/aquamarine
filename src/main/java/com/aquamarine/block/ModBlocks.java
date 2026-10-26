@@ -35,7 +35,8 @@ public final class ModBlocks {
 	/** Bancada das receitas Abissais e dos itens da luta. Brilha de leve, como coral vivo. */
 	public static final Block ABYSSAL_FORGE = register("abyssal_forge", AbyssalForgeBlock::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).instrument(NoteBlockInstrument.BASEDRUM)
-			.requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.DEEPSLATE_BRICKS).lightLevel(state -> 7));
+			.requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.DEEPSLATE_BRICKS).lightLevel(state -> 11)
+			.noOcclusion());
 
 	/** Altar do Abismo: onde o Chamariz Abissal invoca o Kraken. Só na Cidade Perdida (e no criativo). */
 	public static final Block ABYSSAL_ALTAR = register("abyssal_altar", AbyssalAltarBlock::new,

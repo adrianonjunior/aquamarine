@@ -40,12 +40,17 @@ public class AquamarineClient implements ClientModInitializer {
 		ModelLayerRegistry.registerModelLayer(TentacleModel.LAYER, TentacleModel::createBodyLayer);
 		ModelLayerRegistry.registerModelLayer(YoungKrakenModel.LAYER, YoungKrakenModel::createBodyLayer);
 		ModelLayerRegistry.registerModelLayer(KrakenEggModel.LAYER, KrakenEggModel::createBodyLayer);
+		// 6D3: o tridente em voo passa por este renderer; só o arpão do mod troca de desenho.
+		ModelLayerRegistry.registerModelLayer(com.aquamarine.client.entity.harpoon.HarpoonModel.LAYER,
+			com.aquamarine.client.entity.harpoon.HarpoonModel::createBodyLayer);
+		EntityRendererRegistry.register(net.minecraft.world.entity.EntityTypes.TRIDENT, com.aquamarine.client.entity.harpoon.HarpoonRenderer::new);
 		EntityRendererRegistry.register(ModEntities.TENTACLE, TentacleRenderer::new);
 		EntityRendererRegistry.register(ModEntities.YOUNG_KRAKEN, YoungKrakenRenderer::new);
 		EntityRendererRegistry.register(ModEntities.KRAKEN_EGG, KrakenEggRenderer::new);
 		ModelLayerRegistry.registerModelLayer(MorayModel.LAYER, MorayModel::createBodyLayer);
 		EntityRendererRegistry.register(ModEntities.MORAY, MorayRenderer::new);
 		EntityRendererRegistry.register(ModEntities.MORAY_PART, NoopRenderer::new);
+		EntityRendererRegistry.register(ModEntities.WHALE_PART, NoopRenderer::new);
 		ModelLayerRegistry.registerModelLayer(WhaleModel.LAYER, WhaleModel::createBodyLayer);
 		EntityRendererRegistry.register(ModEntities.WHALE, WhaleRenderer::new);
 		ModelLayerRegistry.registerModelLayer(SpermWhaleModel.LAYER, SpermWhaleModel::createBodyLayer);
@@ -57,6 +62,7 @@ public class AquamarineClient implements ClientModInitializer {
 		PressureHud.register();
 		SummonEffects.register();
 		ItemDescriptions.register();
+		EnchantmentDescriptions.register();
 		KrakenEffects.register();
 		KrakenMusic.register();
 		AquamarineKeys.register();

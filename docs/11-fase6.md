@@ -15,11 +15,11 @@
 | # | Faixa | Estado | Depende de | Pergunta |
 |---|---|---|---|---|
 | **6A** | **Kraken renovado (principal):** 3 modelos novos para escolher, colisão por parte, tentáculos que não brotam do nada, movimento dinâmico. **Absorve a antiga 4C** | **6A1 e 6A3 feitas** (26/10); 6A2 e 6A4 esperam a escolha | 6A2 e 6A4 esperam a escolha do modelo (6A1) | F6-1 |
-| 6B | Fauna: colisão da baleia e do cachalote, carne de baleia | a liberar | nenhuma | F6-6 |
+| 6B | Fauna: colisão da baleia e do cachalote, carne de baleia | **6B1 feita** (26/10) | nenhuma | F6-6 |
 | 6C | Vila: skins 3D dos Mergulhadores, funções das mesas de trabalho | a liberar | nenhuma | F6-8 |
-| 6D | Materiais e armas: Aurium, Forja Abissal nova, projétil 3D do Cavitador | a liberar | nenhuma | F6-2, F6-7 |
+| 6D | Materiais e armas: Aurium, Forja Abissal nova, projétil 3D do Cavitador | **6D2 e 6D3 feitas** (26/10) | nenhuma | F6-2, F6-7 |
 | 6E | Energia aquática: geradores e Coletor de Neutrônio | a liberar | 6D1 (se o Aurium entrar na cadeia) | F6-2, F6-3 |
-| 6F | Encantamento: Mesa de Encantamento Aquática e descrições melhores | a liberar | nenhuma | |
+| 6F | Encantamento: Mesa de Encantamento Aquática e descrições melhores | **6F2 feita** (26/10) | nenhuma | |
 | 6G | Equipamento: slot de acessórios (mod Accessories) e Radar | a liberar | 6G2 espera o formato do Radar | F6-4, F6-5 |
 | 6H | Construção: mais decoração e blocos | a liberar | 6D1 (a família do Aurium) | |
 
@@ -95,6 +95,10 @@ que "estão brotando no meio do mar do nada". Fazer o mob se mexer mais e ser ma
 - **6B1 · Colisão por partes (ideia).** O mesmo mecanismo da Moréia, com três partes (cabeça, corpo, rabo), dano igual em todas
   (dano por parte é opcional). Não pode quebrar a Sela, a montaria de 3 nem a fuga do Kraken. **Aceite:** flecha na cabeça e no
   rabo acerta; o jogador não atravessa a cabeça; as partes `whale` e `moray` do `runClientGameTest` seguem verdes.
+  **Feito (26/10/2026):** `WhalePartEntity` (sem salvar, recriada pela baleia) com cabeça, fim do corpo e rabo à frente e atrás
+  da caixa, que fica como o meio do corpo (os modelos têm ~18 blocos). Dano igual; quem está montado não fere a própria
+  baleia; clicar numa parte é clicar na baleia (Sela e montaria); a cabeça é sólida e empurra para fora quem ficou dentro.
+  Testado na parte `whale` (3 partes nas duas espécies, flecha acerta cabeça e rabo, jogador posto na cabeça sai) e `moray`.
 - **6B2 · Carne de Baleia (ideia).** Crua e cozida (fornalha, defumador e fogueira), dropada pela Baleia-de-Nereia e pelo
   Cachalote (Saque aumenta), alimento forte. Texturas por script. Regra do que acontece com baleia domada: F6-6.
 
@@ -125,9 +129,18 @@ que o Neutrônio. O Cavitador de Neutrônio atirar "uma sprite personalizada 3D 
 - **6D2 · Forja Abissal nova (ideia).** Modelo 3D como a Bigorna de Maré da 4D (bloco que vira para quem coloca, colisão no
   formato), com brasas e luz própria, chaminé ou tubo e bolhas. Mantém ID, receitas e a tela. **Aceite:** captura e a parte
   `forge` do `runClientGameTest` verde.
+  **Feito (26/10/2026):** `tools/gen_phase6_art.py` gera o modelo e 8 texturas (tijolos abissais, bancada dourada com a grade
+  3x3, pilares, brasas e metal fundido animados, cadinho, chaminé de latão). `AbyssalForgeBlock` virou `FacingShapeBlock`
+  (luz 11, colisão no formato); a boca solta brasas e a chaminé, bolhas debaixo d'água ou fumaça no seco. Captura
+  `05b_forja_3d`; a parte `forge` precisa rodar junto com a `showcase`, que coloca a Forja.
 - **6D3 · Projétil 3D (ideia, F6-7).** Hoje o arpão em voo é o tridente do jogo (`ThrownTridentMixin`; o Cavitador fora d'água lança
   arpão). Proposta: entidade e renderer próprios com modelo 3D por ponta e rastro de partículas. **Aceite:** captura do
   projétil em voo por ponta; as partes `gear` e `neutronium` verdes.
+  **Feito (26/10/2026), pela proposta F6-7:** o arremesso continua o do tridente (Lealdade, Fisgada e Perfurante iguais); só o
+  desenho muda. O `ThrownTridentMixin` guarda o desenho num dado sincronizado (`HarpoonStyleHolder`: Arpão sem ponta, as 4
+  pontas e o Cavitador) e o `HarpoonRenderer` substitui o do tridente: desenha o comum para tridentes do jogo e o
+  `HarpoonModel` (haste, punho, colar, lâmina com farpas, aletas) com textura por desenho (`tools/gen_phase6_art.py`). Rastro:
+  bolhas na água e uma partícula por ponta. Captura `neutronio_03b_arpoes`; partes `gear`, `neutronium` e `multiplayer` verdes.
 
 ## 6E. Energia aquática
 **Pedido.** Geradores de energia aquáticos. Um **Coletor de Neutrônio** que coleta pó de neutrônio usando os geradores; o pó é
@@ -152,6 +165,9 @@ que o Neutrônio. O Cavitador de Neutrônio atirar "uma sprite personalizada 3D 
 - **6F2 · Descrições melhores (ideia).** Cada `.desc` ganha: o que faz, quanto por nível e onde vale (peça ou arma), em pt-BR e
   en-US, e aparece no JEI (`client/compat/jei`).
   **Aceite:** os 8 revisados nos dois idiomas; o teste de consistência de recursos do `build` verde.
+  **Feito (26/10/2026):** as 8 chaves `enchantment.aquamarine.<id>.desc` (a Quebra-Carapaça não tinha) dizem o que faz, quanto
+  por nível, o máximo e onde vale, com os números do código. `EnchantmentDescriptions` mostra a linha no tooltip dos livros
+  encantados e o JEI ganha a página de informação de cada livro, em todos os níveis. `build` verde.
 
 ## 6G. Equipamento
 **Pedido.** Um slot extra para os Óculos de Mergulho, compatível com o mod **Accessories** (CurseForge). Usar ali também "a

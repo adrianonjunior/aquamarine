@@ -731,6 +731,10 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			player.closeContainer();
 		});
 		context.waitTicks(5);
+		// 6D2: a Forja em 3D (brasas, cadinho e chaminé), vista de frente e um pouco de lado.
+		tp(server, forgePos.getX() - 1.1, forgePos.getY() + 0.3, forgePos.getZ() - 1.6, -37.0F, 24.0F);
+		context.waitTicks(10);
+		shot(context, "05b_forja_3d");
 	}
 
 	/** Tanque de água com colunas de referência: sem e com os Óculos de Mergulho. */

@@ -58,6 +58,8 @@ public final class ModEntities {
 		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("moray"));
 	private static final ResourceKey<EntityType<?>> MORAY_PART_KEY =
 		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("moray_part"));
+	private static final ResourceKey<EntityType<?>> WHALE_PART_KEY =
+		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("whale_part"));
 
 	/** Moréia Tempestuosa (docs/08-fase3.md): a caixa é a cabeça; o corpo são as partes abaixo. */
 	public static final EntityType<MorayEntity> MORAY = Registry.register(BuiltInRegistries.ENTITY_TYPE, MORAY_KEY,
@@ -68,6 +70,11 @@ public final class ModEntities {
 	public static final EntityType<MorayPartEntity> MORAY_PART = Registry.register(BuiltInRegistries.ENTITY_TYPE, MORAY_PART_KEY,
 		EntityType.Builder.<MorayPartEntity>of(MorayPartEntity::new, MobCategory.MISC).sized(1.2F, 1.2F).noSave().noSummon()
 			.clientTrackingRange(10).updateInterval(2).build(MORAY_PART_KEY));
+
+	/** Cabeça, fim do corpo e rabo da Baleia-de-Nereia e do Cachalote (Fase 6, 6B1). */
+	public static final EntityType<WhalePartEntity> WHALE_PART = Registry.register(BuiltInRegistries.ENTITY_TYPE, WHALE_PART_KEY,
+		EntityType.Builder.<WhalePartEntity>of(WhalePartEntity::new, MobCategory.MISC).sized(4.0F, 4.0F).noSave().noSummon()
+			.clientTrackingRange(10).updateInterval(2).build(WHALE_PART_KEY));
 
 	private static final ResourceKey<EntityType<?>> WHALE_KEY =
 		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("whale"));

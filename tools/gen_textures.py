@@ -1271,10 +1271,7 @@ def main():
     out["item/diving_goggles"] = goggles_icon()
     out["block/abyssal_ore"] = abyssal_ore()
     out["block/abyssal_block"] = abyssal_block()
-    out["block/abyssal_forge_side"] = forge_side()
-    out["block/abyssal_forge_front"] = forge_front()
-    out["block/abyssal_forge_top"] = forge_top()
-    out["block/abyssal_forge_bottom"] = forge_bottom()
+    # Forja Abissal: desde a 6D2 o modelo 3D e as texturas saem de tools/gen_phase6_art.py.
     out["item/abyssal_lure"] = lure()
     out["item/lure_blueprint"] = render(BLUEPRINT)
     out["block/abyssal_altar_top"] = altar_top()

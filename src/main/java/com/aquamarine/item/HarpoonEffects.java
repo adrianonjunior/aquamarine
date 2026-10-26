@@ -15,6 +15,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -74,7 +75,10 @@ public final class HarpoonEffects {
 		ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> {
 			if (entity instanceof ThrownTrident trident && trident.tickCount == 0 && isHarpoon(trident.getWeaponItem())
 				&& trident.getOwner() instanceof Player player) {
-				loadTip(trident, player);
+				HarpoonTip tip = loadTip(trident, player);
+				if (((HarpoonStyleHolder) trident).aquamarine$harpoonStyle() == HarpoonStyleHolder.TRIDENT) {
+					((HarpoonStyleHolder) trident).aquamarine$setHarpoonStyle(HarpoonStyleHolder.of(tip));
+				}
 			}
 		});
 	}
@@ -112,6 +116,27 @@ public final class HarpoonEffects {
 	/** Define a ponta direto (testes). */
 	public static void setTip(ThrownTrident trident, HarpoonTip tip) {
 		TIPS.put(trident, tip);
+		((HarpoonStyleHolder) trident).aquamarine$setHarpoonStyle(HarpoonStyleHolder.of(tip));
+	}
+
+	/** Rastro do arpão em voo (6D3), no cliente: bolhas na água e uma partícula por ponta. */
+	public static void trail(ThrownTrident trident, int style) {
+		if (style == HarpoonStyleHolder.TRIDENT || !trident.level().isClientSide() || trident.getDeltaMovement().lengthSqr() < 0.04) {
+			return;
+		}
+		ParticleOptions particle = switch (style) {
+			case 2 -> ParticleTypes.ITEM_SLIME;
+			case 3 -> ParticleTypes.SMALL_FLAME;
+			case 4 -> ParticleTypes.SMOKE;
+			case 5 -> ParticleTypes.ELECTRIC_SPARK;
+			case HarpoonStyleHolder.CAVITATOR -> ParticleTypes.GLOW;
+			default -> ParticleTypes.CRIT;
+		};
+		trident.level().addParticle(trident.isInWater() ? ParticleTypes.BUBBLE : particle, trident.getX(), trident.getY(), trident.getZ(),
+			0.0, 0.0, 0.0);
+		if (trident.isInWater() && trident.tickCount % 2 == 0) {
+			trident.level().addParticle(particle, trident.getX(), trident.getY(), trident.getZ(), 0.0, 0.0, 0.0);
+		}
 	}
 
 	private static int level(ServerLevel level, ResourceKey<Enchantment> key, ItemStack stack) {

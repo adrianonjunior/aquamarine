@@ -2,6 +2,7 @@ package com.aquamarine.entity;
 
 import com.aquamarine.entity.boss.AnimationSync;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.core.BlockPos;
@@ -11,9 +12,12 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -42,6 +46,17 @@ public abstract class AbstractWhaleEntity extends PathfinderMob {
 	private static final EntityDataAccessor<Integer> DATA_ANIM_SEQ = SynchedEntityData.defineId(AbstractWhaleEntity.class, EntityDataSerializers.INT);
 
 	protected final AnimationSync animations;
+	/** Partes de colisão (6B1): cabeça, fim do corpo e rabo; a caixa da baleia é o meio. */
+	public static final int PARTS = 3;
+	public static final int HEAD = 0;
+	/**
+	 * Por espécie (Baleia-de-Nereia, depois Cachalote) e parte: avanço ao longo do corpo em blocos (+ = frente), altura
+	 * do centro (fração da caixa), largura e altura. Os modelos têm ~18 blocos de comprimento; a caixa só cobre o meio.
+	 */
+	static final float[][] PART_SHAPES = {
+		{6.2F, 0.5F, 4.6F, 4.2F}, {-5.0F, 0.5F, 4.4F, 3.8F}, {-8.8F, 0.55F, 3.6F, 2.4F},
+		{5.8F, 0.5F, 4.8F, 4.6F}, {-4.6F, 0.5F, 4.2F, 3.6F}, {-8.0F, 0.55F, 3.4F, 2.2F}};
+	private final List<WhalePartEntity> parts = new ArrayList<>();
 	private Vec3 wanderTarget;
 	private int fleeTicks;
 
@@ -108,6 +123,9 @@ public abstract class AbstractWhaleEntity extends PathfinderMob {
 	@Override
 	public void tick() {
 		super.tick();
+		if (level() instanceof ServerLevel level && isAlive()) {
+			ensureParts(level);
+		}
 		if (level().isClientSide()) {
 			animations.state("idle").startIfStopped(tickCount);
 			animations.state("swim").animateWhen(getDeltaMovement().lengthSqr() > 2.5E-3, tickCount);
@@ -132,6 +150,64 @@ public abstract class AbstractWhaleEntity extends PathfinderMob {
 			fleeTicks--;
 		}
 		serverBehavior(level);
+	}
+
+	// ---- Partes de colisão (6B1) ----
+
+	private int species() {
+		return this instanceof SpermWhaleEntity ? 1 : 0;
+	}
+
+	public List<WhalePartEntity> parts() {
+		return parts;
+	}
+
+	private void ensureParts(ServerLevel level) {
+		parts.removeIf(Entity::isRemoved);
+		if (parts.size() == PARTS) {
+			return;
+		}
+		parts.forEach(Entity::discard);
+		parts.clear();
+		for (int i = 0; i < PARTS; i++) {
+			WhalePartEntity part = new WhalePartEntity(level, this, species() * PARTS + i);
+			placePart(part);
+			level.addFreshEntity(part);
+			parts.add(part);
+		}
+	}
+
+	void placePart(WhalePartEntity part) {
+		float[] s = PART_SHAPES[part.shape()];
+		Vec3 c = position().add(0, getBbHeight() * s[1], 0).add(Vec3.directionFromRotation(getXRot(), yBodyRot).scale(s[0]));
+		part.setPos(c.x, c.y - part.getBbHeight() / 2.0, c.z);
+	}
+
+	/** Dano igual em todas as partes; quem está montado não fere a própria baleia mirando na cabeça à frente. */
+	boolean hurtPart(ServerLevel level, DamageSource source, float damage) {
+		if (source.getEntity() != null && hasPassenger(source.getEntity())) {
+			return false;
+		}
+		return hurtServer(level, source, damage);
+	}
+
+	/** Cabeça sólida: quem ficou dentro dela (a baleia avançou sobre o jogador) é empurrado para fora. */
+	void pushOutOfHead(ServerLevel level, WhalePartEntity head) {
+		for (Player p : level.getEntitiesOfClass(Player.class, head.getBoundingBox(), p -> !p.isSpectator() && !hasPassenger(p))) {
+			Vec3 away = p.position().subtract(head.position()).multiply(1, 0, 1);
+			if (away.lengthSqr() < 1.0E-4) {
+				away = Vec3.directionFromRotation(0, yBodyRot);
+			}
+			p.push(away.normalize().scale(0.25));
+			p.needsSync = true;
+		}
+	}
+
+	@Override
+	public void remove(RemovalReason reason) {
+		super.remove(reason);
+		parts.forEach(Entity::discard);
+		parts.clear();
 	}
 
 	/** Comportamento de cada espécie quando não está fugindo nem sendo pilotada. */

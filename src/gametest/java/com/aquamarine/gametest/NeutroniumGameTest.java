@@ -175,7 +175,26 @@ final class NeutroniumGameTest {
 				check(s.overworld().getEntitiesOfClass(CavitationPulseEntity.class, p.getBoundingBox().inflate(6)).isEmpty(),
 					"fora d'água não pode sair pulso");
 			});
-			context.waitTicks(25);
+			// 6D3: o arpão do Cavitador sai com o desenho próprio; vitrine dos 6 desenhos parados no ar, de pé.
+			server.runOnServer(s -> {
+				ServerPlayer p = player(s);
+				check(s.overworld().getEntitiesOfClass(ThrownTrident.class, p.getBoundingBox().inflate(8)).stream()
+					.anyMatch(t -> ((com.aquamarine.item.HarpoonStyleHolder) t).aquamarine$harpoonStyle() == com.aquamarine.item.HarpoonStyleHolder.CAVITATOR),
+					"o arpão do Cavitador saiu sem o desenho próprio");
+				for (int i = 1; i < com.aquamarine.item.HarpoonStyleHolder.COUNT; i++) {
+					ThrownTrident t = new ThrownTrident(net.minecraft.world.entity.EntityTypes.TRIDENT, s.overworld());
+					t.snapTo(p.getX() - 2.5 + (i - 1), p.getY() + 0.6, p.getZ() - 3.0, 0.0F, 0.0F);
+					t.setNoGravity(true);
+					t.setDeltaMovement(0.0, 0.002, 0.0);
+					((com.aquamarine.item.HarpoonStyleHolder) t).aquamarine$setHarpoonStyle(i);
+					s.overworld().addFreshEntity(t);
+				}
+			});
+			context.waitTicks(4);
+			shot(context, "neutronio_03b_arpoes");
+			server.runOnServer(s -> s.overworld().getEntitiesOfClass(ThrownTrident.class, player(s).getBoundingBox().inflate(8))
+				.forEach(net.minecraft.world.entity.Entity::discard));
+			context.waitTicks(21);
 			shot(context, "neutronio_03_cavitador_mao");
 			context.runOnClient(mc -> mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT));
 			context.waitTicks(5);
