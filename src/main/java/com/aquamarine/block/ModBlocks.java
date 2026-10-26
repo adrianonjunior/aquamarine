@@ -83,6 +83,14 @@ public final class ModBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops()
 			.strength(50.0F, 1200.0F).sound(SoundType.ANCIENT_DEBRIS).lightLevel(state -> 3));
 	/** Bloco de Neutrônio: nove lingotes; base de sinalizador. */
+	/** Aurium (Fase 6, 6D1): minério na ardósia sob o leito dos oceanos profundos e o bloco de nove lingotes. */
+	public static final Block AURIUM_ORE = register("aurium_ore",
+		p -> new DropExperienceBlock(UniformInt.of(3, 6), p),
+		BlockBehaviour.Properties.of().mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM)
+			.requiresCorrectToolForDrops().strength(5.5F, 9.0F).sound(SoundType.DEEPSLATE));
+	public static final Block AURIUM_BLOCK = register("aurium_block", Block::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BELL)
+			.requiresCorrectToolForDrops().strength(7.0F, 14.0F).sound(SoundType.METAL));
 	public static final Block NEUTRONIUM_BLOCK = register("neutronium_block", Block::new,
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).requiresCorrectToolForDrops().strength(50.0F, 1200.0F)
 			.sound(SoundType.NETHERITE_BLOCK).lightLevel(state -> 6));

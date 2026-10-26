@@ -49,6 +49,7 @@ public class Aquamarine implements ModInitializer {
 		ModParticles.register();
 		ModItems.register();
 		ModBuildingBlocks.register();
+		com.aquamarine.block.ModDecorBlocks.register();
 		ModRecipes.register();
 		ModMenus.register();
 		ModCreativeTab.register();
@@ -61,6 +62,8 @@ public class Aquamarine implements ModInitializer {
 		AbyssalEffects.register();
 		NeutroniumEffects.register();
 		NeutroniumOre.register();
+		com.aquamarine.item.AuriumEffects.register();
+		com.aquamarine.block.AuriumOre.register();
 		ModEffects.register();
 		PressureManager.register();
 		HarpoonEffects.register();

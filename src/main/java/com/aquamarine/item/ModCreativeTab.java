@@ -49,7 +49,18 @@ public final class ModCreativeTab {
 		addToVanilla(CreativeModeTabs.COMBAT, ModItems.NEUTRONIUM_SWORD, ModItems.NEUTRONIUM_CAVITATOR, ModItems.NEUTRONIUM_AXE,
 			ModItems.NEUTRONIUM_HELMET,
 			ModItems.NEUTRONIUM_CHESTPLATE, ModItems.NEUTRONIUM_LEGGINGS, ModItems.NEUTRONIUM_BOOTS);
+		// Fase 6 (6D1): o Aurium nas abas do jogo.
+		addToVanilla(CreativeModeTabs.INGREDIENTS, ModItems.RAW_AURIUM, ModItems.AURIUM_INGOT);
+		addToVanilla(CreativeModeTabs.NATURAL_BLOCKS, ModItems.AURIUM_ORE);
+		addToVanilla(CreativeModeTabs.BUILDING_BLOCKS, ModItems.AURIUM_BLOCK);
+		addToVanilla(CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.AURIUM_SHOVEL, ModItems.AURIUM_PICKAXE, ModItems.AURIUM_AXE,
+			ModItems.AURIUM_HOE);
+		addToVanilla(CreativeModeTabs.COMBAT, ModItems.AURIUM_SWORD, ModItems.AURIUM_AXE, ModItems.AURIUM_HELMET, ModItems.AURIUM_CHESTPLATE,
+			ModItems.AURIUM_LEGGINGS, ModItems.AURIUM_BOOTS);
 		addToVanilla(CreativeModeTabs.BUILDING_BLOCKS, ModBuildingBlocks.building().stream().map(b -> b.asItem()).toArray(Item[]::new));
+		// Fase 6 (6H): família do Aurium na construção e as peças de navio e aquário nos blocos funcionais.
+		addToVanilla(CreativeModeTabs.BUILDING_BLOCKS, com.aquamarine.block.ModDecorBlocks.building().stream().map(b -> b.asItem()).toArray(Item[]::new));
+		addToVanilla(CreativeModeTabs.FUNCTIONAL_BLOCKS, com.aquamarine.block.ModDecorBlocks.decor().stream().map(b -> b.asItem()).toArray(Item[]::new));
 		addToVanilla(CreativeModeTabs.COLORED_BLOCKS, ModBuildingBlocks.glass().stream().map(b -> b.asItem()).toArray(Item[]::new));
 		addToVanilla(CreativeModeTabs.FUNCTIONAL_BLOCKS, ModItems.ABYSSAL_FORGE, ModItems.ABYSSAL_ALTAR,
 			ModItems.KRAKEN_TROPHY, ModItems.GOLDEN_ABYSS_TROPHY, ModItems.TIDE_ANVIL, ModItems.CHART_TABLE, ModItems.SHELL_ALTAR);

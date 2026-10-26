@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "T": "aquamarine:aurium_tiles",
+    "G": "minecraft:glowstone"
+  },
+  "pattern": [
+    "TTT",
+    "TGT",
+    "TTT"
+  ],
+  "result": {
+    "count": 4,
+    "id": "aquamarine:aurium_lamp"
+  }
+}

@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "aquamarine:chart_table"
+    "aquamarine:chart_table",
+    "aquamarine:ship_wheel",
+    "aquamarine:cargo_barrel"
   ]
 }

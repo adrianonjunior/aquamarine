@@ -10,6 +10,8 @@ public final class ShieldDamage {
 		COMMON(0.25F, true),
 		/** Ferramentas e armas da tag {@code aquamarine:shield_breakers}. */
 		ABYSSAL(0.60F, true),
+		/** Ferramentas de Aurium (tag {@code aquamarine:aurium_tools}, Fase 6). */
+		AURIUM(0.70F, true),
 		/** Ferramentas de Neutrônio (tag {@code aquamarine:neutronium_tools}, Fase 4). */
 		NEUTRONIUM(0.80F, true),
 		/** Arpão Abissal (tag {@code aquamarine:harpoons}). */

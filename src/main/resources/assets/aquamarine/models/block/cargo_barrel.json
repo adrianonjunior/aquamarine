@@ -1,0 +1,120 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "staves": "aquamarine:block/decor_staves",
+    "top": "aquamarine:block/decor_barrel_top",
+    "iron": "aquamarine:block/decor_iron",
+    "rope": "aquamarine:block/decor_rope",
+    "particle": "aquamarine:block/decor_staves"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        0,
+        2
+      ],
+      "to": [
+        14,
+        14,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#staves"
+        },
+        "south": {
+          "texture": "#staves"
+        },
+        "east": {
+          "texture": "#staves"
+        },
+        "west": {
+          "texture": "#staves"
+        },
+        "up": {
+          "texture": "#top"
+        },
+        "down": {
+          "texture": "#top"
+        }
+      }
+    },
+    {
+      "from": [
+        1.8,
+        2,
+        1.8
+      ],
+      "to": [
+        14.2,
+        3,
+        14.2
+      ],
+      "faces": {
+        "north": {
+          "texture": "#iron"
+        },
+        "south": {
+          "texture": "#iron"
+        },
+        "east": {
+          "texture": "#iron"
+        },
+        "west": {
+          "texture": "#iron"
+        }
+      }
+    },
+    {
+      "from": [
+        1.8,
+        11,
+        1.8
+      ],
+      "to": [
+        14.2,
+        12,
+        14.2
+      ],
+      "faces": {
+        "north": {
+          "texture": "#iron"
+        },
+        "south": {
+          "texture": "#iron"
+        },
+        "east": {
+          "texture": "#iron"
+        },
+        "west": {
+          "texture": "#iron"
+        }
+      }
+    },
+    {
+      "from": [
+        7.5,
+        0,
+        1.6
+      ],
+      "to": [
+        8.5,
+        14.2,
+        14.4
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rope"
+        },
+        "south": {
+          "texture": "#rope"
+        },
+        "up": {
+          "texture": "#rope"
+        }
+      }
+    }
+  ],
+  "ambientocclusion": false
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "group": "aurium_ingot",
+  "ingredient": "aquamarine:aurium_ore",
+  "result": {
+    "id": "aquamarine:aurium_ingot"
+  },
+  "experience": 1.5,
+  "cookingtime": 200
+}

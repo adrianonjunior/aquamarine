@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "aquamarine:aurium_tiles",
+  "result": {
+    "count": 2,
+    "id": "aquamarine:aurium_tile_slab"
+  }
+}

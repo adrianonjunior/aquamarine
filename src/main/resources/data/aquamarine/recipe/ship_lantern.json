@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "N": "minecraft:iron_nugget",
+    "L": "minecraft:lantern",
+    "C": "minecraft:copper_ingot"
+  },
+  "pattern": [
+    " N ",
+    "NLN",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:ship_lantern"
+  }
+}
