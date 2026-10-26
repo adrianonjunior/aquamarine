@@ -50,6 +50,7 @@ public class Aquamarine implements ModInitializer {
 		ModItems.register();
 		ModBuildingBlocks.register();
 		com.aquamarine.block.ModDecorBlocks.register();
+		com.aquamarine.energy.ModEnergy.register();
 		ModRecipes.register();
 		ModMenus.register();
 		ModCreativeTab.register();

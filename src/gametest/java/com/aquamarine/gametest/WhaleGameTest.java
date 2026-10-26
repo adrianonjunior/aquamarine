@@ -62,6 +62,8 @@ final class WhaleGameTest {
 
 		// 6B1: cabeça, fim do corpo e rabo com caixa própria; a flecha acerta a cabeça e o rabo, e a cabeça é sólida.
 		check(server.computeOnServer(s -> whale(s).parts().size()) == 3, "Baleia: devia ter 3 partes de colisão");
+		// Parada durante a mira: um Kraken de uma parte anterior faria a baleia fugir com a flecha no ar.
+		server.runOnServer(s -> whale(s).setNoAi(true));
 		for (int part : new int[] {0, 2}) {
 			float before = server.computeOnServer(s -> whale(s).getHealth());
 			server.runOnServer(s -> {
@@ -82,7 +84,22 @@ final class WhaleGameTest {
 		context.waitTicks(20);
 		check(server.computeOnServer(s -> !whale(s).parts().get(0).getBoundingBox().intersects(player(s).getBoundingBox())),
 			"Baleia: quem fica dentro da cabeça devia ser empurrado para fora");
-		server.runOnServer(s -> whale(s).setHealth(whale(s).getMaxHealth()));
+		server.runOnServer(s -> {
+			whale(s).setHealth(whale(s).getMaxHealth());
+			whale(s).setNoAi(false);
+		});
+		// 6B2: a baleia selvagem morta por um jogador deixa Carne de Baleia Crua.
+		server.runOnServer(s -> {
+			WhaleEntity wild = ModEntities.WHALE.create(s.overworld(), EntitySpawnReason.COMMAND);
+			wild.snapTo(o.getX() + 0.5, o.getY() + 6, o.getZ() + 14.5, 0.0F, 0.0F);
+			s.overworld().addFreshEntity(wild);
+			wild.hurtServer(s.overworld(), s.overworld().damageSources().playerAttack(player(s)), 10000.0F);
+		});
+		context.waitTicks(25);
+		check(server.computeOnServer(s -> s.overworld().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,
+			new net.minecraft.world.phys.AABB(o).inflate(30)).stream().anyMatch(e -> e.getItem().is(ModItems.RAW_WHALE_MEAT))),
+			"Baleia: a selvagem devia deixar Carne de Baleia");
+		server.runCommand("kill @e[type=minecraft:item]");
 		tp(server, o.getX() + 0.5, o.getY() + 8, o.getZ() - 6.5, 0, 10);
 		context.waitTicks(10);
 

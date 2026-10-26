@@ -15,12 +15,12 @@
 | # | Faixa | Estado | Depende de | Pergunta |
 |---|---|---|---|---|
 | **6A** | **Kraken renovado (principal):** 3 modelos novos para escolher, colisão por parte, tentáculos que não brotam do nada, movimento dinâmico. **Absorve a antiga 4C** | **6A1 e 6A3 feitas** (26/10); 6A2 e 6A4 esperam a escolha | 6A2 e 6A4 esperam a escolha do modelo (6A1) | F6-1 |
-| 6B | Fauna: colisão da baleia e do cachalote, carne de baleia | **6B1 feita** (26/10) | nenhuma | F6-6 |
-| 6C | Vila: skins 3D dos Mergulhadores, funções das mesas de trabalho | a liberar | nenhuma | F6-8 |
+| 6B | Fauna: colisão da baleia e do cachalote, carne de baleia | **6B1 e 6B2 feitas** (26/10) | nenhuma | F6-6 |
+| 6C | Vila: skins 3D dos Mergulhadores, funções das mesas de trabalho | **6C2 feita** (26/10); 6C1 falta | nenhuma | F6-8 |
 | 6D | Materiais e armas: Aurium, Forja Abissal nova, projétil 3D do Cavitador | **6D1, 6D2 e 6D3 feitas** (26/10) | nenhuma | F6-2, F6-7 |
-| 6E | Energia aquática: geradores e Coletor de Neutrônio | a liberar | 6D1 (se o Aurium entrar na cadeia) | F6-2, F6-3 |
-| 6F | Encantamento: Mesa de Encantamento Aquática e descrições melhores | **6F2 feita** (26/10) | nenhuma | |
-| 6G | Equipamento: slot de acessórios (mod Accessories) e Radar | a liberar | 6G2 espera o formato do Radar | F6-4, F6-5 |
+| 6E | Energia aquática: geradores e Coletor de Neutrônio | **feita** (26/10) | 6D1 (se o Aurium entrar na cadeia) | F6-2, F6-3 |
+| 6F | Encantamento: Mesa de Encantamento Aquática e descrições melhores | **feita** (26/10) | nenhuma | |
+| 6G | Equipamento: slot de acessórios (mod Accessories) e Radar | **6G2 feita**; 6G1 sem Accessories para o 26.3 | 6G2 espera o formato do Radar | F6-4, F6-5 |
 | 6H | Construção: mais decoração e blocos | **feita** (26/10) | 6D1 (a família do Aurium) | |
 
 Sons: nenhum som novo nesta fase; ficam para uma subversão própria, futura ([00-decisoes.md](00-decisoes.md), linha "Sons (adiados)").
@@ -101,6 +101,9 @@ que "estão brotando no meio do mar do nada". Fazer o mob se mexer mais e ser ma
   Testado na parte `whale` (3 partes nas duas espécies, flecha acerta cabeça e rabo, jogador posto na cabeça sai) e `moray`.
 - **6B2 · Carne de Baleia (ideia).** Crua e cozida (fornalha, defumador e fogueira), dropada pela Baleia-de-Nereia e pelo
   Cachalote (Saque aumenta), alimento forte. Texturas por script. Regra do que acontece com baleia domada: F6-6.
+  **Feito (26/10/2026):** `tools/gen_phase6_fauna.py` (ícones, receitas de fornalha, defumador e fogueira, tag `minecraft:meat`).
+  Crua 3 de fome; cozida 10 de fome e saturação 0,9 (o bife é 8). Cai 3 a 5, mais até 1 por nível de Saque, da Baleia-de-Nereia
+  **selvagem** (a domada não dá, F6-6) e do Cachalote. Testado na parte `whale`.
 
 ## 6C. Vila
 **Pedido.** Melhorar as skins dos aldeões "com assets em 3D". Adicionar funcionalidade às mesas dos aldeões.
@@ -114,6 +117,11 @@ são a Bigorna de Maré, a Mesa de Cartas Náuticas e o Altar de Concha, em 3D d
   - *Bigorna de Maré* (Ferreiro): reparar e renomear o equipamento do mod sem o custo crescente da bigorna comum.
   - *Mesa de Cartas Náuticas* (Cartógrafo): copiar e ampliar os mapas do mod e marcar locais.
   - *Altar de Concha* (Encantador): trocar o encantamento de um livro aquático ou desencantar. Relação com a 6F1: F6-8.
+  - **Feito (26/10/2026):** as três viraram `WorkstationBlock` (mesmo ID, modelo e posto de trabalho) e abrem as telas do jogo:
+    a Bigorna de Maré abre a bigorna (no equipamento do mod o custo de reparo não cresce, `AnvilMenuMixin`, e ela não se
+    desgasta), a Mesa de Cartas Náuticas abre a cartografia (copiar, ampliar e travar mapas) e o Altar de Concha abre o rebolo
+    (desencantar). `WorkstationMenusMixin` deixa as telas abertas perto delas. Trocar o encantamento de um livro ficou de fora.
+    Testado na parte `energy` (as três abrem e continuam abertas; reparo na Bigorna de Maré sem aumento de custo).
 
 ## 6D. Materiais e armas
 **Pedido.** Melhorar o design da Forja Abissal. Novo minério intermediário, o **Aurium**, mais forte que o Abissal e mais fraco
@@ -167,6 +175,19 @@ que o Neutrônio. O Cavitador de Neutrônio atirar "uma sprite personalizada 3D 
 - **6E2 · Coletor de Neutrônio (ideia, F6-3).** Bloco submerso, só no fundo dos oceanos profundos (onde o minério existe,
   [10-fase4.md](10-fase4.md), §8), ligado a geradores. Taxa muito baixa. O que ele entrega e como o pó vira Neutrônio:
   F6-3 (é a Poeira que já existe, ou um pó novo que pede uma etapa cara?).
+- **Feito (26/10/2026), 6E1 e 6E2.** Energia da **Team Reborn Energy 5.0.0** (pede Minecraft 26.1+, vai dentro do jar; os blocos
+  expõem `EnergyStorage.SIDED` e conversam com outros mods). Java em `com.aquamarine.energy`; arte e dados em
+  `tools/gen_phase6_energy.py`. Clique com a mão vazia mostra a carga.
+  - **Turbina de Correnteza:** 4 E/t por lado com água corrente (até 24). **Gerador de Fenda:** 32 E/t com magma embaixo e água
+    em cima. **Boia de Ondas:** 4 E/t na superfície (água embaixo, céu em cima), o dobro na chuva, quatro vezes na tempestade.
+    Guardam 20 000 E e empurram até 128 E/t para os vizinhos; acendem quando geram.
+  - **Cabo Aquático:** liga sozinho nos vizinhos com energia, iguala a carga entre cabos e entrega 256 E/t às máquinas.
+  - **Coletor de Neutrônio:** só trabalha em oceano profundo, com água em cima e 20 blocos abaixo do nível do mar; gasta 64 E/t
+    e junta 1 **Pó Estelar de Neutrônio** a cada 5 minutos (guarda até 16; clique para pegar). Conversão cara na Forja:
+    8 Pós + 1 Cristal de Maré = 1 Poeira de Neutrônio. Receita do Coletor com Poeira, Aurium, Bobinas e um Conduíte.
+  - Testado na parte `energy` (nova): os três geradores produzem no lugar certo, a tempestade quadruplica a Boia, o cabo leva a
+    energia da Fenda ao Coletor, o Coletor recusa o mundo raso e, com o lugar liberado só no teste, junta um Pó; todos aparecem
+    na API da Team Reborn. Não testado: com máquinas de outro mod.
 
 ## 6F. Encantamento
 **Pedido.** Mesa de encantamento aquática, "com apenas encantamentos aquáticos". Melhorar as descrições dos encantamentos.
@@ -176,6 +197,11 @@ que o Neutrônio. O Cavitador de Neutrônio atirar "uma sprite personalizada 3D 
 - **6F1 · Mesa de Encantamento Aquática (ideia).** Bloco com tela de mesa que oferece só os encantamentos aquáticos (os do mod
   mais os do jogo que são da água, por uma tag `aquamarine:aquatic_enchantments`). Custo em material do mod em vez de lápis (a
   detalhar). Os mesmos encantamentos continuam à venda com o Encantador de Fossa.
+  **Feito (26/10/2026):** usa a tela e as regras da mesa do jogo (lápis, estantes, níveis); o `EnchantmentMenuMixin` troca o
+  sorteio pela tag `aquamarine:aquatic_enchantments` (os 8 do mod e Respiração, Afinidade Aquática, Passos Profundos, Passos
+  Gelados, Empalamento, Correnteza, Lealdade, Canalização, Sorte do Mar e Isca) e mantém a tela aberta perto dela. O custo
+  continua em lápis (o material do mod fica para depois, se o Adriano quiser). Modelo 3D com concha e pérola acesa em
+  `tools/gen_phase6_art.py`. Testado na parte `energy` (abre, continua aberta e só oferece encantamentos da tag).
 - **6F2 · Descrições melhores (ideia).** Cada `.desc` ganha: o que faz, quanto por nível e onde vale (peça ou arma), em pt-BR e
   en-US, e aparece no JEI (`client/compat/jei`).
   **Aceite:** os 8 revisados nos dois idiomas; o teste de consistência de recursos do `build` verde.
@@ -189,12 +215,19 @@ bússola de pressão", a aljava (quiver), o regulador de pressão "e outros". Um
 
 **Hoje.** Os Óculos disputam o slot da cabeça com o capacete ([05-itens.md](05-itens.md)). A bússola que existe é a **de Maré**
 (planejada para a Cidade Perdida); o que mede pressão é o **Medidor de Pressão** (F6-4 pergunta se é esse).
-- **6G1 · Slot de acessórios (ideia, F6-4).** Integração **opcional** com o Accessories (slots e itens por dado): os Óculos num slot
+- **6G1 · Slot de acessórios (ideia, F6-4). Pulada em 26/10/2026:** o Accessories não tem versão para o 26.3 (a mais nova é
+  para o 1.21.10, no Modrinth e no Maven da wispforest). Fica para quando sair; nada muda no mod.
+  Texto original: Integração **opcional** com o Accessories (slots e itens por dado): os Óculos num slot
   próprio, mais Medidor de Pressão, Aljava e Regulador de Pressão. Sem o Accessories o mod funciona como hoje. Antes de
   qualquer código, **confirmar que existe versão do Accessories para o 26.3** (uma busca em 26/10/2026 não achou).
 - **6G2 · Radar (ideia, F6-5).** Item de uso ativo (ou acessório) que mostra num HUD os mobs do mod por perto (Kraken, Moréia,
   baleias, cachalote) e as estruturas conhecidas (o Porto; a Cidade Perdida quando existir). Gasta uma Bobina Voltaica, como o
   Propulsor, ou energia da 6E. Não substitui a Bússola de Maré nem o Mapa de Nereia, que apontam um destino só.
+  **Feito (26/10/2026), Radar Aquático:** usar gasta uma Bobina Voltaica (o criativo não gasta) e liga por 60 s; acha o Porto
+  mais perto na hora (até 48 pedaços). O HUD (`RadarHud`) mostra num quadro no canto de cima, com a frente para cima, o Kraken,
+  tentáculos, Crias e ovos, Moréias, Baleias-de-Nereia e Cachalotes a até 64 blocos e o Porto na borda com a distância.
+  Funciona com o radar em qualquer espaço do inventário. Testado na parte `energy` (liga, gasta uma Bobina e o HUD aparece na
+  captura `energia_00_geradores`).
 
 ## 6H. Construção e decoração
 **Pedido.** Mais itens de decoração e blocos de construção.

@@ -68,12 +68,12 @@ public final class ModBlocks {
 			.requiresCorrectToolForDrops().strength(3.0F, 1200.0F).sound(SoundType.METAL).lightLevel(state -> 8).noOcclusion());
 
 	// Fase 3E: blocos de trabalho dos Mergulhadores do Porto dos Náufragos
-	public static final Block TIDE_ANVIL = register("tide_anvil", p -> new FacingShapeBlock(p, ANVIL_SHAPE),
+	public static final Block TIDE_ANVIL = register("tide_anvil", p -> new WorkstationBlock(p, ANVIL_SHAPE, WorkstationBlock.Kind.ANVIL),
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).requiresCorrectToolForDrops().strength(5.0F, 1200.0F)
 			.sound(SoundType.ANVIL).noOcclusion());
-	public static final Block CHART_TABLE = register("chart_table", p -> new FacingShapeBlock(p, TABLE_SHAPE),
+	public static final Block CHART_TABLE = register("chart_table", p -> new WorkstationBlock(p, TABLE_SHAPE, WorkstationBlock.Kind.CHART),
 		BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.5F).sound(SoundType.WOOD).noOcclusion());
-	public static final Block SHELL_ALTAR = register("shell_altar", p -> new FacingShapeBlock(p, ALTAR_SHAPE),
+	public static final Block SHELL_ALTAR = register("shell_altar", p -> new WorkstationBlock(p, ALTAR_SHAPE, WorkstationBlock.Kind.ALTAR),
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PINK).requiresCorrectToolForDrops().strength(3.0F)
 			.lightLevel(state -> 7).sound(SoundType.CORAL_BLOCK).noOcclusion());
 
@@ -83,6 +83,10 @@ public final class ModBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops()
 			.strength(50.0F, 1200.0F).sound(SoundType.ANCIENT_DEBRIS).lightLevel(state -> 3));
 	/** Bloco de Neutrônio: nove lingotes; base de sinalizador. */
+	/** Mesa de Encantamento Aquática (Fase 6, 6F1): a mesa do jogo só com os encantamentos da água. */
+	public static final Block AQUATIC_ENCHANTING_TABLE = register("aquatic_enchanting_table", AquaticEnchantingTableBlock::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.WARPED_WART_BLOCK).requiresCorrectToolForDrops().strength(5.0F, 1200.0F)
+			.sound(SoundType.STONE).lightLevel(state -> 7).noOcclusion());
 	/** Aurium (Fase 6, 6D1): minério na ardósia sob o leito dos oceanos profundos e o bloco de nove lingotes. */
 	public static final Block AURIUM_ORE = register("aurium_ore",
 		p -> new DropExperienceBlock(UniformInt.of(3, 6), p),

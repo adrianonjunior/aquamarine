@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "ingredient": "aquamarine:raw_whale_meat",
+  "result": {
+    "id": "aquamarine:cooked_whale_meat"
+  },
+  "experience": 0.35,
+  "cookingtime": 200
+}

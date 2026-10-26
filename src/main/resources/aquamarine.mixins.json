@@ -4,6 +4,9 @@
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
 		"ThrownTridentMixin",
+		"EnchantmentMenuMixin",
+		"WorkstationMenusMixin",
+		"AnvilMenuMixin",
 		"ItemEntityMixin",
 		"AbstractVillagerInvoker",
 		"AbstractVillagerMixin",

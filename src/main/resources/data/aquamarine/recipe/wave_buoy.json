@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "V": "aquamarine:voltaic_coil",
+    "P": "minecraft:prismarine"
+  },
+  "pattern": [
+    "IVI",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:wave_buoy"
+  }
+}

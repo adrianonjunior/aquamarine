@@ -53,6 +53,11 @@
     "aquamarine:ship_lantern",
     "aquamarine:decorative_anchor",
     "aquamarine:aquarium",
-    "aquamarine:kraken_statue"
+    "aquamarine:kraken_statue",
+    "aquamarine:current_turbine",
+    "aquamarine:vent_generator",
+    "aquamarine:neutronium_collector",
+    "aquamarine:aquatic_cable",
+    "aquamarine:aquatic_enchanting_table"
   ]
 }

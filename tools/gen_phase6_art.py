@@ -204,6 +204,44 @@ def abyssal_forge():
     return m
 
 
+# ================================================================ Mesa de Encantamento Aquática (6F1)
+
+def aquatic_table_side():
+    """Prismarinho escuro com ondas talhadas e filetes de nácar."""
+    t = Tex(670)
+    t.noise((0, 0, 16, 16), [p4.DECK[2], p4.DECK[3], p4.DECK[3], p4.DECK[4]], [1, 3, 2, 1])
+    for y in (4, 10):
+        for x in range(16):
+            t.put(x, y + (1 if (x // 2) % 2 else 0), p4.PATINA[4])
+    t.bevel((0, 0, 16, 16), p4.DECK[5], p4.DECK[0])
+    return t.img
+
+
+def aquatic_table_top():
+    """Tampo com o círculo das letras trocado por uma rosa dos ventos de nácar."""
+    t = Tex(671)
+    t.noise((0, 0, 16, 16), [p4.DECK[3], p4.DECK[4]], [2, 1])
+    t.bevel((0, 0, 16, 16), p4.PATINA[4], p4.DECK[1])
+    for i in range(3, 13):
+        t.put(i, i, p4.PATINA[3])
+        t.put(15 - i, i, p4.PATINA[3])
+    t.hline(4, 11, 8, p4.CYAN_SOFT)
+    t.vline(8, 4, 11, p4.CYAN_SOFT)
+    return t.img
+
+
+def aquatic_table():
+    """Mesa baixa de prismarinho com uma concha de náutilo aberta em cima, segurando uma pérola acesa."""
+    m = Model({"side": "aquatic_enchanting_table_side", "top": "aquatic_enchanting_table_top", "shell": "shell_altar_shell",
+               "pearl": "shell_altar_pearl"}, "side")
+    m.box((0, 0, 0), (16, 10, 16), {"*": "side", "up": "top"})
+    m.box((1, 10, 1), (15, 12, 15), {"*": "side", "up": "top"})
+    m.box((4.5, 12, 6), (11.5, 13.5, 11), "shell")
+    m.box((5, 13.5, 9), (11, 17, 11.5), "shell", rot=((8, 13.5, 10), ("x", -22.5)))
+    m.box((7, 13.5, 7), (9, 15.5, 9), "pearl", light=12)
+    return m
+
+
 def main():
     textures = {"block/abyssal_forge_brick": forge_brick(), "block/abyssal_forge_worktop": forge_top(),
                 "block/abyssal_forge_trim": forge_trim(), "block/abyssal_forge_base": forge_base(),
@@ -211,8 +249,14 @@ def main():
                 "block/abyssal_forge_metal": forge_metal(), "block/abyssal_forge_pipe": forge_pipe()}
     for i, style in enumerate(HARPOON_STYLES):
         textures[f"entity/harpoon/{style}"] = harpoon_texture(style, 650 + i)
+    textures["block/aquatic_enchanting_table_side"] = aquatic_table_side()
+    textures["block/aquatic_enchanting_table_top"] = aquatic_table_top()
     for rel, img in textures.items():
         p4.write_png(img, rel)
+    p4.write_json(aquatic_table().json(), "models/block/aquatic_enchanting_table.json")
+    p4.write_json(p4.facing_states("aquatic_enchanting_table"), "blockstates/aquatic_enchanting_table.json")
+    p4.write_json({"model": {"type": "minecraft:model", "model": f"{p4.NS}:block/aquatic_enchanting_table"}},
+                  "items/aquatic_enchanting_table.json")
     for name, frametime in (("abyssal_forge_embers", 6), ("abyssal_forge_molten", 12)):
         with open(os.path.join(p4.ASSETS, "textures", "block", f"{name}.png.mcmeta"), "w", encoding="utf-8", newline="\n") as f:
             json.dump({"animation": {"frametime": frametime, "interpolate": True}}, f)

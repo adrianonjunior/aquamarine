@@ -120,6 +120,11 @@ public final class ModItems {
 	// Fase 3B: Baleias
 	/** Sela de Baleia: sem ela não se monta a Baleia-de-Nereia domada. */
 	public static final Item WHALE_SADDLE = register("whale_saddle", Item::new, new Item.Properties().stacksTo(1));
+	/** Fase 6 (6B2): carne das baleias selvagens; a cozida vale mais que o bife (10 de fome). */
+	public static final Item RAW_WHALE_MEAT = register("raw_whale_meat", Item::new,
+		new Item.Properties().food(new net.minecraft.world.food.FoodProperties(3, 0.3F, false)));
+	public static final Item COOKED_WHALE_MEAT = register("cooked_whale_meat", Item::new,
+		new Item.Properties().food(new net.minecraft.world.food.FoodProperties(10, 0.9F, false)));
 
 	// Fase 3C: Arpão e munições
 	/** Arpão Abissal: arremesso do tridente, dano triplo no escudo do Kraken, prende o tentáculo 3 s. */
@@ -165,6 +170,10 @@ public final class ModItems {
 	public static final Item KRAKEN_TROPHY = registerBlock(ModBlocks.KRAKEN_TROPHY, new Item.Properties().rarity(Rarity.EPIC));
 	public static final Item GOLDEN_ABYSS_TROPHY = registerBlock(ModBlocks.GOLDEN_ABYSS_TROPHY, new Item.Properties().rarity(Rarity.EPIC));
 
+	/** Fase 6 (6G2): Radar Aquático, liga por 60 s gastando uma Bobina Voltaica. */
+	public static final Item AQUATIC_RADAR = register("aquatic_radar", AquaticRadarItem::new, new Item.Properties().stacksTo(1));
+	public static final Item AQUATIC_ENCHANTING_TABLE = registerBlock(ModBlocks.AQUATIC_ENCHANTING_TABLE, new Item.Properties());
+
 	// Fase 6 (6D1): Aurium, entre o Abissal e o Neutrônio (docs/11-fase6.md).
 	public static final Item AURIUM_ORE = registerBlock(ModBlocks.AURIUM_ORE, new Item.Properties());
 	public static final Item RAW_AURIUM = register("raw_aurium", Item::new, new Item.Properties());
@@ -193,6 +202,8 @@ public final class ModItems {
 	public static final Item NEUTRONIUM_ORE = registerBlock(ModBlocks.NEUTRONIUM_ORE, neutronium());
 	public static final Item RAW_NEUTRONIUM = register("raw_neutronium", Item::new, neutronium());
 	public static final Item NEUTRONIUM_DUST = register("neutronium_dust", Item::new, neutronium());
+	/** Fase 6 (6E2): o que o Coletor de Neutrônio junta; 8 viram 1 Poeira na Forja. */
+	public static final Item NEUTRONIUM_STARDUST = register("neutronium_stardust", Item::new, neutronium());
 	public static final Item UNSTABLE_NEUTRONIUM_INGOT = register("unstable_neutronium_ingot", Item::new, neutronium().stacksTo(16));
 	public static final Item NEUTRONIUM_INGOT = register("neutronium_ingot", Item::new, neutronium());
 	public static final Item NEUTRONIUM_BLOCK = registerBlock(ModBlocks.NEUTRONIUM_BLOCK, neutronium());

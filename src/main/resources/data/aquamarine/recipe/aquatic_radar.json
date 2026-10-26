@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "G": "minecraft:glass_pane",
+    "I": "minecraft:iron_ingot",
+    "X": "minecraft:compass",
+    "V": "aquamarine:voltaic_coil"
+  },
+  "pattern": [
+    "CGC",
+    "IXI",
+    "CVC"
+  ],
+  "result": {
+    "id": "aquamarine:aquatic_radar"
+  }
+}

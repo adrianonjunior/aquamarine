@@ -1,0 +1,16 @@
+{
+  "type": "aquamarine:abyssal_forging",
+  "category": "misc",
+  "key": {
+    "S": "aquamarine:neutronium_stardust",
+    "C": "aquamarine:tide_crystal"
+  },
+  "pattern": [
+    "SSS",
+    "SCS",
+    "SSS"
+  ],
+  "result": {
+    "id": "aquamarine:neutronium_dust"
+  }
+}
