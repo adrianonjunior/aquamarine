@@ -64,7 +64,9 @@ function texture(src){
 }
 function material(){
   const mode=$('material').value;
-  return new THREE.MeshStandardMaterial({map:mode==='texture'?texture(selectedVersion().texture):mode==='uv'?texture(model.uvTexture):null,
+  const v=selectedVersion(),glow=mode==='texture'&&v.glow;
+  return new THREE.MeshStandardMaterial({map:mode==='texture'?texture(v.texture):mode==='uv'?texture(v.uv||model.uvTexture):null,
+    ...(glow?{emissiveMap:texture(v.glow),emissive:0xffffff}:{}),
     color:mode==='clay'?0x97c1c3:mode==='wire'?0x6ee4cf:0xffffff,roughness:.88,metalness:0,side:THREE.DoubleSide,wireframe:mode==='wire',
     ...(model.translucent&&mode==='texture'?{transparent:true,alphaTest:.02}:{alphaTest:.15})});
 }
@@ -242,7 +244,7 @@ function clipInfo(){
 }
 function updateInfo(){
   const g=geometry();const proposed=g.version!=='v1';
-  dl($('model-info'),[['Rig',`${g.bones.length} ossos · ${g.cubes.length} cubos`],['Textura',`${g.resolution[0]} × ${g.resolution[1]} px`],['Arquivo preservado',`tools/atlas/versions/${model.id}-${g.version}.json`],['Status',proposed?'Estudo visual; não instalado no jogo':'Referência preservada do mod']]);
+  dl($('model-info'),[['Rig',`${g.bones.length} ossos · ${g.cubes.length} cubos`],['Textura',`${g.resolution[0]} × ${g.resolution[1]} px`],['Arquivo preservado',`tools/atlas/versions/${model.id}-${g.version}.json`],['Status',proposed?'Estudo visual; não instalado no jogo':'Referência preservada do mod'],...(g.notes?[['Notas',g.notes]]:[])]);
   $('model-note').textContent=model.id==='kraken'?'V2: 7 juntas por braço (antes 5), mandíbula articulada e abas laterais do manto. UVs reaproveitam a textura existente. A opção de movimento contínuo acrescenta a camada procedural da fase 1.':'';
   $('version-history').textContent='Registro permanente · '+model.versions.map(v=>`${v.version}: ${v.label} (${v.date})`).join(' · ')+'. Cada versão preserva seu modelo, textura e animações.';
 }
@@ -361,6 +363,7 @@ frameHandle=requestAnimationFrame(animate);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frameHandle);document.querySelectorAll('audio').forEach(a=>a.pause());}else{lastFrame=performance.now();frameHandle=requestAnimationFrame(animate);}});
 // Superfície de diagnóstico para os testes locais, sem controles extras na interface.
 window.atlas={selectModel,selectClip(name){clipName=name;time=0;clipList();clipInfo();frameModel();},sample,
+  view(x,y,z){frameModel(new THREE.Vector3(x,y,z));},
   inspect(){return {model:model.id,clip:clipName,time,playing,bones:boneMap.size,cubes:geometry().cubes.length,
     bounds:currentBounds?.getSize(new THREE.Vector3()).toArray(),renderer:!!renderer,textureLoaded:[...textures.values()].every(t=>!!t.image?.complete)};},
   pose(at){applyPose(at);return [...boneMap].map(([name,b])=>[name,...b.matrixWorld.elements]);}};

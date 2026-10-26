@@ -75,5 +75,26 @@
     "label": "Atual no mod · v2 (redesenho da Fase 4)",
     "date": "2026-10-25",
     "file": "kraken_egg-v2.json"
+  },
+  {
+    "id": "kraken",
+    "version": "v3a",
+    "label": "Candidata v3a · Lula-colosso (só no site)",
+    "date": "2026-10-26",
+    "file": "kraken-v3a.json"
+  },
+  {
+    "id": "kraken",
+    "version": "v3b",
+    "label": "Candidata v3b · Vampiro-abissal (só no site)",
+    "date": "2026-10-26",
+    "file": "kraken-v3b.json"
+  },
+  {
+    "id": "kraken",
+    "version": "v3c",
+    "label": "Candidata v3c · Amonita-colosso (só no site)",
+    "date": "2026-10-26",
+    "file": "kraken-v3c.json"
   }
 ]

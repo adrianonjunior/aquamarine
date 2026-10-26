@@ -58,6 +58,12 @@ mas o gerador do jogo agora tem a v2 dele mesmo (`kraken_animations.py`: `refine
 o rig e os clipes de produção e não monta proposta. Uma v3 futura se registra sem apagar v1 e v2.
 `reference_v1.json` preserva os clipes do Kraken na data desta entrega.
 
+**Candidatas da Fase 6 (6A1):** `v3a` (Lula-colosso), `v3b` (Vampiro-abissal) e `v3c` (Amonita-colosso) saem de
+`../models/kraken_v3/build_candidates.py --register` e ficam só no site até o Adriano escolher. Os snapshots podem
+trazer três campos opcionais que o visualizador usa: `glow` (camada de brilho, vira luz própria no modo Textura), `uv`
+(gabarito da própria versão) e `notes` (descrição). Para comparar por imagem: `node tools/atlas/tests/candidates.mjs v2 v3a
+v3b v3c` grava vistas de frente, lado, topo e costas em `build/atlas-qa/` (`ATLAS_POSES=idle:0,slam:0.7` escolhe os quadros).
+
 ## Gerar e validar
 
 ```powershell
@@ -69,7 +75,7 @@ node tools/atlas/tests/browser.mjs
 
 O teste de navegador usa Edge instalado, em modo headless. `ATLAS_URL` permite testar a mesma página
 via HTTP; por padrão testa `file://`. Evidências em `build/atlas-qa/` (não versionadas).
-Ele percorre todas as versões registradas: são 11 versões e 74 clipes, incluindo os
+Ele percorre todas as versões registradas: são 14 versões e 92 clipes, incluindo os
 16 originais do Kraken e a v2 do Tentáculo, da Cria e do Ovo (Fase 4). Revisão visual e proveniência em [DESIGN.md](DESIGN.md).
 O build falha em formatos de animação Java desconhecidos para não exibir silenciosamente dados incompletos.
 Não é necessário compilar o mod para trabalhar no Atlas.
