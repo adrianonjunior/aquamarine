@@ -76,6 +76,16 @@ public final class ModBlocks {
 		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PINK).requiresCorrectToolForDrops().strength(3.0F)
 			.lightLevel(state -> 7).sound(SoundType.CORAL_BLOCK).noOcclusion());
 
+	// Fase 4F: Neutrônio (docs/10-fase4.md, §8)
+	/** Minério de Neutrônio: sob o leito dos oceanos profundos; dureza 50, pede picareta Abissal ou de netherite. */
+	public static final Block NEUTRONIUM_ORE = register("neutronium_ore", Block::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops()
+			.strength(50.0F, 1200.0F).sound(SoundType.ANCIENT_DEBRIS).lightLevel(state -> 3));
+	/** Bloco de Neutrônio: nove lingotes; base de sinalizador. */
+	public static final Block NEUTRONIUM_BLOCK = register("neutronium_block", Block::new,
+		BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).requiresCorrectToolForDrops().strength(50.0F, 1200.0F)
+			.sound(SoundType.NETHERITE_BLOCK).lightLevel(state -> 6));
+
 	private static Block register(String name, Function<BlockBehaviour.Properties, Block> factory, BlockBehaviour.Properties properties) {
 		ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Aquamarine.id(name));
 		return Registry.register(BuiltInRegistries.BLOCK, key, factory.apply(properties.setId(key)));

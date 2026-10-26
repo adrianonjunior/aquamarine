@@ -17,7 +17,7 @@
 | 4C | Kraken: hitbox por tentáculo e na cabeça, cabeça sólida, muito mais movimento | a fazer | §3 |
 | 4D | Retexturas da oficina, das pontas, dos itens de mergulho e dos troféus; rework da Boia de Âncora | ✅ **feito** (26/10/2026) | §4, §5 |
 | 4E | Blocos de construção aquáticos e vidros quase quebrados para todos os vidros | ✅ **feito** (26/10/2026) | §6, §7 |
-| 4F | **Neutrônio**: minério novo, cadeia de processos, equipamento com bônus na água, visual estilo Avaritia | a fazer | §8 |
+| 4F | **Neutrônio**: minério novo, cadeia de processos, equipamento com bônus na água, visual estilo Avaritia | ✅ **feito** (26/10/2026) | §8 |
 | 4G | **Cavitador de Neutrônio**: arma de longo alcance debaixo d'água com modelo 3D e partículas | a fazer | §9 |
 | 4S | Sons de tudo acima | **depois**, a pedido do Adriano ("não faça ainda") | §10 |
 
@@ -142,12 +142,12 @@ materiais do oceano mais os do mod. Lista inicial:
 - Na luta: `KrakenWorldEffects.crackGlass` racha os vidros do anel entre 14 e 22 blocos da onda de choque, mantendo
   as conexões das vidraças. Conferido pela parte `building` do `runClientGameTest`.
 
-## 8. Neutrônio (4F)
+## 8. Neutrônio (4F, feito)
 Material de fim de jogo, azul-ciano, acima da netherite. Fica **mais difícil** que ela e pede uma **série de etapas**.
 Visual **estilo Avaritia**: um céu estrelado que corre dentro do metal, brilho próprio e partículas de estrela.
-1. **Minério de Neutrônio:** só sob o leito dos oceanos profundos, na ardósia entre y −64 e −32. É muito raro e
-   nunca fica exposto (como os detritos ancestrais). Minerar pede descer sob Pressão nível 3, com picareta Abissal ou
-   de netherite, e é lento (dureza 50, resiste a explosões). O minério tem luz fraca e cintila. Rende Neutrônio Bruto
+1. **Minério de Neutrônio:** só sob o leito dos oceanos profundos, na ardósia entre y −60 e −32. É muito raro e
+   nunca fica exposto (blocos soltos como os detritos ancestrais, 1 tentativa por pedaço de mundo). Minerar pede
+   picareta Abissal ou de netherite (o diamante não minera) e é lento (dureza 50, resiste a explosões). O minério tem luz fraca e cintila. Rende Neutrônio Bruto
    (sem Fortuna).
 2. **Poeira de Neutrônio:** Forja Abissal, 1 Neutrônio Bruto + 1 Cristal de Maré, rende 2.
 3. **Lingote de Neutrônio Instável:** Forja Abissal, 4 Poeiras + 4 Lingotes Abissais + 1 Escama Antiga.
@@ -161,14 +161,22 @@ Visual **estilo Avaritia**: um céu estrelado que corre dentro do metal, brilho 
   Abissal está a 60%). Picareta com velocidade 10 (9) e nenhuma perda debaixo d'água. Não queima e não explode.
 - **Bônus de cada peça na água:**
   - capacete: respiração aquática e visão noturna submersa;
-  - peitoral: imune à Pressão ambiental (a do Kraken cai 1 nível);
-  - calças: nado +40%;
-  - botas: Passos Profundos III embutido e sem lentidão no fundo.
-- **Conjunto completo, Singularidade Abissal:** submerso, regeneração I, +20% de dano, imune a afogamento e à
-  correnteza, com aura de partículas de estrela.
+  - peitoral: imune à Pressão da profundidade, e a do Kraken sobe 75% mais devagar (o conjunto Abissal dá 60%);
+  - calças: Graça do Golfinho submerso;
+  - botas: Passos Profundos III embutido.
+- **Conjunto completo, Singularidade Abissal:** submerso, regeneração I e +20% de dano; imune à Nuvem de Tinta e ao
+  Redemoinho do Kraken (o afogamento já some com o capacete), com aura de faíscas e brilho.
+- Todo item da família afunda na água (matéria densa) e não queima nem explode.
 - **Visual:** texturas animadas (o céu estrelado corre), partes com luz própria e, na armadura, uma segunda camada de
   energia ciano que escorre. A família inteira segue o mesmo visual: minério, bruto, poeira, lingotes, bloco,
   ferramentas, armadura e o Cavitador.
+- **Como foi feito:**
+  - `tools/gen_phase4_neutronium.py` gera as texturas animadas (8 quadros; os itens usam a silhueta das peças
+    Abissais), a camada da armadura, os dados, as receitas, as tags, a geração no mundo e os nomes.
+  - O `NeutroniumArmorRenderer` desenha a armadura com a camada estrelada e o céu que escorre por cima, com luz
+    própria. `NeutroniumEffects` cuida dos bônus e `NeutroniumTempering` da têmpera e do afundar.
+  - Conferido pela parte `neutronium` do `runClientGameTest`, com receitas, ferraria, Molde, minério, afundar,
+    têmpera, bônus e Pressão.
 
 ## 9. Cavitador de Neutrônio (4G)
 - **Debaixo d'água:** segurar carrega (0,6 s) e soltar dispara um **pulso de cavitação** (a bolha que implode, como a

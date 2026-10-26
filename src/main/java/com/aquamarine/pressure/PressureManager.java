@@ -8,6 +8,7 @@ import com.aquamarine.entity.ModVillagers;
 import com.aquamarine.entity.WhaleEntity;
 import com.aquamarine.item.DiveGear;
 import com.aquamarine.item.AbyssalEffects;
+import com.aquamarine.item.NeutroniumEffects;
 
 import java.util.HashMap;
 import java.util.List;
@@ -117,7 +118,7 @@ public final class PressureManager {
 			int bubble = player.getVehicle() instanceof WhaleEntity ? 1 : 0;
 			entry.ambientTarget = Math.max(0, entry.rawAmbient - DiveGear.ambientReduction(player) - bubble);
 		}
-		if (AnchorBuoyBlock.isStandingOn(player)) {
+		if (AnchorBuoyBlock.isStandingOn(player) || NeutroniumEffects.blocksAmbientPressure(player)) {
 			entry.rawAmbient = 0;
 			entry.ambientTarget = 0;
 		}
@@ -125,7 +126,7 @@ public final class PressureManager {
 		KrakenEntity kraken = entry.exposed ? nearestKraken(level, player) : null;
 		int phase = kraken == null ? 1 : kraken.phase();
 		entry.state.tick(entry.exposed && kraken != null, entry.ambientTarget, ModEffects.hasTonic(player),
-			AbyssalEffects.pressureReduction(player), phase);
+			Math.max(AbyssalEffects.pressureReduction(player), NeutroniumEffects.pressureReduction(player)), phase);
 		apply(player, entry);
 
 		int lvl = entry.state.level();

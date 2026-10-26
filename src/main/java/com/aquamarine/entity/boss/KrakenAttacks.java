@@ -12,6 +12,7 @@ import com.aquamarine.entity.TentacleEntity;
 import com.aquamarine.entity.YoungKrakenEntity;
 import com.aquamarine.sound.ModSounds;
 import com.aquamarine.item.AbyssalEffects;
+import com.aquamarine.item.NeutroniumEffects;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -606,7 +607,7 @@ public final class KrakenAttacks {
 	private void strikeInk(ServerLevel level) {
 		for (ServerPlayer p : level.getEntitiesOfClass(ServerPlayer.class, kraken.getBoundingBox().inflate(KrakenAttackType.INK_RADIUS),
 			p -> p.isAlive() && !p.isSpectator() && p.distanceTo(kraken) <= KrakenAttackType.INK_RADIUS)) {
-			if (!AbyssalEffects.hasFullSet(p)) {
+			if (!AbyssalEffects.hasFullSet(p) && !NeutroniumEffects.hasFullSet(p)) {
 				p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, KrakenAttackType.INK_BLIND_TICKS, 0));
 			}
 		}
@@ -793,7 +794,7 @@ public final class KrakenAttacks {
 		}
 		for (ServerPlayer p : level.getEntitiesOfClass(ServerPlayer.class, kraken.getBoundingBox().inflate(KrakenAttackType.WHIRLPOOL_RADIUS),
 			p -> p.isAlive() && !p.isSpectator() && p.position().distanceTo(whirlpoolCenter) <= KrakenAttackType.WHIRLPOOL_RADIUS)) {
-			if (hasCurrentAmulet(p)) {
+			if (hasCurrentAmulet(p) || NeutroniumEffects.hasFullSet(p)) {
 				continue;
 			}
 			Vec3 pull = whirlpoolCenter.subtract(p.position());

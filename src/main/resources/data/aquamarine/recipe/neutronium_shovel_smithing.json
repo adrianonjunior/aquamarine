@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "aquamarine:neutronium_ingot",
+  "base": "aquamarine:abyssal_shovel",
+  "result": {
+    "id": "aquamarine:neutronium_shovel"
+  },
+  "template": "aquamarine:neutronium_upgrade_smithing_template"
+}

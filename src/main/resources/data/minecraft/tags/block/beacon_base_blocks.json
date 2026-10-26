@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "aquamarine:abyssal_block"
+    "aquamarine:abyssal_block",
+    "aquamarine:neutronium_block"
   ]
 }

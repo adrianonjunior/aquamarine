@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "aquamarine:item/neutronium_upgrade_smithing_template"
+  }
+}

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "aquamarine:abyssal_chestplate"
+    "aquamarine:abyssal_chestplate",
+    "aquamarine:neutronium_chestplate"
   ]
 }

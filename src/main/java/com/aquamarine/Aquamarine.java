@@ -2,6 +2,7 @@ package com.aquamarine;
 
 import com.aquamarine.block.ModBlocks;
 import com.aquamarine.block.ModBuildingBlocks;
+import com.aquamarine.block.NeutroniumOre;
 import com.aquamarine.command.CreatureCommand;
 import com.aquamarine.command.HarborCommand;
 import com.aquamarine.command.KrakenCommand;
@@ -20,6 +21,7 @@ import com.aquamarine.item.ModComponents;
 import com.aquamarine.item.ModItems;
 import com.aquamarine.item.TideThrusterItem;
 import com.aquamarine.item.AbyssalEffects;
+import com.aquamarine.item.NeutroniumEffects;
 import com.aquamarine.menu.ModMenus;
 import com.aquamarine.pressure.PressureManager;
 import com.aquamarine.recipe.ModRecipes;
@@ -55,6 +57,8 @@ public class Aquamarine implements ModInitializer {
 		HarborElevators.register();
 		AquamarineBossBar.registerPayloads();
 		AbyssalEffects.register();
+		NeutroniumEffects.register();
+		NeutroniumOre.register();
 		ModEffects.register();
 		PressureManager.register();
 		HarpoonEffects.register();

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "aquamarine:abyssal_shovel"
+    "aquamarine:abyssal_shovel",
+    "aquamarine:neutronium_shovel"
   ]
 }

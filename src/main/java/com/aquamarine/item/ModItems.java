@@ -1,6 +1,7 @@
 package com.aquamarine.item;
 
 import com.aquamarine.Aquamarine;
+import com.aquamarine.ModTags;
 import com.aquamarine.block.ModBlocks;
 import com.aquamarine.effect.ModEffects;
 import com.aquamarine.pressure.PressureState;
@@ -23,6 +24,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.Consumable;
+import net.minecraft.world.item.component.DamageResistant;
 import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TridentItem;
@@ -162,6 +164,41 @@ public final class ModItems {
 	public static final Item KRAKEN_HEART = register("kraken_heart", Item::new, new Item.Properties().rarity(Rarity.EPIC));
 	public static final Item KRAKEN_TROPHY = registerBlock(ModBlocks.KRAKEN_TROPHY, new Item.Properties().rarity(Rarity.EPIC));
 	public static final Item GOLDEN_ABYSS_TROPHY = registerBlock(ModBlocks.GOLDEN_ABYSS_TROPHY, new Item.Properties().rarity(Rarity.EPIC));
+
+	// Fase 4F: Neutrônio (docs/10-fase4.md, §8). Não queima, não explode e afunda na água (NeutroniumTempering).
+	public static final Item NEUTRONIUM_ORE = registerBlock(ModBlocks.NEUTRONIUM_ORE, neutronium());
+	public static final Item RAW_NEUTRONIUM = register("raw_neutronium", Item::new, neutronium());
+	public static final Item NEUTRONIUM_DUST = register("neutronium_dust", Item::new, neutronium());
+	public static final Item UNSTABLE_NEUTRONIUM_INGOT = register("unstable_neutronium_ingot", Item::new, neutronium().stacksTo(16));
+	public static final Item NEUTRONIUM_INGOT = register("neutronium_ingot", Item::new, neutronium());
+	public static final Item NEUTRONIUM_BLOCK = registerBlock(ModBlocks.NEUTRONIUM_BLOCK, neutronium());
+	public static final Item NEUTRONIUM_UPGRADE_SMITHING_TEMPLATE = register("neutronium_upgrade_smithing_template",
+		NeutroniumEffects::template, neutronium());
+	public static final Item NEUTRONIUM_SWORD = register("neutronium_sword", Item::new,
+		neutronium().sword(ModMaterials.NEUTRONIUM_TOOL, 3.0F, -2.4F));
+	public static final Item NEUTRONIUM_PICKAXE = register("neutronium_pickaxe", Item::new,
+		neutronium().pickaxe(ModMaterials.NEUTRONIUM_TOOL, 1.0F, -2.8F));
+	public static final Item NEUTRONIUM_AXE = register("neutronium_axe", Item::new,
+		neutronium().axe(ModMaterials.NEUTRONIUM_TOOL, 5.0F, -3.0F));
+	public static final Item NEUTRONIUM_SHOVEL = register("neutronium_shovel", Item::new,
+		neutronium().shovel(ModMaterials.NEUTRONIUM_TOOL, 1.5F, -3.0F));
+	public static final Item NEUTRONIUM_HOE = register("neutronium_hoe", Item::new,
+		neutronium().hoe(ModMaterials.NEUTRONIUM_TOOL, -5.0F, 0.0F));
+	public static final Item NEUTRONIUM_HELMET = register("neutronium_helmet", Item::new,
+		neutronium().humanoidArmor(ModMaterials.NEUTRONIUM_ARMOR, ArmorType.HELMET));
+	public static final Item NEUTRONIUM_CHESTPLATE = register("neutronium_chestplate", Item::new,
+		neutronium().humanoidArmor(ModMaterials.NEUTRONIUM_ARMOR, ArmorType.CHESTPLATE));
+	public static final Item NEUTRONIUM_LEGGINGS = register("neutronium_leggings", Item::new,
+		neutronium().humanoidArmor(ModMaterials.NEUTRONIUM_ARMOR, ArmorType.LEGGINGS));
+	public static final Item NEUTRONIUM_BOOTS = register("neutronium_boots", Item::new,
+		neutronium().humanoidArmor(ModMaterials.NEUTRONIUM_ARMOR, ArmorType.BOOTS));
+
+	/** Propriedades da família do Neutrônio: épica e imune a fogo e explosão. */
+	private static Item.Properties neutronium() {
+		return new Item.Properties().rarity(Rarity.EPIC)
+			.delayedComponent(DataComponents.DAMAGE_RESISTANT,
+				registries -> new DamageResistant(registries.getOrThrow(ModTags.DamageTypes.NEUTRONIUM_IMMUNE)));
+	}
 
 	public static Item register(String name, Function<Item.Properties, Item> factory, Item.Properties properties) {
 		ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Aquamarine.id(name));

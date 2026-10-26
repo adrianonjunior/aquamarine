@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "aquamarine:neutronium_ingot",
+  "base": "aquamarine:abyssal_leggings",
+  "result": {
+    "id": "aquamarine:neutronium_leggings"
+  },
+  "template": "aquamarine:neutronium_upgrade_smithing_template"
+}

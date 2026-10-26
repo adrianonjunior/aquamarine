@@ -30,7 +30,7 @@ public final class KrakenRewards {
 	public static final int INK_MIN = 2;
 	public static final int INK_MAX = 4;
 
-	/** Itens de um jogador: {@code firstWin} acrescenta o Coração, {@code abyssal} o Troféu Dourado. */
+	/** Itens de um jogador: {@code firstWin} acrescenta o Coração e o Molde de Neutrônio, {@code abyssal} o Troféu Dourado. */
 	public static List<ItemStack> plan(boolean firstWin, boolean abyssal, RandomSource random) {
 		List<ItemStack> items = new ArrayList<>();
 		items.add(new ItemStack(ModItems.KRAKEN_EYE, EYES));
@@ -38,6 +38,7 @@ public final class KrakenRewards {
 		items.add(new ItemStack(abyssal ? ModItems.GOLDEN_ABYSS_TROPHY : ModItems.KRAKEN_TROPHY));
 		if (firstWin) {
 			items.add(new ItemStack(ModItems.KRAKEN_HEART));
+			items.add(new ItemStack(ModItems.NEUTRONIUM_UPGRADE_SMITHING_TEMPLATE));  // Fase 4: o Molde de Neutrônio
 		}
 		return items;
 	}

@@ -39,6 +39,8 @@
     "aquamarine:abyssal_tile_wall",
     "aquamarine:chiseled_abyssal_tiles",
     "aquamarine:pearl_lamp",
-    "aquamarine:naval_grate"
+    "aquamarine:naval_grate",
+    "aquamarine:neutronium_ore",
+    "aquamarine:neutronium_block"
   ]
 }

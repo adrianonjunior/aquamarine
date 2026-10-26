@@ -2,6 +2,15 @@
   "replace": false,
   "values": [
     "aquamarine:abyssal_harpoon",
-    "aquamarine:moray_whip"
+    "aquamarine:moray_whip",
+    "aquamarine:neutronium_sword",
+    "aquamarine:neutronium_pickaxe",
+    "aquamarine:neutronium_axe",
+    "aquamarine:neutronium_shovel",
+    "aquamarine:neutronium_hoe",
+    "aquamarine:neutronium_helmet",
+    "aquamarine:neutronium_chestplate",
+    "aquamarine:neutronium_leggings",
+    "aquamarine:neutronium_boots"
   ]
 }

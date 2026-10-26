@@ -39,7 +39,15 @@ public final class ModCreativeTab {
 			ModItems.KRAKEN_HEART, ModItems.ELECTRIC_SCALE, ModItems.VOLTAIC_COIL);
 		addToVanilla(CreativeModeTabs.NATURAL_BLOCKS, ModItems.ABYSSAL_ORE);
 		addToVanilla(CreativeModeTabs.BUILDING_BLOCKS, ModItems.ABYSSAL_BLOCK);
-		// Fase 4: blocos aquáticos na aba de construção e os vidros rachados na de blocos coloridos.
+		// Fase 4: o Neutrônio nas abas do jogo; blocos aquáticos na de construção e os vidros rachados na de coloridos.
+		addToVanilla(CreativeModeTabs.INGREDIENTS, ModItems.RAW_NEUTRONIUM, ModItems.NEUTRONIUM_DUST, ModItems.UNSTABLE_NEUTRONIUM_INGOT,
+			ModItems.NEUTRONIUM_INGOT, ModItems.NEUTRONIUM_UPGRADE_SMITHING_TEMPLATE);
+		addToVanilla(CreativeModeTabs.NATURAL_BLOCKS, ModItems.NEUTRONIUM_ORE);
+		addToVanilla(CreativeModeTabs.BUILDING_BLOCKS, ModItems.NEUTRONIUM_BLOCK);
+		addToVanilla(CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.NEUTRONIUM_SHOVEL, ModItems.NEUTRONIUM_PICKAXE, ModItems.NEUTRONIUM_AXE,
+			ModItems.NEUTRONIUM_HOE);
+		addToVanilla(CreativeModeTabs.COMBAT, ModItems.NEUTRONIUM_SWORD, ModItems.NEUTRONIUM_AXE, ModItems.NEUTRONIUM_HELMET,
+			ModItems.NEUTRONIUM_CHESTPLATE, ModItems.NEUTRONIUM_LEGGINGS, ModItems.NEUTRONIUM_BOOTS);
 		addToVanilla(CreativeModeTabs.BUILDING_BLOCKS, ModBuildingBlocks.building().stream().map(b -> b.asItem()).toArray(Item[]::new));
 		addToVanilla(CreativeModeTabs.COLORED_BLOCKS, ModBuildingBlocks.glass().stream().map(b -> b.asItem()).toArray(Item[]::new));
 		addToVanilla(CreativeModeTabs.FUNCTIONAL_BLOCKS, ModItems.ABYSSAL_FORGE, ModItems.ABYSSAL_ALTAR,

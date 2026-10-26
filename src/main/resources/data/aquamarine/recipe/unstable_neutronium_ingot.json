@@ -1,0 +1,17 @@
+{
+  "type": "aquamarine:abyssal_forging",
+  "category": "misc",
+  "key": {
+    "D": "aquamarine:neutronium_dust",
+    "I": "aquamarine:abyssal_ingot",
+    "S": "aquamarine:ancient_scale"
+  },
+  "pattern": [
+    "DID",
+    "ISI",
+    "DID"
+  ],
+  "result": {
+    "id": "aquamarine:unstable_neutronium_ingot"
+  }
+}

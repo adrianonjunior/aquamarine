@@ -169,6 +169,7 @@ Especificação, ordem e painel do que já foi feito: [10-fase4.md](10-fase4.md)
   com frente e colisão no formato, lanterna da Boia que muda de cor com o tempo.
 - [x] **4E** Blocos de construção aquáticos (35) e vidros rachados para todos os vidros (35), com a onda de choque do
   Kraken rachando os vidros da arena.
-- [ ] **4F** Neutrônio: minério, cadeia de processos, equipamento com bônus na água, visual estilo Avaritia.
+- [x] **4F** Neutrônio: minério sob os oceanos profundos, cadeia Forja → têmpera no fundo → ferraria, equipamento com
+  bônus na água e visual estilo Avaritia (itens animados e céu que escorre na armadura).
 - [ ] **4G** Cavitador de Neutrônio: modelo 3D, pulso de cavitação, lançador de arpões, partículas.
 - [ ] **4S** Sons da Fase 4 (depois, a pedido do Adriano).

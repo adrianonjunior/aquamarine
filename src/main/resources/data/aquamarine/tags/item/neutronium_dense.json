@@ -1,0 +1,20 @@
+{
+  "values": [
+    "aquamarine:neutronium_ore",
+    "aquamarine:raw_neutronium",
+    "aquamarine:neutronium_dust",
+    "aquamarine:unstable_neutronium_ingot",
+    "aquamarine:neutronium_ingot",
+    "aquamarine:neutronium_block",
+    "aquamarine:neutronium_upgrade_smithing_template",
+    "aquamarine:neutronium_sword",
+    "aquamarine:neutronium_pickaxe",
+    "aquamarine:neutronium_axe",
+    "aquamarine:neutronium_shovel",
+    "aquamarine:neutronium_hoe",
+    "aquamarine:neutronium_helmet",
+    "aquamarine:neutronium_chestplate",
+    "aquamarine:neutronium_leggings",
+    "aquamarine:neutronium_boots"
+  ]
+}

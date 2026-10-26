@@ -10,6 +10,8 @@ public final class ShieldDamage {
 		COMMON(0.25F, true),
 		/** Ferramentas e armas da tag {@code aquamarine:shield_breakers}. */
 		ABYSSAL(0.60F, true),
+		/** Ferramentas de Neutrônio (tag {@code aquamarine:neutronium_tools}, Fase 4). */
+		NEUTRONIUM(0.80F, true),
 		/** Arpão Abissal (tag {@code aquamarine:harpoons}). */
 		HARPOON(3.0F, true),
 		/** Carga de Pulso: dano fixo, em área. */

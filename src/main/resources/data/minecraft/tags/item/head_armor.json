@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "aquamarine:abyssal_helmet"
+    "aquamarine:abyssal_helmet",
+    "aquamarine:neutronium_helmet"
   ]
 }

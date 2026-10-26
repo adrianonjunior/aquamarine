@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "aquamarine:abyssal_ingot"
+    "aquamarine:abyssal_ingot",
+    "aquamarine:neutronium_ingot"
   ]
 }
