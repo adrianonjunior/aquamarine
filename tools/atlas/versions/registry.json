@@ -96,5 +96,26 @@
     "label": "Candidata v3c · Amonita-colosso (só no site)",
     "date": "2026-10-26",
     "file": "kraken-v3c.json"
+  },
+  {
+    "id": "kraken",
+    "version": "v3a-jogo",
+    "label": "No jogo · v3a Lula-colosso (aquamarine:kraken), 16 clipes",
+    "date": "2026-10-26",
+    "file": "kraken-v3a-jogo.json"
+  },
+  {
+    "id": "kraken",
+    "version": "v3b-jogo",
+    "label": "No jogo · v3b Vampiro-abissal (aquamarine:kraken_vampire), 16 clipes",
+    "date": "2026-10-26",
+    "file": "kraken-v3b-jogo.json"
+  },
+  {
+    "id": "kraken",
+    "version": "v3c-jogo",
+    "label": "No jogo · v3c Amonita-colosso (aquamarine:kraken_ammonite), 16 clipes",
+    "date": "2026-10-26",
+    "file": "kraken-v3c-jogo.json"
   }
 ]

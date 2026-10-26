@@ -33,6 +33,20 @@ public final class ModEntities {
 	/** O Kraken (docs/02-kraken.md). Caixa provisória; o tamanho final vem com o modelo. */
 	public static final EntityType<KrakenEntity> KRAKEN = Registry.register(BuiltInRegistries.ENTITY_TYPE, KRAKEN_KEY,
 		EntityType.Builder.of(KrakenEntity::new, MobCategory.MONSTER).sized(36.0F, 24.0F).fireImmune().clientTrackingRange(48).build(KRAKEN_KEY));
+	private static final ResourceKey<EntityType<?>> KRAKEN_VAMPIRE_KEY =
+		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("kraken_vampire"));
+	private static final ResourceKey<EntityType<?>> KRAKEN_AMMONITE_KEY =
+		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("kraken_ammonite"));
+	/**
+	 * Fase 6: os outros dois desenhos novos do Kraken, com a mesma luta (docs/11-fase6.md, 6A). O {@link #KRAKEN} é a
+	 * v3a, Lula-colosso; estes são a v3b, Vampiro-abissal, e a v3c, Amonita-colosso, e só nascem pelo /summon.
+	 */
+	public static final EntityType<KrakenEntity> KRAKEN_VAMPIRE = Registry.register(BuiltInRegistries.ENTITY_TYPE, KRAKEN_VAMPIRE_KEY,
+		EntityType.Builder.of(KrakenEntity::new, MobCategory.MONSTER).sized(36.0F, 24.0F).fireImmune().clientTrackingRange(48)
+			.build(KRAKEN_VAMPIRE_KEY));
+	public static final EntityType<KrakenEntity> KRAKEN_AMMONITE = Registry.register(BuiltInRegistries.ENTITY_TYPE, KRAKEN_AMMONITE_KEY,
+		EntityType.Builder.of(KrakenEntity::new, MobCategory.MONSTER).sized(36.0F, 24.0F).fireImmune().clientTrackingRange(48)
+			.build(KRAKEN_AMMONITE_KEY));
 
 	private static final ResourceKey<EntityType<?>> TENTACLE_KEY =
 		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("tentacle"));
@@ -100,6 +114,8 @@ public final class ModEntities {
 
 	public static void register() {
 		FabricDefaultAttributeRegistry.register(KRAKEN, KrakenEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(KRAKEN_VAMPIRE, KrakenEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(KRAKEN_AMMONITE, KrakenEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(BOSS_DUMMY, BossDummy.createAttributes());
 		FabricDefaultAttributeRegistry.register(TENTACLE, TentacleEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(YOUNG_KRAKEN, YoungKrakenEntity.createAttributes());

@@ -63,6 +63,10 @@ o rig e os clipes de produção e não monta proposta. Uma v3 futura se registra
 trazer três campos opcionais que o visualizador usa: `glow` (camada de brilho, vira luz própria no modo Textura), `uv`
 (gabarito da própria versão) e `notes` (descrição). Para comparar por imagem: `node tools/atlas/tests/candidates.mjs v2 v3a
 v3b v3c` grava vistas de frente, lado, topo e costas em `build/atlas-qa/` (`ATLAS_POSES=idle:0,slam:0.7` escolhe os quadros).
+**No jogo desde a 0.6.0:** a escolha do Adriano foi a v3a como `aquamarine:kraken`, com a v3b e a v3c como
+`kraken_vampire` e `kraken_ammonite`. `../models/kraken_v3/build_game.py --register` gravou as versões `v3a-jogo`,
+`v3b-jogo` e `v3c-jogo`, com os 16 clipes da luta; o rótulo começa com "No jogo", e o site abre nessa versão e mostra
+"NO JOGO" no palco. As candidatas de 6 clipes e a v2 ficam no histórico.
 
 ## Gerar e validar
 
@@ -75,7 +79,7 @@ node tools/atlas/tests/browser.mjs
 
 O teste de navegador usa Edge instalado, em modo headless. `ATLAS_URL` permite testar a mesma página
 via HTTP; por padrão testa `file://`. Evidências em `build/atlas-qa/` (não versionadas).
-Ele percorre todas as versões registradas: são 14 versões e 92 clipes, incluindo os
+Ele percorre todas as versões registradas: são 17 versões e 140 clipes, incluindo os
 16 originais do Kraken e a v2 do Tentáculo, da Cria e do Ovo (Fase 4). Revisão visual e proveniência em [DESIGN.md](DESIGN.md).
 O build falha em formatos de animação Java desconhecidos para não exibir silenciosamente dados incompletos.
 Não é necessário compilar o mod para trabalhar no Atlas.

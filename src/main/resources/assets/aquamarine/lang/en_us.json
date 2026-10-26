@@ -546,5 +546,7 @@
   "container.aquamarine.shell_altar": "Shell Altar",
   "tooltip.aquamarine.tide_anvil.2": "Anvil: on the mod's gear the repair cost does not grow, and it never wears out.",
   "tooltip.aquamarine.chart_table.2": "Cartography: copies, zooms and locks maps.",
-  "tooltip.aquamarine.shell_altar.2": "Grindstone: removes enchantments from books and gear."
+  "tooltip.aquamarine.shell_altar.2": "Grindstone: removes enchantments from books and gear.",
+  "entity.aquamarine.kraken_vampire": "Vampire Kraken",
+  "entity.aquamarine.kraken_ammonite": "Ammonite Kraken"
 }

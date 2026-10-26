@@ -546,5 +546,7 @@
   "container.aquamarine.shell_altar": "Altar de Concha",
   "tooltip.aquamarine.tide_anvil.2": "Bigorna: no equipamento do mod o custo de reparo não cresce, e ela não se desgasta.",
   "tooltip.aquamarine.chart_table.2": "Cartografia: copia, amplia e trava mapas.",
-  "tooltip.aquamarine.shell_altar.2": "Rebolo: tira os encantamentos de livros e equipamentos."
+  "tooltip.aquamarine.shell_altar.2": "Rebolo: tira os encantamentos de livros e equipamentos.",
+  "entity.aquamarine.kraken_vampire": "Kraken-Vampiro",
+  "entity.aquamarine.kraken_ammonite": "Kraken-Amonita"
 }
