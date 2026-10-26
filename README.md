@@ -17,6 +17,9 @@ conflito, vale [docs/00-decisoes.md](docs/00-decisoes.md)).
   Aljava e 4 pontas; 7 encantamentos; Propulsor de Maré; a Vila subaquática (Porto dos Náufragos), com
   Cúpula, cinco prédios, Cais com elevadores de bolhas, Torre de Vigia, Mergulhadores em 3 profissões,
   reputação por jogador e o Alerta de Moréia.
+- **Fase 4:** Neutrônio estilo Avaritia e o Cavitador, Oricálcio renomeado para Abissal, 35 blocos aquáticos e 35
+  vidros rachados, oficina da Vila e troféus em 3D, Boia nova, Cria, Ovo e Tentáculo refeitos. Resumo de tudo, do que
+  falta e do plano: [docs/resumo.md](docs/resumo.md).
 - **Próximo (não liberado):** a Cidade Perdida de Nereia. Estado de cada faixa e o que só o Adriano
   pode testar: [docs/07-roadmap.md](docs/07-roadmap.md).
 

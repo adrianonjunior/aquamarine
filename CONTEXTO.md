@@ -31,6 +31,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+- 26/10/2026 · Claude Opus 5.5 · **Resumo geral** em [docs/resumo.md](docs/resumo.md): feito, o que falta e plano proposto em tabelas; achado da progressão no sobrevivência travada registrado em "Em aberto" ([docs/00-decisoes.md](docs/00-decisoes.md)) · falta o Adriano escolher a ordem do plano.
 
 - 26/10/2026 · Claude Opus 5.5 · **Release 0.5.0** no GitHub (aba Releases, `Aquamarine-0.5.0.zip` com instalador e servidor, mais o `aquamarine-0.5.0.jar` solto para CurseForge), com tudo da Fase 4 até a 4G. **Testado:** `build` e a parte `multiplayer` do `runClientGameTest` (servidor dedicado, cliente pela rede). **Falta:** teste com os amigos do Adriano, 4C e 4S.
 

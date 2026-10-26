@@ -64,4 +64,7 @@ balanceamento não precisam de nova decisão, só de atualização em `02-kraken
 
 ## Em aberto
 Perguntas que só o Adriano responde (o resto está decidido):
+- **Progressão no sobrevivência** (achado de 26/10/2026): o Minério Abissal não aparece no mundo e o Altar do Abismo e o
+  Projeto do Chamariz não têm fonte, porque viriam da Cidade Perdida; sem comandos, Forja, Kraken e Neutrônio ficam
+  travados. Liberar a ponte proposta em [resumo.md](resumo.md), "Plano", etapa 1?
 - **Branch `estruturador/entrega-1`** (6 commits fora da `main`) e as worktrees antigas das faixas: apagar ou guardar?
