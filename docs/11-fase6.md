@@ -1,6 +1,6 @@
 # Fase 6: Kraken renovado, energia aquática e conforto do mergulhador (ideia)
 
-> ## ✅ FECHADA na `0.6.0` em 26/10/2026 (liberada e organizada no mesmo dia; falta publicar a release no GitHub)
+> ## ✅ PUBLICADA na `0.6.0` em 26/10/2026 (liberada e organizada no mesmo dia)
 > Na release: tudo o que o painel marca como feito, mais os três Krakens novos no jogo. Faltam a 6A2, a 6A4, a 6C1 e a
 > 6G1 (`0.6.x`) e os sons (subversão própria). Notas da release: [07-roadmap.md](07-roadmap.md), "Releases e fases".
 > Ideias do Adriano para a release **0.6.0** (a Fase 5 não existe; a regra está em [00-decisoes.md](00-decisoes.md),
