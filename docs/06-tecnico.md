@@ -57,13 +57,17 @@
   rede (API `worldBuilder().createServer()` do teste de cliente da Fabric): entrada com registros sincronizados,
   música da luta por fase no cliente, céu, chuva, pacote do servidor (Pressão), pacote do cliente (Propulsor),
   vitória e a baleia andando com o piloto. Pega o que o singleplayer esconde.
+- Partes da Fase 6: `energy` (geradores, cabo, Coletor, Mesa de Encantamento Aquática, mesas da Vila e Radar) e `krakens`
+  (o `/summon` dos três Krakens novos, com capturas). A `forge` precisa rodar junto com a `showcase`, que coloca a Forja; a
+  `moray` falha se rodar logo depois da `showcase` (o jogador fica de armadura e o choque cai).
 - `C:\Python314\python tools/gen_textures.py --preview` regera as texturas e
   grava folhas de prévia em `build/texture_preview*.png`.
 
 ## Release para jogadores
 Pacote para quem só tem o Minecraft: `./gradlew build` e depois `C:\Python314\python tools/release/montar_release.py`
 (versões lidas do `gradle.properties`). A versão do mod é a da release `0.N.0` da fase ([00-decisoes.md](00-decisoes.md),
-"Versões e fases"). Sai `build/release/Aquamarine-<versão>.zip` com:
+"Versões e fases"). A Team Reborn Energy (Fase 6) vai dentro do jar do mod (`include` no `build.gradle`); o pacote não muda.
+Sai `build/release/Aquamarine-<versão>.zip` com:
 - `INSTALAR.bat` → `arquivos/instalar.ps1`: faz o que o instalador oficial do Fabric faz, **sem Java** (grava o perfil
   de versão do Fabric Loader, baixado do meta.fabricmc.net ou a cópia do pacote, e um `.jar` vazio em `versions/`),
   cria o perfil "Aquamarine <versão>" no `launcher_profiles.json` com **pasta própria** (`.minecraft/aquamarine`,
@@ -241,6 +245,10 @@ sobre o UV), classes Java no pacote do cliente acima. O renderer do Codex começ
 **sem textura final**: usa o gabarito até a faixa de textura terminar.
 
 **Mudança de contrato:** só com aval do Adriano; o novo valor entra aqui, antes do código.
+
+**Kraken desde a Fase 6 (`0.6.0`):** o desenho do jogo sai de `tools/models/kraken_v3/build_game.py` (`KrakenV3aModel`,
+`KrakenV3bModel`, `KrakenV3cModel` e as `Animations`, com os 16 clipes acima e as mesmas `AnimationState` da
+`KrakenView`); `KrakenRenderer.Variant` liga cada tipo ao seu desenho. `tools/models/kraken/` guarda a v2 (fora do jogo).
 
 ## Contrato de modelos e entidades (Fase 3)
 Dono desta regra: aqui. Vale a mesma divisão e o mesmo método da Entrega 2 (seção acima:

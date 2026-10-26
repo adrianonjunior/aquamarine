@@ -20,14 +20,16 @@ conflito, vale [docs/00-decisoes.md](docs/00-decisoes.md)).
 - **Fase 4:** Neutrônio estilo Avaritia e o Cavitador, Oricálcio renomeado para Abissal, 35 blocos aquáticos e 35
   vidros rachados, oficina da Vila e troféus em 3D, Boia nova, Cria, Ovo e Tentáculo refeitos. Resumo de tudo, do que
   falta e do plano: [docs/resumo.md](docs/resumo.md).
-- **Em andamento (liberada em 26/10/2026):** a Fase 6, release `0.6.0`: Kraken renovado, energia aquática, Aurium,
-  acessórios, radar e mais ([docs/11-fase6.md](docs/11-fase6.md)). A Cidade Perdida de Nereia e o Kraken completo
-  ficam sem fase por enquanto. Estado de cada faixa e o que só o Adriano pode testar:
+- **Fase 6, na `0.6.0` (26/10/2026):** três Krakens novos (Lula-colosso é o principal; Vampiro-abissal e Amonita-colosso
+  pelo `/summon`), tentáculos que nascem do fundo, colisão das baleias, Forja 3D, arpão 3D, Aurium, energia aquática com o
+  Coletor de Neutrônio, Mesa de Encantamento Aquática, mesas da Vila com função, carne de baleia, Radar e 14 blocos de
+  construção e decoração ([docs/11-fase6.md](docs/11-fase6.md)). Faltam a 6A2, a 6A4, a 6C1 e a 6G1. A Cidade Perdida de
+  Nereia e o Kraken completo ficam sem fase por enquanto. Estado de cada faixa e o que só o Adriano pode testar:
   [docs/07-roadmap.md](docs/07-roadmap.md).
 
 ## Versões e fases
 A release **`0.N.0` entrega a Fase `N`**; correções saem como `0.N.x`. Não existe Fase 5 (o `0.5.0` entregou a
-Fase 4; a próxima é a `0.6.0`, da Fase 6). Tabela de releases, fases e especificações:
+Fase 4; a `0.6.0` entregou a Fase 6). Tabela de releases, fases e especificações:
 [docs/07-roadmap.md](docs/07-roadmap.md), "Releases e fases". A regra: [docs/00-decisoes.md](docs/00-decisoes.md).
 
 ## Para jogar (sem nada de programação)
@@ -104,7 +106,7 @@ com modelos 3D, animações, áudio, texturas e documentos. O Kraken v2 do site 
 | docs/resumo.md | todas | Retrato do que foi feito, do que falta e do plano proposto |
 | docs/08-fase3.md | `0.3.0` | Fase 3: fauna, equipamentos de mergulho e Vila |
 | docs/10-fase4.md | `0.5.0` | Fase 4: Kraken vivo, oficina, construção aquática e Neutrônio |
-| docs/11-fase6.md | `0.6.0` (planejada) | Fase 6: Kraken renovado, energia aquática, Aurium, acessórios, radar |
+| docs/11-fase6.md | `0.6.0` (publicada) | Fase 6: Kraken renovado, energia aquática, Aurium, acessórios, radar |
 | docs/09-audio.md | transversal | Áudio: direção sonora, ambiência, música, lista de efeitos, método e padrões |
 
 **Design do mod (Entregas 1 e 2 e Cidade Perdida)**
