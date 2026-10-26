@@ -15,7 +15,7 @@ especificação e um bloco de marcos neste arquivo.
 | `0.3.0` (só a versão do build) | Fase 3 | [08-fase3.md](08-fase3.md) | "Fase 3" | feita; falta o aceite com 3 jogadores reais |
 | `0.4.0` (GitHub) | nenhuma: release de teste multiplayer, com a luta do Kraken em áudio e o Kraken v2 | [06-tecnico.md](06-tecnico.md), "Release para jogadores" | "Áudio v1" | publicada; falta o teste com os amigos |
 | `0.5.0` (GitHub) | **Fase 4** (a "5" ficou sem fase) | [10-fase4.md](10-fase4.md) | "Fase 4" | publicada; falta a 4S (sons); 4C passou para a Fase 6 |
-| `0.6.0` (tag no GitHub) | **Fase 6** | [11-fase6.md](11-fase6.md) | "Fase 6" | pronta em 26/10/2026, falta publicar na aba Releases; faltam 6A2, 6A4, 6C1 e 6G1 (`0.6.x`) e os sons |
+| `0.6.0` (GitHub) | **Fase 6** | [11-fase6.md](11-fase6.md) | "Fase 6" | publicada em 26/10/2026; faltam 6A2, 6A4, 6C1 e 6G1 (`0.6.x`) e os sons |
 
 Fora desta tabela, **sem fase e sem número** até o Adriano decidir: Cidade Perdida, Kraken completo e áudio A1 a A5
 ([resumo.md](resumo.md), "O que falta"). Temas transversais (sem release própria): [09-audio.md](09-audio.md) e os
@@ -224,5 +224,4 @@ alvo: `0.6.0`.
   - [ ] 6G1 slot de acessórios: **sem Accessories para o 26.3** (pulada em 26/10/2026)
   - [x] 6G2 Radar (26/10/2026)
 - [x] **6H** Construção: mais decoração e blocos (26/10/2026)
-- [ ] **Release 0.6.0**: pacote, `.jar` e notas prontos e tag `v0.6.0` no GitHub (26/10/2026); falta publicar na aba Releases
-  (na pasta principal: `gh release create v0.6.0 --verify-tag --notes-file build/release/notas-0.6.0.md build/release/Aquamarine-0.6.0.zip build/release/aquamarine-0.6.0.jar`)
+- [x] **Release 0.6.0** (26/10/2026, GitHub: `Aquamarine-0.6.0.zip` e o `.jar` solto; [https://github.com/adrianonjunior/aquamarine/releases/tag/v0.6.0](https://github.com/adrianonjunior/aquamarine/releases/tag/v0.6.0))
