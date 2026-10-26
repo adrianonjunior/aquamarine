@@ -211,7 +211,7 @@ alvo: `0.6.0`.
   - [ ] 6B2 carne de baleia
 - [ ] **6C** Vila: 6C1 skins 3D dos Mergulhadores · 6C2 funções das mesas
 - [ ] **6D** Materiais e armas:
-  - [ ] 6D1 Aurium
+  - [x] 6D1 Aurium (26/10/2026)
   - [x] 6D2 Forja Abissal nova (26/10/2026)
   - [x] 6D3 projétil 3D do Cavitador (26/10/2026)
 - [ ] **6E** Energia aquática: 6E1 geradores · 6E2 Coletor de Neutrônio
@@ -219,5 +219,5 @@ alvo: `0.6.0`.
   - [ ] 6F1 Mesa de Encantamento Aquática
   - [x] 6F2 descrições melhores (26/10/2026)
 - [ ] **6G** Equipamento: 6G1 slot de acessórios (Accessories) · 6G2 Radar
-- [ ] **6H** Construção: mais decoração e blocos
+- [x] **6H** Construção: mais decoração e blocos (26/10/2026)
 - [ ] **Release 0.6.0** (versão do build e pacote)

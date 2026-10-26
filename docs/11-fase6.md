@@ -17,11 +17,11 @@
 | **6A** | **Kraken renovado (principal):** 3 modelos novos para escolher, colisão por parte, tentáculos que não brotam do nada, movimento dinâmico. **Absorve a antiga 4C** | **6A1 e 6A3 feitas** (26/10); 6A2 e 6A4 esperam a escolha | 6A2 e 6A4 esperam a escolha do modelo (6A1) | F6-1 |
 | 6B | Fauna: colisão da baleia e do cachalote, carne de baleia | **6B1 feita** (26/10) | nenhuma | F6-6 |
 | 6C | Vila: skins 3D dos Mergulhadores, funções das mesas de trabalho | a liberar | nenhuma | F6-8 |
-| 6D | Materiais e armas: Aurium, Forja Abissal nova, projétil 3D do Cavitador | **6D2 e 6D3 feitas** (26/10) | nenhuma | F6-2, F6-7 |
+| 6D | Materiais e armas: Aurium, Forja Abissal nova, projétil 3D do Cavitador | **6D1, 6D2 e 6D3 feitas** (26/10) | nenhuma | F6-2, F6-7 |
 | 6E | Energia aquática: geradores e Coletor de Neutrônio | a liberar | 6D1 (se o Aurium entrar na cadeia) | F6-2, F6-3 |
 | 6F | Encantamento: Mesa de Encantamento Aquática e descrições melhores | **6F2 feita** (26/10) | nenhuma | |
 | 6G | Equipamento: slot de acessórios (mod Accessories) e Radar | a liberar | 6G2 espera o formato do Radar | F6-4, F6-5 |
-| 6H | Construção: mais decoração e blocos | a liberar | 6D1 (a família do Aurium) | |
+| 6H | Construção: mais decoração e blocos | **feita** (26/10) | 6D1 (a família do Aurium) | |
 
 Sons: nenhum som novo nesta fase; ficam para uma subversão própria, futura ([00-decisoes.md](00-decisoes.md), linha "Sons (adiados)").
 
@@ -126,6 +126,20 @@ que o Neutrônio. O Cavitador de Neutrônio atirar "uma sprite personalizada 3D 
   | Abissal | 3/7/5/3 | 60% | levemente abaixo da netherite; dourado |
   | **Aurium** | entre os dois | ~70% | cor própria, que não confunda com o dourado Abissal nem com o ciano Neutrônio |
   | Neutrônio | 4/9/7/4 | 80% | acima da netherite; ciano; bônus fortes na água |
+
+  **Feito (26/10/2026)** por `tools/gen_phase6_aurium.py` (texturas, dados, receitas, tags, mundo, nomes) e o Java em
+  `ModMaterials`, `ModItems`, `ModBlocks`, `AuriumEffects` e `AuriumOre` (decisões em [00-decisoes.md](00-decisoes.md),
+  linha "Aurium (6D1)"):
+  - **Cor:** pérola leitosa com reflexos de opala rosa e ciano; os ícones e a armadura usam a silhueta das peças Abissais.
+  - **Números:** armadura 3/8/6/3, resistência 3, repulsão 0,1, durabilidade 45; ferramentas com 2300 usos, velocidade 9,2,
+    espada com 8 de dano, mineram debaixo d'água sem perda (como as Abissais) e ferem o escudo do Kraken a 70%.
+  - **Brilho Perolado** (conjunto completo, submerso): Poder do Conduíte e o nado rápido do conjunto Abissal.
+  - **Fonte:** Minério de Aurium na ardósia sob o leito dos oceanos profundos (y −48 a 0, veios de 4, 3 tentativas por pedaço,
+    metade some se encostar no ar), que dá Aurium Bruto (Fortuna; Toque Suave dá o minério); fornalha e alto-forno dão o
+    lingote. Ferramentas e armadura na Forja Abissal, com os desenhos das Abissais.
+  - **Cadeia do Neutrônio:** o Lingote Instável pede 4 Lingotes de Aurium no lugar dos 4 Abissais.
+  - Testado: `build` (inclui o escudo a 70%) e partes `neutronium` (receitas) e `building` (o conjunto dá Poder do Conduíte na
+    água; vitrine `construcao_02_fase6`).
 - **6D2 · Forja Abissal nova (ideia).** Modelo 3D como a Bigorna de Maré da 4D (bloco que vira para quem coloca, colisão no
   formato), com brasas e luz própria, chaminé ou tubo e bolhas. Mantém ID, receitas e a tela. **Aceite:** captura e a parte
   `forge` do `runClientGameTest` verde.
@@ -190,6 +204,13 @@ bússola de pressão", a aljava (quiver), o regulador de pressão "e outros". Um
 - **6H (ideia).** Gerador novo, no mesmo molde (`tools/gen_phase6_building.py`). Pontos de partida: a família do Aurium (como
   os Ladrilhos Abissais), peças de navio e naufrágio (lemes, âncoras, redes, cordas, barris, lanternas de navio), estátuas,
   estandartes e aquários. Lista e tamanho a fechar com o Adriano ao liberar a faixa.
+- **Feito (26/10/2026)** por `tools/gen_phase6_building.py`, que também gera o `ModDecorBlocks` (14 blocos):
+  - Família do Aurium: Ladrilhos de Aurium (8 com 8 ladrilhos de ardósia e 1 lingote), escada, laje e muro (bancada e
+    cortador), Ladrilho de Aurium Talhado (concha em leque) e Lampião de Aurium (luz 15).
+  - Peças 3D que viram para quem as coloca, com colisão no formato: Lanterna de Navio (luz 15), Leme de Navio (na parede),
+    Âncora Decorativa, Rolo de Corda, Barril de Carga, Rede de Pesca (sem colisão, com boias), Aquário (areia, coral e peixes,
+    luz 8) e Estátua do Kraken (tentáculo de pedra com o olho aceso).
+  - Estandartes ficaram de fora: os do jogo já servem. Testado: `build` e captura `construcao_02_fase6`.
 
 ## Aceite da Fase 6
 - `./gradlew build` e a parte do `runClientGameTest` de cada faixa verdes; a parte `multiplayer` verde.
