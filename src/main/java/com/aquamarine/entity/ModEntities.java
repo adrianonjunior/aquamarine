@@ -41,11 +41,11 @@ public final class ModEntities {
 
 	/** Tentáculo do Kraken (60 de vida). Caixa provisória até o modelo da 2D-M. */
 	public static final EntityType<TentacleEntity> TENTACLE = Registry.register(BuiltInRegistries.ENTITY_TYPE, TENTACLE_KEY,
-		EntityType.Builder.of(TentacleEntity::new, MobCategory.MONSTER).sized(1.5F, 6.0F).fireImmune().clientTrackingRange(16).build(TENTACLE_KEY));
+		EntityType.Builder.of(TentacleEntity::new, MobCategory.MONSTER).sized(2.0F, 9.0F).fireImmune().clientTrackingRange(16).build(TENTACLE_KEY));
 
 	/** Cria de Kraken (8 de vida). Caixa provisória até o modelo da 2D-M. */
 	public static final EntityType<YoungKrakenEntity> YOUNG_KRAKEN = Registry.register(BuiltInRegistries.ENTITY_TYPE, YOUNG_KRAKEN_KEY,
-		EntityType.Builder.of(YoungKrakenEntity::new, MobCategory.MONSTER).sized(0.9F, 0.9F).fireImmune().clientTrackingRange(10).build(YOUNG_KRAKEN_KEY));
+		EntityType.Builder.of(YoungKrakenEntity::new, MobCategory.MONSTER).sized(1.0F, 1.3F).fireImmune().clientTrackingRange(10).build(YOUNG_KRAKEN_KEY));
 
 	private static final ResourceKey<EntityType<?>> KRAKEN_EGG_KEY =
 		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("kraken_egg"));

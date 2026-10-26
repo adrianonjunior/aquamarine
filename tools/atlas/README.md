@@ -69,8 +69,8 @@ node tools/atlas/tests/browser.mjs
 
 O teste de navegador usa Edge instalado, em modo headless. `ATLAS_URL` permite testar a mesma página
 via HTTP; por padrão testa `file://`. Evidências em `build/atlas-qa/` (não versionadas).
-Ele percorre todas as versões registradas: nesta entrega são 8 versões e 61 clipes, incluindo os
-16 originais do Kraken. Revisão visual e proveniência em [DESIGN.md](DESIGN.md).
+Ele percorre todas as versões registradas: são 11 versões e 74 clipes, incluindo os
+16 originais do Kraken e a v2 do Tentáculo, da Cria e do Ovo (Fase 4). Revisão visual e proveniência em [DESIGN.md](DESIGN.md).
 O build falha em formatos de animação Java desconhecidos para não exibir silenciosamente dados incompletos.
 Não é necessário compilar o mod para trabalhar no Atlas.
 
@@ -78,7 +78,8 @@ Não é necessário compilar o mod para trabalhar no Atlas.
 
 - Texturas e mapas UV são cópias dos recursos do próprio projeto; não foram gerados PNGs novos.
 - Rig do Kraken: caixas do `.bbmodel`, pose radial e UV cúbico do Java. Baleias/Moréia: geradores do
-  projeto. Criaturas pequenas: adaptadores explícitos do Java. Clipes atuais vêm do Java ou do
+  projeto. Tentáculo, Cria e Ovo: o `rig.json` que o gerador do jogo (`tools/models/spawnlings/build_model.py`)
+  grava junto com o Java. Clipes atuais vêm do Java ou do
   gerador do Kraken, não das aproximações presentes em alguns `.bbmodel` antigos.
 - A v2 acrescenta mandíbula, abas e duas juntas por tentáculo, reaproveitando as ilhas da textura
   existente. Ajustes de textura podem ser feitos depois do aceite da estrutura.

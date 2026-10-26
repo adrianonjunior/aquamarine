@@ -65,7 +65,8 @@ function texture(src){
 function material(){
   const mode=$('material').value;
   return new THREE.MeshStandardMaterial({map:mode==='texture'?texture(selectedVersion().texture):mode==='uv'?texture(model.uvTexture):null,
-    color:mode==='clay'?0x97c1c3:mode==='wire'?0x6ee4cf:0xffffff,roughness:.88,metalness:0,side:THREE.DoubleSide,alphaTest:.15,wireframe:mode==='wire'});
+    color:mode==='clay'?0x97c1c3:mode==='wire'?0x6ee4cf:0xffffff,roughness:.88,metalness:0,side:THREE.DoubleSide,wireframe:mode==='wire',
+    ...(model.translucent&&mode==='texture'?{transparent:true,alphaTest:.02}:{alphaTest:.15})});
 }
 function disposeGroup(group){
   if(!group)return;

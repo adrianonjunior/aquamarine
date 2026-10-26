@@ -1,6 +1,7 @@
 """Verifica contratos que podem se perder na conversão Java → navegador."""
 import json
 import math
+import re
 import sys
 import unittest
 import tempfile
@@ -56,14 +57,21 @@ class CatalogTest(unittest.TestCase):
         generator=(MODELS/"kraken/build_model.py").read_text(encoding="utf-8")
         self.assertNotIn("kraken_preview_v2",generator)
 
-    def test_egg_uses_java_parent_and_uv(self):
+    def test_spawnlings_match_generated_java(self):
+        # O gerador grava o Java e o rig.json juntos: caixas e UV do site são as do jogo.
+        for kind,cls in (("tentacle","Tentacle"),("young_kraken","YoungKraken"),("kraken_egg","KrakenEgg")):
+            m=next(m for m in self.models if m["id"]==kind)
+            java=(BASE.parents[1]/"src/client/java/com/aquamarine/client/entity"/kind/f"{cls}Model.java").read_text(encoding="utf-8")
+            offsets=sorted([int(u),int(v)] for u,v in re.findall(r"texOffs\((\d+), (\d+)\)",java))
+            self.assertEqual(offsets,sorted(c["uv"] for c in m["cubes"]),kind)
         egg=next(m for m in self.models if m["id"]=="kraken_egg")
-        self.assertEqual(next(b for b in egg["bones"] if b["name"]=="tendril_1")["parent"],"shell")
-        self.assertEqual(next(c for c in egg["cubes"] if c["name"]=="cap")["uv"],[48,0])
+        self.assertEqual(next(b for b in egg["bones"] if b["name"]=="embryo")["parent"],"anchor")
+        self.assertTrue(egg["translucent"])
 
     def test_registry_preserves_originals_and_proposal(self):
         registry=json.loads((BASE/"versions/registry.json").read_text(encoding="utf-8"))
-        self.assertEqual(len(registry),8)
+        self.assertEqual(len(registry),11)
+        latest={r["id"]:r["file"] for r in registry}  # última versão registrada de cada modelo
         for m in self.models:
             old=json.loads((BASE/"versions"/f"{m['id']}-v1.json").read_text(encoding="utf-8"))
             if m["id"]=="kraken":
@@ -71,9 +79,10 @@ class CatalogTest(unittest.TestCase):
                 self.assertEqual(old["clips"],m["baseline"])
                 self.assertTrue({b["name"] for b in old["bones"]}<{b["name"] for b in m["bones"]})
                 continue
-            self.assertEqual(old["bones"],m["bones"])
-            self.assertEqual(old["cubes"],m["cubes"])
-            self.assertEqual(old["clips"],m["clips"])
+            current=json.loads((BASE/"versions"/latest[m["id"]]).read_text(encoding="utf-8"))
+            self.assertEqual(current["bones"],m["bones"])
+            self.assertEqual(current["cubes"],m["cubes"])
+            self.assertEqual(current["clips"],m["clips"])
         new=json.loads((BASE/"versions/kraken-v2.json").read_text(encoding="utf-8"))
         self.assertEqual({b["name"] for b in new["bones"]},{b["name"] for b in self.kraken["bones"]})
         self.assertEqual({n:(c["length"],c["loop"]) for n,c in new["clips"].items()},

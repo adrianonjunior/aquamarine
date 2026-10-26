@@ -157,3 +157,16 @@ pequenos com aprovação do Adriano** (agentes não ouvem). Arquivos novos em `t
   ([00-decisoes.md](00-decisoes.md), "Tamanho do Kraken"). Falta o aceite no jogo.
 
 Uso, limites e evidências: [Atlas técnico](../tools/atlas/README.md).
+
+## Fase 4: Kraken vivo, oficina, construção aquática e Neutrônio (**liberada em 25/10/2026**)
+Especificação, ordem e painel do que já foi feito: [10-fase4.md](10-fase4.md). Decisão: [00-decisoes.md](00-decisoes.md), "Fase 4".
+
+- [x] **4A** Cria, Ovo e Tentáculo refeitos (gerador único com Java, texturas, brilho, UV e rig do site; ovo com
+  filhote visível; v2 no Atlas). Testado na parte `spawnlings` do `runClientGameTest`.
+- [ ] **4B** Oricálcio → Abissal, com alias dos IDs antigos.
+- [ ] **4C** Kraken: partes de colisão por tentáculo e cabeça, cabeça sólida, movimento constante.
+- [ ] **4D** Retexturas (oficina da Vila, pontas, itens de mergulho, troféus) e rework da Boia de Âncora.
+- [ ] **4E** Blocos de construção aquáticos e vidros rachados.
+- [ ] **4F** Neutrônio: minério, cadeia de processos, equipamento com bônus na água, visual estilo Avaritia.
+- [ ] **4G** Cavitador de Neutrônio: modelo 3D, pulso de cavitação, lançador de arpões, partículas.
+- [ ] **4S** Sons da Fase 4 (depois, a pedido do Adriano).

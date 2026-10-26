@@ -89,6 +89,7 @@ da verdade é [docs/00-decisoes.md](docs/00-decisoes.md); seções de **ideia** 
 | docs/07-roadmap.md | Marcos e faixas das Entregas 1 e 2 e da Fase 3 |
 | docs/08-fase3.md | Especificação da Fase 3 |
 | docs/09-audio.md | Áudio: direção sonora, camadas de ambiência, música, lista de efeitos, método e padrões |
+| docs/10-fase4.md | Fase 4: plano, painel do que já foi feito e especificação (Kraken vivo, oficina, blocos aquáticos, Neutrônio) |
 | prompts/audio.md | Prompt do agente que produz e integra o áudio (Áudio v1) |
 | docs/relatorio-2q.md | QA visual da Entrega 2 |
 | docs/relatorio-3q.md | QA da Fase 3 e o roteiro do aceite com jogadores reais |

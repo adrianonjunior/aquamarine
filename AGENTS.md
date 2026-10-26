@@ -9,9 +9,10 @@
 > [CONTEXTO.md](CONTEXTO.md) e confira os marcos em [docs/07-roadmap.md](docs/07-roadmap.md)
 > antes de assumir uma faixa. Um handoff antigo não comprova o estado atual da tarefa.
 
-> **FASE ATUAL: ENTREGA 1, ENTREGA 2 E FASE 3 IMPLEMENTADAS** (faixas fechadas em 25/10/2026; o aceite com
-> jogadores reais é do Adriano, ver docs/07-roadmap.md). **Nada além está liberado:** a Cidade Perdida e o
-> resto continuam em planejamento; não escreva código, texturas ou modelos novos até o Adriano liberar
+> **FASE ATUAL: FASE 4 LIBERADA** pelo Adriano em 25/10/2026 ([docs/10-fase4.md](docs/10-fase4.md)). Entrega 1,
+> Entrega 2 e Fase 3 estão implementadas (o aceite com jogadores reais é do Adriano, ver docs/07-roadmap.md).
+> **Fora da Fase 4 nada está liberado:** a Cidade Perdida e o resto continuam em planejamento; não escreva código,
+> texturas ou modelos fora dela até o Adriano liberar
 > explicitamente. Correções e testes do que já existe podem ser feitos a pedido dele. Na dúvida, pergunte.
 
 ## ⚠️ Vários agentes rodam ao mesmo tempo

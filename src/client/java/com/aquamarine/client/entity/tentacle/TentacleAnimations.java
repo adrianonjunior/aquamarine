@@ -6,29 +6,754 @@ import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
 import org.joml.Vector3f;
 
+/** GERADO por tools/models/spawnlings/build_model.py: não edite à mão. */
 public final class TentacleAnimations {
-    private static final AnimationChannel.Target ROT = AnimationChannel.Targets.ROTATION;
-    private static final AnimationChannel.Interpolation SMOOTH = AnimationChannel.Interpolations.CATMULLROM;
-    public static final AnimationDefinition IDLE = clip(2.4F, true, 10, -4, "segment_1", "segment_2", "segment_3", "segment_4", "segment_5", "segment_6");
-    public static final AnimationDefinition RISE = clip(1.2F, false, -28, 14, "segment_1", "segment_2", "segment_3");
-    public static final AnimationDefinition SLAM = clip(1.35F, false, -34, 52, "segment_1", "segment_2", "segment_3");
-    public static final AnimationDefinition GRAB = clip(1.6F, false, -25, 42, "segment_2", "segment_3", "segment_4");
-    public static final AnimationDefinition RELEASE = clip(1.1F, false, 20, -10, "segment_3", "segment_4", "segment_5");
+	private static final AnimationChannel.Target ROT = AnimationChannel.Targets.ROTATION;
+	private static final AnimationChannel.Target POS = AnimationChannel.Targets.POSITION;
+	private static final AnimationChannel.Target SCALE = AnimationChannel.Targets.SCALE;
+	private static final AnimationChannel.Interpolation SMOOTH = AnimationChannel.Interpolations.CATMULLROM;
+	private static final AnimationChannel.Interpolation LINEAR = AnimationChannel.Interpolations.LINEAR;
 
-    private static AnimationDefinition clip(float duration, boolean loop, float windup, float peak, String... bones) {
-        var builder = AnimationDefinition.Builder.withLength(duration);
-        if (loop) builder.looping();
-        for (int i = 0; i < bones.length; i++) {
-            float direction = i % 2 == 0 ? 1 : -1;
-            builder.addAnimation(bones[i], new AnimationChannel(ROT,
-                frame(0, 0), frame(duration * .28F, windup * direction),
-                frame(duration * .58F, peak * direction), frame(duration, 0)));
-        }
-        return builder.build();
-    }
-    private static Keyframe frame(float time, float z) {
-        Vector3f vector = KeyframeAnimations.degreeVec(0, 0, z);
-        return new Keyframe(time, vector, SMOOTH);
-    }
-    private TentacleAnimations() {}
+	public static final AnimationDefinition IDLE = idle();
+	public static final AnimationDefinition RISE = rise();
+	public static final AnimationDefinition SLAM = slam();
+	public static final AnimationDefinition GRAB = grab();
+	public static final AnimationDefinition RELEASE = release();
+
+	private static AnimationDefinition idle() {
+		return AnimationDefinition.Builder.withLength(2.4F).looping()
+			.addAnimation("seg_0", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0.9178F), SMOOTH),
+				k(0.2F, rot(0.8F, 0F, 0.4083F), SMOOTH),
+				k(0.4F, rot(1.3856F, 0F, -0.2106F), SMOOTH),
+				k(0.6F, rot(1.6F, 0F, -0.7731F), SMOOTH),
+				k(0.8F, rot(1.3856F, 0F, -1.1284F), SMOOTH),
+				k(1F, rot(0.8F, 0F, -1.1814F), SMOOTH),
+				k(1.2F, rot(0F, 0F, -0.9178F), SMOOTH),
+				k(1.4F, rot(-0.8F, 0F, -0.4083F), SMOOTH),
+				k(1.6F, rot(-1.3856F, 0F, 0.2106F), SMOOTH),
+				k(1.8F, rot(-1.6F, 0F, 0.7731F), SMOOTH),
+				k(2F, rot(-1.3856F, 0F, 1.1284F), SMOOTH),
+				k(2.2F, rot(-0.8F, 0F, 1.1814F), SMOOTH),
+				k(2.4F, rot(0F, 0F, 0.9178F), SMOOTH)))
+			.addAnimation("seg_1", new AnimationChannel(ROT,
+				k(0F, rot(-1.0004F, 0F, 1.6718F), SMOOTH),
+				k(0.2F, rot(0.1691F, 0F, 1.1893F), SMOOTH),
+				k(0.4F, rot(1.2934F, 0F, 0.388F), SMOOTH),
+				k(0.6F, rot(2.071F, 0F, -0.5172F), SMOOTH),
+				k(0.8F, rot(2.2938F, 0F, -1.2838F), SMOOTH),
+				k(1F, rot(1.9019F, 0F, -1.7064F), SMOOTH),
+				k(1.2F, rot(1.0004F, 0F, -1.6718F), SMOOTH),
+				k(1.4F, rot(-0.1691F, 0F, -1.1893F), SMOOTH),
+				k(1.6F, rot(-1.2934F, 0F, -0.388F), SMOOTH),
+				k(1.8F, rot(-2.071F, 0F, 0.5172F), SMOOTH),
+				k(2F, rot(-2.2938F, 0F, 1.2838F), SMOOTH),
+				k(2.2F, rot(-1.9019F, 0F, 1.7064F), SMOOTH),
+				k(2.4F, rot(-1.0004F, 0F, 1.6718F), SMOOTH)))
+			.addAnimation("seg_2", new AnimationChannel(ROT,
+				k(0F, rot(-2.35F, 0F, 2.2885F), SMOOTH),
+				k(0.2F, rot(-1.1027F, 0F, 2.0967F), SMOOTH),
+				k(0.4F, rot(0.44F, 0F, 1.3431F), SMOOTH),
+				k(0.6F, rot(1.8648F, 0F, 0.2296F), SMOOTH),
+				k(0.8F, rot(2.79F, 0F, -0.9454F), SMOOTH),
+				k(1F, rot(2.9676F, 0F, -1.8671F), SMOOTH),
+				k(1.2F, rot(2.35F, 0F, -2.2885F), SMOOTH),
+				k(1.4F, rot(1.1027F, 0F, -2.0967F), SMOOTH),
+				k(1.6F, rot(-0.44F, 0F, -1.3431F), SMOOTH),
+				k(1.8F, rot(-1.8648F, 0F, -0.2296F), SMOOTH),
+				k(2F, rot(-2.79F, 0F, 0.9454F), SMOOTH),
+				k(2.2F, rot(-2.9676F, 0F, 1.8671F), SMOOTH),
+				k(2.4F, rot(-2.35F, 0F, 2.2885F), SMOOTH)))
+			.addAnimation("seg_3", new AnimationChannel(ROT,
+				k(0F, rot(-3.6102F, 0F, 2.5011F), SMOOTH),
+				k(0.2F, rot(-2.7213F, 0F, 2.8492F), SMOOTH),
+				k(0.4F, rot(-1.1033F, 0F, 2.4339F), SMOOTH),
+				k(0.6F, rot(0.8103F, 0F, 1.3664F), SMOOTH),
+				k(0.8F, rot(2.5069F, 0F, -0.0673F), SMOOTH),
+				k(1F, rot(3.5317F, 0F, -1.4828F), SMOOTH),
+				k(1.2F, rot(3.6102F, 0F, -2.5011F), SMOOTH),
+				k(1.4F, rot(2.7213F, 0F, -2.8492F), SMOOTH),
+				k(1.6F, rot(1.1033F, 0F, -2.4339F), SMOOTH),
+				k(1.8F, rot(-0.8103F, 0F, -1.3664F), SMOOTH),
+				k(2F, rot(-2.5069F, 0F, 0.0673F), SMOOTH),
+				k(2.2F, rot(-3.5317F, 0F, 1.4828F), SMOOTH),
+				k(2.4F, rot(-3.6102F, 0F, 2.5011F), SMOOTH)))
+			.addAnimation("seg_4", new AnimationChannel(ROT,
+				k(0F, rot(-4.2849F, 0F, 2.1135F), SMOOTH),
+				k(0.2F, rot(-4.2107F, 0F, 3.162F), SMOOTH),
+				k(0.4F, rot(-3.0082F, 0F, 3.3632F), SMOOTH),
+				k(0.6F, rot(-0.9997F, 0F, 2.6633F), SMOOTH),
+				k(0.8F, rot(1.2767F, 0F, 1.2498F), SMOOTH),
+				k(1F, rot(3.211F, 0F, -0.4987F), SMOOTH),
+				k(1.2F, rot(4.2849F, 0F, -2.1135F), SMOOTH),
+				k(1.4F, rot(4.2107F, 0F, -3.162F), SMOOTH),
+				k(1.6F, rot(3.0082F, 0F, -3.3632F), SMOOTH),
+				k(1.8F, rot(0.9997F, 0F, -2.6633F), SMOOTH),
+				k(2F, rot(-1.2767F, 0F, -1.2498F), SMOOTH),
+				k(2.2F, rot(-3.211F, 0F, 0.4987F), SMOOTH),
+				k(2.4F, rot(-4.2849F, 0F, 2.1135F), SMOOTH)))
+			.addAnimation("seg_5", new AnimationChannel(ROT,
+				k(0F, rot(-3.9682F, 0F, 1.0566F), SMOOTH),
+				k(0.2F, rot(-5.0384F, 0F, 2.8181F), SMOOTH),
+				k(0.4F, rot(-4.7586F, 0F, 3.8245F), SMOOTH),
+				k(0.6F, rot(-3.2037F, 0F, 3.8061F), SMOOTH),
+				k(0.8F, rot(-0.7904F, 0F, 2.7678F), SMOOTH),
+				k(1F, rot(1.8347F, 0F, 0.988F), SMOOTH),
+				k(1.2F, rot(3.9682F, 0F, -1.0566F), SMOOTH),
+				k(1.4F, rot(5.0384F, 0F, -2.8181F), SMOOTH),
+				k(1.6F, rot(4.7586F, 0F, -3.8245F), SMOOTH),
+				k(1.8F, rot(3.2037F, 0F, -3.8061F), SMOOTH),
+				k(2F, rot(0.7904F, 0F, -2.7678F), SMOOTH),
+				k(2.2F, rot(-1.8347F, 0F, -0.988F), SMOOTH),
+				k(2.4F, rot(-3.9682F, 0F, 1.0566F), SMOOTH)))
+			.addAnimation("seg_6", new AnimationChannel(ROT,
+				k(0F, rot(-2.4788F, 0F, -0.5798F), SMOOTH),
+				k(0.2F, rot(-4.7685F, 0F, 1.7291F), SMOOTH),
+				k(0.4F, rot(-5.7805F, 0F, 3.5747F), SMOOTH),
+				k(0.6F, rot(-5.2436F, 0F, 4.4625F), SMOOTH),
+				k(0.8F, rot(-3.3017F, 0F, 4.1545F), SMOOTH),
+				k(1F, rot(-0.4751F, 0F, 2.7334F), SMOOTH),
+				k(1.2F, rot(2.4788F, 0F, 0.5798F), SMOOTH),
+				k(1.4F, rot(4.7685F, 0F, -1.7291F), SMOOTH),
+				k(1.6F, rot(5.7805F, 0F, -3.5747F), SMOOTH),
+				k(1.8F, rot(5.2436F, 0F, -4.4625F), SMOOTH),
+				k(2F, rot(3.3017F, 0F, -4.1545F), SMOOTH),
+				k(2.2F, rot(0.4751F, 0F, -2.7334F), SMOOTH),
+				k(2.4F, rot(-2.4788F, 0F, -0.5798F), SMOOTH)))
+			.addAnimation("seg_7", new AnimationChannel(ROT,
+				k(0F, rot(0.0546F, 0F, -2.5495F), SMOOTH),
+				k(0.2F, rot(-3.2026F, 0F, -0.0283F), SMOOTH),
+				k(0.4F, rot(-5.6016F, 0F, 2.5004F), SMOOTH),
+				k(0.6F, rot(-6.4998F, 0F, 4.3592F), SMOOTH),
+				k(0.8F, rot(-5.6563F, 0F, 5.0499F), SMOOTH),
+				k(1F, rot(-3.2972F, 0F, 4.3875F), SMOOTH),
+				k(1.2F, rot(-0.0546F, 0F, 2.5495F), SMOOTH),
+				k(1.4F, rot(3.2026F, 0F, 0.0283F), SMOOTH),
+				k(1.6F, rot(5.6016F, 0F, -2.5004F), SMOOTH),
+				k(1.8F, rot(6.4998F, 0F, -4.3592F), SMOOTH),
+				k(2F, rot(5.6563F, 0F, -5.0499F), SMOOTH),
+				k(2.2F, rot(3.2972F, 0F, -4.3875F), SMOOTH),
+				k(2.4F, rot(0.0546F, 0F, -2.5495F), SMOOTH)))
+			.addAnimation("seg_8", new AnimationChannel(ROT,
+				k(0F, rot(3.1861F, 0F, -4.4864F), SMOOTH),
+				k(0.2F, rot(-0.469F, 0F, -2.2096F), SMOOTH),
+				k(0.4F, rot(-3.9986F, 0F, 0.6592F), SMOOTH),
+				k(0.6F, rot(-6.4567F, 0F, 3.3514F), SMOOTH),
+				k(0.8F, rot(-7.1847F, 0F, 5.1456F), SMOOTH),
+				k(1F, rot(-5.9876F, 0F, 5.5611F), SMOOTH),
+				k(1.2F, rot(-3.1861F, 0F, 4.4864F), SMOOTH),
+				k(1.4F, rot(0.469F, 0F, 2.2096F), SMOOTH),
+				k(1.6F, rot(3.9986F, 0F, -0.6592F), SMOOTH),
+				k(1.8F, rot(6.4567F, 0F, -3.3514F), SMOOTH),
+				k(2F, rot(7.1847F, 0F, -5.1456F), SMOOTH),
+				k(2.2F, rot(5.9876F, 0F, -5.5611F), SMOOTH),
+				k(2.4F, rot(3.1861F, 0F, -4.4864F), SMOOTH)))
+			.addAnimation("seg_9", new AnimationChannel(ROT,
+				k(0F, rot(6.2293F, 0F, -5.9714F), SMOOTH),
+				k(0.2F, rot(2.9655F, 0F, -4.4357F), SMOOTH),
+				k(0.4F, rot(-1.0929F, 0F, -1.7114F), SMOOTH),
+				k(0.6F, rot(-4.8585F, 0F, 1.4714F), SMOOTH),
+				k(0.8F, rot(-7.3223F, 0F, 4.26F), SMOOTH),
+				k(1F, rot(-7.824F, 0F, 5.9071F), SMOOTH),
+				k(1.2F, rot(-6.2293F, 0F, 5.9714F), SMOOTH),
+				k(1.4F, rot(-2.9655F, 0F, 4.4357F), SMOOTH),
+				k(1.6F, rot(1.0929F, 0F, 1.7114F), SMOOTH),
+				k(1.8F, rot(4.8585F, 0F, -1.4714F), SMOOTH),
+				k(2F, rot(7.3223F, 0F, -4.26F), SMOOTH),
+				k(2.2F, rot(7.824F, 0F, -5.9071F), SMOOTH),
+				k(2.4F, rot(6.2293F, 0F, -5.9714F), SMOOTH)))
+			.addAnimation("seg_10", new AnimationChannel(ROT,
+				k(0F, rot(8.4068F, 0F, -6.6161F), SMOOTH),
+				k(0.2F, rot(6.374F, 0F, -6.2582F), SMOOTH),
+				k(0.4F, rot(2.6334F, 0F, -4.2234F), SMOOTH),
+				k(0.6F, rot(-1.8128F, 0F, -1.0569F), SMOOTH),
+				k(0.8F, rot(-5.7733F, 0F, 2.3928F), SMOOTH),
+				k(1F, rot(-8.1869F, 0F, 5.2013F), SMOOTH),
+				k(1.2F, rot(-8.4068F, 0F, 6.6161F), SMOOTH),
+				k(1.4F, rot(-6.374F, 0F, 6.2582F), SMOOTH),
+				k(1.6F, rot(-2.6334F, 0F, 4.2234F), SMOOTH),
+				k(1.8F, rot(1.8128F, 0F, 1.0569F), SMOOTH),
+				k(2F, rot(5.7733F, 0F, -2.3928F), SMOOTH),
+				k(2.2F, rot(8.1869F, 0F, -5.2013F), SMOOTH),
+				k(2.4F, rot(8.4068F, 0F, -6.6161F), SMOOTH)))
+			.addAnimation("seg_11", new AnimationChannel(ROT,
+				k(0F, rot(9.0387F, 0F, -6.1487F), SMOOTH),
+				k(0.2F, rot(8.9223F, 0F, -7.2456F), SMOOTH),
+				k(0.4F, rot(6.4151F, 0F, -6.401F), SMOOTH),
+				k(0.6F, rot(2.189F, 0F, -3.8413F), SMOOTH),
+				k(0.8F, rot(-2.6236F, 0F, -0.2523F), SMOOTH),
+				k(1F, rot(-6.7332F, 0F, 3.4043F), SMOOTH),
+				k(1.2F, rot(-9.0387F, 0F, 6.1487F), SMOOTH),
+				k(1.4F, rot(-8.9223F, 0F, 7.2456F), SMOOTH),
+				k(1.6F, rot(-6.4151F, 0F, 6.401F), SMOOTH),
+				k(1.8F, rot(-2.189F, 0F, 3.8413F), SMOOTH),
+				k(2F, rot(2.6236F, 0F, 0.2523F), SMOOTH),
+				k(2.2F, rot(6.7332F, 0F, -3.4043F), SMOOTH),
+				k(2.4F, rot(9.0387F, 0F, -6.1487F), SMOOTH)))
+			.addAnimation("tip", new AnimationChannel(ROT,
+				k(0F, rot(7.7276F, 0F, -4.4836F), SMOOTH),
+				k(0.2F, rot(9.8658F, 0F, -7.0742F), SMOOTH),
+				k(0.4F, rot(9.3604F, 0F, -7.7693F), SMOOTH),
+				k(0.6F, rot(6.3469F, 0F, -6.3826F), SMOOTH),
+				k(0.8F, rot(1.6328F, 0F, -3.2856F), SMOOTH),
+				k(1F, rot(-3.5189F, 0F, 0.6917F), SMOOTH),
+				k(1.2F, rot(-7.7276F, 0F, 4.4836F), SMOOTH),
+				k(1.4F, rot(-9.8658F, 0F, 7.0742F), SMOOTH),
+				k(1.6F, rot(-9.3604F, 0F, 7.7693F), SMOOTH),
+				k(1.8F, rot(-6.3469F, 0F, 6.3826F), SMOOTH),
+				k(2F, rot(-1.6328F, 0F, 3.2856F), SMOOTH),
+				k(2.2F, rot(3.5189F, 0F, -0.6917F), SMOOTH),
+				k(2.4F, rot(7.7276F, 0F, -4.4836F), SMOOTH)))
+			.addAnimation("hook", new AnimationChannel(ROT,
+				k(0F, rot(5.7535F, 0F, 0F), SMOOTH),
+				k(0.2F, rot(5.8337F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(4.3507F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(1.702F, 0F, 0F), SMOOTH),
+				k(0.8F, rot(-1.4028F, 0F, 0F), SMOOTH),
+				k(1F, rot(-4.1317F, 0F, 0F), SMOOTH),
+				k(1.2F, rot(-5.7535F, 0F, 0F), SMOOTH),
+				k(1.4F, rot(-5.8337F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(-4.3507F, 0F, 0F), SMOOTH),
+				k(1.8F, rot(-1.702F, 0F, 0F), SMOOTH),
+				k(2F, rot(1.4028F, 0F, 0F), SMOOTH),
+				k(2.2F, rot(4.1317F, 0F, 0F), SMOOTH),
+				k(2.4F, rot(5.7535F, 0F, 0F), SMOOTH)))
+			.build();
+	}
+
+	private static AnimationDefinition rise() {
+		return AnimationDefinition.Builder.withLength(1.5F)
+			.addAnimation("base", new AnimationChannel(POS,
+				k(0F, pos(0F, -120F, 0F), SMOOTH),
+				k(0.55F, pos(0F, 4F, 0F), SMOOTH),
+				k(0.75F, pos(0F, -2F, 0F), SMOOTH),
+				k(1F, pos(0F, 0F, 0F), SMOOTH),
+				k(1.5F, pos(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_0", new AnimationChannel(ROT,
+				k(0F, rot(20F, 0F, 0F), SMOOTH),
+				k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1F, rot(-3.8F, 0F, 0.8F), LINEAR),
+				k(1.07F, rot(-6.2F, 0F, -0.8F), LINEAR),
+				k(1.14F, rot(-3.8F, 0F, 0.8F), LINEAR),
+				k(1.21F, rot(-6.2F, 0F, -0.8F), LINEAR),
+				k(1.28F, rot(-3.8F, 0F, 0.8F), LINEAR),
+				k(1.35F, rot(-6.2F, 0F, -0.8F), LINEAR),
+				k(1.42F, rot(-3.8F, 0F, 0.8F), LINEAR),
+				k(1.49F, rot(-6.2F, 0F, -0.8F), LINEAR),
+				k(1.5F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_1", new AnimationChannel(ROT,
+				k(0F, rot(20F, 0F, 0F), SMOOTH),
+				k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1F, rot(-3.65F, 0F, 0.8F), LINEAR),
+				k(1.07F, rot(-6.35F, 0F, -0.8F), LINEAR),
+				k(1.14F, rot(-3.65F, 0F, 0.8F), LINEAR),
+				k(1.21F, rot(-6.35F, 0F, -0.8F), LINEAR),
+				k(1.28F, rot(-3.65F, 0F, 0.8F), LINEAR),
+				k(1.35F, rot(-6.35F, 0F, -0.8F), LINEAR),
+				k(1.42F, rot(-3.65F, 0F, 0.8F), LINEAR),
+				k(1.49F, rot(-6.35F, 0F, -0.8F), LINEAR),
+				k(1.5F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_2", new AnimationChannel(ROT,
+				k(0F, rot(20F, 0F, 0F), SMOOTH),
+				k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1F, rot(-3.5F, 0F, 0.8F), LINEAR),
+				k(1.07F, rot(-6.5F, 0F, -0.8F), LINEAR),
+				k(1.14F, rot(-3.5F, 0F, 0.8F), LINEAR),
+				k(1.21F, rot(-6.5F, 0F, -0.8F), LINEAR),
+				k(1.28F, rot(-3.5F, 0F, 0.8F), LINEAR),
+				k(1.35F, rot(-6.5F, 0F, -0.8F), LINEAR),
+				k(1.42F, rot(-3.5F, 0F, 0.8F), LINEAR),
+				k(1.49F, rot(-6.5F, 0F, -0.8F), LINEAR),
+				k(1.5F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_3", new AnimationChannel(ROT,
+				k(0F, rot(20F, 0F, 0F), SMOOTH),
+				k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1F, rot(-3.35F, 0F, 0.8F), LINEAR),
+				k(1.07F, rot(-6.65F, 0F, -0.8F), LINEAR),
+				k(1.14F, rot(-3.35F, 0F, 0.8F), LINEAR),
+				k(1.21F, rot(-6.65F, 0F, -0.8F), LINEAR),
+				k(1.28F, rot(-3.35F, 0F, 0.8F), LINEAR),
+				k(1.35F, rot(-6.65F, 0F, -0.8F), LINEAR),
+				k(1.42F, rot(-3.35F, 0F, 0.8F), LINEAR),
+				k(1.49F, rot(-6.65F, 0F, -0.8F), LINEAR),
+				k(1.5F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_4", new AnimationChannel(ROT,
+				k(0F, rot(20F, 0F, 0F), SMOOTH),
+				k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1F, rot(-3.2F, 0F, 0.8F), LINEAR),
+				k(1.07F, rot(-6.8F, 0F, -0.8F), LINEAR),
+				k(1.14F, rot(-3.2F, 0F, 0.8F), LINEAR),
+				k(1.21F, rot(-6.8F, 0F, -0.8F), LINEAR),
+				k(1.28F, rot(-3.2F, 0F, 0.8F), LINEAR),
+				k(1.35F, rot(-6.8F, 0F, -0.8F), LINEAR),
+				k(1.42F, rot(-3.2F, 0F, 0.8F), LINEAR),
+				k(1.49F, rot(-6.8F, 0F, -0.8F), LINEAR),
+				k(1.5F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_5", new AnimationChannel(ROT,
+				k(0F, rot(20F, 0F, 0F), SMOOTH),
+				k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1F, rot(-3.05F, 0F, 0.8F), LINEAR),
+				k(1.07F, rot(-6.95F, 0F, -0.8F), LINEAR),
+				k(1.14F, rot(-3.05F, 0F, 0.8F), LINEAR),
+				k(1.21F, rot(-6.95F, 0F, -0.8F), LINEAR),
+				k(1.28F, rot(-3.05F, 0F, 0.8F), LINEAR),
+				k(1.35F, rot(-6.95F, 0F, -0.8F), LINEAR),
+				k(1.42F, rot(-3.05F, 0F, 0.8F), LINEAR),
+				k(1.49F, rot(-6.95F, 0F, -0.8F), LINEAR),
+				k(1.5F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_6", new AnimationChannel(ROT,
+				k(0F, rot(20F, 0F, 0F), SMOOTH),
+				k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1F, rot(-2.9F, 0F, 0.8F), LINEAR),
+				k(1.07F, rot(-7.1F, 0F, -0.8F), LINEAR),
+				k(1.14F, rot(-2.9F, 0F, 0.8F), LINEAR),
+				k(1.21F, rot(-7.1F, 0F, -0.8F), LINEAR),
+				k(1.28F, rot(-2.9F, 0F, 0.8F), LINEAR),
+				k(1.35F, rot(-7.1F, 0F, -0.8F), LINEAR),
+				k(1.42F, rot(-2.9F, 0F, 0.8F), LINEAR),
+				k(1.49F, rot(-7.1F, 0F, -0.8F), LINEAR),
+				k(1.5F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_7", new AnimationChannel(ROT,
+				k(0F, rot(20F, 0F, 0F), SMOOTH),
+				k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1F, rot(-2.75F, 0F, 0.8F), LINEAR),
+				k(1.07F, rot(-7.25F, 0F, -0.8F), LINEAR),
+				k(1.14F, rot(-2.75F, 0F, 0.8F), LINEAR),
+				k(1.21F, rot(-7.25F, 0F, -0.8F), LINEAR),
+				k(1.28F, rot(-2.75F, 0F, 0.8F), LINEAR),
+				k(1.35F, rot(-7.25F, 0F, -0.8F), LINEAR),
+				k(1.42F, rot(-2.75F, 0F, 0.8F), LINEAR),
+				k(1.49F, rot(-7.25F, 0F, -0.8F), LINEAR),
+				k(1.5F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_8", new AnimationChannel(ROT,
+				k(0F, rot(20F, 0F, 0F), SMOOTH),
+				k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1F, rot(-2.6F, 0F, 0.8F), LINEAR),
+				k(1.07F, rot(-7.4F, 0F, -0.8F), LINEAR),
+				k(1.14F, rot(-2.6F, 0F, 0.8F), LINEAR),
+				k(1.21F, rot(-7.4F, 0F, -0.8F), LINEAR),
+				k(1.28F, rot(-2.6F, 0F, 0.8F), LINEAR),
+				k(1.35F, rot(-7.4F, 0F, -0.8F), LINEAR),
+				k(1.42F, rot(-2.6F, 0F, 0.8F), LINEAR),
+				k(1.49F, rot(-7.4F, 0F, -0.8F), LINEAR),
+				k(1.5F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_9", new AnimationChannel(ROT,
+				k(0F, rot(20F, 0F, 0F), SMOOTH),
+				k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1F, rot(-2.45F, 0F, 0.8F), LINEAR),
+				k(1.07F, rot(-7.55F, 0F, -0.8F), LINEAR),
+				k(1.14F, rot(-2.45F, 0F, 0.8F), LINEAR),
+				k(1.21F, rot(-7.55F, 0F, -0.8F), LINEAR),
+				k(1.28F, rot(-2.45F, 0F, 0.8F), LINEAR),
+				k(1.35F, rot(-7.55F, 0F, -0.8F), LINEAR),
+				k(1.42F, rot(-2.45F, 0F, 0.8F), LINEAR),
+				k(1.49F, rot(-7.55F, 0F, -0.8F), LINEAR),
+				k(1.5F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_10", new AnimationChannel(ROT,
+				k(0F, rot(20F, 0F, 0F), SMOOTH),
+				k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1F, rot(-2.3F, 0F, 0.8F), LINEAR),
+				k(1.07F, rot(-7.7F, 0F, -0.8F), LINEAR),
+				k(1.14F, rot(-2.3F, 0F, 0.8F), LINEAR),
+				k(1.21F, rot(-7.7F, 0F, -0.8F), LINEAR),
+				k(1.28F, rot(-2.3F, 0F, 0.8F), LINEAR),
+				k(1.35F, rot(-7.7F, 0F, -0.8F), LINEAR),
+				k(1.42F, rot(-2.3F, 0F, 0.8F), LINEAR),
+				k(1.49F, rot(-7.7F, 0F, -0.8F), LINEAR),
+				k(1.5F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_11", new AnimationChannel(ROT,
+				k(0F, rot(20F, 0F, 0F), SMOOTH),
+				k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1F, rot(-2.15F, 0F, 0.8F), LINEAR),
+				k(1.07F, rot(-7.85F, 0F, -0.8F), LINEAR),
+				k(1.14F, rot(-2.15F, 0F, 0.8F), LINEAR),
+				k(1.21F, rot(-7.85F, 0F, -0.8F), LINEAR),
+				k(1.28F, rot(-2.15F, 0F, 0.8F), LINEAR),
+				k(1.35F, rot(-7.85F, 0F, -0.8F), LINEAR),
+				k(1.42F, rot(-2.15F, 0F, 0.8F), LINEAR),
+				k(1.49F, rot(-7.85F, 0F, -0.8F), LINEAR),
+				k(1.5F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("tip", new AnimationChannel(ROT,
+				k(0F, rot(20F, 0F, 0F), SMOOTH),
+				k(0.5F, rot(8F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1F, rot(-2F, 0F, 0.8F), LINEAR),
+				k(1.07F, rot(-8F, 0F, -0.8F), LINEAR),
+				k(1.14F, rot(-2F, 0F, 0.8F), LINEAR),
+				k(1.21F, rot(-8F, 0F, -0.8F), LINEAR),
+				k(1.28F, rot(-2F, 0F, 0.8F), LINEAR),
+				k(1.35F, rot(-8F, 0F, -0.8F), LINEAR),
+				k(1.42F, rot(-2F, 0F, 0.8F), LINEAR),
+				k(1.49F, rot(-8F, 0F, -0.8F), LINEAR),
+				k(1.5F, rot(0F, 0F, 0F), SMOOTH)))
+			.build();
+	}
+
+	private static AnimationDefinition slam() {
+		return AnimationDefinition.Builder.withLength(1.35F)
+			.addAnimation("seg_0", new AnimationChannel(ROT,
+				k(0F, rot(-5F, 0F, 0F), SMOOTH),
+				k(0.06F, rot(-9F, 0F, 0F), SMOOTH),
+				k(0.2F, rot(12F, 0F, 0F), LINEAR),
+				k(0.32F, rot(10F, 0F, 0F), SMOOTH),
+				k(0.42F, rot(11.5F, 0F, 0F), SMOOTH),
+				k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.35F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_1", new AnimationChannel(ROT,
+				k(0F, rot(-5F, 0F, 0F), SMOOTH),
+				k(0.074F, rot(-9F, 0F, 0F), SMOOTH),
+				k(0.214F, rot(12F, 0F, 0F), LINEAR),
+				k(0.334F, rot(10F, 0F, 0F), SMOOTH),
+				k(0.434F, rot(11.5F, 0F, 0F), SMOOTH),
+				k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.35F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_2", new AnimationChannel(ROT,
+				k(0F, rot(-5F, 0F, 0F), SMOOTH),
+				k(0.088F, rot(-9F, 0F, 0F), SMOOTH),
+				k(0.228F, rot(12F, 0F, 0F), LINEAR),
+				k(0.348F, rot(10F, 0F, 0F), SMOOTH),
+				k(0.448F, rot(11.5F, 0F, 0F), SMOOTH),
+				k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.35F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_3", new AnimationChannel(ROT,
+				k(0F, rot(-5F, 0F, 0F), SMOOTH),
+				k(0.102F, rot(-9F, 0F, 0F), SMOOTH),
+				k(0.242F, rot(12F, 0F, 0F), LINEAR),
+				k(0.362F, rot(10F, 0F, 0F), SMOOTH),
+				k(0.462F, rot(11.5F, 0F, 0F), SMOOTH),
+				k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.35F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_4", new AnimationChannel(ROT,
+				k(0F, rot(-5F, 0F, 0F), SMOOTH),
+				k(0.116F, rot(-9F, 0F, 0F), SMOOTH),
+				k(0.256F, rot(12F, 0F, 0F), LINEAR),
+				k(0.376F, rot(10F, 0F, 0F), SMOOTH),
+				k(0.476F, rot(11.5F, 0F, 0F), SMOOTH),
+				k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.35F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_5", new AnimationChannel(ROT,
+				k(0F, rot(-5F, 0F, 0F), SMOOTH),
+				k(0.13F, rot(-9F, 0F, 0F), SMOOTH),
+				k(0.27F, rot(12F, 0F, 0F), LINEAR),
+				k(0.39F, rot(10F, 0F, 0F), SMOOTH),
+				k(0.49F, rot(11.5F, 0F, 0F), SMOOTH),
+				k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.35F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_6", new AnimationChannel(ROT,
+				k(0F, rot(-5F, 0F, 0F), SMOOTH),
+				k(0.144F, rot(-9F, 0F, 0F), SMOOTH),
+				k(0.284F, rot(12F, 0F, 0F), LINEAR),
+				k(0.404F, rot(10F, 0F, 0F), SMOOTH),
+				k(0.504F, rot(11.5F, 0F, 0F), SMOOTH),
+				k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.35F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_7", new AnimationChannel(ROT,
+				k(0F, rot(-5F, 0F, 0F), SMOOTH),
+				k(0.158F, rot(-9F, 0F, 0F), SMOOTH),
+				k(0.298F, rot(12F, 0F, 0F), LINEAR),
+				k(0.418F, rot(10F, 0F, 0F), SMOOTH),
+				k(0.518F, rot(11.5F, 0F, 0F), SMOOTH),
+				k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.35F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_8", new AnimationChannel(ROT,
+				k(0F, rot(-5F, 0F, 0F), SMOOTH),
+				k(0.172F, rot(-9F, 0F, 0F), SMOOTH),
+				k(0.312F, rot(12F, 0F, 0F), LINEAR),
+				k(0.432F, rot(10F, 0F, 0F), SMOOTH),
+				k(0.532F, rot(11.5F, 0F, 0F), SMOOTH),
+				k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.35F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_9", new AnimationChannel(ROT,
+				k(0F, rot(-5F, 0F, 0F), SMOOTH),
+				k(0.186F, rot(-9F, 0F, 0F), SMOOTH),
+				k(0.326F, rot(12F, 0F, 0F), LINEAR),
+				k(0.446F, rot(10F, 0F, 0F), SMOOTH),
+				k(0.546F, rot(11.5F, 0F, 0F), SMOOTH),
+				k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.35F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_10", new AnimationChannel(ROT,
+				k(0F, rot(-5F, 0F, 0F), SMOOTH),
+				k(0.2F, rot(-9F, 0F, 0F), SMOOTH),
+				k(0.34F, rot(12F, 0F, 0F), LINEAR),
+				k(0.46F, rot(10F, 0F, 0F), SMOOTH),
+				k(0.56F, rot(11.5F, 0F, 0F), SMOOTH),
+				k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.35F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_11", new AnimationChannel(ROT,
+				k(0F, rot(-5F, 0F, 0F), SMOOTH),
+				k(0.214F, rot(-9F, 0F, 0F), SMOOTH),
+				k(0.354F, rot(12F, 0F, 0F), LINEAR),
+				k(0.474F, rot(10F, 0F, 0F), SMOOTH),
+				k(0.574F, rot(11.5F, 0F, 0F), SMOOTH),
+				k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.35F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("tip", new AnimationChannel(ROT,
+				k(0F, rot(-5F, 0F, 0F), SMOOTH),
+				k(0.228F, rot(-9F, 0F, 0F), SMOOTH),
+				k(0.368F, rot(12F, 0F, 0F), LINEAR),
+				k(0.488F, rot(10F, 0F, 0F), SMOOTH),
+				k(0.588F, rot(11.5F, 0F, 0F), SMOOTH),
+				k(0.75F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.35F, rot(0F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_0", new AnimationChannel(SCALE,
+				k(0F, scale(1F, 1F, 1F), SMOOTH),
+				k(0.2F, scale(1.1F, 0.94F, 1.1F), LINEAR),
+				k(0.4F, scale(1F, 1F, 1F), SMOOTH),
+				k(1.35F, scale(1F, 1F, 1F), SMOOTH)))
+			.build();
+	}
+
+	private static AnimationDefinition grab() {
+		return AnimationDefinition.Builder.withLength(1.6F)
+			.addAnimation("seg_0", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0F), SMOOTH),
+				k(0.35F, rot(1.8F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(3F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(3F, 0F, 0F), SMOOTH),
+				k(1.3F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(3F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_1", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0F), SMOOTH),
+				k(0.35F, rot(1.8F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(3F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(3F, 0F, 0F), SMOOTH),
+				k(1.3F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(3F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_2", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0F), SMOOTH),
+				k(0.35F, rot(1.8F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(3F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(3F, 0F, 0F), SMOOTH),
+				k(1.3F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(3F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_3", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0F), SMOOTH),
+				k(0.35F, rot(1.8F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(3F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(3F, 0F, 0F), SMOOTH),
+				k(1.3F, rot(8F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(3F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_4", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0F), SMOOTH),
+				k(0.35F, rot(13.2F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(22F, 0F, 0F), SMOOTH),
+				k(1.3F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(22F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_5", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0F), SMOOTH),
+				k(0.35F, rot(13.2F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(22F, 0F, 0F), SMOOTH),
+				k(1.3F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(22F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_6", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0F), SMOOTH),
+				k(0.35F, rot(13.2F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(22F, 0F, 0F), SMOOTH),
+				k(1.3F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(22F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_7", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0F), SMOOTH),
+				k(0.35F, rot(13.2F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(22F, 0F, 0F), SMOOTH),
+				k(1.3F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(22F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_8", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0F), SMOOTH),
+				k(0.35F, rot(13.2F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(22F, 0F, 0F), SMOOTH),
+				k(1.3F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(22F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_9", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0F), SMOOTH),
+				k(0.35F, rot(13.2F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(22F, 0F, 0F), SMOOTH),
+				k(1.3F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(22F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_10", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0F), SMOOTH),
+				k(0.35F, rot(13.2F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(22F, 0F, 0F), SMOOTH),
+				k(1.3F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(22F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_11", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0F), SMOOTH),
+				k(0.35F, rot(13.2F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(22F, 0F, 0F), SMOOTH),
+				k(1.3F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(22F, 0F, 0F), SMOOTH)))
+			.addAnimation("tip", new AnimationChannel(ROT,
+				k(0F, rot(0F, 0F, 0F), SMOOTH),
+				k(0.35F, rot(13.2F, 0F, 0F), SMOOTH),
+				k(0.6F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.9F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(22F, 0F, 0F), SMOOTH),
+				k(1.3F, rot(27F, 0F, 0F), SMOOTH),
+				k(1.6F, rot(22F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_4", new AnimationChannel(SCALE,
+				k(0F, scale(1F, 1F, 1F), SMOOTH),
+				k(0.9F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.1F, scale(1F, 1F, 1F), SMOOTH),
+				k(1.3F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.6F, scale(1F, 1F, 1F), SMOOTH)))
+			.addAnimation("seg_5", new AnimationChannel(SCALE,
+				k(0F, scale(1F, 1F, 1F), SMOOTH),
+				k(0.9F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.1F, scale(1F, 1F, 1F), SMOOTH),
+				k(1.3F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.6F, scale(1F, 1F, 1F), SMOOTH)))
+			.addAnimation("seg_6", new AnimationChannel(SCALE,
+				k(0F, scale(1F, 1F, 1F), SMOOTH),
+				k(0.9F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.1F, scale(1F, 1F, 1F), SMOOTH),
+				k(1.3F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.6F, scale(1F, 1F, 1F), SMOOTH)))
+			.addAnimation("seg_7", new AnimationChannel(SCALE,
+				k(0F, scale(1F, 1F, 1F), SMOOTH),
+				k(0.9F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.1F, scale(1F, 1F, 1F), SMOOTH),
+				k(1.3F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.6F, scale(1F, 1F, 1F), SMOOTH)))
+			.addAnimation("seg_8", new AnimationChannel(SCALE,
+				k(0F, scale(1F, 1F, 1F), SMOOTH),
+				k(0.9F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.1F, scale(1F, 1F, 1F), SMOOTH),
+				k(1.3F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.6F, scale(1F, 1F, 1F), SMOOTH)))
+			.addAnimation("seg_9", new AnimationChannel(SCALE,
+				k(0F, scale(1F, 1F, 1F), SMOOTH),
+				k(0.9F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.1F, scale(1F, 1F, 1F), SMOOTH),
+				k(1.3F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.6F, scale(1F, 1F, 1F), SMOOTH)))
+			.addAnimation("seg_10", new AnimationChannel(SCALE,
+				k(0F, scale(1F, 1F, 1F), SMOOTH),
+				k(0.9F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.1F, scale(1F, 1F, 1F), SMOOTH),
+				k(1.3F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.6F, scale(1F, 1F, 1F), SMOOTH)))
+			.addAnimation("seg_11", new AnimationChannel(SCALE,
+				k(0F, scale(1F, 1F, 1F), SMOOTH),
+				k(0.9F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.1F, scale(1F, 1F, 1F), SMOOTH),
+				k(1.3F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.6F, scale(1F, 1F, 1F), SMOOTH)))
+			.addAnimation("tip", new AnimationChannel(SCALE,
+				k(0F, scale(1F, 1F, 1F), SMOOTH),
+				k(0.9F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.1F, scale(1F, 1F, 1F), SMOOTH),
+				k(1.3F, scale(0.9F, 1F, 0.9F), SMOOTH),
+				k(1.6F, scale(1F, 1F, 1F), SMOOTH)))
+			.build();
+	}
+
+	private static AnimationDefinition release() {
+		return AnimationDefinition.Builder.withLength(1.1F)
+			.addAnimation("seg_0", new AnimationChannel(ROT,
+				k(0F, rot(3F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(6F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_1", new AnimationChannel(ROT,
+				k(0F, rot(3F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(6F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_2", new AnimationChannel(ROT,
+				k(0F, rot(3F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(6F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_3", new AnimationChannel(ROT,
+				k(0F, rot(3F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(6F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_4", new AnimationChannel(ROT,
+				k(0F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(6F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_5", new AnimationChannel(ROT,
+				k(0F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(6F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_6", new AnimationChannel(ROT,
+				k(0F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(6F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_7", new AnimationChannel(ROT,
+				k(0F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(6F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_8", new AnimationChannel(ROT,
+				k(0F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(6F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_9", new AnimationChannel(ROT,
+				k(0F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(6F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_10", new AnimationChannel(ROT,
+				k(0F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(6F, 0F, 0F), SMOOTH)))
+			.addAnimation("seg_11", new AnimationChannel(ROT,
+				k(0F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(6F, 0F, 0F), SMOOTH)))
+			.addAnimation("tip", new AnimationChannel(ROT,
+				k(0F, rot(22F, 0F, 0F), SMOOTH),
+				k(0.4F, rot(-5F, 0F, 0F), SMOOTH),
+				k(1.1F, rot(6F, 0F, 0F), SMOOTH)))
+			.addAnimation("base", new AnimationChannel(POS,
+				k(0F, pos(0F, 0F, 0F), SMOOTH),
+				k(0.35F, pos(0F, 3F, 0F), SMOOTH),
+				k(1.1F, pos(0F, -110F, 0F), SMOOTH)))
+			.build();
+	}
+
+	private static Keyframe k(float time, Vector3f vector, AnimationChannel.Interpolation interpolation) {
+		return new Keyframe(time, vector, interpolation);
+	}
+
+	private static Vector3f rot(float x, float y, float z) {
+		return KeyframeAnimations.degreeVec(x, y, z);
+	}
+
+	private static Vector3f pos(float x, float y, float z) {
+		return KeyframeAnimations.posVec(x, y, z);
+	}
+
+	private static Vector3f scale(float x, float y, float z) {
+		return KeyframeAnimations.scaleVec(x, y, z);
+	}
+
+	private TentacleAnimations() {}
 }

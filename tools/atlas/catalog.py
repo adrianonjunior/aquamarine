@@ -20,6 +20,9 @@ ASSETS = ROOT / "src/main/resources/assets/aquamarine"
 NAMES = {"kraken": "Kraken", "tentacle": "Tentáculo", "young_kraken": "Cria de Kraken",
          "kraken_egg": "Ovo de Kraken", "moray": "Moréia Tempestuosa", "whale": "Baleia-de-Nereia",
          "sperm_whale": "Cachalote"}
+# Tentáculo, Cria e Ovo saem de tools/models/spawnlings/build_model.py, que grava o Java do jogo e um rig.json
+# com as mesmas caixas, UV e clipes: o site lê esse arquivo em vez de copiar o modelo à mão.
+SPAWNLINGS = ("tentacle", "young_kraken", "kraken_egg")
 CLASSES = {"kraken": "Kraken", "tentacle": "Tentacle", "young_kraken": "YoungKraken",
            "kraken_egg": "KrakenEgg", "moray": "Moray", "whale": "Whale", "sperm_whale": "SpermWhale"}
 
@@ -137,47 +140,6 @@ def kraken_rig():
     return bones, cubes, [128, 256]
 
 
-def small_rig(kind):
-    bones, cubes = [], []
-    if kind == "tentacle":
-        for i in range(7):
-            n = f"segment_{i}"
-            bones.append(bone(n, "root" if i == 0 else f"segment_{i-1}", (0, -4 if i == 0 else 0, 0)))
-            r = 2.5 - i * .23
-            cubes.append(cube(n, n, (-r, -4, -r), (r*2, 4.3, r*2), (i*12, 0)))
-            for j in range(3):
-                cubes.append(cube(f"{n}_sucker_{j}", n, (-r+.35, .2-j*.2, -r-.6+j*.1),
-                                  (max(.65, r-.4), .55, .8), (i*12, 20+j*4)))
-        cubes.append(cube("hook", "segment_6", (-1.5, -6, -.5), (3, 2, 1), (96, 0)))
-    elif kind == "young_kraken":
-        bones += [bone("mantle", pos=(0, -12, -1)), bone("head", pos=(0, -7, 1))]
-        cubes += [cube("mantle", "mantle", (-5,-5,-6),(10,8,13),(0,0)),
-                  cube("crown", "mantle", (-3,-7,-5),(6,3,9),(32,0)),
-                  cube("head", "head", (-4,-4,-5),(8,7,11),(0,32)),
-                  cube("beak", "head", (-1.5,1,5),(3,2,2),(40,32))]
-        for side in (-1, 1):
-            cubes.append(cube(f"eye_{side}", "head", (side*2.5-1,-2,5),(2,2,1),(48+(8 if side>0 else 0),32)))
-        for i in range(6):
-            for j in range(3):
-                n = f"arm_{i}_{j}"
-                p = (math.sin(i*math.pi/3)*3.1,-7,math.cos(i*math.pi/3)*2.8) if j == 0 else (0,0,3)
-                bones.append(bone(n, "root" if j==0 else f"arm_{i}_{j-1}", p))
-                taper = 1.55-j*.32
-                cubes += [cube(n,n,(-taper/2,-taper/2,0),(taper,taper,3),(64+j*12,i*12)),
-                          cube(n+"_sucker",n,(-.45,taper/2,.8),(.9,.5,1.1),(100+j*8,i*8))]
-    else:
-        bones += [bone("shell",pos=(0,-6,0)),bone("cap","shell",(0,-3,0))]
-        cubes += [cube("body","shell",(-4,-6,-4),(8,12,8),(0,0)),
-                  cube("belt","shell",(-4.3,-2,-4.3),(8.6,2,8.6),(24,0)),
-                  cube("glow","shell",(-1.5,-1,-4.5),(3,3,.6),(64,0)),
-                  cube("cap","cap",(-2.8,-4,-2.8),(5.6,4,5.6),(48,0))]
-        for side in (-1,1):
-            n = f"tendril_{side}"
-            bones.append(bone(n,"shell",(side*2,1,side*2)))
-            cubes.append(cube(n,n,(-.5,0,-.5),(1,6,1),(72+(8 if side>0 else 0),0)))
-    return bones, cubes, 128
-
-
 def kraken_proposal(bones, cubes, clips):
     """Rig v2 apenas do Atlas: pontas flexíveis, mandíbula e abas laterais do manto.
 
@@ -230,18 +192,19 @@ def models():
     production = module(MODELS / "kraken/kraken_animations.py")
     result = []
     for kind, name in NAMES.items():
-        bones, cubes, size = kraken_rig() if kind == "kraken" else large_rig(kind) if kind in ("moray","whale","sperm_whale") else small_rig(kind)
+        rig = json.loads((MODELS/"spawnlings"/kind/"rig.json").read_text(encoding="utf-8")) if kind in SPAWNLINGS else None
+        bones, cubes, size = (rig["bones"], rig["cubes"], rig["resolution"]) if rig else             kraken_rig() if kind == "kraken" else large_rig(kind)
         folder = MODELS / kind if kind in ("kraken","moray","whale","sperm_whale") else MODELS / "spawnlings" / kind
         # A v2 entrou no jogo em 25/10/2026: com o rig de produção já articulado, ele e os clipes de produção
         # são o Kraken atual, e a proposta separada deixa de existir (a v1 segue no histórico de versões).
         integrated = kind == "kraken" and any(b["name"] == "jaw_hinge" for b in bones)
         clips = (clips_data(production.build_all()) if integrated else clips_data(anim.build_all())) if kind == "kraken" \
-            else java_animations(kind)
+            else rig["clips"] if rig else java_animations(kind)
         proposal = kraken_proposal(bones,cubes,clips) if kind=="kraken" and not integrated else None
         ids = {b["name"] for b in (proposal["bones"] if proposal else bones)} | {"root"}
         for clip in clips.values():
             assert all(t["bone"] in ids for t in clip["tracks"]), kind
-        result.append({"id":kind,"name":name,"bones":bones,"cubes":cubes,
+        result.append({"id":kind,"name":name,"bones":bones,"cubes":cubes,"translucent":kind == "kraken_egg",
                        "proposal":proposal,"resolution":[size,size] if isinstance(size,int) else size,
                        "texture":image_data(ASSETS/f"textures/entity/{kind}/{kind}.png"),
                        "uvTexture":image_data(folder/"uv.png"),"clips":clips,

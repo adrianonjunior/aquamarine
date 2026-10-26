@@ -10,8 +10,10 @@ import net.minecraft.world.entity.Mob;
 
 public final class TentacleRenderer<T extends Mob> extends MobRenderer<T, TentacleRenderState, TentacleModel> {
     private static final Identifier TEXTURE = Aquamarine.id("textures/entity/tentacle/tentacle.png");
+    private static final Identifier GLOW = Aquamarine.id("textures/entity/tentacle/tentacle_glow.png");
     public TentacleRenderer(EntityRendererProvider.Context context) {
-        super(context, new TentacleModel(context.bakeLayer(TentacleModel.LAYER)), .8F);
+        super(context, new TentacleModel(context.bakeLayer(TentacleModel.LAYER)), 1.3F);
+        this.addLayer(new com.aquamarine.client.entity.CreatureGlowLayer<>(this, GLOW));
     }
     @Override public TentacleRenderState createRenderState() { return new TentacleRenderState(); }
     @Override public void extractRenderState(T entity, TentacleRenderState state, float partialTick) {

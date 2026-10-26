@@ -54,5 +54,26 @@
     "label": "Atual no mod · v1",
     "date": "2026-10-25",
     "file": "sperm_whale-v1.json"
+  },
+  {
+    "id": "tentacle",
+    "version": "v2",
+    "label": "Atual no mod · v2 (redesenho da Fase 4)",
+    "date": "2026-10-25",
+    "file": "tentacle-v2.json"
+  },
+  {
+    "id": "young_kraken",
+    "version": "v2",
+    "label": "Atual no mod · v2 (redesenho da Fase 4)",
+    "date": "2026-10-25",
+    "file": "young_kraken-v2.json"
+  },
+  {
+    "id": "kraken_egg",
+    "version": "v2",
+    "label": "Atual no mod · v2 (redesenho da Fase 4)",
+    "date": "2026-10-25",
+    "file": "kraken_egg-v2.json"
   }
 ]

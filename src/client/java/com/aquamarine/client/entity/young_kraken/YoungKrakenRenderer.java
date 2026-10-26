@@ -10,8 +10,10 @@ import net.minecraft.world.entity.Mob;
 
 public final class YoungKrakenRenderer<T extends Mob> extends MobRenderer<T, YoungKrakenRenderState, YoungKrakenModel> {
     private static final Identifier TEXTURE = Aquamarine.id("textures/entity/young_kraken/young_kraken.png");
+    private static final Identifier GLOW = Aquamarine.id("textures/entity/young_kraken/young_kraken_glow.png");
     public YoungKrakenRenderer(EntityRendererProvider.Context context) {
         super(context, new YoungKrakenModel(context.bakeLayer(YoungKrakenModel.LAYER)), .45F);
+        this.addLayer(new com.aquamarine.client.entity.CreatureGlowLayer<>(this, GLOW));
     }
     @Override public YoungKrakenRenderState createRenderState() { return new YoungKrakenRenderState(); }
     @Override public void extractRenderState(T entity, YoungKrakenRenderState state, float partialTick) {
