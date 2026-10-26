@@ -38,7 +38,7 @@
 | **Fase 6, E2** | 26/10 | Baleia e cachalote com colisão na cabeça, no corpo e no rabo; Forja Abissal 3D; arpão 3D por ponta e do Cavitador; descrições dos 8 encantamentos | ✅ |
 | **Fase 6, E3** | 26/10 | Aurium (perolado, entre o Abissal e o Neutrônio, minério sob os oceanos profundos, entra no Lingote Instável) e 14 blocos de construção e decoração | ✅ |
 | **Fase 6, E4 a E6** | 26/10 | Energia aquática (Team Reborn Energy): 3 geradores, cabo e Coletor de Neutrônio com o Pó Estelar; Mesa de Encantamento Aquática; Bigorna, Mesa de Cartas e Altar com função; carne de baleia; Radar com HUD | ✅ |
-| **Releases** | 25 e 26/10 | 0.4.0 (instalador de clique duplo e pacote de servidor), 0.5.0 (Fase 4 até a 4G) e 0.6.0 (Fase 6, com o `.jar` solto) | ✅ falta o teste com os amigos |
+| **Releases** | 25 e 26/10 | 0.4.0 (instalador de clique duplo e pacote de servidor), 0.5.0 (Fase 4 até a 4G) e 0.6.0 (Fase 6, pronta; falta publicar na aba Releases) | ✅ falta o teste com os amigos |
 
 ## O que falta
 
@@ -69,7 +69,7 @@ O que não tem fase (etapa 5) ganha número quando o Adriano escolher.
 |---|---|---|---|---|
 | 0 | Teste da 0.5.0 com os amigos, pelo roteiro de [relatorio-3q.md](relatorio-3q.md); o que der errado vira 0.5.x | sem crash nem desync | sessão de jogo | o Adriano e os amigos |
 | 1 | **Ponte do sobrevivência (0.5.1):** Minério Abissal raro no fundo dos oceanos profundos (mais comum e mais alto que o Neutrônio; quando a Cidade vier, as Minas viram a fonte boa), receita do Altar do Abismo na Forja, Projeto do Chamariz raro nos baús do Porto e numa troca de nível alto do Cartógrafo | teste num mundo gerado: achar o minério, fazer Forja, Altar e Chamariz e invocar o Kraken sem comando | 2 a 3 h | ok do Adriano (muda a decisão "o minério só existe na cidade") |
-| 2 | **Fase 6 (0.6.0), publicada em 26/10/2026:** faltam 6A2, 6A4 e 6C1 numa `0.6.x` ([11-fase6.md](11-fase6.md)) | cada faixa testada no jogo; o Adriano escolhe o modelo do Kraken | várias sessões | liberação do Adriano (fase ou faixa) e respostas F6-1 a F6-8 |
+| 2 | **Fase 6 (0.6.0), pronta em 26/10/2026 (falta publicar no GitHub):** faltam 6A2, 6A4 e 6C1 numa `0.6.x` ([11-fase6.md](11-fase6.md)) | cada faixa testada no jogo; o Adriano escolhe o modelo do Kraken | várias sessões | liberação do Adriano (fase ou faixa) e respostas F6-1 a F6-8 |
 | 3 | **4S:** sons da Fase 4 (e depois os da 6) em lotes para ouvir, junto com a correção do aviso do Porto | o Adriano aprova cada lote | 2 a 3 h | pedido do Adriano |
 | 4 | **Áudio A1 a A5**, entre as outras etapas | prévia aprovada a cada lote | por lote | aprovação por lote |
 | 5 | **Sem fase:** *Kraken completo* (linhas 4, 5 e 6 de "O que falta"; os pós-boss dão uso ao Olho e à Tinta) e **Cidade Perdida** em 4 levas, cada uma com release: (a) estrutura, baús, livros, Chave, Bússola e Mapa, com as Minas como fonte do minério; (b) bioma Fossa de Nereia; (c) 4 criaturas no nível dos mobs atuais; (d) Walker | teste de cada item no jogo; `/locate` acha a cidade | várias sessões | o Adriano dar número de fase e liberar |
