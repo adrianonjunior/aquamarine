@@ -4,6 +4,7 @@
 > (incluindo o Walker) e o texto dos livros de história. Tudo **decidido**;
 > números são valores iniciais a testar. Decisões gerais em
 > [00-decisoes.md](00-decisoes.md). Itens e receitas em [05-itens.md](05-itens.md).
+> **Estado:** sem fase (planejada, não liberada); ver [07-roadmap.md](07-roadmap.md), "Releases e fases".
 
 ## Estrutura
 - Grande e rara, no oceano profundo, dentro do bioma Fossa de Nereia. Espaçamento

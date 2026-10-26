@@ -4,6 +4,24 @@
 > tarefas em andamento (isso fica em [../CONTEXTO.md](../CONTEXTO.md)). Marque o
 > checkbox aqui quando um marco terminar.
 
+## Releases e fases
+Regra (decisão de 26/10/2026, [00-decisoes.md](00-decisoes.md), "Versões e fases"): a release **`0.N.0` entrega a
+Fase `N`**; correções e pendências da fase saem como `0.N.x`. Não existe Fase 5. Cada fase tem um arquivo de
+especificação e um bloco de marcos neste arquivo.
+
+| Release | Fase | Especificação | Marcos | Estado |
+|---|---|---|---|---|
+| `0.1.0` (só a versão do build) | Entregas 1 e 2 | [05-itens.md](05-itens.md), [02-kraken.md](02-kraken.md) | "Entrega 1", "Entrega 2" abaixo | feita; falta o aceite multiplayer real |
+| `0.3.0` (só a versão do build) | Fase 3 | [08-fase3.md](08-fase3.md) | "Fase 3" | feita; falta o aceite com 3 jogadores reais |
+| `0.4.0` (GitHub) | nenhuma: release de teste multiplayer, com a luta do Kraken em áudio e o Kraken v2 | [06-tecnico.md](06-tecnico.md), "Release para jogadores" | "Áudio v1" | publicada; falta o teste com os amigos |
+| `0.5.0` (GitHub) | **Fase 4** (a "5" ficou sem fase) | [10-fase4.md](10-fase4.md) | "Fase 4" | publicada; falta a 4S (sons); 4C passou para a Fase 6 |
+| **`0.6.0`** | **Fase 6** | [11-fase6.md](11-fase6.md) | "Fase 6" | **liberada em 26/10/2026** |
+
+Fora desta tabela, **sem fase e sem número** até o Adriano decidir: Cidade Perdida, Kraken completo e áudio A1 a A5
+([resumo.md](resumo.md), "O que falta"). Temas transversais (sem release própria): [09-audio.md](09-audio.md) e os
+relatórios de QA.
+
+## Marcos
 - [x] Repositório público com esqueleto Fabric 26.3.
 - [x] JDK 25 instalado; build e `runClient` funcionam.
 - [ ] Ciclo **manual** de screenshot: print no jogo (F2) lido de `run/screenshots`.
@@ -15,8 +33,9 @@
   sentir a luta em multiplayer. *Faixas prontas (Entrega 2); falta o aceite multiplayer real, que é do Adriano.*
 - [ ] **Fase 3** (fauna, equipamentos de mergulho e Vila). *Faixas 3A a 3E prontas e 3Q feita até onde um
   cliente alcança; falta o aceite com 3 jogadores reais, que é do Adriano.*
-- [ ] **Cidade Perdida v1** (estrutura jigsaw).
-- [ ] Kraken completo, depois bioma e polimento.
+- [x] **Fase 4** (Kraken vivo, oficina, construção aquática e Neutrônio), release `0.5.0`. *Falta a 4S (sons).*
+- [ ] **Fase 6** (release `0.6.0`; liberada em 26/10/2026): [11-fase6.md](11-fase6.md).
+- [ ] **Sem fase:** Cidade Perdida v1 (estrutura jigsaw), Kraken completo, bioma e polimento.
 
 A ordem do plano oficial põe a cidade antes do Kraken. Aqui o Kraken v1 vem
 antes porque é a parte mais arriscada e a mais divertida de ajustar.
@@ -164,7 +183,8 @@ Especificação, ordem e painel do que já foi feito: [10-fase4.md](10-fase4.md)
 - [x] **4A** Cria, Ovo e Tentáculo refeitos (gerador único com Java, texturas, brilho, UV e rig do site; ovo com
   filhote visível; v2 no Atlas). Testado na parte `spawnlings` do `runClientGameTest`.
 - [x] **4B** Oricálcio → Abissal, com apelido dos IDs antigos (mundos salvos abrem com os itens convertidos).
-- [ ] **4C** Kraken: partes de colisão por tentáculo e cabeça, cabeça sólida, movimento constante.
+- [ ] **4C** Kraken: partes de colisão por tentáculo e cabeça, cabeça sólida, movimento constante. **Movida para a Fase 6
+  (6A2 e 6A4)** em 26/10/2026: depende do modelo novo do Kraken; a especificação segue em [10-fase4.md](10-fase4.md), §3.
 - [x] **4D** Retexturas (oficina da Vila, pontas, itens de mergulho, troféus) e rework da Boia de Âncora: modelos 3D
   com frente e colisão no formato, lanterna da Boia que muda de cor com o tempo.
 - [x] **4E** Blocos de construção aquáticos (35) e vidros rachados para todos os vidros (35), com a onda de choque do
@@ -175,3 +195,19 @@ Especificação, ordem e painel do que já foi feito: [10-fase4.md](10-fase4.md)
   partículas próprias.
 - [ ] **4S** Sons da Fase 4 (depois, a pedido do Adriano).
 - [x] **Release 0.5.0** (26/10/2026) com tudo da Fase 4 até aqui, no GitHub (zip com instalador e o `.jar` solto).
+
+## Fase 6: Kraken renovado, energia aquática e conforto do mergulhador (**liberada em 26/10/2026**)
+Especificação, painel e ordem sugerida: [11-fase6.md](11-fase6.md). Decisão e perguntas: [00-decisoes.md](00-decisoes.md),
+linha "Fase 6" e "Em aberto" (F6-1 a F6-8). Nada é implementado antes de o Adriano liberar a fase ou uma faixa. Release
+alvo: `0.6.0`.
+
+- [ ] **6A** Kraken renovado (principal): 6A1 três modelos candidatos no Atlas · 6A2 colisão por parte (ex-4C) · 6A3 tentáculos
+  que não brotam do nada · 6A4 movimento dinâmico (ex-4C)
+- [ ] **6B** Fauna: 6B1 colisão da baleia e do cachalote · 6B2 carne de baleia
+- [ ] **6C** Vila: 6C1 skins 3D dos Mergulhadores · 6C2 funções das mesas
+- [ ] **6D** Materiais e armas: 6D1 Aurium · 6D2 Forja Abissal nova · 6D3 projétil 3D do Cavitador
+- [ ] **6E** Energia aquática: 6E1 geradores · 6E2 Coletor de Neutrônio
+- [ ] **6F** Encantamento: 6F1 Mesa de Encantamento Aquática · 6F2 descrições melhores
+- [ ] **6G** Equipamento: 6G1 slot de acessórios (Accessories) · 6G2 Radar
+- [ ] **6H** Construção: mais decoração e blocos
+- [ ] **Release 0.6.0** (versão do build e pacote)

@@ -20,8 +20,15 @@ conflito, vale [docs/00-decisoes.md](docs/00-decisoes.md)).
 - **Fase 4:** Neutrônio estilo Avaritia e o Cavitador, Oricálcio renomeado para Abissal, 35 blocos aquáticos e 35
   vidros rachados, oficina da Vila e troféus em 3D, Boia nova, Cria, Ovo e Tentáculo refeitos. Resumo de tudo, do que
   falta e do plano: [docs/resumo.md](docs/resumo.md).
-- **Próximo (não liberado):** a Cidade Perdida de Nereia. Estado de cada faixa e o que só o Adriano
-  pode testar: [docs/07-roadmap.md](docs/07-roadmap.md).
+- **Em andamento (liberada em 26/10/2026):** a Fase 6, release `0.6.0`: Kraken renovado, energia aquática, Aurium,
+  acessórios, radar e mais ([docs/11-fase6.md](docs/11-fase6.md)). A Cidade Perdida de Nereia e o Kraken completo
+  ficam sem fase por enquanto. Estado de cada faixa e o que só o Adriano pode testar:
+  [docs/07-roadmap.md](docs/07-roadmap.md).
+
+## Versões e fases
+A release **`0.N.0` entrega a Fase `N`**; correções saem como `0.N.x`. Não existe Fase 5 (o `0.5.0` entregou a
+Fase 4; a próxima é a `0.6.0`, da Fase 6). Tabela de releases, fases e especificações:
+[docs/07-roadmap.md](docs/07-roadmap.md), "Releases e fases". A regra: [docs/00-decisoes.md](docs/00-decisoes.md).
 
 ## Para jogar (sem nada de programação)
 Baixe o `.zip` da release (no GitHub, aba Releases), extraia e clique duas vezes em `INSTALAR.bat`: ele cria o
@@ -74,27 +81,46 @@ com modelos 3D, animações, áudio, texturas e documentos. O Kraken v2 do site 
 | `prompts/` | Prompts já enviados aos agentes de IA (histórico, não são ordens atuais) |
 
 ## Por onde começar (agentes)
-[AGENTS.md](AGENTS.md) (regras), depois [CONTEXTO.md](CONTEXTO.md) (quem faz o quê agora). A fonte
-da verdade é [docs/00-decisoes.md](docs/00-decisoes.md); seções de **ideia** não são decisão.
+1. [AGENTS.md](AGENTS.md) (regras) e [CONTEXTO.md](CONTEXTO.md) (quem faz o quê agora e o que está liberado).
+2. [docs/00-decisoes.md](docs/00-decisoes.md) (fonte da verdade; seções de **ideia** não são decisão) e
+   [docs/06-tecnico.md](docs/06-tecnico.md) (build, ambiente, convenções).
+3. A especificação da **fase da sua tarefa** (tabela abaixo) e os marcos dela em [docs/07-roadmap.md](docs/07-roadmap.md).
+   Fase "planejada" não está liberada: não escreva código, textura nem modelo dela.
 
 ## Índice (cada arquivo é dono do seu assunto)
+
+**Regras e estado do projeto**
 | Arquivo | Assunto |
 |---|---|
 | AGENTS.md | Regras de comportamento e coordenação entre agentes |
-| CONTEXTO.md | Tarefas em andamento e registro de entregas |
+| CONTEXTO.md | Fase atual e o que está liberado, tarefas em andamento e registro de entregas |
 | docs/00-decisoes.md | Decisões tomadas e perguntas em aberto |
+| docs/06-tecnico.md | Implementação, ambiente, build, testes, release e convenções |
+
+**Fases e releases** (a release `0.N.0` entrega a Fase `N`)
+| Arquivo | Release | Assunto |
+|---|---|---|
+| docs/07-roadmap.md | todas | Tabela "Releases e fases" e os marcos de cada fase |
+| docs/resumo.md | todas | Retrato do que foi feito, do que falta e do plano proposto |
+| docs/08-fase3.md | `0.3.0` | Fase 3: fauna, equipamentos de mergulho e Vila |
+| docs/10-fase4.md | `0.5.0` | Fase 4: Kraken vivo, oficina, construção aquática e Neutrônio |
+| docs/11-fase6.md | `0.6.0` (planejada) | Fase 6: Kraken renovado, energia aquática, Aurium, acessórios, radar |
+| docs/09-audio.md | transversal | Áudio: direção sonora, ambiência, música, lista de efeitos, método e padrões |
+
+**Design do mod (Entregas 1 e 2 e Cidade Perdida)**
+| Arquivo | Assunto |
+|---|---|
 | docs/01-visao-e-riscos.md | Visão do mod, riscos, tom e paleta |
 | docs/02-kraken.md | Luta, escudo, Pressão, barra de vida, IA, balanceamento |
 | docs/03-invocacao-e-chat.md | Anúncio estilo Terraria, aviso falso |
-| docs/04-cidade-perdida.md | Estrutura, bioma, criaturas (incluindo o Walker) |
+| docs/04-cidade-perdida.md | Estrutura, bioma, criaturas (incluindo o Walker); **sem fase** |
 | docs/05-itens.md | Materiais e itens |
-| docs/06-tecnico.md | Implementação, ambiente, build, testes e convenções |
-| docs/07-roadmap.md | Marcos e faixas das Entregas 1 e 2 e da Fase 3 |
-| docs/08-fase3.md | Especificação da Fase 3 |
-| docs/09-audio.md | Áudio: direção sonora, camadas de ambiência, música, lista de efeitos, método e padrões |
-| docs/10-fase4.md | Fase 4: plano, painel do que já foi feito e especificação (Kraken vivo, oficina, blocos aquáticos, Neutrônio) |
-| prompts/audio.md | Prompt do agente que produz e integra o áudio (Áudio v1) |
+
+**QA e histórico (somente leitura)**
+| Arquivo | Assunto |
+|---|---|
 | docs/relatorio-2q.md | QA visual da Entrega 2 |
 | docs/relatorio-3q.md | QA da Fase 3 e o roteiro do aceite com jogadores reais |
-| docs/historico.md | Registro antigo de handoffs (somente leitura) |
-| prompts/*.md | Prompts já enviados aos agentes (histórico; cada um diz quando foi usado) |
+| docs/historico.md | Registro antigo de handoffs, tirado do CONTEXTO.md |
+| prompts/*.md | Prompts já enviados aos agentes (histórico; cada um diz quando foi usado); `prompts/audio.md` é o do Áudio v1 |
+| tools/atlas/README.md | Site (Atlas) com modelos, animações, áudio, texturas e docs |

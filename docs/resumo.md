@@ -41,7 +41,7 @@
 | # | O que falta | Tipo | Liberado? |
 |---|---|---|---|
 | 1 | **Progressão no sobrevivência:** o Minério Abissal não aparece no mundo, o Altar do Abismo não tem receita e o Projeto do Chamariz só existe no criativo. Sem comandos ficam travados a Forja, o Arpão, as pontas, o Propulsor, o Chicote, o Kraken e o Neutrônio. Tudo isso ia vir da Cidade Perdida | buraco | precisa do Adriano ([00-decisoes.md](00-decisoes.md), "Em aberto") |
-| 2 | **4C:** Kraken com colisão por tentáculo e cabeça, cabeça sólida, muito mais movimento ([10-fase4.md](10-fase4.md), §3) | Fase 4 | ✅ sim |
+| 2 | **Kraken renovado (ex-4C):** 3 modelos novos para escolher, colisão por parte, cabeça sólida, tentáculos que não brotam do nada, mais movimento ([11-fase6.md](11-fase6.md), 6A; especificação de colisão em [10-fase4.md](10-fase4.md), §3) | Fase 6 | planejada, aguarda o Adriano |
 | 3 | **4S:** sons da Fase 4 ([10-fase4.md](10-fase4.md), §10) | Fase 4 | quando o Adriano pedir |
 | 4 | Itens da luta: Carga de Pulso, Pilar Ressonante, Amuleto da Corrente (o escudo e o Redemoinho já esperam por eles) | Kraken completo | não |
 | 5 | Itens de exploração: Lanterna de Coral, Arco de Coral, Sopa de Tentáculo | Kraken completo | não |
@@ -53,17 +53,19 @@
 | 11 | Testes com jogadores reais: Entrega 2, Fase 3, Kraken v2, trilhas, 0.5.0 ([07-roadmap.md](07-roadmap.md), "Só o Adriano pode fechar") | aceite | só o Adriano |
 | 12 | Aviso no log dos blocos de quebra-cabeça do Porto (`joint="rolling"`); teste de print manual (F2) | correção | a pedido |
 | 13 | Branch `estruturador/entrega-1`, worktrees antigas e arquivos grandes do disco | faxina | só o Adriano |
+| 14 | **Resto da Fase 6:** colisão e carne de baleia, skins 3D e mesas da Vila, Aurium, Forja Abissal nova, projétil 3D do Cavitador, energia e Coletor de Neutrônio, Mesa de Encantamento Aquática, acessórios, radar, decoração ([11-fase6.md](11-fase6.md), 6B a 6H) | Fase 6 | planejada, aguarda o Adriano |
 
 ## Plano (ideia, aguarda o Adriano)
 
-Ordem recomendada: **1 → 2 → teste com os amigos → 4 e 5 → 6**. A etapa 0 corre em paralelo.
+Release `0.N.0` entrega a Fase `N` e não existe Fase 5 ([00-decisoes.md](00-decisoes.md), "Versões e fases"; tabela em
+[07-roadmap.md](07-roadmap.md), "Releases e fases"). Ordem recomendada: **0 em paralelo → 1 → 2 → 3 e 4 entre as outras**.
+O que não tem fase (etapa 5) ganha número quando o Adriano escolher.
 
 | Etapa | O quê | Aceite | Tamanho | Precisa de |
 |---|---|---|---|---|
 | 0 | Teste da 0.5.0 com os amigos, pelo roteiro de [relatorio-3q.md](relatorio-3q.md); o que der errado vira 0.5.x | sem crash nem desync | sessão de jogo | o Adriano e os amigos |
 | 1 | **Ponte do sobrevivência (0.5.1):** Minério Abissal raro no fundo dos oceanos profundos (mais comum e mais alto que o Neutrônio; quando a Cidade vier, as Minas viram a fonte boa), receita do Altar do Abismo na Forja, Projeto do Chamariz raro nos baús do Porto e numa troca de nível alto do Cartógrafo | teste num mundo gerado: achar o minério, fazer Forja, Altar e Chamariz e invocar o Kraken sem comando | 2 a 3 h | ok do Adriano (muda a decisão "o minério só existe na cidade") |
-| 2 | **4C, fecha a Fase 4 (0.6.0):** peças de colisão na cabeça, no manto e em 3 partes de cada braço, seguindo a animação; cabeça sólida que empurra para fora; órbita, investidas curtas e mergulhos | flecha na cabeça tira mais que no braço; quem está dentro sai em até 1 s; 3 mudanças de posição por minuto; teste multiplayer verde | 3 a 4 h | já liberado |
-| 3 | **4S:** sons da Fase 4 em lotes para ouvir, junto com a correção do aviso do Porto | o Adriano aprova cada lote | 2 a 3 h | pedido do Adriano |
-| 4 | **Fase 5, Kraken completo:** linhas 4, 5 e 6 de "O que falta" (os pós-boss dão uso ao Olho e à Tinta) | teste de cada item no jogo | 6 a 8 h | liberação do Adriano |
-| 5 | **Áudio A1 a A5**, entre as outras etapas | prévia aprovada a cada lote | por lote | aprovação por lote |
-| 6 | **Cidade Perdida** em 4 levas, cada uma com release: (a) estrutura, baús, livros, Chave, Bússola e Mapa, com as Minas como fonte do minério; (b) bioma Fossa de Nereia; (c) 4 criaturas no nível dos mobs atuais; (d) Walker | `/locate` acha a cidade; cada leva testada no jogo | várias sessões | liberação do Adriano |
+| 2 | **Fase 6 (0.6.0):** Kraken renovado (principal), fauna, Vila, Aurium, energia aquática, encantamento, acessórios, radar e decoração, em faixas 6A a 6H ([11-fase6.md](11-fase6.md)). Começa pela 6A1: três modelos candidatos no Atlas | cada faixa testada no jogo; o Adriano escolhe o modelo do Kraken | várias sessões | liberação do Adriano (fase ou faixa) e respostas F6-1 a F6-8 |
+| 3 | **4S:** sons da Fase 4 (e depois os da 6) em lotes para ouvir, junto com a correção do aviso do Porto | o Adriano aprova cada lote | 2 a 3 h | pedido do Adriano |
+| 4 | **Áudio A1 a A5**, entre as outras etapas | prévia aprovada a cada lote | por lote | aprovação por lote |
+| 5 | **Sem fase:** *Kraken completo* (linhas 4, 5 e 6 de "O que falta"; os pós-boss dão uso ao Olho e à Tinta) e **Cidade Perdida** em 4 levas, cada uma com release: (a) estrutura, baús, livros, Chave, Bússola e Mapa, com as Minas como fonte do minério; (b) bioma Fossa de Nereia; (c) 4 criaturas no nível dos mobs atuais; (d) Walker | teste de cada item no jogo; `/locate` acha a cidade | várias sessões | o Adriano dar número de fase e liberar |

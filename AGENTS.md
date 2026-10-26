@@ -9,11 +9,11 @@
 > [CONTEXTO.md](CONTEXTO.md) e confira os marcos em [docs/07-roadmap.md](docs/07-roadmap.md)
 > antes de assumir uma faixa. Um handoff antigo não comprova o estado atual da tarefa.
 
-> **FASE ATUAL: FASE 4 LIBERADA** pelo Adriano em 25/10/2026 ([docs/10-fase4.md](docs/10-fase4.md)). Entrega 1,
-> Entrega 2 e Fase 3 estão implementadas (o aceite com jogadores reais é do Adriano, ver docs/07-roadmap.md).
-> **Fora da Fase 4 nada está liberado:** a Cidade Perdida e o resto continuam em planejamento; não escreva código,
-> texturas ou modelos fora dela até o Adriano liberar
-> explicitamente. Correções e testes do que já existe podem ser feitos a pedido dele. Na dúvida, pergunte.
+> **O que está liberado:** só as fases marcadas **LIBERADA** no topo de [CONTEXTO.md](CONTEXTO.md). Fase "planejada"
+> (hoje só a Cidade Perdida e o Kraken completo) ou sem fase **não é ordem de trabalho**: não escreva código,
+> texturas ou modelos dela até o Adriano liberar explicitamente a fase ou a faixa. Correções e testes do que já existe
+> podem ser feitos a pedido dele. Na dúvida, pergunte. A release `0.N.0` entrega a Fase `N`
+> ([docs/07-roadmap.md](docs/07-roadmap.md), "Releases e fases").
 
 ## ⚠️ Vários agentes rodam ao mesmo tempo
 O Adriano mantém **diversos agentes simultâneos** neste mesmo projeto. Trabalhe
@@ -61,6 +61,9 @@ para o outro (modelos, QA visual, 3Q...). Um .md dizer "o Codex fará" não é m
 - Decisão nova entra primeiro em `docs/00-decisoes.md`. Se contradisser outro
   arquivo, corrija o outro no mesmo commit.
 - Seções de ideia dizem "(ideia)" no título; nunca misture ideia com decisão na mesma seção.
+- Fase nova: arquivo `docs/NN-faseN.md` (painel e banner de estado no topo), linha "Fase N" em `docs/00-decisoes.md`,
+  marcos e linha da release em `docs/07-roadmap.md` e linha no índice do `README.md`. Release `0.N.0` = Fase `N`
+  (sem Fase 5).
 - Idioma de docs e commits: português. Commits terminam com a linha de
   coautoria do agente que os fez.
 

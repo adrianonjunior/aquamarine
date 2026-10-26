@@ -62,7 +62,8 @@
 
 ## Release para jogadores
 Pacote para quem só tem o Minecraft: `./gradlew build` e depois `C:\Python314\python tools/release/montar_release.py`
-(versões lidas do `gradle.properties`). Sai `build/release/Aquamarine-<versão>.zip` com:
+(versões lidas do `gradle.properties`). A versão do mod é a da release `0.N.0` da fase ([00-decisoes.md](00-decisoes.md),
+"Versões e fases"). Sai `build/release/Aquamarine-<versão>.zip` com:
 - `INSTALAR.bat` → `arquivos/instalar.ps1`: faz o que o instalador oficial do Fabric faz, **sem Java** (grava o perfil
   de versão do Fabric Loader, baixado do meta.fabricmc.net ou a cópia do pacote, e um `.jar` vazio em `versions/`),
   cria o perfil "Aquamarine <versão>" no `launcher_profiles.json` com **pasta própria** (`.minecraft/aquamarine`,

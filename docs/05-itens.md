@@ -10,8 +10,10 @@
 > Abissal, Aljava e pontas, Propulsor de Maré, blocos de trabalho da Vila, Mapa de Fossas de Moréia).
 > **Ainda planejados** (fase da Cidade Perdida): Carga de Pulso, Pilar Ressonante, Amuleto da
 > Corrente, Bússola de Maré, Mapa de Nereia, Lanterna de Coral, Arco de Coral, Sopa de Tentáculo,
-> Chave de Nereia e o Casco de Prismarinho. Regra: todo item
-> responde "o que faz na luta ou na exploração?". Decisões gerais em
+> Chave de Nereia e o Casco de Prismarinho (sem fase).
+> **Planejados na Fase 6** (Aurium, Carne de Baleia, geradores, Coletor de Neutrônio, Mesa de Encantamento Aquática,
+> Radar, acessórios): especificação em [11-fase6.md](11-fase6.md); entram aqui quando forem implementados.
+> Regra: todo item responde "o que faz na luta ou na exploração?". Decisões gerais em
 > [00-decisoes.md](00-decisoes.md).
 
 ## Materiais
@@ -106,4 +108,4 @@ no código.
 
 ## Descartado
 - Ferramentas Abissais como "só efeito Maré sem dano de escudo" (agora têm 60%).
-- Itens puramente decorativos além dos troféus (ficam para depois do lançamento).
+- Itens puramente decorativos além dos troféus. **Reabertos:** os blocos de construção entraram na Fase 4 (4E) e mais decoração está planejada na Fase 6 (6H).

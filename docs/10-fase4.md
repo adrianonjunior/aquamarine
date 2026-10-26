@@ -1,8 +1,9 @@
 # Fase 4: Kraken vivo, oficina renovada, construção aquática e o Neutrônio
 
-> ## 🚧 EM ANDAMENTO desde 25/10/2026
+> ## ✅ ENTREGUE no `0.5.0` (26/10/2026), menos a 4S (sons)
 > Liberada pelo Adriano em 25/10/2026 ("isso será a fase 4. estou deixando você bem livre para gerir").
-> O painel abaixo diz o que já está pronto. Cada entrega regera o site (Atlas), que mostra este arquivo.
+> O painel abaixo diz o que foi feito. **A 4C passou para a Fase 6** (faixas 6A2 e 6A4 de [11-fase6.md](11-fase6.md)): a
+> especificação dela continua neste arquivo, §3. Cada entrega regera o site (Atlas), que mostra este arquivo.
 
 > **Dono de:** a especificação de tudo que é da Fase 4. A **decisão** de abrir a fase e as escolhas de
 > design moram em [00-decisoes.md](00-decisoes.md) (linha "Fase 4"). Os marcos ficam em [07-roadmap.md](07-roadmap.md),
@@ -14,7 +15,7 @@
 |---|---|---|---|
 | 4A | Cria, Ovo e Tentáculo do Kraken: modelos e texturas refeitos | ✅ **feito** (25/10/2026) | §1 |
 | 4B | Oricálcio vira **Abissal** (minério, lingote, ferramentas, armadura, pontas, arpão) | ✅ **feito** (26/10/2026) | §2 |
-| 4C | Kraken: hitbox por tentáculo e na cabeça, cabeça sólida, muito mais movimento | a fazer | §3 |
+| 4C | Kraken: hitbox por tentáculo e na cabeça, cabeça sólida, muito mais movimento | **movida para a Fase 6** (6A2 e 6A4), depois da escolha do modelo novo | §3 |
 | 4D | Retexturas da oficina, das pontas, dos itens de mergulho e dos troféus; rework da Boia de Âncora | ✅ **feito** (26/10/2026) | §4, §5 |
 | 4E | Blocos de construção aquáticos e vidros quase quebrados para todos os vidros | ✅ **feito** (26/10/2026) | §6, §7 |
 | 4F | **Neutrônio**: minério novo, cadeia de processos, equipamento com bônus na água, visual estilo Avaritia | ✅ **feito** (26/10/2026) | §8 |
@@ -69,8 +70,9 @@ e um `rig.json`, que o Atlas lê (o site mostra o modelo que está no jogo, sem 
 - Teste: a parte `forge` do `runClientGameTest` lê um item salvo como `aquamarine:orichalcum_pickaxe` e confere que
   ele abre como Picareta Abissal, e que `orichalcum_ore` aponta para o Minério Abissal.
 
-## 3. Kraken: partes, cabeça sólida e movimento (4C)
-Hoje o Kraken é uma caixa só (36 x 24 blocos). Dá para ficar dentro do modelo, na cabeça, sem ser atingido. E ele
+## 3. Kraken: partes, cabeça sólida e movimento (4C, movida para a Fase 6: 6A2 e 6A4)
+Especificação mantida aqui; quem a executa é a [Fase 6](11-fase6.md), depois de o Adriano escolher o modelo novo (as
+partes seguem as juntas do rig). Hoje o Kraken é uma caixa só (36 x 24 blocos). Dá para ficar dentro do modelo, na cabeça, sem ser atingido. E ele
 quase não se desloca.
 - **Partes de colisão** (o mesmo mecanismo das 7 partes da Moréia): núcleo, cabeça, manto e 8 braços x 3 partes.
   Cada parte segue a pose animada: o servidor calcula a posição das juntas com os mesmos clipes do jogo. A entidade
