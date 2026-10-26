@@ -36,7 +36,16 @@ public class AquamarineClient implements ClientModInitializer {
 		MenuScreens.register(ModMenus.ABYSSAL_FORGE, AbyssalForgeScreen::new);
 		EntityRendererRegistry.register(ModEntities.BOSS_DUMMY, NoopRenderer::new);
 		ModelLayerRegistry.registerModelLayer(KrakenModel.LAYER, KrakenModel::createBodyLayer);
-		EntityRendererRegistry.register(ModEntities.KRAKEN, KrakenRenderer::new);
+		// Fase 6: a v3a é o Kraken; a v3b e a v3c têm IDs próprios (KrakenRenderer.Variant).
+		ModelLayerRegistry.registerModelLayer(com.aquamarine.client.entity.kraken.KrakenV3aModel.LAYER,
+			com.aquamarine.client.entity.kraken.KrakenV3aModel::createBodyLayer);
+		ModelLayerRegistry.registerModelLayer(com.aquamarine.client.entity.kraken.KrakenV3bModel.LAYER,
+			com.aquamarine.client.entity.kraken.KrakenV3bModel::createBodyLayer);
+		ModelLayerRegistry.registerModelLayer(com.aquamarine.client.entity.kraken.KrakenV3cModel.LAYER,
+			com.aquamarine.client.entity.kraken.KrakenV3cModel::createBodyLayer);
+		EntityRendererRegistry.register(ModEntities.KRAKEN, ctx -> new KrakenRenderer<>(ctx, KrakenRenderer.Variant.V3A));
+		EntityRendererRegistry.register(ModEntities.KRAKEN_VAMPIRE, ctx -> new KrakenRenderer<>(ctx, KrakenRenderer.Variant.V3B));
+		EntityRendererRegistry.register(ModEntities.KRAKEN_AMMONITE, ctx -> new KrakenRenderer<>(ctx, KrakenRenderer.Variant.V3C));
 		ModelLayerRegistry.registerModelLayer(TentacleModel.LAYER, TentacleModel::createBodyLayer);
 		ModelLayerRegistry.registerModelLayer(YoungKrakenModel.LAYER, YoungKrakenModel::createBodyLayer);
 		ModelLayerRegistry.registerModelLayer(KrakenEggModel.LAYER, KrakenEggModel::createBodyLayer);

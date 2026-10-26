@@ -70,12 +70,16 @@ class CatalogTest(unittest.TestCase):
 
     def test_registry_preserves_originals_and_proposal(self):
         registry=json.loads((BASE/"versions/registry.json").read_text(encoding="utf-8"))
-        self.assertEqual(len(registry),14)
+        self.assertEqual(len(registry),17)
         # Fase 6 (6A1): três candidatos do Kraken só no site, com camada de brilho e gabarito de UV próprios.
         for v in ("v3a","v3b","v3c"):
             cand=json.loads((BASE/"versions"/f"kraken-{v}.json").read_text(encoding="utf-8"))
             self.assertTrue(cand["glow"].startswith("data:image/png") and cand["uv"].startswith("data:image/png"))
             self.assertTrue({"idle","swim","slam","roar","grab","death"}<=set(cand["clips"]))
+            # Fase 6: as três foram para o jogo com os 16 clipes do contrato (tools/models/kraken_v3/build_game.py).
+            game=json.loads((BASE/"versions"/f"kraken-{v}-jogo.json").read_text(encoding="utf-8"))
+            self.assertEqual(len(game["clips"]),16)
+            self.assertEqual(set(game["clips"]),{n for n in self.kraken["clips"]})
         latest={r["id"]:r["file"] for r in registry}  # última versão registrada de cada modelo
         for m in self.models:
             old=json.loads((BASE/"versions"/f"{m['id']}-v1.json").read_text(encoding="utf-8"))

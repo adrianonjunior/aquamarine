@@ -4,6 +4,8 @@
 > vida, escala por jogadores e recompensas. Tudo aqui está **decidido**; números
 > são valores iniciais a testar (ajustar aqui, sem nova decisão). Ideias
 > descartadas ficam em "Descartado" no fim. Decisões gerais em [00-decisoes.md](00-decisoes.md).
+> Desenho no jogo desde a `0.6.0`: a v3a, Lula-colosso; a v3b e a v3c são variantes do `/summon` com a mesma luta
+> ([00-decisoes.md](00-decisoes.md), linha "Kraken da Fase 6"; modelos em [11-fase6.md](11-fase6.md), 6A1).
 
 ## Arena
 - A luta acontece na **Cratera**, uma bacia aberta da Fossa de Nereia ao lado da

@@ -30,6 +30,7 @@ let model=data.models[0], clipName='idle', time=0, playing=!matchMedia('(prefers
 let root, boneMap=new Map(), helpers, grid, renderer, scene, camera, controls, currentBounds, framePoints=[], lastFrame=0;
 let baseRot=new Map(), basePos=new Map(), frameHandle, viewportObserver;
 const textures=new Map();
+const inGame = v => (v.label||'').startsWith('No jogo');
 const selectedVersion = () => model.versions.find(v=>v.version===$('version').value)||model.versions.at(-1);
 const clips = () => selectedVersion().clips;
 const clip = () => clips()[clipName];
@@ -219,7 +220,7 @@ function selectModel(id){
 }
 function versionOptions(){
   $('version').replaceChildren(...model.versions.map(v=>{const option=el('option','',v.label);option.value=v.version;return option;}));
-  $('version').value=model.versions.at(-1).version;
+  $('version').value=(model.versions.find(v=>inGame(v))||model.versions.at(-1)).version;
 }
 function clipList(){
   const query=$('clip-search').value.toLocaleLowerCase('pt-BR');
@@ -233,9 +234,9 @@ function clipList(){
   if(!entries.length)$('clip-list').append(el('p','empty','Nenhum movimento encontrado.'));
 }
 function clipInfo(){
-  const c=clip(),warning=model.warnings[clipName],proposed=selectedVersion().version!=='v1';
+  const c=clip(),warning=model.warnings[clipName],live=inGame(selectedVersion()),proposed=!live&&selectedVersion().version!=='v1';
   $('clip-title').textContent=labels[clipName]||clipName;$('stage-clip').textContent=labels[clipName]||clipName;
-  $('stage-version').textContent=proposed?`PROPOSTA ${selectedVersion().version.toUpperCase()} · SÓ NO SITE`:'REFERÊNCIA V1 DO MOD';
+  $('stage-version').textContent=live?`NO JOGO · ${selectedVersion().version.toUpperCase()}`:proposed?`PROPOSTA ${selectedVersion().version.toUpperCase()} · SÓ NO SITE`:'REFERÊNCIA V1 DO MOD';
   $('clip-description').textContent=proposed?(model.id==='kraken'&&selectedVersion().version==='v2'?descriptions[clipName]:'Estudo do movimento; consulte o histórico da versão.'):`Keyframes preservados de ${model.name}. ${c.loop?'Este movimento é um laço.':'Este movimento é executado uma vez no jogo.'}`;
   dl($('clip-info'),[['Identificador',clipName],['Duração',`${fmt(c.length)} s`],['Canais',c.tracks.length],...(warning?[['Aviso preservado',`${fmt(warning)} s`]]:[])]);
   $('timeline').max=c.length;$('impact-marker').hidden=!warning;$('jump-impact').hidden=!warning;
@@ -243,8 +244,8 @@ function clipInfo(){
   syncTransport();updateInfo();
 }
 function updateInfo(){
-  const g=geometry();const proposed=g.version!=='v1';
-  dl($('model-info'),[['Rig',`${g.bones.length} ossos · ${g.cubes.length} cubos`],['Textura',`${g.resolution[0]} × ${g.resolution[1]} px`],['Arquivo preservado',`tools/atlas/versions/${model.id}-${g.version}.json`],['Status',proposed?'Estudo visual; não instalado no jogo':'Referência preservada do mod'],...(g.notes?[['Notas',g.notes]]:[])]);
+  const g=geometry();const live=inGame(g),proposed=!live&&g.version!=='v1';
+  dl($('model-info'),[['Rig',`${g.bones.length} ossos · ${g.cubes.length} cubos`],['Textura',`${g.resolution[0]} × ${g.resolution[1]} px`],['Arquivo preservado',`tools/atlas/versions/${model.id}-${g.version}.json`],['Status',live?'No jogo':proposed?'Estudo visual; não instalado no jogo':'Referência preservada do mod'],...(g.notes?[['Notas',g.notes]]:[])]);
   $('model-note').textContent=model.id==='kraken'?'V2: 7 juntas por braço (antes 5), mandíbula articulada e abas laterais do manto. UVs reaproveitam a textura existente. A opção de movimento contínuo acrescenta a camada procedural da fase 1.':'';
   $('version-history').textContent='Registro permanente · '+model.versions.map(v=>`${v.version}: ${v.label} (${v.date})`).join(' · ')+'. Cada versão preserva seu modelo, textura e animações.';
 }

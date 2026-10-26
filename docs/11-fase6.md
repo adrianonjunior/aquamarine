@@ -1,6 +1,8 @@
 # Fase 6: Kraken renovado, energia aquática e conforto do mergulhador (ideia)
 
-> ## 🚧 LIBERADA em 26/10/2026 (organizada no mesmo dia)
+> ## ✅ PUBLICADA na `0.6.0` em 26/10/2026 (liberada e organizada no mesmo dia)
+> Na release: tudo o que o painel marca como feito, mais os três Krakens novos no jogo. Faltam a 6A2, a 6A4, a 6C1 e a
+> 6G1 (`0.6.x`) e os sons (subversão própria). Notas da release: [07-roadmap.md](07-roadmap.md), "Releases e fases".
 > Ideias do Adriano para a release **0.6.0** (a Fase 5 não existe; a regra está em [00-decisoes.md](00-decisoes.md),
 > "Versões e fases"). Liberada "o quanto o contexto de 5 horas suportar", em entregas organizadas
 > ([00-decisoes.md](00-decisoes.md), "Fase 6 (respostas)"). Seções marcadas **(ideia)** são propostas do agente, não decisão.
@@ -14,7 +16,7 @@
 
 | # | Faixa | Estado | Depende de | Pergunta |
 |---|---|---|---|---|
-| **6A** | **Kraken renovado (principal):** 3 modelos novos para escolher, colisão por parte, tentáculos que não brotam do nada, movimento dinâmico. **Absorve a antiga 4C** | **6A1 e 6A3 feitas** (26/10); 6A2 e 6A4 esperam a escolha | 6A2 e 6A4 esperam a escolha do modelo (6A1) | F6-1 |
+| **6A** | **Kraken renovado (principal):** 3 modelos novos para escolher, colisão por parte, tentáculos que não brotam do nada, movimento dinâmico. **Absorve a antiga 4C** | **6A1 e 6A3 feitas**; v3a no jogo, v3b e v3c no `/summon` (`0.6.0`); 6A2 e 6A4 a fazer | 6A2 e 6A4 esperam a escolha do modelo (6A1) | F6-1 |
 | 6B | Fauna: colisão da baleia e do cachalote, carne de baleia | **6B1 e 6B2 feitas** (26/10) | nenhuma | F6-6 |
 | 6C | Vila: skins 3D dos Mergulhadores, funções das mesas de trabalho | **6C2 feita** (26/10); 6C1 falta | nenhuma | F6-8 |
 | 6D | Materiais e armas: Aurium, Forja Abissal nova, projétil 3D do Cavitador | **6D1, 6D2 e 6D3 feitas** (26/10) | nenhuma | F6-2, F6-7 |
@@ -64,11 +66,19 @@ que "estão brotando no meio do mar do nada". Fazer o mob se mexer mais e ser ma
     - Os três rigs têm os ossos do contrato de clipes (corpo, cabeça, mandíbula, manto que respira, barbatanas, pálpebras
       escondidas no olho, 8 braços de 6 juntas, 2 tentáculos de caça com clava); 6 clipes cada: `idle` (com piscada),
       `swim`, `slam`, `roar`, `grab` e `death`. Os outros 10 da `KrakenView` saem quando a escolhida entrar no jogo.
+    - **No jogo (escolha do Adriano, `0.6.0`):** a v3a é o `aquamarine:kraken`; a v3b e a v3c são `aquamarine:kraken_vampire` e
+      `aquamarine:kraken_ammonite` (só pelo `/summon`, mesma luta). `tools/models/kraken_v3/build_game.py` completa os 16
+      clipes do contrato (emerge, stunned, phaseChange, ink, whirlpool, spawnYoung, waterJet, bolts, ambush e doubleGrab
+      somados aos 6), grava `KrakenV3{a,b,c}Model`/`Animations` e as texturas `textures/entity/kraken/v3{a,b,c}.png` e
+      registra no Atlas as versões `v3a-jogo`, `v3b-jogo` e `v3c-jogo`. `KrakenV3Motion` dá o movimento contínuo e
+      `KrakenRenderer.Variant` escolhe o desenho e a altura (a ponta mais baixa fica nos pés da entidade). Os modelos novos
+      não têm as cascas de rachadura do escudo da v2. Testado: parte `krakens` (o `/summon` dos três; capturas
+      `kraken_v3_*`) e `kraken`, `attack` e `multiplayer`.
     - O Atlas acende o `_glow` no modo Textura e usa o UV de cada versão; `tools/atlas/tests/candidates.mjs` grava vistas de
       frente, lado, topo e costas para comparar. Testado: `tools/atlas/tests` (catálogo e navegador, 14 versões e 92 clipes).
 - **6A2 · Colisão e hitboxes (antiga 4C, parte 1).** A especificação continua em [10-fase4.md](10-fase4.md), §3 (partes por
   cabeça, núcleo, manto e braços; dano por parte; cabeça e manto sólidos). Só começa **depois de 6A1**, porque as partes
-  seguem as juntas do rig escolhido.
+  seguem as juntas do rig escolhido. **Destravada em 26/10/2026:** o rig é o da v3a (e as variantes têm os mesmos ossos).
 - **6A3 · Tentáculos que brotam do nada (ideia).**
   - *Hipótese a confirmar:* o anel de 28 blocos põe tentáculos soltos na água, longe de qualquer parte do Kraken.
   - Primeiro reproduzir e capturar a cena (parte `kraken` do `runClientGameTest`). Depois, uma de duas saídas ou ambas:
@@ -246,6 +256,8 @@ bússola de pressão", a aljava (quiver), o regulador de pressão "e outros". Um
   - Estandartes ficaram de fora: os do jogo já servem. Testado: `build` e captura `construcao_02_fase6`.
 
 ## Aceite da Fase 6
+Estado na `0.6.0`: `build` e as partes de cada faixa verdes, com `multiplayer`; os três Krakens no Atlas e a escolha
+registrada. Falta o que só o Adriano fecha (abaixo) e as faixas da `0.6.x`.
 - `./gradlew build` e a parte do `runClientGameTest` de cada faixa verdes; a parte `multiplayer` verde.
 - As três candidatas do Kraken no Atlas e a escolha do Adriano registrada em [00-decisoes.md](00-decisoes.md).
 - Site (Atlas) regerado a cada entrega; docs, roadmap e handoff atualizados.

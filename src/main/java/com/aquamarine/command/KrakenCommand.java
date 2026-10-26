@@ -79,7 +79,7 @@ public final class KrakenCommand {
 
 	private static int anim(CommandSourceStack source, String name) {
 		ServerLevel level = source.getLevel();
-		KrakenEntity kraken = level.getEntities(ModEntities.KRAKEN, k -> true).stream()
+		KrakenEntity kraken = level.getEntities(net.minecraft.world.level.entity.EntityTypeTest.forClass(KrakenEntity.class), k -> true).stream()
 			.min(java.util.Comparator.comparingDouble(k -> k.distanceToSqr(source.getPosition()))).orElse(null);
 		if (kraken == null) {
 			source.sendFailure(Component.translatable("commands.aquamarine.kraken.none"));
@@ -133,7 +133,7 @@ public final class KrakenCommand {
 	}
 
 	private static KrakenEntity nearestKraken(CommandSourceStack source) {
-		return source.getLevel().getEntities(ModEntities.KRAKEN, k -> true).stream()
+		return source.getLevel().getEntities(net.minecraft.world.level.entity.EntityTypeTest.forClass(KrakenEntity.class), k -> true).stream()
 			.min(java.util.Comparator.comparingDouble(k -> k.distanceToSqr(source.getPosition()))).orElse(null);
 	}
 
