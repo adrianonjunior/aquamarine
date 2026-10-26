@@ -174,3 +174,4 @@ Especificação, ordem e painel do que já foi feito: [10-fase4.md](10-fase4.md)
 - [x] **4G** Cavitador de Neutrônio: modelo 3D com estágios de carga, pulso de cavitação, lançador de arpões e
   partículas próprias.
 - [ ] **4S** Sons da Fase 4 (depois, a pedido do Adriano).
+- [x] **Release 0.5.0** (26/10/2026) com tudo da Fase 4 até aqui, no GitHub (zip com instalador e o `.jar` solto).
