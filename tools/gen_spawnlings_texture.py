@@ -8,8 +8,9 @@ Escreve src/main/resources/assets/aquamarine/textures/entity/<criatura>/<criatur
 ATENÇÃO: tools/models/spawnlings/build_model.py copia o uv.png por cima desses arquivos; depois de
 rodá-lo, rode este script de novo.
 
-Como funciona: o gabarito tem um retângulo por face, com borda e diagonal creme e preenchimento
-que indica o "grupo" da peça (A azul-petróleo escuro, B verde-água claro, C roxo). Cada pixel
+Como funciona: o gabarito tem a rede box-UV inteira de cada cubo (largura 2*(w+d), altura h+d),
+com contorno creme nos cubos grandes e preenchimento que indica o "grupo" da peça (A azul-petróleo
+escuro, B verde-água claro, C roxo); redes não se sobrepõem. Cada pixel
 recebe a rampa do grupo mais próximo; a borda vira contorno escuro, o canto superior esquerdo de
 cada face ganha luz e o resto leva ruído e pontos bioluminescentes. As cores são mais claras que as
 do Kraken para ler de longe debaixo d'água.

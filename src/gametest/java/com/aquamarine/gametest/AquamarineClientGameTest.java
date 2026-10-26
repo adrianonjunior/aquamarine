@@ -46,6 +46,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -86,6 +87,12 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 
 			if (enabled("showcase")) {
 				showcase(context, world, server, base);
+			}
+			if (enabled("blocks")) {
+				blockVisuals(context, world, server, base);
+			}
+			if (enabled("spawnlings")) {
+				spawnlingVisuals(context, world, server, base);
 			}
 			if (enabled("creative")) {
 				creativeTab(context, world);
@@ -535,6 +542,60 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		check(!server.computeOnServer(s -> player(s).getAttribute(Attributes.WATER_MOVEMENT_EFFICIENCY)
 			.hasModifier(Aquamarine.id("orichalcum_set_swim"))), "bônus de nado continuou sem o capacete");
 		context.runOnClient(mc -> mc.options.setCameraType(CameraType.FIRST_PERSON));
+	}
+
+	/** Vitrine dedicada aos dez blocos da revisão visual, com seis capturas para posterior recorte. */
+	private static void blockVisuals(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos base) {
+		server.runCommand("time set noon");
+		server.runCommand("weather clear");
+		server.runOnServer(s -> {
+			ServerLevel level = s.overworld();
+			BlockPos row = base.offset(-9, 0, 8);
+			Block[] blocks = {ModBlocks.ORICHALCUM_ORE, ModBlocks.ORICHALCUM_BLOCK, ModBlocks.ABYSSAL_FORGE,
+				ModBlocks.ABYSSAL_ALTAR, ModBlocks.ANCHOR_BUOY, ModBlocks.KRAKEN_TROPHY,
+				ModBlocks.GOLDEN_ABYSS_TROPHY, ModBlocks.TIDE_ANVIL, ModBlocks.CHART_TABLE, ModBlocks.SHELL_ALTAR};
+			for (int i = 0; i < blocks.length; i++) {
+				BlockState state = blocks[i].defaultBlockState();
+				if (state.hasProperty(HorizontalDirectionalBlock.FACING)) {
+					state = state.setValue(HorizontalDirectionalBlock.FACING, i % 2 == 0 ? Direction.NORTH : Direction.EAST);
+				}
+				level.setBlockAndUpdate(row.east(i * 2), state);
+			}
+		});
+		BlockPos row = base.offset(-9, 0, 8);
+		tp(server, base.getX() + 0.5, base.getY() + 4.0, row.getZ() + 13.0, 180, 15);
+		world.getConnection().waitForChunksRender();
+		context.waitTicks(10);
+		shot(context, "blocos_00_fileira");
+		for (int i = 0; i < 10; i += 2) {
+			tp(server, row.getX() + 2 * i + 1.0, row.getY() + 0.0, row.getZ() + 4.2, 180, 16);
+			world.getConnection().waitForChunksRender();
+			context.waitTicks(3);
+			shot(context, "blocos_" + String.format(java.util.Locale.ROOT, "%02d", i / 2 + 1) + "_pares_" + i + "_" + (i + 1));
+		}
+	}
+
+	/** Ovo, Cria e tentáculo do Kraken lado a lado, de frente e de trás, para a revisão de UV. */
+	private static void spawnlingVisuals(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos base) {
+		server.runCommand("time set noon");
+		server.runCommand("kill @e[type=!player]");
+		double z = base.getZ() + 8.5, y = base.getY();
+		String[] ids = {"kraken_egg", "young_kraken", "tentacle"};
+		for (int i = 0; i < ids.length; i++) {
+			server.runCommand(String.format(java.util.Locale.ROOT, "summon aquamarine:%s %.1f %.1f %.1f {Rotation:[0f,0f]}", ids[i], base.getX() - 4.0 + i * 4.0 + 0.5, y, z));
+		}
+		tp(server, base.getX() + 0.5, y + 0.0, z + 10.0, 180, 8);
+		world.getConnection().waitForChunksRender();
+		context.waitTicks(20);
+		shot(context, "spawnlings_00_frente");
+		tp(server, base.getX() + 0.5, y + 0.0, z - 10.0, 0, 8);
+		context.waitTicks(10);
+		shot(context, "spawnlings_01_costas");
+		for (int i = 0; i < ids.length; i++) {
+			tp(server, base.getX() - 4.0 + i * 4.0 + 0.5, y + 1.0, z + 4.5, 180, 8);
+			context.waitTicks(6);
+			shot(context, "spawnlings_" + (i + 2) + "_" + ids[i]);
+		}
 	}
 
 	private static void spawnStand(ServerLevel level, BlockPos pos, Item head, Item hand) {
