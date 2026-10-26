@@ -23,7 +23,7 @@
 | 6G | Equipamento: slot de acessórios (mod Accessories) e Radar | a liberar | 6G2 espera o formato do Radar | F6-4, F6-5 |
 | 6H | Construção: mais decoração e blocos | a liberar | 6D1 (a família do Aurium) | |
 
-Sons desta fase seguem a regra da 4S (só quando o Adriano pedir): [10-fase4.md](10-fase4.md), §10.
+Sons: nenhum som novo nesta fase; ficam para uma subversão própria, futura ([00-decisoes.md](00-decisoes.md), linha "Sons (adiados)").
 
 ## Ordem sugerida (ideia)
 1. **Já no começo:** 6A1 (gera o portão de escolha do Adriano) e as faixas pequenas e independentes (6A3, 6B1, 6D2, 6D3,

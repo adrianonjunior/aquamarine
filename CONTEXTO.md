@@ -32,6 +32,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 | Publicar e verificar link ngrok do Atlas de amostra | Codex | Servidor Atlas 8767 e túnel ngrok | 25/10/2026 |
+| Fase 6 (`0.6.0`), entregas E1 a E6 (worktree `aquamarine-claude-fase6`, branch `claude/fase6`) | Claude Opus 5.5 | Gradle e jogo de teste da worktree; Atlas regerado na `main` | 26/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
