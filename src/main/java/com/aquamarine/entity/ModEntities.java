@@ -84,6 +84,13 @@ public final class ModEntities {
 		EntityType.Builder.of(SpermWhaleEntity::new, MobCategory.UNDERGROUND_WATER_CREATURE).sized(5.5F, 5.0F).eyeHeight(3.0F)
 			.clientTrackingRange(12).build(SPERM_WHALE_KEY));
 
+	private static final ResourceKey<EntityType<?>> CAVITATION_PULSE_KEY =
+		ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("cavitation_pulse"));
+	/** Pulso do Cavitador de Neutrônio (Fase 4G): sem modelo, só o rastro de partículas. */
+	public static final EntityType<CavitationPulseEntity> CAVITATION_PULSE = Registry.register(BuiltInRegistries.ENTITY_TYPE,
+		CAVITATION_PULSE_KEY, EntityType.Builder.<CavitationPulseEntity>of(CavitationPulseEntity::new, MobCategory.MISC).sized(0.5F, 0.5F)
+			.clientTrackingRange(8).updateInterval(1).noSave().build(CAVITATION_PULSE_KEY));
+
 	public static void register() {
 		FabricDefaultAttributeRegistry.register(KRAKEN, KrakenEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(BOSS_DUMMY, BossDummy.createAttributes());

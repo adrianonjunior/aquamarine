@@ -2,6 +2,7 @@ package com.aquamarine.client;
 
 import com.aquamarine.client.bossbar.AquamarineBossBarHud;
 import com.aquamarine.client.entity.NeutroniumArmorRenderer;
+import com.aquamarine.client.particle.AquamarineParticles;
 import com.aquamarine.client.entity.kraken.KrakenModel;
 import com.aquamarine.client.entity.kraken_egg.KrakenEggModel;
 import com.aquamarine.client.entity.kraken_egg.KrakenEggRenderer;
@@ -50,6 +51,8 @@ public class AquamarineClient implements ClientModInitializer {
 		ModelLayerRegistry.registerModelLayer(SpermWhaleModel.LAYER, SpermWhaleModel::createBodyLayer);
 		EntityRendererRegistry.register(ModEntities.SPERM_WHALE, SpermWhaleRenderer::new);
 		NeutroniumArmorRenderer.register();
+		AquamarineParticles.register();
+		EntityRendererRegistry.register(ModEntities.CAVITATION_PULSE, NoopRenderer::new);
 		AquamarineBossBarHud.register();
 		PressureHud.register();
 		SummonEffects.register();

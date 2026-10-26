@@ -21,6 +21,7 @@ import com.aquamarine.item.ModComponents;
 import com.aquamarine.item.ModItems;
 import com.aquamarine.item.TideThrusterItem;
 import com.aquamarine.item.AbyssalEffects;
+import com.aquamarine.particle.ModParticles;
 import com.aquamarine.item.NeutroniumEffects;
 import com.aquamarine.menu.ModMenus;
 import com.aquamarine.pressure.PressureManager;
@@ -45,6 +46,7 @@ public class Aquamarine implements ModInitializer {
 		// Ordem importa: blocos antes dos itens de bloco.
 		ModBlocks.register();
 		ModComponents.register();
+		ModParticles.register();
 		ModItems.register();
 		ModBuildingBlocks.register();
 		ModRecipes.register();

@@ -436,5 +436,11 @@
   "item.aquamarine.smithing_template.neutronium_upgrade.applies_to": "Equipamento Abissal",
   "item.aquamarine.smithing_template.neutronium_upgrade.ingredients": "Lingote de Neutrônio",
   "item.aquamarine.smithing_template.neutronium_upgrade.base_slot_description": "Coloque uma arma, ferramenta ou armadura Abissal",
-  "item.aquamarine.smithing_template.neutronium_upgrade.additions_slot_description": "Coloque um Lingote de Neutrônio"
+  "item.aquamarine.smithing_template.neutronium_upgrade.additions_slot_description": "Coloque um Lingote de Neutrônio",
+  "item.aquamarine.neutronium_cavitator": "Cavitador de Neutrônio",
+  "tooltip.aquamarine.neutronium_cavitator": "Segure e solte. Debaixo d'água: pulso de cavitação (10 de dano, 32 blocos, atravessa 3).",
+  "tooltip.aquamarine.neutronium_cavitator.2": "Fora d'água: lança arpões com a ponta escolhida na Aljava.",
+  "tooltip.aquamarine.neutronium_cavitator.3": "80% de dano no escudo do Kraken.",
+  "death.attack.aquamarine.cavitation": "%1$s implodiu numa bolha de cavitação",
+  "death.attack.aquamarine.cavitation.player": "%1$s implodiu no pulso de %2$s"
 }

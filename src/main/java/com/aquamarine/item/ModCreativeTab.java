@@ -46,7 +46,8 @@ public final class ModCreativeTab {
 		addToVanilla(CreativeModeTabs.BUILDING_BLOCKS, ModItems.NEUTRONIUM_BLOCK);
 		addToVanilla(CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.NEUTRONIUM_SHOVEL, ModItems.NEUTRONIUM_PICKAXE, ModItems.NEUTRONIUM_AXE,
 			ModItems.NEUTRONIUM_HOE);
-		addToVanilla(CreativeModeTabs.COMBAT, ModItems.NEUTRONIUM_SWORD, ModItems.NEUTRONIUM_AXE, ModItems.NEUTRONIUM_HELMET,
+		addToVanilla(CreativeModeTabs.COMBAT, ModItems.NEUTRONIUM_SWORD, ModItems.NEUTRONIUM_CAVITATOR, ModItems.NEUTRONIUM_AXE,
+			ModItems.NEUTRONIUM_HELMET,
 			ModItems.NEUTRONIUM_CHESTPLATE, ModItems.NEUTRONIUM_LEGGINGS, ModItems.NEUTRONIUM_BOOTS);
 		addToVanilla(CreativeModeTabs.BUILDING_BLOCKS, ModBuildingBlocks.building().stream().map(b -> b.asItem()).toArray(Item[]::new));
 		addToVanilla(CreativeModeTabs.COLORED_BLOCKS, ModBuildingBlocks.glass().stream().map(b -> b.asItem()).toArray(Item[]::new));

@@ -436,5 +436,11 @@
   "item.aquamarine.smithing_template.neutronium_upgrade.applies_to": "Abyssal Equipment",
   "item.aquamarine.smithing_template.neutronium_upgrade.ingredients": "Neutronium Ingot",
   "item.aquamarine.smithing_template.neutronium_upgrade.base_slot_description": "Add Abyssal armor, weapon, or tool",
-  "item.aquamarine.smithing_template.neutronium_upgrade.additions_slot_description": "Add Neutronium Ingot"
+  "item.aquamarine.smithing_template.neutronium_upgrade.additions_slot_description": "Add Neutronium Ingot",
+  "item.aquamarine.neutronium_cavitator": "Neutronium Cavitator",
+  "tooltip.aquamarine.neutronium_cavitator": "Hold and release. Underwater: a cavitation pulse (10 damage, 32 blocks, pierces 3).",
+  "tooltip.aquamarine.neutronium_cavitator.2": "Out of water: fires harpoons with the tip selected in the Quiver.",
+  "tooltip.aquamarine.neutronium_cavitator.3": "Deals 80% damage to the Kraken's shield.",
+  "death.attack.aquamarine.cavitation": "%1$s imploded in a cavitation bubble",
+  "death.attack.aquamarine.cavitation.player": "%1$s was imploded by %2$s's pulse"
 }

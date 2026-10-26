@@ -171,5 +171,6 @@ Especificação, ordem e painel do que já foi feito: [10-fase4.md](10-fase4.md)
   Kraken rachando os vidros da arena.
 - [x] **4F** Neutrônio: minério sob os oceanos profundos, cadeia Forja → têmpera no fundo → ferraria, equipamento com
   bônus na água e visual estilo Avaritia (itens animados e céu que escorre na armadura).
-- [ ] **4G** Cavitador de Neutrônio: modelo 3D, pulso de cavitação, lançador de arpões, partículas.
+- [x] **4G** Cavitador de Neutrônio: modelo 3D com estágios de carga, pulso de cavitação, lançador de arpões e
+  partículas próprias.
 - [ ] **4S** Sons da Fase 4 (depois, a pedido do Adriano).

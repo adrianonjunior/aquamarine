@@ -18,7 +18,7 @@
 | 4D | Retexturas da oficina, das pontas, dos itens de mergulho e dos troféus; rework da Boia de Âncora | ✅ **feito** (26/10/2026) | §4, §5 |
 | 4E | Blocos de construção aquáticos e vidros quase quebrados para todos os vidros | ✅ **feito** (26/10/2026) | §6, §7 |
 | 4F | **Neutrônio**: minério novo, cadeia de processos, equipamento com bônus na água, visual estilo Avaritia | ✅ **feito** (26/10/2026) | §8 |
-| 4G | **Cavitador de Neutrônio**: arma de longo alcance debaixo d'água com modelo 3D e partículas | a fazer | §9 |
+| 4G | **Cavitador de Neutrônio**: arma de longo alcance debaixo d'água com modelo 3D e partículas | ✅ **feito** (26/10/2026) | §9 |
 | 4S | Sons de tudo acima | **depois**, a pedido do Adriano ("não faça ainda") | §10 |
 
 Ordem: 4A já entrou; 4B vem antes do resto porque o nome novo aparece em quase tudo que vem depois.
@@ -178,7 +178,7 @@ Visual **estilo Avaritia**: um céu estrelado que corre dentro do metal, brilho 
   - Conferido pela parte `neutronium` do `runClientGameTest`, com receitas, ferraria, Molde, minério, afundar,
     têmpera, bônus e Pressão.
 
-## 9. Cavitador de Neutrônio (4G)
+## 9. Cavitador de Neutrônio (4G, feito)
 - **Debaixo d'água:** segurar carrega (0,6 s) e soltar dispara um **pulso de cavitação** (a bolha que implode, como a
   do camarão-pistola). O pulso corre rápido pela água com rastro de bolhas, atravessa até 3 criaturas e implode no
   impacto com um anel de choque de 2 blocos. Dano inicial: 10 carregado, 5 rápido. Alcance de 32 blocos. Fora d'água,
@@ -191,6 +191,19 @@ Visual **estilo Avaritia**: um céu estrelado que corre dentro do metal, brilho 
   convergem para a boca do cano enquanto carrega.
 - **Receita** (Forja Abissal): 3 Lingotes de Neutrônio + 1 Arpão Abissal + 1 Coração do Kraken + 2 Bobinas Voltaicas
   + 1 Regulador de Pressão.
+- **Como foi feito:**
+  - O modelo 3D tem 29 peças: emissor e núcleo acesos, cano arredondado, três bobinas, câmara com janelas de luz,
+    mangueiras de latão, trilho com o arpão carregado, barbatanas, empunhadura, gatilho e coronha.
+  - O modelo está montado na diagonal do sprite da besta, então as poses de mão da besta seguram a arma na
+    horizontal. Na mão aparecem quatro modelos: parado e os três estágios da carga, com o núcleo e as bobinas
+    acendendo. No inventário, no chão e na moldura fica o ícone 2D animado.
+  - Pulso: entidade `CavitationPulseEntity`, sem modelo; o que se vê é o rastro. O dano tem tipo próprio
+    (`aquamarine:cavitation`) e o escudo do Kraken toma 80%.
+  - Partículas próprias com luz: bolha de cavitação, centelha, anel de choque e ponto de carga.
+  - Sons provisórios do jogo até a 4S.
+  - Gerado por `tools/gen_phase4_cavitator.py`.
+  - Conferido pela parte `neutronium` do `runClientGameTest`: o pulso acerta e implode, fora d'água sai arpão e nunca
+    pulso, com capturas em primeira e terceira pessoa.
 
 ## 10. Sons (4S, depois)
 Por pedido do Adriano, só depois do resto e com a mesma régua de [09-audio.md](09-audio.md) (tudo original).

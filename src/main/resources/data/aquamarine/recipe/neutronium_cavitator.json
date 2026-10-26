@@ -1,0 +1,19 @@
+{
+  "type": "aquamarine:abyssal_forging",
+  "category": "equipment",
+  "key": {
+    "C": "aquamarine:voltaic_coil",
+    "I": "aquamarine:neutronium_ingot",
+    "K": "aquamarine:kraken_heart",
+    "H": "aquamarine:abyssal_harpoon",
+    "R": "aquamarine:pressure_regulator"
+  },
+  "pattern": [
+    "CIC",
+    "IKI",
+    "HR "
+  ],
+  "result": {
+    "id": "aquamarine:neutronium_cavitator"
+  }
+}

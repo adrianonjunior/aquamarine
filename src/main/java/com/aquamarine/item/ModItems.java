@@ -193,6 +193,10 @@ public final class ModItems {
 	public static final Item NEUTRONIUM_BOOTS = register("neutronium_boots", Item::new,
 		neutronium().humanoidArmor(ModMaterials.NEUTRONIUM_ARMOR, ArmorType.BOOTS));
 
+	/** Cavitador de Neutrônio (Fase 4G): pulso de cavitação debaixo d'água, lançador de arpões fora dela. */
+	public static final Item NEUTRONIUM_CAVITATOR = register("neutronium_cavitator", NeutroniumCavitatorItem::new,
+		neutronium().durability(1200));
+
 	/** Propriedades da família do Neutrônio: épica e imune a fogo e explosão. */
 	private static Item.Properties neutronium() {
 		return new Item.Properties().rarity(Rarity.EPIC)
