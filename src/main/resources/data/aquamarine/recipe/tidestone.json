@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": "#minecraft:stone_crafting_materials",
+    "P": "minecraft:prismarine_shard"
+  },
+  "pattern": [
+    "###",
+    "#P#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "id": "aquamarine:tidestone"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "aquamarine:petrified_coral_bricks",
+  "result": {
+    "count": 2,
+    "id": "aquamarine:petrified_coral_tile_slab"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": {
+      "force_translucent": true,
+      "sprite": "aquamarine:block/cracked_white_stained_glass"
+    }
+  }
+}

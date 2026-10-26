@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "aquamarine:block/abyssal_tile_slab"
+    },
+    "type=double": {
+      "model": "aquamarine:block/abyssal_tiles"
+    },
+    "type=top": {
+      "model": "aquamarine:block/abyssal_tile_slab_top"
+    }
+  }
+}

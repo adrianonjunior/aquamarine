@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "hanging=false,waterlogged=false": {
+      "model": "aquamarine:block/pearl_lamp"
+    },
+    "hanging=false,waterlogged=true": {
+      "model": "aquamarine:block/pearl_lamp"
+    },
+    "hanging=true,waterlogged=false": {
+      "model": "aquamarine:block/pearl_lamp_hanging"
+    },
+    "hanging=true,waterlogged=true": {
+      "model": "aquamarine:block/pearl_lamp_hanging"
+    }
+  }
+}

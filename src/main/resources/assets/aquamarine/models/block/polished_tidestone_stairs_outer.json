@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "aquamarine:block/polished_tidestone",
+    "side": "aquamarine:block/polished_tidestone",
+    "top": "aquamarine:block/polished_tidestone"
+  }
+}

@@ -2,12 +2,14 @@ package com.aquamarine.gametest;
 
 import com.aquamarine.Aquamarine;
 import com.aquamarine.block.AnchorBuoyBlock;
+import com.aquamarine.block.ModBuildingBlocks;
 import com.aquamarine.block.ModBlocks;
 import com.aquamarine.client.compat.jei.AquamarineJeiPlugin;
 import com.aquamarine.client.screen.AbyssalForgeScreen;
 import com.aquamarine.command.KrakenCommand;
 import com.aquamarine.entity.BossDummy;
 import com.aquamarine.entity.KrakenEntity;
+import com.aquamarine.entity.boss.KrakenWorldEffects;
 import com.aquamarine.entity.boss.ShieldDamage;
 import com.aquamarine.event.KrakenSummoning;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -50,6 +52,8 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -93,6 +97,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			}
 			if (enabled("blocks")) {
 				blockVisuals(context, world, server, base);
+			}
+			if (enabled("building")) {
+				buildingVisuals(context, world, server, base);
 			}
 			if (enabled("spawnlings")) {
 				spawnlingVisuals(context, world, server, base);
@@ -578,6 +585,44 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			context.waitTicks(3);
 			shot(context, "blocos_" + String.format(java.util.Locale.ROOT, "%02d", i / 2 + 1) + "_pares_" + i + "_" + (i + 1));
 		}
+	}
+
+	/** Fase 4 (4E): blocos aquáticos, vidros e vidraças rachados, e a onda de choque do Kraken rachando vidro. */
+	private static void buildingVisuals(ClientGameTestContext context, TestSingleplayerContext world, TestServerContext server, BlockPos base) {
+		server.runCommand("time set noon");
+		server.runCommand("kill @e[type=!player]");
+		BlockPos origin = base.offset(-12, 0, 16);
+		server.runOnServer(s -> {
+			ServerLevel level = s.overworld();
+			List<Block> building = ModBuildingBlocks.building();
+			for (int i = 0; i < building.size(); i++) {
+				level.setBlockAndUpdate(origin.offset((i % 12) * 2, 0, (i / 12) * 2), building.get(i).defaultBlockState());
+			}
+			List<Block> glass = ModBuildingBlocks.glass();
+			int blocks = 0, panes = 0;
+			for (Block block : glass) {
+				boolean pane = BuiltInRegistries.BLOCK.getKey(block).getPath().endsWith("_pane");
+				BlockPos at = origin.offset(pane ? panes++ : blocks++, 0, pane ? 9 : 7);
+				level.setBlockAndUpdate(at, block.defaultBlockState());
+				level.setBlockAndUpdate(at.above(), block.defaultBlockState());
+			}
+			// Onda de choque: vidro comum e vermelho fora da cratera viram rachados (com as mesmas propriedades).
+			BlockPos clear = origin.offset(0, 4, -6);
+			level.setBlockAndUpdate(clear, Blocks.GLASS.defaultBlockState());
+			level.setBlockAndUpdate(clear.east(), Blocks.STAINED_GLASS_PANE.pick(DyeColor.RED).defaultBlockState());
+			int cracked = KrakenWorldEffects.crackGlass(level, Vec3.atCenterOf(clear).add(18, 0, 0), 14, 22);
+			check(cracked >= 2 && level.getBlockState(clear).is(ModBuildingBlocks.cracked(Blocks.GLASS))
+				&& level.getBlockState(clear.east()).is(ModBuildingBlocks.cracked(Blocks.STAINED_GLASS_PANE.pick(DyeColor.RED))),
+				"a onda de choque não rachou os vidros (" + cracked + ")");
+		});
+		tp(server, origin.getX() + 11.5, origin.getY() + 5.0, origin.getZ() - 5.0, 0, 35);
+		world.getConnection().waitForChunksRender();
+		context.waitTicks(10);
+		shot(context, "construcao_00_blocos");
+		tp(server, origin.getX() + 9.0, origin.getY() + 1.6, origin.getZ() + 14.5, 180, 5);
+		world.getConnection().waitForChunksRender();
+		context.waitTicks(10);
+		shot(context, "construcao_01_vidros");
 	}
 
 	/** Ovo, Cria e tentáculo do Kraken lado a lado, de frente e de trás, para a revisão de UV. */

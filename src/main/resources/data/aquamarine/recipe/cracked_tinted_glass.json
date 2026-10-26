@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:tinted_glass",
+    "minecraft:flint"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:cracked_tinted_glass"
+  }
+}

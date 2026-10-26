@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "aquamarine:polished_tidestone",
+  "result": {
+    "count": 2,
+    "id": "aquamarine:polished_tidestone_slab"
+  }
+}

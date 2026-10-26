@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "aquamarine:block/shell_shingle_slab"
+    },
+    "type=double": {
+      "model": "aquamarine:block/shell_shingles"
+    },
+    "type=top": {
+      "model": "aquamarine:block/shell_shingle_slab_top"
+    }
+  }
+}

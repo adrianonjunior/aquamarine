@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "aquamarine:block/shell_shingles",
+    "side": "aquamarine:block/shell_shingles",
+    "top": "aquamarine:block/shell_shingles"
+  }
+}

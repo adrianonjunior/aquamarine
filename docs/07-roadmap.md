@@ -167,7 +167,8 @@ Especificação, ordem e painel do que já foi feito: [10-fase4.md](10-fase4.md)
 - [ ] **4C** Kraken: partes de colisão por tentáculo e cabeça, cabeça sólida, movimento constante.
 - [x] **4D** Retexturas (oficina da Vila, pontas, itens de mergulho, troféus) e rework da Boia de Âncora: modelos 3D
   com frente e colisão no formato, lanterna da Boia que muda de cor com o tempo.
-- [ ] **4E** Blocos de construção aquáticos e vidros rachados.
+- [x] **4E** Blocos de construção aquáticos (35) e vidros rachados para todos os vidros (35), com a onda de choque do
+  Kraken rachando os vidros da arena.
 - [ ] **4F** Neutrônio: minério, cadeia de processos, equipamento com bônus na água, visual estilo Avaritia.
 - [ ] **4G** Cavitador de Neutrônio: modelo 3D, pulso de cavitação, lançador de arpões, partículas.
 - [ ] **4S** Sons da Fase 4 (depois, a pedido do Adriano).

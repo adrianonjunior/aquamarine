@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "aquamarine:block/tidestone_slab"
+    },
+    "type=double": {
+      "model": "aquamarine:block/tidestone"
+    },
+    "type=top": {
+      "model": "aquamarine:block/tidestone_slab_top"
+    }
+  }
+}

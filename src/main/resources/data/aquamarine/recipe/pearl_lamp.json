@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:lantern",
+    "aquamarine:abyssal_pearl"
+  ],
+  "result": {
+    "count": 2,
+    "id": "aquamarine:pearl_lamp"
+  }
+}

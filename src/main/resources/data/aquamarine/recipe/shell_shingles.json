@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": "minecraft:brick",
+    "N": "minecraft:nautilus_shell"
+  },
+  "pattern": [
+    "BBB",
+    "BNB",
+    "BBB"
+  ],
+  "result": {
+    "count": 8,
+    "id": "aquamarine:shell_shingles"
+  }
+}

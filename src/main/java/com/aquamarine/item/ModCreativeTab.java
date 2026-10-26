@@ -1,6 +1,7 @@
 package com.aquamarine.item;
 
 import com.aquamarine.Aquamarine;
+import com.aquamarine.block.ModBuildingBlocks;
 
 import java.util.List;
 
@@ -38,6 +39,9 @@ public final class ModCreativeTab {
 			ModItems.KRAKEN_HEART, ModItems.ELECTRIC_SCALE, ModItems.VOLTAIC_COIL);
 		addToVanilla(CreativeModeTabs.NATURAL_BLOCKS, ModItems.ABYSSAL_ORE);
 		addToVanilla(CreativeModeTabs.BUILDING_BLOCKS, ModItems.ABYSSAL_BLOCK);
+		// Fase 4: blocos aquáticos na aba de construção e os vidros rachados na de blocos coloridos.
+		addToVanilla(CreativeModeTabs.BUILDING_BLOCKS, ModBuildingBlocks.building().stream().map(b -> b.asItem()).toArray(Item[]::new));
+		addToVanilla(CreativeModeTabs.COLORED_BLOCKS, ModBuildingBlocks.glass().stream().map(b -> b.asItem()).toArray(Item[]::new));
 		addToVanilla(CreativeModeTabs.FUNCTIONAL_BLOCKS, ModItems.ABYSSAL_FORGE, ModItems.ABYSSAL_ALTAR,
 			ModItems.KRAKEN_TROPHY, ModItems.GOLDEN_ABYSS_TROPHY, ModItems.TIDE_ANVIL, ModItems.CHART_TABLE, ModItems.SHELL_ALTAR);
 		addToVanilla(CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.ABYSSAL_SHOVEL, ModItems.ABYSSAL_PICKAXE,

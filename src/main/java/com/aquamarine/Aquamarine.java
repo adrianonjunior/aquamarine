@@ -1,6 +1,7 @@
 package com.aquamarine;
 
 import com.aquamarine.block.ModBlocks;
+import com.aquamarine.block.ModBuildingBlocks;
 import com.aquamarine.command.CreatureCommand;
 import com.aquamarine.command.HarborCommand;
 import com.aquamarine.command.KrakenCommand;
@@ -43,6 +44,7 @@ public class Aquamarine implements ModInitializer {
 		ModBlocks.register();
 		ModComponents.register();
 		ModItems.register();
+		ModBuildingBlocks.register();
 		ModRecipes.register();
 		ModMenus.register();
 		ModCreativeTab.register();

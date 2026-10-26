@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "waterlogged=false": {
+      "model": "aquamarine:block/naval_grate"
+    },
+    "waterlogged=true": {
+      "model": "aquamarine:block/naval_grate"
+    }
+  }
+}

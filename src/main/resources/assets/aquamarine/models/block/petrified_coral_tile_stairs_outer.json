@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "aquamarine:block/petrified_coral_tiles",
+    "side": "aquamarine:block/petrified_coral_tiles",
+    "top": "aquamarine:block/petrified_coral_tiles"
+  }
+}

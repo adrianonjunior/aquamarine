@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "aquamarine:abyssal_tiles",
+  "result": {
+    "count": 1,
+    "id": "aquamarine:abyssal_tile_wall"
+  }
+}

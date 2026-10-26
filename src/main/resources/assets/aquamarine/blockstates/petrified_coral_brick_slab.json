@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "aquamarine:block/petrified_coral_brick_slab"
+    },
+    "type=double": {
+      "model": "aquamarine:block/petrified_coral_bricks"
+    },
+    "type=top": {
+      "model": "aquamarine:block/petrified_coral_brick_slab_top"
+    }
+  }
+}

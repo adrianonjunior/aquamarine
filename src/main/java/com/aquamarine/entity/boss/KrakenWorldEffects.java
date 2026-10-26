@@ -1,6 +1,7 @@
 package com.aquamarine.entity.boss;
 
 import com.aquamarine.Aquamarine;
+import com.aquamarine.block.ModBuildingBlocks;
 import com.aquamarine.config.AquamarineConfig;
 import com.aquamarine.entity.KrakenEntity;
 import java.util.List;
@@ -184,6 +185,29 @@ public final class KrakenWorldEffects {
 		return broken;
 	}
 
+	/**
+	 * Fase 4 (docs/10-fase4.md, §7): no anel em volta da cratera os vidros e vidraças do jogo racham em vez de quebrar
+	 * (os de dentro a cratera já quebrou). Devolve quantos racharam.
+	 */
+	public static int crackGlass(ServerLevel level, Vec3 center, double inner, double outer) {
+		int count = 0;
+		int r = (int) Math.ceil(outer);
+		BlockPos origin = BlockPos.containing(center);
+		for (BlockPos pos : BlockPos.betweenClosed(origin.offset(-r, -r, -r), origin.offset(r, r, r))) {
+			double distance = pos.distToCenterSqr(center);
+			if (distance > outer * outer || distance < inner * inner) {
+				continue;
+			}
+			BlockState state = level.getBlockState(pos);
+			Block cracked = ModBuildingBlocks.cracked(state.getBlock());
+			if (cracked != null) {
+				level.setBlock(pos.immutable(), cracked.withPropertiesOf(state), Block.UPDATE_ALL);
+				count++;
+			}
+		}
+		return count;
+	}
+
 	/** Emboscada: a erupção abre uma cratera no fundo do mar embaixo do ponto. */
 	public static int seabedCrater(ServerLevel level, Vec3 point, double radius) {
 		int floor = level.getHeight(Heightmap.Types.OCEAN_FLOOR, (int) Math.floor(point.x), (int) Math.floor(point.z));
@@ -196,6 +220,7 @@ public final class KrakenWorldEffects {
 			return 0;
 		}
 		int broken = crater(level, center, SHOCKWAVE_RADIUS, SHOCKWAVE_MAX_HARDNESS);
+		crackGlass(level, center, SHOCKWAVE_RADIUS, SHOCKWAVE_RADIUS * 1.6);
 		blight(level, BlockPos.containing(center), SHOCKWAVE_RADIUS, level.getRandom());
 		return broken;
 	}

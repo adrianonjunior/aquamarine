@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "aquamarine:block/abyssal_tiles",
+    "side": "aquamarine:block/abyssal_tiles",
+    "top": "aquamarine:block/abyssal_tiles"
+  }
+}

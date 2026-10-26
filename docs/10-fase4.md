@@ -16,7 +16,7 @@
 | 4B | Oricálcio vira **Abissal** (minério, lingote, ferramentas, armadura, pontas, arpão) | ✅ **feito** (26/10/2026) | §2 |
 | 4C | Kraken: hitbox por tentáculo e na cabeça, cabeça sólida, muito mais movimento | a fazer | §3 |
 | 4D | Retexturas da oficina, das pontas, dos itens de mergulho e dos troféus; rework da Boia de Âncora | ✅ **feito** (26/10/2026) | §4, §5 |
-| 4E | Blocos de construção aquáticos e vidros quase quebrados para todos os vidros | a fazer | §6, §7 |
+| 4E | Blocos de construção aquáticos e vidros quase quebrados para todos os vidros | ✅ **feito** (26/10/2026) | §6, §7 |
 | 4F | **Neutrônio**: minério novo, cadeia de processos, equipamento com bônus na água, visual estilo Avaritia | a fazer | §8 |
 | 4G | **Cavitador de Neutrônio**: arma de longo alcance debaixo d'água com modelo 3D e partículas | a fazer | §9 |
 | 4S | Sons de tudo acima | **depois**, a pedido do Adriano ("não faça ainda") | §10 |
@@ -106,7 +106,7 @@ o modelo também ganha forma.
 - Quando o Kraken a destrói, há efeito visível (estilhaços e espirro d'água).
 - Regras iguais às de hoje ([05-itens.md](05-itens.md)): 90 s, Pressão zerada, recarga de 30 s.
 
-## 6. Blocos de construção aquáticos (4E)
+## 6. Blocos de construção aquáticos (4E, feito)
 Cada família tem bloco, escada, laje e muro, além de polido, cinzelado ou pilar quando faz sentido. Saem de
 materiais do oceano mais os do mod. Lista inicial:
 - **Pedra de Maré:** pedra com veios verde-azulados, em versões bruta, polida, tijolos, tijolos rachados, cinzelada com
@@ -117,13 +117,30 @@ materiais do oceano mais os do mod. Lista inicial:
 - **Vidro do mar:** vidro fosco em cores de água.
 - **Luzes:** Lanterna de Água-viva e Lampião de Pérola.
 - **Grade naval:** treliça de ferro com cracas.
+- **Como ficou:** 35 blocos.
+  - Pedra de Maré: bruta, polida, tijolos, tijolos rachados, talhada com tridente e pilar.
+  - Escadas, lajes e muros: da Pedra de Maré bruta, polida e em tijolos, dos tijolos de coral e dos Ladrilhos
+    Abissais. Os ladrilhos de coral e as telhas têm só escadas e lajes.
+  - Vidro do Mar com vidraça. A Lanterna de Água-viva tem luz 15 e pulsa. O Lampião de Pérola pendura no teto.
+  - Receitas:
+    - Pedra de Maré: 8 pedras + 1 fragmento de prismarinho; o resto da família sai pela serra.
+    - Tijolos de Coral Petrificado: 4 blocos de coral morto.
+    - Telhas de Concha: 8 tijolos + 1 concha de náutilo.
+    - Ladrilhos Abissais: 8 ladrilhos de ardósia + 1 Lingote Abissal.
+    - Vidro do Mar: 8 vidros + 1 cristal de prismarinho.
+    - Lanterna de Água-viva: bolsas de tinta brilhante, cristais e Vidro do Mar.
+    - Lampião de Pérola: lampião + Pérola Abissal, rende 2.
+    - Grade Naval: 4 barras de ferro + 1 lingote de cobre.
+  - Tudo é gerado por `tools/gen_phase4_building.py`, que também grava o `ModBuildingBlocks`.
 
-## 7. Vidros quase quebrados (4E)
+## 7. Vidros quase quebrados (4E, feito)
 - Uma variante rachada para **todos os vidros**: vidro, 16 tingidos e fumê (18 blocos), mais os painéis (17).
 - Receita: vidro + pederneira (sem forma) rende 1 vidro rachado.
 - Na luta, a onda de choque do Kraken racha os vidros da arena (complementa a destruição do ambiente).
-- Desenho: as rachaduras são uma camada própria por cima da textura do vidro do jogo. Não há cópia das texturas do
-  Minecraft.
+- Desenho: textura própria de cada cor (moldura, brilho e as mesmas rachaduras finas saindo de um ponto de impacto,
+  com um furinho no meio). Não há cópia das texturas do Minecraft.
+- Na luta: `KrakenWorldEffects.crackGlass` racha os vidros do anel entre 14 e 22 blocos da onda de choque, mantendo
+  as conexões das vidraças. Conferido pela parte `building` do `runClientGameTest`.
 
 ## 8. Neutrônio (4F)
 Material de fim de jogo, azul-ciano, acima da netherite. Fica **mais difícil** que ela e pede uma **série de etapas**.

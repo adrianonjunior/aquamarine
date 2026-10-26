@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "C": "minecraft:prismarine_crystals",
+    "G": "minecraft:glow_ink_sac",
+    "S": "aquamarine:sea_glass"
+  },
+  "pattern": [
+    "CGC",
+    "GSG",
+    "CGC"
+  ],
+  "result": {
+    "count": 2,
+    "id": "aquamarine:jellyfish_lantern"
+  }
+}

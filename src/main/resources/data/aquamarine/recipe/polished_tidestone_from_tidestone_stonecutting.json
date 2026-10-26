@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "aquamarine:tidestone",
+  "result": {
+    "count": 1,
+    "id": "aquamarine:polished_tidestone"
+  }
+}

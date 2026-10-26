@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "aquamarine:shell_shingles",
+  "result": {
+    "count": 1,
+    "id": "aquamarine:shell_shingle_stairs"
+  }
+}

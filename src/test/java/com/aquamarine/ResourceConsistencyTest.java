@@ -80,7 +80,9 @@ class ResourceConsistencyTest {
 			JsonObject json = read(model);
 			if (json.has("textures")) {
 				for (Map.Entry<String, JsonElement> tex : json.getAsJsonObject("textures").entrySet()) {
-					String id = tex.getValue().getAsString();
+					// no 26.3 a textura pode ser objeto: {"sprite": ..., "force_translucent": true}
+					JsonElement value = tex.getValue();
+					String id = value.isJsonObject() ? value.getAsJsonObject().get("sprite").getAsString() : value.getAsString();
 					if (id.startsWith("aquamarine:") && !Files.exists(asset(id, "textures", ".png"))) {
 						missing.add(model.getFileName() + " -> " + id);
 					}
