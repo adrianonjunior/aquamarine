@@ -140,6 +140,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			if (enabled("neutronium")) {
 				NeutroniumGameTest.run(context, world, server, base);
 			}
+			if (enabled("energy")) {
+				EnergyGameTest.run(context, world, server, base);
+			}
 			if (enabled("harbor")) {
 				HarborGameTest.run(context, world, server, base);
 			}

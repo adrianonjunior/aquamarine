@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "N": "aquamarine:neutronium_dust",
+    "A": "aquamarine:aurium_ingot",
+    "V": "aquamarine:voltaic_coil",
+    "X": "minecraft:conduit"
+  },
+  "pattern": [
+    "NAN",
+    "VXV",
+    "NAN"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:neutronium_collector"
+  }
+}

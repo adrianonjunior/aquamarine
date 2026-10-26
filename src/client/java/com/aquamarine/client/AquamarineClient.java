@@ -63,6 +63,7 @@ public class AquamarineClient implements ClientModInitializer {
 		SummonEffects.register();
 		ItemDescriptions.register();
 		EnchantmentDescriptions.register();
+		RadarHud.register();
 		KrakenEffects.register();
 		KrakenMusic.register();
 		AquamarineKeys.register();

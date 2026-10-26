@@ -198,8 +198,12 @@ public abstract class AbstractWhaleEntity extends PathfinderMob {
 			if (away.lengthSqr() < 1.0E-4) {
 				away = Vec3.directionFromRotation(0, yBodyRot);
 			}
-			p.push(away.normalize().scale(0.25));
-			p.needsSync = true;
+			Vec3 push = away.normalize().scale(0.35);
+			p.setDeltaMovement(p.getDeltaMovement().add(push.x, 0.05, push.z));
+			// O cliente manda no próprio movimento: sem o pacote, o empurrão do servidor não chega.
+			if (p instanceof net.minecraft.server.level.ServerPlayer sp) {
+				sp.connection.send(new net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket(sp));
+			}
 		}
 	}
 
@@ -208,6 +212,17 @@ public abstract class AbstractWhaleEntity extends PathfinderMob {
 		super.remove(reason);
 		parts.forEach(Entity::discard);
 		parts.clear();
+	}
+
+	/** Carne de Baleia (6B2): 3 a 5 pedaços, mais até 1 por nível de Saque de quem matou. Só as selvagens chamam (F6-6). */
+	protected void dropMeat(ServerLevel level, DamageSource source) {
+		int looting = source.getEntity() instanceof net.minecraft.world.entity.LivingEntity killer
+			? level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
+				.get(net.minecraft.world.item.enchantment.Enchantments.LOOTING)
+				.map(h -> net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantmentLevel(h, killer)).orElse(0)
+			: 0;
+		int count = 3 + random.nextInt(3) + (looting > 0 ? random.nextInt(looting + 1) : 0);
+		spawnAtLocation(level, new net.minecraft.world.item.ItemStack(com.aquamarine.item.ModItems.RAW_WHALE_MEAT, count));
 	}
 
 	/** Comportamento de cada espécie quando não está fugindo nem sendo pilotada. */

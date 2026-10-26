@@ -43,6 +43,10 @@ dependencies {
 	compileOnly "mezz.jei:jei-${project.minecraft_version}-fabric-api:${project.jei_version}"
 	localRuntime "mezz.jei:jei-${project.minecraft_version}-fabric:${project.jei_version}"
 
+	// Energia aquática (Fase 6, 6E): Team Reborn Energy, a unidade que os mods de tecnologia usam; vai dentro do jar.
+	implementation "teamreborn:energy:${project.energy_version}"
+	include "teamreborn:energy:${project.energy_version}"
+
 	// Testes (rodam no `gradlew build`): JUnit com o loader do Fabric no classpath.
 	testImplementation "net.fabricmc:fabric-loader-junit:${project.loader_version}"
 	testRuntimeOnly "org.junit.platform:junit-platform-launcher"

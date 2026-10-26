@@ -6,6 +6,7 @@
     "aquamarine:neutronium_ore",
     "aquamarine:neutronium_block",
     "aquamarine:aurium_ore",
-    "aquamarine:aurium_block"
+    "aquamarine:aurium_block",
+    "aquamarine:neutronium_collector"
   ]
 }

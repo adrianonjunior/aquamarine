@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:book",
+    "D": "minecraft:diamond",
+    "H": "minecraft:heart_of_the_sea",
+    "P": "minecraft:prismarine_bricks"
+  },
+  "pattern": [
+    " B ",
+    "DHD",
+    "PPP"
+  ],
+  "result": {
+    "id": "aquamarine:aquatic_enchanting_table"
+  }
+}

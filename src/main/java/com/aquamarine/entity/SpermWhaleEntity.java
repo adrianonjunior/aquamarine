@@ -181,6 +181,7 @@ public class SpermWhaleEntity extends AbstractWhaleEntity implements SpermWhaleV
 	protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean killedByPlayer) {
 		super.dropCustomDeathLoot(level, source, killedByPlayer);
 		spawnAtLocation(level, new ItemStack(Items.LEATHER, 2 + random.nextInt(3)));
+		dropMeat(level, source);
 	}
 
 	@Override

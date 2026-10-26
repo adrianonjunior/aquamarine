@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": "minecraft:prismarine_shard",
+    "C": "minecraft:copper_ingot"
+  },
+  "pattern": [
+    "PCP"
+  ],
+  "result": {
+    "count": 6,
+    "id": "aquamarine:aquatic_cable"
+  }
+}

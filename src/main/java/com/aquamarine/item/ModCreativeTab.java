@@ -61,6 +61,12 @@ public final class ModCreativeTab {
 		// Fase 6 (6H): família do Aurium na construção e as peças de navio e aquário nos blocos funcionais.
 		addToVanilla(CreativeModeTabs.BUILDING_BLOCKS, com.aquamarine.block.ModDecorBlocks.building().stream().map(b -> b.asItem()).toArray(Item[]::new));
 		addToVanilla(CreativeModeTabs.FUNCTIONAL_BLOCKS, com.aquamarine.block.ModDecorBlocks.decor().stream().map(b -> b.asItem()).toArray(Item[]::new));
+		// Fase 6 (6E): geradores, cabo e Coletor de Neutrônio nos blocos de redstone; o Pó Estelar nos ingredientes.
+		addToVanilla(CreativeModeTabs.REDSTONE_BLOCKS, com.aquamarine.energy.ModEnergy.blocks().stream().map(b -> b.asItem()).toArray(Item[]::new));
+		addToVanilla(CreativeModeTabs.INGREDIENTS, ModItems.NEUTRONIUM_STARDUST);
+		addToVanilla(CreativeModeTabs.FUNCTIONAL_BLOCKS, ModItems.AQUATIC_ENCHANTING_TABLE);
+		addToVanilla(CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.AQUATIC_RADAR);
+		addToVanilla(CreativeModeTabs.FOOD_AND_DRINKS, ModItems.RAW_WHALE_MEAT, ModItems.COOKED_WHALE_MEAT);
 		addToVanilla(CreativeModeTabs.COLORED_BLOCKS, ModBuildingBlocks.glass().stream().map(b -> b.asItem()).toArray(Item[]::new));
 		addToVanilla(CreativeModeTabs.FUNCTIONAL_BLOCKS, ModItems.ABYSSAL_FORGE, ModItems.ABYSSAL_ALTAR,
 			ModItems.KRAKEN_TROPHY, ModItems.GOLDEN_ABYSS_TROPHY, ModItems.TIDE_ANVIL, ModItems.CHART_TABLE, ModItems.SHELL_ALTAR);

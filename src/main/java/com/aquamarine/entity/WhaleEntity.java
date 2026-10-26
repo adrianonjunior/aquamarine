@@ -390,6 +390,9 @@ public class WhaleEntity extends AbstractWhaleEntity implements WhaleView {
 	protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean killedByPlayer) {
 		super.dropCustomDeathLoot(level, source, killedByPlayer);
 		spawnAtLocation(level, new ItemStack(Items.LEATHER, 2 + random.nextInt(3)));
+		if (!isTamed()) {
+			dropMeat(level, source);
+		}
 		if (saddled()) {
 			spawnAtLocation(level, new ItemStack(ModItems.WHALE_SADDLE));
 		}
