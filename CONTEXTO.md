@@ -26,6 +26,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| **Fase 4** (plano em `docs/10-fase4.md` e execução: hitboxes e movimento do Kraken, retexturas, Boia, blocos aquáticos, vidros rachados, Oricálcio → Abissal, Neutrônio estilo Avaritia e a arma; sons depois) | Claude Opus 5.5 (worktree `aquamarine-claude-kraken`, branch `claude/fase4`) | Gradle na worktree; site (Atlas) regerado a cada entrega | 25/10/2026 |
 | Publicar e verificar link ngrok do Atlas de amostra | Codex | Servidor Atlas 8767 e túnel ngrok | 25/10/2026 |
 
 ## Registro de handoff
