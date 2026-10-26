@@ -31,6 +31,15 @@ public final class ModMaterials {
 
 	public static final ResourceKey<EquipmentAsset> ABYSSAL_ASSET =
 		ResourceKey.create(EquipmentAssets.ROOT_ID, Aquamarine.id("abyssal"));
+	/**
+	 * Aurium (Fase 6, 6D1): entre o Abissal e o Neutrônio. A espada fica com 8 de dano (1 base + 4 do material + 3 da
+	 * espada), como a netherite; minera o mesmo que ela.
+	 */
+	public static final ToolMaterial AURIUM_TOOL = new ToolMaterial(
+		BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 2300, 9.2F, 4.0F, 20, ModTags.Items.AURIUM_TOOL_MATERIALS);
+
+	public static final ResourceKey<EquipmentAsset> AURIUM_ASSET =
+		ResourceKey.create(EquipmentAssets.ROOT_ID, Aquamarine.id("aurium"));
 	public static final ResourceKey<EquipmentAsset> NEUTRONIUM_ASSET =
 		ResourceKey.create(EquipmentAssets.ROOT_ID, Aquamarine.id("neutronium"));
 	public static final ResourceKey<EquipmentAsset> DIVING_GOGGLES_ASSET =
@@ -60,6 +69,17 @@ public final class ModMaterials {
 		0.05F,
 		ModTags.Items.REPAIRS_ABYSSAL_ARMOR,
 		ABYSSAL_ASSET);
+
+	/** Aurium: defesa 3/8/6/3, resistência 3, repulsão 0,1 e durabilidade 45 (entre o Abissal e o Neutrônio). */
+	public static final ArmorMaterial AURIUM_ARMOR = new ArmorMaterial(
+		45,
+		Map.of(ArmorType.HELMET, 3, ArmorType.CHESTPLATE, 8, ArmorType.LEGGINGS, 6, ArmorType.BOOTS, 3, ArmorType.BODY, 12),
+		20,
+		SoundEvents.ARMOR_EQUIP_DIAMOND,
+		3.0F,
+		0.1F,
+		ModTags.Items.REPAIRS_AURIUM_ARMOR,
+		AURIUM_ASSET);
 
 	/** Neutrônio: defesa 4/9/7/4, resistência 4, repulsão 0,15 e durabilidade 60 (a netherite: 3/8/6/3, 3, 0,1, 37). */
 	public static final ArmorMaterial NEUTRONIUM_ARMOR = new ArmorMaterial(

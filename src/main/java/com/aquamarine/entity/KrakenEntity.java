@@ -470,6 +470,9 @@ public class KrakenEntity extends Mob implements KrakenView {
 		if (weapon != null && weapon.is(ModTags.Items.NEUTRONIUM_TOOLS)) {
 			return ShieldDamage.Source.NEUTRONIUM;
 		}
+		if (weapon != null && weapon.is(ModTags.Items.AURIUM_TOOLS)) {
+			return ShieldDamage.Source.AURIUM;
+		}
 		if (weapon != null && weapon.is(ModTags.Items.SHIELD_BREAKERS)) {
 			return ShieldDamage.Source.ABYSSAL;
 		}

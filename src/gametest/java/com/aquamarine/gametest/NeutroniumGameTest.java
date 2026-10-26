@@ -60,6 +60,10 @@ final class NeutroniumGameTest {
 				ServerLevel level = s.overworld();
 				check(s.getRecipeManager().byKey(recipe("neutronium_dust")).isPresent(), "sem a receita da Poeira na Forja");
 				check(s.getRecipeManager().byKey(recipe("unstable_neutronium_ingot")).isPresent(), "sem a receita do Lingote Instável");
+				// 6D1: a família do Aurium (fundição, Forja e bloco); ele entra no Lingote Instável no lugar do Abissal.
+				for (String name : new String[] {"aurium_ingot_from_smelting", "aurium_block", "aurium_sword", "aurium_chestplate"}) {
+					check(s.getRecipeManager().byKey(recipe(name)).isPresent(), "sem a receita " + name);
+				}
 				SmithingRecipeInput input = new SmithingRecipeInput(new ItemStack(ModItems.NEUTRONIUM_UPGRADE_SMITHING_TEMPLATE),
 					new ItemStack(ModItems.ABYSSAL_PICKAXE), new ItemStack(ModItems.NEUTRONIUM_INGOT));
 				ItemStack upgraded = s.getRecipeManager().getRecipeFor(RecipeType.SMITHING, input, level)

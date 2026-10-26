@@ -165,6 +165,30 @@ public final class ModItems {
 	public static final Item KRAKEN_TROPHY = registerBlock(ModBlocks.KRAKEN_TROPHY, new Item.Properties().rarity(Rarity.EPIC));
 	public static final Item GOLDEN_ABYSS_TROPHY = registerBlock(ModBlocks.GOLDEN_ABYSS_TROPHY, new Item.Properties().rarity(Rarity.EPIC));
 
+	// Fase 6 (6D1): Aurium, entre o Abissal e o Neutrônio (docs/11-fase6.md).
+	public static final Item AURIUM_ORE = registerBlock(ModBlocks.AURIUM_ORE, new Item.Properties());
+	public static final Item RAW_AURIUM = register("raw_aurium", Item::new, new Item.Properties());
+	public static final Item AURIUM_INGOT = register("aurium_ingot", Item::new, new Item.Properties());
+	public static final Item AURIUM_BLOCK = registerBlock(ModBlocks.AURIUM_BLOCK, new Item.Properties());
+	public static final Item AURIUM_SWORD = register("aurium_sword", Item::new,
+		new Item.Properties().sword(ModMaterials.AURIUM_TOOL, 3.0F, -2.4F));
+	public static final Item AURIUM_PICKAXE = register("aurium_pickaxe", Item::new,
+		new Item.Properties().pickaxe(ModMaterials.AURIUM_TOOL, 1.0F, -2.8F));
+	public static final Item AURIUM_AXE = register("aurium_axe", Item::new,
+		new Item.Properties().axe(ModMaterials.AURIUM_TOOL, 5.0F, -3.0F));
+	public static final Item AURIUM_SHOVEL = register("aurium_shovel", Item::new,
+		new Item.Properties().shovel(ModMaterials.AURIUM_TOOL, 1.5F, -3.0F));
+	public static final Item AURIUM_HOE = register("aurium_hoe", Item::new,
+		new Item.Properties().hoe(ModMaterials.AURIUM_TOOL, -4.0F, 0.0F));
+	public static final Item AURIUM_HELMET = register("aurium_helmet", Item::new,
+		new Item.Properties().humanoidArmor(ModMaterials.AURIUM_ARMOR, ArmorType.HELMET));
+	public static final Item AURIUM_CHESTPLATE = register("aurium_chestplate", Item::new,
+		new Item.Properties().humanoidArmor(ModMaterials.AURIUM_ARMOR, ArmorType.CHESTPLATE));
+	public static final Item AURIUM_LEGGINGS = register("aurium_leggings", Item::new,
+		new Item.Properties().humanoidArmor(ModMaterials.AURIUM_ARMOR, ArmorType.LEGGINGS));
+	public static final Item AURIUM_BOOTS = register("aurium_boots", Item::new,
+		new Item.Properties().humanoidArmor(ModMaterials.AURIUM_ARMOR, ArmorType.BOOTS));
+
 	// Fase 4F: Neutrônio (docs/10-fase4.md, §8). Não queima, não explode e afunda na água (NeutroniumTempering).
 	public static final Item NEUTRONIUM_ORE = registerBlock(ModBlocks.NEUTRONIUM_ORE, neutronium());
 	public static final Item RAW_NEUTRONIUM = register("raw_neutronium", Item::new, neutronium());

@@ -626,6 +626,47 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 		world.getConnection().waitForChunksRender();
 		context.waitTicks(10);
 		shot(context, "construcao_01_vidros");
+
+		// Fase 6 (6D1 e 6H): família do Aurium, peças de navio, aquário e estátua; e o bônus do conjunto de Aurium na água.
+		BlockPos row = origin.offset(0, 0, -4);
+		server.runOnServer(s -> {
+			ServerLevel level = s.overworld();
+			List<Block> six = new java.util.ArrayList<>(com.aquamarine.block.ModDecorBlocks.building());
+			six.addAll(com.aquamarine.block.ModDecorBlocks.decor());
+			six.add(ModBlocks.AURIUM_ORE);
+			six.add(ModBlocks.AURIUM_BLOCK);
+			for (int i = 0; i < six.size(); i++) {
+				level.setBlockAndUpdate(row.offset((i * 2) % 24, 0, -(i / 12) * 2), six.get(i).defaultBlockState());
+			}
+		});
+		tp(server, row.getX() + 11.5, row.getY() + 3.0, row.getZ() - 7.5, 0, 25);
+		world.getConnection().waitForChunksRender();
+		context.waitTicks(10);
+		shot(context, "construcao_02_fase6");
+		BlockPos pool = row.offset(28, 0, 0);
+		server.runCommand(String.format("fill %d %d %d %d %d %d minecraft:glass", pool.getX() - 1, pool.getY() - 1, pool.getZ() - 1,
+			pool.getX() + 1, pool.getY() + 3, pool.getZ() + 1));
+		server.runCommand(String.format("fill %d %d %d %d %d %d minecraft:water", pool.getX(), pool.getY(), pool.getZ(),
+			pool.getX(), pool.getY() + 2, pool.getZ()));
+		server.runOnServer(s -> {
+			ServerPlayer p = player(s);
+			p.setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD, new ItemStack(ModItems.AURIUM_HELMET));
+			p.setItemSlot(net.minecraft.world.entity.EquipmentSlot.CHEST, new ItemStack(ModItems.AURIUM_CHESTPLATE));
+			p.setItemSlot(net.minecraft.world.entity.EquipmentSlot.LEGS, new ItemStack(ModItems.AURIUM_LEGGINGS));
+			p.setItemSlot(net.minecraft.world.entity.EquipmentSlot.FEET, new ItemStack(ModItems.AURIUM_BOOTS));
+			p.removeEffect(net.minecraft.world.effect.MobEffects.CONDUIT_POWER);
+			p.teleportTo(pool.getX() + 0.5, pool.getY(), pool.getZ() + 0.5);
+		});
+		context.waitTicks(30);
+		check(server.computeOnServer(s -> player(s).hasEffect(net.minecraft.world.effect.MobEffects.CONDUIT_POWER)),
+			"Aurium: o conjunto devia dar Poder do Conduíte debaixo da água");
+		server.runOnServer(s -> {
+			for (net.minecraft.world.entity.EquipmentSlot slot : new net.minecraft.world.entity.EquipmentSlot[] {
+				net.minecraft.world.entity.EquipmentSlot.HEAD, net.minecraft.world.entity.EquipmentSlot.CHEST,
+				net.minecraft.world.entity.EquipmentSlot.LEGS, net.minecraft.world.entity.EquipmentSlot.FEET}) {
+				player(s).setItemSlot(slot, ItemStack.EMPTY);
+			}
+		});
 	}
 
 	/** Ovo, Cria e tentáculo do Kraken lado a lado, de frente e de trás, para a revisão de UV. */

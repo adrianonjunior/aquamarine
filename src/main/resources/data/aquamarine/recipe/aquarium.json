@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "G": "minecraft:glass",
+    "C": "minecraft:tube_coral",
+    "S": "minecraft:sand"
+  },
+  "pattern": [
+    "GGG",
+    "GCG",
+    "GSG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:aquarium"
+  }
+}

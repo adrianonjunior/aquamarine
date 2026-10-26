@@ -4,6 +4,8 @@
     "aquamarine:abyssal_ore",
     "aquamarine:abyssal_block",
     "aquamarine:neutronium_ore",
-    "aquamarine:neutronium_block"
+    "aquamarine:neutronium_block",
+    "aquamarine:aurium_ore",
+    "aquamarine:aurium_block"
   ]
 }

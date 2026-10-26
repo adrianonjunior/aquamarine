@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "aquamarine:block/aurium_tile_slab"
+    },
+    "type=double": {
+      "model": "aquamarine:block/aurium_tiles"
+    },
+    "type=top": {
+      "model": "aquamarine:block/aurium_tile_slab_top"
+    }
+  }
+}

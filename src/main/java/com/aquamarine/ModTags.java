@@ -31,6 +31,10 @@ public final class ModTags {
 		public static final TagKey<Item> REPAIRS_NEUTRONIUM_ARMOR = create("repairs_neutronium_armor");
 		/** Ferramentas de Neutrônio: 80% de dano no escudo do Kraken. */
 		public static final TagKey<Item> NEUTRONIUM_TOOLS = create("neutronium_tools");
+		/** Aurium (Fase 6, 6D1): reparo das ferramentas e da armadura e as ferramentas que ferem o escudo a 70%. */
+		public static final TagKey<Item> AURIUM_TOOL_MATERIALS = create("aurium_tool_materials");
+		public static final TagKey<Item> REPAIRS_AURIUM_ARMOR = create("repairs_aurium_armor");
+		public static final TagKey<Item> AURIUM_TOOLS = create("aurium_tools");
 		/** Itens da família do Neutrônio: afundam na água. */
 		public static final TagKey<Item> NEUTRONIUM_DENSE = create("neutronium_dense");
 

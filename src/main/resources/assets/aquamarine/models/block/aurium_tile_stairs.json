@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "aquamarine:block/aurium_tiles",
+    "side": "aquamarine:block/aurium_tiles",
+    "top": "aquamarine:block/aurium_tiles"
+  }
+}

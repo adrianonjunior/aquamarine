@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "group": "aurium_ingot",
+  "ingredient": "aquamarine:raw_aurium",
+  "result": {
+    "id": "aquamarine:aurium_ingot"
+  },
+  "experience": 1.5,
+  "cookingtime": 100
+}

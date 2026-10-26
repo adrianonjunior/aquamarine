@@ -41,6 +41,18 @@
     "aquamarine:pearl_lamp",
     "aquamarine:naval_grate",
     "aquamarine:neutronium_ore",
-    "aquamarine:neutronium_block"
+    "aquamarine:neutronium_block",
+    "aquamarine:aurium_ore",
+    "aquamarine:aurium_block",
+    "aquamarine:aurium_tiles",
+    "aquamarine:aurium_tile_stairs",
+    "aquamarine:aurium_tile_slab",
+    "aquamarine:aurium_tile_wall",
+    "aquamarine:chiseled_aurium_tiles",
+    "aquamarine:aurium_lamp",
+    "aquamarine:ship_lantern",
+    "aquamarine:decorative_anchor",
+    "aquamarine:aquarium",
+    "aquamarine:kraken_statue"
   ]
 }

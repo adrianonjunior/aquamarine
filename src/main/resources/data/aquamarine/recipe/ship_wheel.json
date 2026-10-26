@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "S": "minecraft:stick",
+    "P": "#minecraft:planks",
+    "I": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "SPS",
+    "PIP",
+    "SPS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:ship_wheel"
+  }
+}

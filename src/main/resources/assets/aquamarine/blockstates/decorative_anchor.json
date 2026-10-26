@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "aquamarine:block/decorative_anchor"
+    },
+    "facing=east": {
+      "model": "aquamarine:block/decorative_anchor",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "aquamarine:block/decorative_anchor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "aquamarine:block/decorative_anchor",
+      "y": 270
+    }
+  }
+}

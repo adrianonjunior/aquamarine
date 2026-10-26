@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "S": "minecraft:string",
+    "B": "minecraft:barrel"
+  },
+  "pattern": [
+    "S",
+    "B",
+    "S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:cargo_barrel"
+  }
+}
