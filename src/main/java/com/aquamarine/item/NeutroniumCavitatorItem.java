@@ -94,6 +94,7 @@ public class NeutroniumCavitatorItem extends Item {
 			harpoon.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, HARPOON_SPEED, 0.4F);
 			harpoon.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
 			HarpoonEffects.loadTip(harpoon, player);
+			((HarpoonStyleHolder) harpoon).aquamarine$setHarpoonStyle(HarpoonStyleHolder.CAVITATOR);
 			server.addFreshEntity(harpoon);
 			Vec3 muzzle = muzzle(player);
 			server.sendParticles(ModParticles.NEUTRON_SPARK, muzzle.x, muzzle.y, muzzle.z, 6, 0.1, 0.1, 0.1, 0.06);

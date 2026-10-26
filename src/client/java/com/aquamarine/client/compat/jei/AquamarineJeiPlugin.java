@@ -1,6 +1,7 @@
 package com.aquamarine.client.compat.jei;
 
 import com.aquamarine.Aquamarine;
+import com.aquamarine.client.EnchantmentDescriptions;
 import com.aquamarine.client.ItemDescriptions;
 import com.aquamarine.item.ModItems;
 import com.aquamarine.recipe.ModRecipes;
@@ -10,17 +11,22 @@ import java.util.Optional;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.constants.RecipeTypes;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
 
+import java.util.stream.IntStream;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
@@ -79,6 +85,15 @@ public class AquamarineJeiPlugin implements IModPlugin {
 			if (!lines.isEmpty()) {
 				registration.addIngredientInfo(item, lines.toArray(Component[]::new));
 			}
+		}
+		// 6F2: os livros de cada encantamento do mod, em todos os níveis, com a descrição na página de informação.
+		if (Minecraft.getInstance().level != null) {
+			Minecraft.getInstance().level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).listElements()
+				.filter(holder -> EnchantmentDescriptions.line(holder) != null)
+				.forEach(holder -> registration.addIngredientInfo(
+					IntStream.rangeClosed(1, holder.value().getMaxLevel())
+						.mapToObj(level -> EnchantmentHelper.createBook(new EnchantmentInstance(holder, level))).toList(),
+					VanillaTypes.ITEM_STACK, EnchantmentDescriptions.line(holder)));
 		}
 	}
 

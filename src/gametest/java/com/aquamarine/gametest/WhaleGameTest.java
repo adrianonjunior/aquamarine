@@ -60,6 +60,32 @@ final class WhaleGameTest {
 		tp(server, o.getX() + 0.5, o.getY() + 8, o.getZ() - 6.5, 0, 10);
 		context.waitTicks(10);
 
+		// 6B1: cabeça, fim do corpo e rabo com caixa própria; a flecha acerta a cabeça e o rabo, e a cabeça é sólida.
+		check(server.computeOnServer(s -> whale(s).parts().size()) == 3, "Baleia: devia ter 3 partes de colisão");
+		for (int part : new int[] {0, 2}) {
+			float before = server.computeOnServer(s -> whale(s).getHealth());
+			server.runOnServer(s -> {
+				net.minecraft.world.phys.Vec3 c = whale(s).parts().get(part).getBoundingBox().getCenter();
+				net.minecraft.world.entity.projectile.arrow.Arrow arrow = new net.minecraft.world.entity.projectile.arrow.Arrow(
+					s.overworld(), c.x + 5.0, c.y, c.z, new ItemStack(Items.ARROW), null);
+				arrow.shoot(-1.0, 0.0, 0.0, 3.0F, 0.0F);
+				s.overworld().addFreshEntity(arrow);
+			});
+			context.waitTicks(10);
+			check(server.computeOnServer(s -> whale(s).getHealth()) < before, "Baleia: a flecha devia acertar a parte " + part);
+			server.runOnServer(s -> whale(s).setInvulnerableTime(0));
+		}
+		server.runOnServer(s -> {
+			net.minecraft.world.phys.Vec3 c = whale(s).parts().get(0).getBoundingBox().getCenter();
+			player(s).teleportTo(c.x, c.y - 0.5, c.z);
+		});
+		context.waitTicks(20);
+		check(server.computeOnServer(s -> !whale(s).parts().get(0).getBoundingBox().intersects(player(s).getBoundingBox())),
+			"Baleia: quem fica dentro da cabeça devia ser empurrado para fora");
+		server.runOnServer(s -> whale(s).setHealth(whale(s).getMaxHealth()));
+		tp(server, o.getX() + 0.5, o.getY() + 8, o.getZ() - 6.5, 0, 10);
+		context.waitTicks(10);
+
 		// Domar: 4 a 6 peixes crus de quem alimenta.
 		server.runOnServer(s -> {
 			ServerPlayer p = player(s);
@@ -142,6 +168,7 @@ final class WhaleGameTest {
 		world.getConnection().waitForChunksRender();
 		context.waitTicks(20);
 		shot(context, "33_cachalote");
+		check(server.computeOnServer(s -> sperm(s).parts().size()) == 3, "Cachalote: devia ter 3 partes de colisão");
 		check(server.computeOnServer(s -> sperm(s).angryAt() == null), "Cachalote: não devia reagir sem ser atacado");
 		tp(server, o.getX() + 0.5, o.getY() + 7, o.getZ() - 6.5, 0, 0);
 		server.runOnServer(s -> {
