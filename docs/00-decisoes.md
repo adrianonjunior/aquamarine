@@ -74,6 +74,8 @@ Perguntas que só o Adriano responde (o resto está decidido):
 - **Branch `estruturador/entrega-1`** (6 commits fora da `main`) e as worktrees antigas das faixas: apagar ou guardar?
 - **Fase 6** ([11-fase6.md](11-fase6.md)). Respondidas em 26/10/2026 (F6-1 a F6-5, na linha "Fase 6 (respostas)"). Ainda valem as
   propostas padrão, sem resposta do Adriano:
+  - **F6-1b · Qual Kraken entra no jogo?** As três candidatas estão no Atlas (`kraken` → versão `v3a` Lula-colosso, `v3b`
+    Vampiro-abissal, `v3c` Amonita-colosso; [11-fase6.md](11-fase6.md), 6A1). A 6A2 e a 6A4 só começam com a escolha.
   - **F6-6 · Carne de baleia e baleia domada.** Proposta: só a selvagem dropa.
   - **F6-7 · Projétil 3D.** Proposta: um projétil próprio serve ao Cavitador e ao Arpão Abissal (trocar só o desenho, mantendo o
     arremesso do tridente).

@@ -28,7 +28,8 @@ def register(record,label):
     index=json.loads(index_path.read_text(encoding="utf-8")) if index_path.exists() else []
     if path.exists() or any(r["id"]==kind and r["version"]==version for r in index):
         raise FileExistsError(f"A versão {kind}/{version} já existe. Crie uma versão nova; o histórico é preservado.")
-    snapshot={key:record[key] for key in required}|{"id":kind,"version":version,"format":"aquamarine-atlas-1"}
+    optional=("glow","uv","notes")  # camada de brilho, gabarito de UV e notas da versão (candidatos da Fase 6)
+    snapshot={key:record[key] for key in required+tuple(k for k in optional if k in record)}|{"id":kind,"version":version,"format":"aquamarine-atlas-1"}
     path.write_text(json.dumps(snapshot,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
     index.append({"id":kind,"version":version,"label":label,"date":date.today().isoformat(),"file":filename})
     index_path.write_text(json.dumps(index,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")

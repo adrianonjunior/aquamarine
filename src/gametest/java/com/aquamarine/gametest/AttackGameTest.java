@@ -84,6 +84,10 @@ final class AttackGameTest {
 		attack(server, KrakenAttackType.GRAB);
 		context.waitTicks(36);
 		check(server.computeOnServer(s -> kraken(s).attacks().grabbedCount()) == 1, "Agarrão: devia prender o jogador");
+		// 6A3: com o leito perto (até 8 blocos), o tentáculo do ataque nasce dele, não solto no meio da água.
+		check(server.computeOnServer(s -> busyTentacles(s).stream().allMatch(t -> rootedOrDeep(s.overworld(), t))),
+			"Tentáculo do ataque solto na água com o leito perto");
+		shot(context, "18b_tentaculo_raiz");
 		context.waitTicks(25);
 		check(health(server) <= 14.0F, "Agarrão: 6 de dano por segundo, vida " + health(server));
 		server.runOnServer(s -> busyTentacles(s).forEach(t -> t.kill(s.overworld())));
@@ -296,6 +300,17 @@ final class AttackGameTest {
 
 	private static java.util.List<? extends TentacleEntity> busyTentacles(MinecraftServer s) {
 		return s.overworld().getEntities(ModEntities.TENTACLE, t -> t.isBusy());
+	}
+
+	private static boolean rootedOrDeep(net.minecraft.server.level.ServerLevel level, TentacleEntity t) {
+		net.minecraft.core.BlockPos below = t.blockPosition().below();
+		for (int i = 0; i <= 9; i++) {
+			net.minecraft.core.BlockPos p = below.below(i);
+			if (!level.getBlockState(p).getCollisionShape(level, p).isEmpty()) {
+				return i == 0;
+			}
+		}
+		return true;
 	}
 
 	private static float health(TestServerContext server) {

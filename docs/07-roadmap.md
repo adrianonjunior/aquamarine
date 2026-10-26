@@ -201,8 +201,11 @@ Especificação, painel e ordem sugerida: [11-fase6.md](11-fase6.md). Decisão e
 linha "Fase 6" e "Em aberto" (F6-1 a F6-8). Nada é implementado antes de o Adriano liberar a fase ou uma faixa. Release
 alvo: `0.6.0`.
 
-- [ ] **6A** Kraken renovado (principal): 6A1 três modelos candidatos no Atlas · 6A2 colisão por parte (ex-4C) · 6A3 tentáculos
-  que não brotam do nada · 6A4 movimento dinâmico (ex-4C)
+- [ ] **6A** Kraken renovado (principal):
+  - [x] 6A1 três modelos candidatos no Atlas (`v3a`, `v3b`, `v3c`; 26/10/2026), esperando a escolha do Adriano
+  - [ ] 6A2 colisão por parte (ex-4C), depois da escolha
+  - [x] 6A3 tentáculos que não brotam do nada (26/10/2026)
+  - [ ] 6A4 movimento dinâmico (ex-4C), depois da escolha
 - [ ] **6B** Fauna: 6B1 colisão da baleia e do cachalote · 6B2 carne de baleia
 - [ ] **6C** Vila: 6C1 skins 3D dos Mergulhadores · 6C2 funções das mesas
 - [ ] **6D** Materiais e armas: 6D1 Aurium · 6D2 Forja Abissal nova · 6D3 projétil 3D do Cavitador

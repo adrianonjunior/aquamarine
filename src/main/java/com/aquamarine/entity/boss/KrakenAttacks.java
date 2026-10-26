@@ -23,6 +23,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -50,6 +51,11 @@ import net.minecraft.world.phys.Vec3;
  */
 public final class KrakenAttacks {
 	private static final double RING_RADIUS = 28.0;
+	/** Até onde se procura o leito sob a casa (ociosos) e sob o alvo (ataque): a raiz nasce dele (6A3). */
+	private static final int IDLE_ROOT_DEPTH = 16;
+	private static final int ATTACK_ROOT_DEPTH = 8;
+	/** Duração do clipe "release" (1,1 s): o tentáculo afunda onde está antes de voltar para casa. */
+	private static final int RELEASE_TICKS = 22;
 	private static final SoundEvent[] NO_SOUND = {};
 
 	/** Um ataque em fase de aviso. */
@@ -87,6 +93,7 @@ public final class KrakenAttacks {
 	private final RandomSource random = RandomSource.create();
 	private final UUID[] tentacles = new UUID[KrakenAttackType.TENTACLES];
 	private final long[] cutAt = new long[KrakenAttackType.TENTACLES];
+	private final long[] returnAt = new long[KrakenAttackType.TENTACLES];
 	private final List<Active> active = new ArrayList<>();
 	private final List<Grab> grabs = new ArrayList<>();
 	private final Set<UUID> youngs = new HashSet<>();
@@ -102,6 +109,7 @@ public final class KrakenAttacks {
 	public KrakenAttacks(KrakenEntity kraken) {
 		this.kraken = kraken;
 		java.util.Arrays.fill(cutAt, -1L);
+		java.util.Arrays.fill(returnAt, -1L);
 	}
 
 	// --- Controle externo ---
@@ -143,7 +151,9 @@ public final class KrakenAttacks {
 		for (int slot = 0; slot < tentacles.length; slot++) {
 			TentacleEntity t = tentacle(level, slot);
 			if (t != null && !t.isBusy()) {
-				t.snapTo(t.getX() + delta.x, t.getY() + delta.y, t.getZ() + delta.z, t.getYRot(), 0.0F);
+				Vec3 moved = t.position().add(delta);
+				Vec3 floor = seabed(level, new Vec3(moved.x, kraken.getY(), moved.z), IDLE_ROOT_DEPTH);
+				t.snapTo(moved.x, floor != null ? floor.y : moved.y, moved.z, t.getYRot(), 0.0F);
 			}
 		}
 	}
@@ -254,8 +264,12 @@ public final class KrakenAttacks {
 		for (int i = 0; i < tentacles.length; i++) {
 			boolean alive = tentacles[i] != null && level.getEntity(tentacles[i]) instanceof TentacleEntity t && t.isAlive();
 			if (alive) {
+				if (returnAt[i] >= 0 && now >= returnAt[i]) {
+					returnHome(level, i);
+				}
 				continue;
 			}
+			returnAt[i] = -1L;
 			if (cutAt[i] < 0) {
 				cutAt[i] = tentacles[i] == null ? now - KrakenAttackType.TENTACLE_RESPAWN_TICKS : now;
 			}
@@ -279,11 +293,58 @@ public final class KrakenAttacks {
 		if (t == null) {
 			return;
 		}
-		Vec3 pos = home(slot);
+		Vec3 ring = home(slot);
+		Vec3 floor = seabed(level, ring, IDLE_ROOT_DEPTH);
+		Vec3 pos = floor != null ? floor : ring;
 		t.snapTo(pos.x, pos.y, pos.z, (float) (slot * 45.0), 0.0F);
 		t.bind(kraken.getUUID(), slot);
 		level.addFreshEntity(t);
 		tentacles[slot] = t.getUUID();
+		t.playAnimation("rise");
+		announce(level, pos, floor != null);
+	}
+
+	/** Fim do "release": o tentáculo já afundou onde atacou; volta para casa subindo de novo, com aviso. */
+	private void returnHome(ServerLevel level, int slot) {
+		returnAt[slot] = -1L;
+		TentacleEntity t = tentacle(level, slot);
+		if (t == null) {
+			return;
+		}
+		Vec3 ring = home(slot);
+		Vec3 floor = seabed(level, ring, IDLE_ROOT_DEPTH);
+		Vec3 h = floor != null ? floor : ring;
+		t.snapTo(h.x, h.y, h.z, t.getYRot(), 0.0F);
+		t.setBusy(false);
+		t.playAnimation("rise");
+		announce(level, h, floor != null);
+	}
+
+	/** Leito sob {@code p}, até {@code depth} blocos abaixo: a raiz do tentáculo nasce de algo visível (6A3). */
+	private static Vec3 seabed(ServerLevel level, Vec3 p, int depth) {
+		BlockPos.MutableBlockPos pos = BlockPos.containing(p).mutable();
+		for (int i = 0; i <= depth; i++, pos.move(0, -1, 0)) {
+			if (!level.getBlockState(pos).getCollisionShape(level, pos).isEmpty()) {
+				return new Vec3(p.x, pos.getY() + 1, p.z);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Aviso de que um tentáculo vai subir (6A3: nenhum surge do nada). Com leito perto, o chão se rompe na raiz; sem
+	 * leito, uma sombra de tinta e uma coluna de bolhas sobem do fundo até ele.
+	 */
+	private void announce(ServerLevel level, Vec3 root, boolean rooted) {
+		if (rooted) {
+			BlockState floor = level.getBlockState(BlockPos.containing(root).below());
+			particles(level, new BlockParticleOption(ParticleTypes.BLOCK, floor), root.add(0, 0.2, 0), 40, 1.2, 0.15);
+		} else {
+			particles(level, ParticleTypes.SQUID_INK, root.add(0, -2.0, 0), 30, 1.4, 0.02);
+		}
+		for (int i = 0; i < 6; i++) {
+			particles(level, ParticleTypes.BUBBLE_COLUMN_UP, root.add(0, rooted ? i * 0.6 : -6 + i * 1.2, 0), 6, 0.5, 0.05);
+		}
 	}
 
 	private TentacleEntity tentacle(ServerLevel level, int slot) {
@@ -320,10 +381,9 @@ public final class KrakenAttacks {
 		for (int slot : slots) {
 			TentacleEntity t = tentacle(level, slot);
 			if (t != null) {
-				t.setBusy(false);
+				// Afunda onde atacou e só depois volta para casa (antes reaparecia de repente na casa).
 				t.playAnimation("release");
-				Vec3 h = home(slot);
-				t.snapTo(h.x, h.y, h.z, t.getYRot(), 0.0F);
+				returnAt[slot] = level.getGameTime() + RELEASE_TICKS;
 			}
 		}
 	}
@@ -381,10 +441,13 @@ public final class KrakenAttacks {
 				return false;
 			}
 			for (int n = 0; n < a.slots.length; n++) {
-				Vec3 spot = a.point.add(n == 0 ? 0 : 1.2, -1.0, 0);
+				Vec3 near = a.point.add(n == 0 ? 0 : 1.2, -1.0, 0);
+				Vec3 floor = seabed(level, near.add(0, 1.0, 0), ATTACK_ROOT_DEPTH);
+				Vec3 spot = floor != null ? floor : near;
 				TentacleEntity t = tentacle(level, a.slots[n]);
 				t.snapTo(spot.x, spot.y, spot.z, t.getYRot(), 0.0F);
 				t.playAnimation("rise");
+				announce(level, spot, floor != null);
 			}
 		}
 		a.targets.add(target.getUUID());
@@ -463,6 +526,15 @@ public final class KrakenAttacks {
 
 	private void warn(ServerLevel level, Active a) {
 		float progress = a.age / (float) a.type.warnTicks();
+		if (a.slots != null && a.age % 4 == 0) {
+			// A raiz ferve enquanto o tentáculo sobe.
+			for (int slot : a.slots) {
+				TentacleEntity t = tentacle(level, slot);
+				if (t != null) {
+					particles(level, ParticleTypes.BUBBLE_COLUMN_UP, t.position().add(0, 0.3, 0), 4, 0.6, 0.05);
+				}
+			}
+		}
 		switch (a.type) {
 			case SLAM -> {
 				// Claro e brilhante: a tinta escura sumia na água funda (relatório 2Q, P2).
