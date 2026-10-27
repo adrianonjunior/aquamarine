@@ -164,6 +164,12 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			if (enabled("jei")) {
 				JeiGameTest.run(context);
 			}
+			if (enabled("manualshots")) {
+				ManualGameTest.shots(context, world, server, base);
+			}
+			if (enabled("manual")) {
+				ManualGameTest.book(context, world, server);
+			}
 			if (enabled("harbor")) {
 				HarborGameTest.run(context, world, server, base);
 			}
