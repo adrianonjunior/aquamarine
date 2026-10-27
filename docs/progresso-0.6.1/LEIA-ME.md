@@ -6,8 +6,8 @@ Criado em 27/10/2026 a pedido do Adriano. Estes documentos guardam checkpoints, 
 
 - Main limpa na inspeção: `505691f`; 7A, 7B e 7C integradas.
 - Referência visual aprovada: Gerador de Fenda do Claude, `tools/models/machines/vent_generator/` e contrato em [06-tecnico.md](../06-tecnico.md).
-- Há reserva das ondas 3 a 6 para Claude em CONTEXTO.md; transferência para Codex solicitada ao Adriano e ainda sem resposta. Nenhuma implementação iniciada por Codex.
-- A expressão “fases 3 e 4” diverge da lista de ondas 3 a 6. Escopo proposto: a lista detalhada até 0.6.1, aguardando a mesma confirmação.
+- Adriano confirmou em 27/10/2026: assumir **somente as ondas 3 e 4**; Claude está parado. Transferência registrada no CONTEXTO.md.
+- Ondas 5 e 6 ficam fora desta execução; seus documentos são apenas preparação anterior, sem ordem de implementação ou publicação.
 
 ## Ondas
 
