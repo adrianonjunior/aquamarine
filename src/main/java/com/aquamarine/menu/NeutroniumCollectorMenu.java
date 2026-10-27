@@ -16,6 +16,12 @@ import net.minecraft.world.item.ItemStack;
 
 /** Tela viva do Coletor; valores grandes viajam em duas partes de 15 bits para não estourar o pacote curto vanilla. */
 public final class NeutroniumCollectorMenu extends AbstractContainerMenu {
+	/** Fonte única das posições: Screen, textura gerada e teste conferem estes valores. */
+	public static final int OUTPUT_SLOT_X = 174;
+	public static final int OUTPUT_SLOT_Y = 50;
+	public static final int PLAYER_INVENTORY_X = 29;
+	public static final int PLAYER_INVENTORY_Y = 145;
+
 	private static final int OUTPUT = 0;
 	private static final int INVENTORY_START = 1;
 	private static final int HOTBAR_START = 28;
@@ -36,10 +42,10 @@ public final class NeutroniumCollectorMenu extends AbstractContainerMenu {
 		super(ModMenus.NEUTRONIUM_COLLECTOR, id);
 		this.data = data;
 		this.access = access;
-		addSlot(new Slot(output, 0, 178, 47) {
+		addSlot(new Slot(output, 0, OUTPUT_SLOT_X, OUTPUT_SLOT_Y) {
 			@Override public boolean mayPlace(ItemStack stack) { return false; }
 		});
-		addStandardInventorySlots(inventory, 29, 120);
+		addStandardInventorySlots(inventory, PLAYER_INVENTORY_X, PLAYER_INVENTORY_Y);
 		addDataSlots(data);
 	}
 

@@ -10,22 +10,35 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
-/** Painel de operação: energia à esquerda, compressão no centro e estoque/saída à direita. */
+/** Painel de operação: instrumentos independentes, estado em duas linhas e inventário integrado. */
 public final class NeutroniumCollectorScreen extends AbstractContainerScreen<NeutroniumCollectorMenu> {
 	private static final Identifier BACKGROUND = Aquamarine.id("textures/gui/container/neutronium_collector.png");
 	private static final int PANEL_W = 220;
-	private static final int PANEL_H = 202;
+	private static final int PANEL_H = 224;
+
+	private static final int HEADER_X = 8, HEADER_Y = 6, HEADER_W = 204, HEADER_H = 15;
+	private static final int ENERGY_X = 6, ENERGY_Y = 25, ENERGY_W = 60, ENERGY_H = 72;
+	private static final int CORE_X = 70, CORE_Y = 25, CORE_W = 76, CORE_H = 72;
+	private static final int STOCK_X = 150, STOCK_Y = 25, STOCK_W = 64, STOCK_H = 72;
+	private static final int STATUS_X = 6, STATUS_Y = 101, STATUS_W = 208, STATUS_H = 27;
+	private static final int INVENTORY_X = 6, INVENTORY_Y = 131, INVENTORY_W = 208, INVENTORY_H = 90;
+
+	private static final int TUBE_X = 12, TUBE_Y = 45, TUBE_W = 17, TUBE_H = 45;
+	private static final int CORE_CENTER_X = 108, CORE_CENTER_Y = 60;
+	private static final int CORE_SPRITE_SIZE = 24;
+	private static final int CORE_SPRITE_V = 232;
 
 	public NeutroniumCollectorScreen(NeutroniumCollectorMenu menu, Inventory inventory, Component title) {
 		super(menu, inventory, title, PANEL_W, PANEL_H);
 	}
 
-	@Override protected void init() {
+	@Override
+	protected void init() {
 		super.init();
-		titleLabelX = 10;
-		titleLabelY = 5;
-		inventoryLabelX = 29;
-		inventoryLabelY = 110;
+		titleLabelX = HEADER_X + 3;
+		titleLabelY = HEADER_Y + 3;
+		inventoryLabelX = INVENTORY_X + 8;
+		inventoryLabelY = INVENTORY_Y + 3;
 	}
 
 	@Override
@@ -35,47 +48,87 @@ public final class NeutroniumCollectorScreen extends AbstractContainerScreen<Neu
 		graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x, y, 0, 0, PANEL_W, PANEL_H, 256, 256);
 		drawEnergy(graphics, x, y);
 		drawCore(graphics, x, y, partialTick);
+		drawStatusIcon(graphics, x, y);
 	}
 
 	private void drawEnergy(GuiGraphicsExtractor g, int x, int y) {
 		int capacity = Math.max(1, menu.capacity());
-		int fill = Math.min(50, menu.energy() * 50 / capacity);
-		g.fillGradient(x + 20, y + 79 - fill, x + 30, y + 79, 0xffd9ffff, 0xff1789aa);
-		long time = minecraft.level == null ? 0 : minecraft.level.getGameTime();
-		for (int ray = 0; ray < 3; ray++) {
-			int yy = y + 76 - Math.floorMod((int) time + ray * 17, Math.max(1, fill));
-			if (fill > 3) g.fill(x + 21, yy, x + 29, yy + 1, 0xffeaffff);
+		int fill = Math.min(TUBE_H - 4, menu.energy() * (TUBE_H - 4) / capacity);
+		int bottom = y + TUBE_Y + TUBE_H - 2;
+		if (fill > 0) {
+			int top = bottom - fill;
+			g.fillGradient(x + TUBE_X + 2, top, x + TUBE_X + TUBE_W - 2, bottom,
+				0xff9ff8ff, 0xff168aa8);
+			g.fill(x + TUBE_X + 3, top, x + TUBE_X + TUBE_W - 3, top + 1, 0xffe5ffff);
+			long time = minecraft.level == null ? 0 : minecraft.level.getGameTime();
+			for (int ray = 0; ray < 3; ray++) {
+				int yy = bottom - Math.floorMod((int) time + ray * 11, Math.max(1, fill));
+				if (yy > top + 1) g.fill(x + TUBE_X + 3, yy, x + TUBE_X + TUBE_W - 3, yy + 1, 0xffcaffff);
+			}
 		}
 	}
 
 	private void drawCore(GuiGraphicsExtractor g, int x, int y, float partialTick) {
-		int lit = Math.round(menu.progressPercent() * 24 / 100.0F);
-		for (int i = 0; i < 24; i++) {
-			double a = Math.PI * 2 * i / 24.0 - Math.PI / 2;
-			int px = x + 107 + (int) Math.round(Math.cos(a) * 31);
-			int py = y + 52 + (int) Math.round(Math.sin(a) * 22);
-			g.fill(px - 1, py - 1, px + 2, py + 2, i < lit ? 0xffbffcff : 0xff3f5b61);
+		int progress = menu.progressPercent();
+		int lit = Math.round(progress * 28 / 100.0F);
+		for (int i = 0; i < 28; i++) {
+			double angle = Math.PI * 2 * i / 28.0 - Math.PI / 2;
+			int px = x + CORE_CENTER_X + (int) Math.round(Math.cos(angle) * 26);
+			int py = y + CORE_CENTER_Y + (int) Math.round(Math.sin(angle) * 14);
+			int color = i < lit ? 0xffc8fbff : 0xff31545b;
+			g.fill(px - 1, py - 1, px + 1, py + 1, color);
 		}
+
 		double time = (minecraft.level == null ? 0 : minecraft.level.getGameTime()) + partialTick;
-		int pulse = menu.status() == 0 ? (int) Math.round(2 + Math.sin(time * .35) * 2) : 1;
-		int size = 5 + menu.progressPercent() * 7 / 100 + pulse;
-		g.fillGradient(x + 107 - size, y + 52 - size, x + 108 + size, y + 53 + size, 0xffffffff, 0xff3da8c7);
-		g.fill(x + 105, y + 38, x + 110, y + 67, 0xffd9ffff);
-		g.fill(x + 93, y + 50, x + 122, y + 55, 0xffd9ffff);
+		int cadence = menu.status() == 0 ? 3 : 7;
+		int frame = Math.floorMod((int) (time / cadence), 8);
+		g.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND,
+			x + CORE_CENTER_X - CORE_SPRITE_SIZE / 2, y + CORE_CENTER_Y - CORE_SPRITE_SIZE / 2,
+			frame * CORE_SPRITE_SIZE, CORE_SPRITE_V, CORE_SPRITE_SIZE, CORE_SPRITE_SIZE, 256, 256);
+		if (progress >= 96) {
+			int glow = ((int) time & 2) == 0 ? 0xffeaffff : 0xff72dce9;
+			g.fill(x + CORE_CENTER_X - 15, y + CORE_CENTER_Y, x + CORE_CENTER_X - 12, y + CORE_CENTER_Y + 1, glow);
+			g.fill(x + CORE_CENTER_X + 13, y + CORE_CENTER_Y, x + CORE_CENTER_X + 16, y + CORE_CENTER_Y + 1, glow);
+		}
+	}
+
+	private void drawStatusIcon(GuiGraphicsExtractor g, int x, int y) {
+		int color = statusColor();
+		g.fill(x + STATUS_X + 7, y + STATUS_Y + 9, x + STATUS_X + 14, y + STATUS_Y + 16, color);
+		g.fill(x + STATUS_X + 9, y + STATUS_Y + 7, x + STATUS_X + 12, y + STATUS_Y + 18, color);
 	}
 
 	@Override
 	protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-		graphics.text(font, title, titleLabelX, titleLabelY, 0xff2a1b0c, false);
-		graphics.centeredText(font, Component.translatable("gui.aquamarine.collector.energy"), 34, 15, 0xffeefcff);
-		graphics.centeredText(font, Component.translatable("gui.aquamarine.collector.progress"), 107, 15, 0xffeefcff);
-		graphics.centeredText(font, Component.translatable("gui.aquamarine.collector.stock"), 183, 15, 0xff2a1b0c);
-		graphics.centeredText(font, Component.literal(menu.progressPercent() + "%"), 107, 72, 0xffd8f8ff);
-		graphics.centeredText(font, Component.translatable("gui.aquamarine.collector.remaining", remaining()), 107, 82, 0xff29424a);
-		graphics.centeredText(font, Component.literal(menu.dust() + " / " + WaterEnergy.COLLECTOR_MAX_DUST), 183, 31, 0xff2a1b0c);
-		graphics.centeredText(font, Component.literal(menu.energy() + " / " + menu.capacity() + " E · "
-			+ WaterEnergy.COLLECTOR_USE + " E/t"), PANEL_W / 2, 89, 0xffd8f8ff);
-		graphics.textWithWordWrap(font, status(), 12, 101, PANEL_W - 24, statusColor());
+		centered(graphics, title, HEADER_X + 3, HEADER_X + HEADER_W - 3, HEADER_Y + 3, 0xff2a1b0c);
+		centered(graphics, Component.translatable("gui.aquamarine.collector.energy"),
+			ENERGY_X + 4, ENERGY_X + ENERGY_W - 4, ENERGY_Y + 4, 0xff2a1b0c);
+		centered(graphics, Component.translatable("gui.aquamarine.collector.progress"),
+			CORE_X + 4, CORE_X + CORE_W - 4, CORE_Y + 4, 0xff2a1b0c);
+		centered(graphics, Component.translatable("gui.aquamarine.collector.stock"),
+			STOCK_X + 3, STOCK_X + STOCK_W - 3, STOCK_Y + 4, 0xff2a1b0c);
+
+		int percent = Math.min(100, menu.energy() * 100 / Math.max(1, menu.capacity()));
+		centered(graphics, Component.literal(compactEnergy(menu.energy())), 32, 64, 55, 0xffeafcff);
+		centered(graphics, Component.literal(percent + "%"), 32, 64, 70, 0xff91edf4);
+		centered(graphics, Component.literal(menu.progressPercent() + "%"), 73, 105, 82, 0xffeafcff);
+		centered(graphics, Component.literal(remaining()), 108, 143, 82, 0xffeafcff);
+		centered(graphics, Component.literal(menu.dust() + " / " + WaterEnergy.COLLECTOR_MAX_DUST),
+			155, 209, 82, 0xffeafcff);
+
+		graphics.text(font, statusTitle(), STATUS_X + 25, STATUS_Y + 4, statusColor(), false);
+		graphics.text(font, statusDetail(), STATUS_X + 25, STATUS_Y + 14, 0xffe8f4f2, false);
+		centered(graphics, playerInventoryTitle, 12, 84, INVENTORY_Y + 3, 0xff2a1b0c);
+	}
+
+	private void centered(GuiGraphicsExtractor graphics, Component text, int x0, int x1, int y, int color) {
+		graphics.centeredText(font, text, (x0 + x1) / 2, y, color);
+	}
+
+	private static String compactEnergy(int energy) {
+		if (energy >= 1_000_000) return Math.round(energy / 100_000.0F) / 10.0F + "ME";
+		if (energy >= 1_000) return Math.round(energy / 1_000.0F) + "kE";
+		return energy + "E";
 	}
 
 	private String remaining() {
@@ -83,35 +136,54 @@ public final class NeutroniumCollectorScreen extends AbstractContainerScreen<Neu
 		return "%d:%02d".formatted(seconds / 60, seconds % 60);
 	}
 
-	private Component status() {
+	private Component statusTitle() {
+		return Component.translatable("gui.aquamarine.collector.status.title." + statusKey());
+	}
+
+	private Component statusDetail() {
+		String key = "gui.aquamarine.collector.status.detail." + statusKey();
+		return menu.status() == 4 ? Component.translatable(key, menu.missingDepth()) : Component.translatable(key);
+	}
+
+	private Component statusTooltip() {
+		String key = "gui.aquamarine.collector.tooltip.status." + statusKey();
+		return menu.status() == 4 ? Component.translatable(key, menu.missingDepth()) : Component.translatable(key);
+	}
+
+	private String statusKey() {
 		return switch (menu.status()) {
-			case 1 -> Component.translatable("gui.aquamarine.collector.status.no_energy");
-			case 2 -> Component.translatable("gui.aquamarine.collector.status.deep_ocean");
-			case 3 -> Component.translatable("gui.aquamarine.collector.status.water");
-			case 4 -> Component.translatable("gui.aquamarine.collector.status.depth", menu.missingDepth());
-			case 5 -> Component.translatable("gui.aquamarine.collector.status.full");
-			default -> Component.translatable("gui.aquamarine.collector.status.running");
+			case 1 -> "no_energy";
+			case 2 -> "deep_ocean";
+			case 3 -> "water";
+			case 4 -> "depth";
+			case 5 -> "full";
+			default -> "running";
 		};
 	}
 
 	private int statusColor() {
-		return switch (menu.status()) { case 0 -> 0xffbdf7ee; case 1 -> 0xffffc45c; case 5 -> 0xffd6f9ff; default -> 0xffff8a8a; };
+		return switch (menu.status()) {
+			case 0 -> 0xff63dff2;
+			case 1 -> 0xffffbd55;
+			case 5 -> 0xfff4fbff;
+			default -> 0xffff6f6f;
+		};
 	}
 
 	@Override
 	protected void extractTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
 		super.extractTooltip(graphics, mouseX, mouseY);
-		if (isHovering(13, 23, 42, 62, mouseX, mouseY)) {
+		if (isHovering(ENERGY_X, ENERGY_Y, ENERGY_W, ENERGY_H, mouseX, mouseY)) {
 			graphics.setTooltipForNextFrame(font, Component.translatable("gui.aquamarine.collector.tooltip.energy",
 				menu.energy(), menu.capacity(), WaterEnergy.COLLECTOR_USE), mouseX, mouseY);
-		} else if (isHovering(62, 18, 91, 69, mouseX, mouseY)) {
+		} else if (isHovering(CORE_X, CORE_Y, CORE_W, CORE_H, mouseX, mouseY)) {
 			graphics.setTooltipForNextFrame(font, Component.translatable("gui.aquamarine.collector.tooltip.progress",
 				menu.progressPercent(), remaining()), mouseX, mouseY);
-		} else if (isHovering(160, 20, 48, 63, mouseX, mouseY)) {
+		} else if (isHovering(STOCK_X, STOCK_Y, STOCK_W, STOCK_H, mouseX, mouseY)) {
 			graphics.setTooltipForNextFrame(font, Component.translatable("gui.aquamarine.collector.tooltip.stock",
 				menu.dust(), WaterEnergy.COLLECTOR_MAX_DUST), mouseX, mouseY);
-		} else if (isHovering(10, 99, PANEL_W - 20, 18, mouseX, mouseY)) {
-			graphics.setTooltipForNextFrame(font, status(), mouseX, mouseY);
+		} else if (isHovering(STATUS_X, STATUS_Y, STATUS_W, STATUS_H, mouseX, mouseY)) {
+			graphics.setTooltipForNextFrame(font, statusTooltip(), mouseX, mouseY);
 		}
 	}
 }
