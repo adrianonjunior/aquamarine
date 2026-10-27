@@ -7,8 +7,8 @@
 > Registro antigo (Entregas 1 e 2, Fase 3, áudio, Atlas): [docs/historico.md](docs/historico.md).
 
 > **FASE ATUAL (26/10/2026): FASE 6 PUBLICADA na `0.6.0`.** Entregas 1 e 2 e Fases 3, 4 e 6 estão no jogo.
-> **Liberado para trabalho:** a `0.6.1` nas faixas 7A e 7B, até o portão do Gerador de Fenda
-> ([docs/12-industria.md](docs/12-industria.md)); o resto da Fase 6 numa `0.6.x` (6A2 e 6A4 sobre a v3a, 6C1; a 6G1
+> **Liberado para trabalho:** a `0.6.1` inteira (o Adriano aprovou o Gerador de Fenda em 26/10/2026; ondas em
+> [docs/12-industria.md](docs/12-industria.md)); o resto da Fase 6 numa `0.6.x` (6A2 e 6A4 sobre a v3a, 6C1; a 6G1
 > espera o Accessories para o 26.3), os sons numa subversão própria quando o Adriano pedir, e correções e testes do que já existe. A
 > Cidade Perdida e o Kraken completo estão sem fase. Release `0.N.0` = Fase `N`, sem Fase 5
 > ([docs/07-roadmap.md](docs/07-roadmap.md), "Releases e fases").
@@ -33,7 +33,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 | Publicar e verificar link ngrok do Atlas de amostra | Codex | Servidor Atlas 8767 e túnel ngrok | 25/10/2026 |
-| 0.6.1: 7B **no portão**: Gerador de Fenda entregue, esperando o aval do Adriano antes das outras máquinas (branch `claude/industria`) | Claude Opus 5.5 | nenhum agora | 26/10/2026 |
+| 0.6.1: ondas 2 a 6 (7C em diante), uma faixa por vez, sem Orca (worktree `.worktrees/claude-industria`, branch `claude/industria`) | Claude Opus 5.5 | Gradle e jogo de teste da worktree | 26/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.

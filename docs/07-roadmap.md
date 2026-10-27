@@ -16,7 +16,7 @@ especificação e um bloco de marcos neste arquivo.
 | `0.4.0` (GitHub) | nenhuma: release de teste multiplayer, com a luta do Kraken em áudio e o Kraken v2 | [06-tecnico.md](06-tecnico.md), "Release para jogadores" | "Áudio v1" | publicada; falta o teste com os amigos |
 | `0.5.0` (GitHub) | **Fase 4** (a "5" ficou sem fase) | [10-fase4.md](10-fase4.md) | "Fase 4" | publicada; falta a 4S (sons); 4C passou para a Fase 6 |
 | `0.6.0` (GitHub) | **Fase 6** | [11-fase6.md](11-fase6.md) | "Fase 6" | publicada em 26/10/2026; faltam 6A2, 6A4, 6C1 e 6G1 (`0.6.x`) e os sons |
-| `0.6.1` (em andamento) | Indústria aquática (conteúdo novo numa `0.N.x`) | [12-industria.md](12-industria.md) | "0.6.1" abaixo | **7A e 7B liberadas** (26/10/2026); o resto espera o aval da Fenda |
+| `0.6.1` (em andamento) | Indústria aquática (conteúdo novo numa `0.N.x`) | [12-industria.md](12-industria.md) | "0.6.1" abaixo | **liberada** (26/10/2026, aval da Fenda); 7A e 7B feitas |
 
 Fora desta tabela, **sem fase e sem número** até o Adriano decidir: Cidade Perdida, Kraken completo e áudio A1 a A5
 ([resumo.md](resumo.md), "O que falta"). Temas transversais (sem release própria): [09-audio.md](09-audio.md) e os
@@ -227,10 +227,10 @@ alvo: `0.6.0`.
 - [x] **6H** Construção: mais decoração e blocos (26/10/2026)
 - [x] **Release 0.6.0** (26/10/2026, GitHub: `Aquamarine-0.6.0.zip` e o `.jar` solto; [https://github.com/adrianonjunior/aquamarine/releases/tag/v0.6.0](https://github.com/adrianonjunior/aquamarine/releases/tag/v0.6.0))
 
-## 0.6.1: indústria aquática (**7A e 7B liberadas**)
-Especificação e ondas: [12-industria.md](12-industria.md). 7A e 7B liberadas em 26/10/2026; as outras faixas esperam o aval do Adriano sobre o Gerador de Fenda.
-- [x] **7A** Água dentro dos blocos (waterlogged) (26/10/2026) · [ ] **7B** Máquinas animadas e aba do Atlas (Fenda entregue
-  em 26/10/2026; espera o aval do Adriano) · [ ] **7C** Cano, Tubo de Ar e cabos
+## 0.6.1: indústria aquática (**liberada**)
+Especificação e ondas: [12-industria.md](12-industria.md). Liberada inteira em 26/10/2026, com o aval do Adriano sobre o Gerador de Fenda.
+- [x] **7A** Água dentro dos blocos (waterlogged) (26/10/2026) · [x] **7B** Máquinas animadas e aba do Atlas (Fenda aprovada
+  pelo Adriano em 26/10/2026) · [ ] **7C** Cano, Tubo de Ar e cabos
 - [ ] **7D** Bomba de Maré e Tanque d'Água · [ ] **7E** Gerador de Fenda refeito · [ ] **7F** Compressor e Pulmão de Ferro
 - [ ] **7G** Ostra, pérolas e Fazenda · [ ] **7H** Caranguejo e Escudo de Concha · [ ] **7I** Fornalha, Prensa e todas as máquinas animadas
 - [ ] **7J** Telas das máquinas · [ ] **7Q** QA e release (portão de aprovação visual do Gerador de Fenda antes da 7C)

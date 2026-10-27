@@ -4,9 +4,8 @@
 > "Máquinas" do Atlas). **Decisões** em [00-decisoes.md](00-decisoes.md) (linhas "0.6.1"); **faixas e ondas** em
 > [07-roadmap.md](07-roadmap.md), "0.6.1"; regras de agentes em [../AGENTS.md](../AGENTS.md). Números são valores iniciais a testar.
 
-> **ESTADO: 7A E 7B LIBERADAS (26/10/2026).** O agente da 0.6.1 faz a 7A e a 7B e entrega o Gerador de Fenda (modelo,
-> textura, animações, aba "Máquinas" e capturas); **para aí e espera o aval do Adriano** antes das outras máquinas. As
-> outras faixas seguem planejadas: ninguém escreve código, texturas ou modelos delas antes desse aval.
+> **ESTADO: LIBERADA (26/10/2026).** 7A feita; 7B feita com o **aval do Adriano** sobre o Gerador de Fenda, que vira a
+> referência de nível das outras máquinas. As outras faixas seguem as ondas abaixo, uma por vez.
 
 > **FOCO DO AGENTE (pedido do Adriano).** Quem trabalhar nesta fase foca **só nesta etapa**: leia este arquivo e a faixa que
 > recebeu, use o próprio mod como **referência** (por exemplo `AnchorBuoyBlock`, `tools/gen_phase6_energy.py`, `tools/models/`),
@@ -22,8 +21,8 @@
 | Faixa | O que | Estado | Depende de |
 |---|---|---|---|
 | 7A | Água dentro dos blocos (waterlogged) em todo bloco do mod | **feita** (26/10/2026) | nada |
-| 7B | Pipeline de máquinas animadas, bíblia de arte e aba "Máquinas" do Atlas | **no portão**: Fenda entregue, espera o aval | nada |
-| 7C | Redes: Cano de fluido, Tubo de Ar, cabos novos, Chave de Maré, conteúdo visível | planejada | 7A, 7B |
+| 7B | Pipeline de máquinas animadas, bíblia de arte e aba "Máquinas" do Atlas | **feita** (aval da Fenda em 26/10/2026) | nada |
+| 7C | Redes: Cano de fluido, Tubo de Ar, cabos novos, Chave de Maré, conteúdo visível | em andamento | 7A, 7B |
 | 7D | Bomba de Maré, Tanque d'Água e exceção dos geradores | planejada | 7C |
 | 7E | Gerador de Fenda refeito (animado) e geradores com fluido | planejada | 7B, 7C, 7D |
 | 7F | Compressor de Ar e Pulmão de Ferro (gás + regulação) | planejada | 7C, 7E |

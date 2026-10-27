@@ -107,7 +107,7 @@ com modelos 3D, animações, áudio, texturas e documentos. O Kraken v2 do site 
 | docs/08-fase3.md | `0.3.0` | Fase 3: fauna, equipamentos de mergulho e Vila |
 | docs/10-fase4.md | `0.5.0` | Fase 4: Kraken vivo, oficina, construção aquática e Neutrônio |
 | docs/11-fase6.md | `0.6.0` (publicada) | Fase 6: Kraken renovado, energia aquática, Aurium, acessórios, radar |
-| docs/12-industria.md | `0.6.1` (7A e 7B liberadas) | Indústria aquática: ostras, caranguejo, redes de fluido e gás, Tanque, Pulmão de Ferro, máquinas animadas |
+| docs/12-industria.md | `0.6.1` (em andamento) | Indústria aquática: ostras, caranguejo, redes de fluido e gás, Tanque, Pulmão de Ferro, máquinas animadas |
 | docs/09-audio.md | transversal | Áudio: direção sonora, ambiência, música, lista de efeitos, método e padrões |
 
 **Design do mod (Entregas 1 e 2 e Cidade Perdida)**
