@@ -68,7 +68,18 @@ final class WaterlogGameTest {
 				level.setBlockAndUpdate(cell, Blocks.WATER.defaultBlockState());
 				BlockPlaceContext place = new BlockPlaceContext(player, InteractionHand.MAIN_HAND, new ItemStack(block),
 					new BlockHitResult(Vec3.atCenterOf(cell), Direction.UP, cell, false));
+				BlockPos cultivationAnchor = null;
+				BlockState cultivationAnchorPrevious = null;
+				if (block == com.aquamarine.farming.ModCultivation.CULTIVATION_ROPE) {
+					Direction facing = player.getDirection().getOpposite();
+					Direction.Axis axis = facing.getClockWise().getAxis();
+					cultivationAnchor = cell.relative(axis == Direction.Axis.X ? Direction.WEST : Direction.NORTH);
+					cultivationAnchorPrevious = level.getBlockState(cultivationAnchor);
+					level.setBlockAndUpdate(cultivationAnchor, com.aquamarine.farming.ModCultivation.CULTIVATION_JAR.defaultBlockState()
+						.setValue(com.aquamarine.block.FacingShapeBlock.FACING, facing));
+				}
 				BlockState state = block.getStateForPlacement(place);
+				if (cultivationAnchor != null) level.setBlockAndUpdate(cultivationAnchor, cultivationAnchorPrevious);
 				check(state != null, "Água nos blocos: " + name(block) + " não pôde ser colocado na água");
 				check(state.getValue(Waterlogging.WATERLOGGED), "Água nos blocos: " + name(block) + " posto na fonte não ficou com água");
 				level.setBlockAndUpdate(cell, state);

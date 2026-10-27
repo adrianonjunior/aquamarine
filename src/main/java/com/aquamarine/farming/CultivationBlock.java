@@ -2,10 +2,12 @@ package com.aquamarine.farming;
 
 import com.aquamarine.block.FacingShapeBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -23,6 +25,28 @@ public final class CultivationBlock extends FacingShapeBlock implements EntityBl
     public CultivationBlock(Properties properties, VoxelShape shape, Kind kind) {
         super(properties, shape);
         this.kind = kind;
+    }
+    @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState state = super.getStateForPlacement(context);
+        if (kind != Kind.ROPE || state == null) return state;
+        return reachesAnchor(context.getLevel(), context.getClickedPos(), state) ? state : null;
+    }
+    private static boolean reachesAnchor(Level level, BlockPos origin, BlockState ropeState) {
+        Direction.Axis axis = CultivationLine.axis(ropeState);
+        Direction[] directions = axis == Direction.Axis.X
+            ? new Direction[] {Direction.WEST, Direction.EAST}
+            : new Direction[] {Direction.NORTH, Direction.SOUTH};
+        for (Direction direction : directions) {
+            for (int distance = 1; distance <= 64; distance++) {
+                BlockPos pos = origin.relative(direction, distance);
+                if (!level.hasChunkAt(pos)) break;
+                BlockState state = level.getBlockState(pos);
+                if (!(state.getBlock() instanceof CultivationBlock) || CultivationLine.axis(state) != axis) break;
+                if (state.is(ModCultivation.CULTIVATION_JAR) || state.is(ModCultivation.CULTIVATION_BUOY)) return true;
+                if (!state.is(ModCultivation.CULTIVATION_ROPE)) break;
+            }
+        }
+        return false;
     }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return switch (kind) {
