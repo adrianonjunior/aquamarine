@@ -70,7 +70,7 @@ class CatalogTest(unittest.TestCase):
 
     def test_registry_preserves_originals_and_proposal(self):
         registry=json.loads((BASE/"versions/registry.json").read_text(encoding="utf-8"))
-        self.assertEqual(len(registry),29)
+        self.assertEqual(len(registry),32)
         # 0.6.1 (7F): Compressor e Pulmão com o clipe de nível do Pulmão.
         lung=json.loads((BASE/"versions/iron_lung-v1.json").read_text(encoding="utf-8"))
         self.assertTrue({"idle","run","full","level"}<=set(lung["clips"]))
@@ -134,6 +134,20 @@ class CatalogTest(unittest.TestCase):
         self.assertEqual((java / "VentGeneratorModel.java").read_text(encoding="utf-8").count("p.box("), len(vent["cubes"]))
         anims = (java / "VentGeneratorAnimations.java").read_text(encoding="utf-8")
         self.assertTrue(all(f'clips.put("{n}"' in anims for n in vent["clips"]))
+
+        # Rework do Coletor: primeiro rig multibloco do Atlas, folha maior e leitura viva de progresso/estoque.
+        collector = {m["id"]: m for m in machines()}["neutronium_collector"]
+        self.assertEqual(collector["resolution"], [512, 512])
+        self.assertEqual(len(collector["cubes"]), 200)
+        self.assertTrue({"idle", "start", "run", "stop", "full", "collect", "progress", "stock", "invalid"}
+                        <= set(collector["clips"]))
+        self.assertEqual(set(collector["states"]), {"idle", "run", "full"})
+        self.assertTrue(any(min(c["position"]) < -16 for c in collector["cubes"]))
+        self.assertTrue((BASE / "versions/neutronium_collector-v1.json").exists())
+        self.assertTrue((BASE / "versions/neutronium_collector-v2.json").exists())
+        saved = json.loads((BASE / "versions/neutronium_collector-v3.json").read_text(encoding="utf-8"))
+        self.assertEqual(saved["cubes"], collector["cubes"])
+        self.assertTrue(saved["glow"].startswith("data:image/png") and saved["uv"].startswith("data:image/png"))
 
     def test_adaptive_audio_manifest_without_single_file(self):
         import build

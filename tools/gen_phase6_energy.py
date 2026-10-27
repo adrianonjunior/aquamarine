@@ -136,7 +136,7 @@ def collector(on):
 
 GENERATORS = {"current_turbine": turbine, "vent_generator": vent, "wave_buoy": buoy, "neutronium_collector": collector}
 # Máquinas animadas da 0.6.1 (7B): modelo, estado e item saem de tools/models/machines/<máquina>/build_model.py.
-ANIMATED = {"vent_generator"}
+ANIMATED = {"vent_generator", "neutronium_collector"}
 NAMES = {
     "current_turbine": ("Turbina de Correnteza", "Current Turbine", "Gera 4 E/t por lado com água corrente (até 24).",
                         "Makes 4 E/t per side touching flowing water (up to 24)."),
@@ -182,7 +182,9 @@ def main():
 
     blocks = list(GENERATORS) + ["aquatic_cable"]
     for name in blocks:
-        w(bld.self_drop(name), f"{NS}/loot_table/blocks/{name}.json", DATA)
+        # O multibloco do Coletor desmonta e solta um item único com o pó no Java; loot comum duplicaria o item.
+        if name != "neutronium_collector":
+            w(bld.self_drop(name), f"{NS}/loot_table/blocks/{name}.json", DATA)
         pattern, key, count = RECIPES[name]
         w(bld.shaped(name, pattern, key, count), f"{NS}/recipe/{name}.json", DATA)
     # O pó do Coletor vira Poeira de Neutrônio na Forja, caro: 8 pós e um Cristal de Maré.
