@@ -1,0 +1,15 @@
+{
+  "type": "aquamarine:abyssal_forging",
+  "category": "building",
+  "key": {
+    "R": "aquamarine:raw_aurium",
+    "P": "aquamarine:oyster_pearl"
+  },
+  "pattern": [
+    "RP"
+  ],
+  "result": {
+    "count": 2,
+    "id": "aquamarine:aurium_ingot"
+  }
+}

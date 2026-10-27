@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": "aquamarine:brass_ingot",
+    "P": "aquamarine:oyster_pearl",
+    "C": "aquamarine:fluid_pipe",
+    "R": "minecraft:piston"
+  },
+  "pattern": [
+    " B ",
+    "CPC",
+    "BRB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:tide_pump"
+  }
+}

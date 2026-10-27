@@ -118,7 +118,7 @@ def build():
     m.clips['full']=full.finish()
     m.clips['ready']=full.finish()
     m.clips['harvest']=Clip(1).scale('pearl',(0,1),(.4,1.15),(.65,.1),(1,.1)).rot('lid',(0,(-30,0,0)),(1,(-20,0,0))).finish()
-    m.states={'idle':{'clip':'idle'},'run':{'clip':'run'},'full':{'clip':'full'}}
+    m.states={'idle':{'label':'Parado','enter':'stop','loop':'idle'},'run':{'label':'Cultivando','enter':'start','loop':'run'},'full':{'label':'Pérola pronta','loop':'full'}}
     return m
 
 if __name__=='__main__':

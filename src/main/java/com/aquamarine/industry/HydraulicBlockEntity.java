@@ -56,9 +56,7 @@ public class HydraulicBlockEntity extends BlockEntity implements MachineView, Po
         }
         protected void onFinalCommit() { changed(); }
     };
-    public final SimpleEnergyStorage energy = new SimpleEnergyStorage(16000, 256, 0) {
-        protected void onFinalCommit() { setChanged(); dirty = true; }
-    };
+    public final MachineEnergy energy = new MachineEnergy(16000, 256, () -> { setChanged(); dirty = true; });
     public HydraulicBlockEntity(BlockPos pos, BlockState state) {
         super(ModHydraulics.ENTITY, pos, state);
         Arrays.fill(modes, kind() == HydraulicBlock.Kind.PUMP ? PortMode.OUT : PortMode.IN);
@@ -140,7 +138,7 @@ public class HydraulicBlockEntity extends BlockEntity implements MachineView, Po
             try (Transaction tx = Transaction.openOuter()) {
                 if (contents.insert(FluidVariant.of(Fluids.WATER), BUCKET, tx) != BUCKET) return;
                 // A energia pertence à mesma transação; saída externa nunca pode extrair do reservatório da Bomba.
-                energy.amount -= PUMP_COST;
+                if (!energy.consume(PUMP_COST, tx)) return;
                 tx.commit();
             }
             if (!renewable) level.setBlockAndUpdate(source, Blocks.AIR.defaultBlockState());

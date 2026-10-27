@@ -53,4 +53,4 @@ def build():
 if __name__=="__main__":
     m=build()
     k.write(m,BASE,preview_shots=h.shots(m) if "--preview" in sys.argv else None,
-            register=("v1","Bomba de Maré · v1, oficina hidráulica") if "--register" in sys.argv else None)
+            register=("v2","No jogo · Bomba de Maré · repouso e funcionamento") if "--register" in sys.argv else None)

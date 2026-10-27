@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "aquamarine:crab_shell",
+    "aquamarine:oyster_pearl",
+    "minecraft:shield"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:shell_shield"
+  }
+}

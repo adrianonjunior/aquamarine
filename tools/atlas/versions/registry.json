@@ -131,5 +131,47 @@
     "label": "No jogo · Garrafão de Cultivo",
     "date": "2026-10-27",
     "file": "cultivation_jar-v1.json"
+  },
+  {
+    "id": "tide_pump",
+    "version": "v1",
+    "label": "Bomba de Maré · v1, oficina hidráulica",
+    "date": "2026-10-27",
+    "file": "tide_pump-v1.json"
+  },
+  {
+    "id": "water_tank",
+    "version": "v1",
+    "label": "Tanque d'Água · v1, vidro e latão",
+    "date": "2026-10-27",
+    "file": "water_tank-v1.json"
+  },
+  {
+    "id": "oyster",
+    "version": "v1",
+    "label": "Ostra · nácar e pérola",
+    "date": "2026-10-27",
+    "file": "oyster-v1.json"
+  },
+  {
+    "id": "crab",
+    "version": "v1",
+    "label": "Caranguejo · 7H · coral e marfim",
+    "date": "2026-10-27",
+    "file": "crab-v1.json"
+  },
+  {
+    "id": "tide_pump",
+    "version": "v2",
+    "label": "No jogo · Bomba de Maré · repouso e funcionamento",
+    "date": "2026-10-27",
+    "file": "tide_pump-v2.json"
+  },
+  {
+    "id": "water_tank",
+    "version": "v2",
+    "label": "No jogo · Tanque d'Água · nível e pressão",
+    "date": "2026-10-27",
+    "file": "water_tank-v2.json"
   }
 ]

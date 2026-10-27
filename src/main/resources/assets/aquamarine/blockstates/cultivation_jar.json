@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "aquamarine:block/cultivation_jar",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "aquamarine:block/cultivation_jar",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "aquamarine:block/cultivation_jar",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "aquamarine:block/cultivation_jar",
+      "y": 270
+    }
+  }
+}

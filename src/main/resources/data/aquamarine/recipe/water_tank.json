@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": "aquamarine:brass_ingot",
+    "P": "aquamarine:oyster_pearl",
+    "G": "minecraft:glass"
+  },
+  "pattern": [
+    "BBB",
+    "GPG",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:water_tank"
+  }
+}

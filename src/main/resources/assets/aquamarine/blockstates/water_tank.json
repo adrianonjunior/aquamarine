@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "aquamarine:block/water_tank",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "aquamarine:block/water_tank",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "aquamarine:block/water_tank",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "aquamarine:block/water_tank",
+      "y": 270
+    }
+  }
+}

@@ -86,7 +86,7 @@ def port(m, name, at, kind="fluid", rot=(0,0,0)):
     x,y,z=at
     m.bone(name,"works",at,rot)
     colors = {"fluid":k.RING_FLUID,"energy":k.RING_ENERGY,"gas":k.RING_GAS}
-    m.box(name+"_ring",name,(x-1.5,y-1.5,z-0.5),(3,3,1),ref.ring_face(colors[kind], k.STEEL[0]),
+    m.box(name+"_ring",name,(x-1.5,y-1.5,z-0.5),(3,3,1),ref.ring_face(colors[kind], k.STEEL),
           same={"back":"front","right":"left"})
     m.box(name+"_neck",name,(x-1,y-1,z+0.5),(2,2,1),brass,
           same={"back":"front","right":"left","bottom":"top"})
@@ -124,7 +124,9 @@ def sine(clip,bone,channel,amplitude,axis=1,phase=0,base=0,steps=12):
     getattr(clip,{"rotation":"rot","position":"pos","scale":"scale"}[channel])(bone,*points)
 
 def motion(m, piston="piston", cycle=1.0, wheel_name="flywheel"):
-    m.clips["idle"]=k.Clip(3,True).finish()
+    idle=k.Clip(3,True)
+    sine(idle,"needle","rotation",.25,2)
+    m.clips["idle"]=idle.finish()
     run=k.Clip(cycle,True)
     sine(run,piston,"position",0.75)
     run.rot(wheel_name,(0,(0,0,0),k.L),(cycle,(0,0,360),k.L))
@@ -143,7 +145,7 @@ def motion(m, piston="piston", cycle=1.0, wheel_name="flywheel"):
     full=k.Clip(3,True)
     sine(full,"needle","rotation",1,2,0,170)
     m.clips["full"]=full.finish()
-    m.states={"idle":{"clip":"idle"},"run":{"clip":"run"},"full":{"clip":"full"}}
+    m.states={"idle":{"label":"Parada","enter":"stop","loop":"idle"},"run":{"label":"Funcionando","enter":"start","loop":"run"},"full":{"label":"Cheia","loop":"full"}}
 
 def shots(m):
     return [("repouso",[(m.clips["idle"],0,1)],math.radians(135),math.radians(24)),

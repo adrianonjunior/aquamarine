@@ -59,10 +59,11 @@ def build():
     m.clips["run"]=run.finish()
     m.clips["start"]=k.Clip(1.5).rot("needle",(0,(0,0,0)),(.8,(0,0,88)),(1.5,(0,0,80))).finish()
     m.clips["stop"]=k.Clip(1).rot("needle",(0,(0,0,80)),(.7,(0,0,-3)),(1,(0,0,0))).finish()
-    m.clips["full"]=k.Clip(3,True).rot("needle",(0,(0,0,165)),(3,(0,0,165))).finish()
+    full=k.Clip(3,True); h.sine(full,"needle","rotation",.3,2,0,165)
+    m.clips["full"]=full.finish()
     m.clips["fill"]=m.clips["run"]
     m.clips["empty"]=m.clips["stop"]
-    m.states={"idle":{"clip":"idle"},"run":{"clip":"run"},"full":{"clip":"full"}}
+    m.states={"idle":{"label":"Parado","enter":"stop","loop":"idle"},"run":{"label":"Enchendo","enter":"start","loop":"run"},"full":{"label":"Cheio","loop":"full"}}
     m.descriptions={"idle":"Tanque selado; nível real desenhado pelo renderer.","run":"Agulha acompanha o fluxo de entrada.",
         "fill":"Fluxo suave; o líquido real sobe.","empty":"Fluxo encerrado; o líquido real desce.","full":"Indicador no limite de capacidade."}
     return m
@@ -70,4 +71,4 @@ def build():
 if __name__=="__main__":
     m=build()
     k.write(m,BASE,preview_shots=h.shots(m) if "--preview" in sys.argv else None,
-            register=("v1","Tanque d'Água · v1, vidro e latão") if "--register" in sys.argv else None)
+            register=("v2","No jogo · Tanque d'Água · nível e pressão") if "--register" in sys.argv else None)

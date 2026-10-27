@@ -20,7 +20,7 @@ class CatalogTest(unittest.TestCase):
         cls.kraken = cls.models[0]
 
     def test_complete_java_inventory(self):
-        expected = {"kraken":16,"tentacle":5,"young_kraken":6,"kraken_egg":2,"moray":7,"whale":5,"sperm_whale":4}
+        expected = {"kraken":16,"tentacle":5,"young_kraken":6,"kraken_egg":2,"moray":7,"whale":5,"sperm_whale":4,"crab":8,"oyster":4}
         self.assertEqual({m["id"]:len(m["clips"]) for m in self.models},expected)
 
     def test_java_timing_and_proposal_do_not_change_contract(self):
@@ -70,7 +70,7 @@ class CatalogTest(unittest.TestCase):
 
     def test_registry_preserves_originals_and_proposal(self):
         registry=json.loads((BASE/"versions/registry.json").read_text(encoding="utf-8"))
-        self.assertEqual(len(registry),18)
+        self.assertEqual(len(registry),25)
         # 0.6.1 (7B): a primeira máquina animada, com a camada de brilho e o gabarito de UV.
         vent=json.loads((BASE/"versions/vent_generator-v1.json").read_text(encoding="utf-8"))
         self.assertTrue(vent["glow"].startswith("data:image/png") and vent["uv"].startswith("data:image/png"))

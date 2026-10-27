@@ -26,7 +26,7 @@ public final class ModHydraulics {
         Aquamarine.id("hydraulic"), new BlockEntityType<>(HydraulicBlockEntity::new, Set.of(TIDE_PUMP, WATER_TANK)));
     private static Block block(String id, HydraulicBlock.Kind kind, VoxelShape shape) {
         return Registry.register(BuiltInRegistries.BLOCK, Aquamarine.id(id), new HydraulicBlock(
-            BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).noOcclusion()
+            BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()
                 .setId(ResourceKey.create(Registries.BLOCK, Aquamarine.id(id))), shape, kind));
     }
     public static void register() {

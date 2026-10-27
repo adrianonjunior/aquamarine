@@ -82,6 +82,7 @@ public class AquamarineClient implements ClientModInitializer {
 			return new MachineRenderer<WaterGeneratorBlockEntity>(be -> be.kind() == WaterGeneratorBlock.Kind.VENT ? vent : null);
 		});
 		AquamarineParticles.register();
+		com.aquamarine.client.IndustryClient.register();
 		EntityRendererRegistry.register(ModEntities.CAVITATION_PULSE, NoopRenderer::new);
 		AquamarineBossBarHud.register();
 		PressureHud.register();

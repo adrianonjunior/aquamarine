@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "T": "minecraft:torch",
+    "B": "aquamarine:brass_ingot",
+    "C": "minecraft:copper_ingot",
+    "R": "aquamarine:cultivation_rope"
+  },
+  "pattern": [
+    " T ",
+    "BCB",
+    " R "
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:cultivation_buoy"
+  }
+}
