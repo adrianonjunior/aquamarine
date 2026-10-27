@@ -198,8 +198,9 @@ public abstract class AbstractWhaleEntity extends PathfinderMob {
 			if (away.lengthSqr() < 1.0E-4) {
 				away = Vec3.directionFromRotation(0, yBodyRot);
 			}
-			Vec3 push = away.normalize().scale(0.35);
-			p.setDeltaMovement(p.getDeltaMovement().add(push.x, 0.05, push.z));
+			double resistance = com.aquamarine.item.ShellShield.whalePushScale(p);
+			Vec3 push = away.normalize().scale(0.35 * resistance);
+			p.setDeltaMovement(p.getDeltaMovement().add(push.x, 0.05 * resistance, push.z));
 			// O cliente manda no próprio movimento: sem o pacote, o empurrão do servidor não chega.
 			if (p instanceof net.minecraft.server.level.ServerPlayer sp) {
 				sp.connection.send(new net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket(sp));

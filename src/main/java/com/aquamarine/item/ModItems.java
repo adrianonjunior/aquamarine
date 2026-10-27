@@ -41,6 +41,8 @@ public final class ModItems {
 	private static final List<Item> TAB_ORDER = new ArrayList<>();
 
 	// Materiais
+	public static final Item CRAB_SHELL = register("crab_shell", Item::new, new Item.Properties());
+	public static final Item SHELL_SHIELD = register("shell_shield", net.minecraft.world.item.ShieldItem::new, ShellShield.properties());
 	public static final Item ABYSSAL_ORE = registerBlock(ModBlocks.ABYSSAL_ORE, new Item.Properties());
 	public static final Item ABYSSAL_INGOT = register("abyssal_ingot", Item::new, new Item.Properties());
 	public static final Item ABYSSAL_BLOCK = registerBlock(ModBlocks.ABYSSAL_BLOCK, new Item.Properties());

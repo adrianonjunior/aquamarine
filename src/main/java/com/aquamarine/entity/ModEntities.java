@@ -113,6 +113,9 @@ public final class ModEntities {
 			.clientTrackingRange(8).updateInterval(1).noSave().build(CAVITATION_PULSE_KEY));
 
 	public static void register() {
+		FabricDefaultAttributeRegistry.register(CRAB, CrabEntity.createAttributes());
+		SpawnPlacements.register(CRAB, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CrabEntity::checkSpawn);
+		BiomeModifications.addSpawn(BiomeSelectors.tag(BiomeTags.IS_BEACH), MobCategory.CREATURE, CRAB, 3, 1, 2);
 		FabricDefaultAttributeRegistry.register(KRAKEN, KrakenEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(KRAKEN_VAMPIRE, KrakenEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(KRAKEN_AMMONITE, KrakenEntity.createAttributes());
@@ -135,6 +138,10 @@ public final class ModEntities {
 			MobCategory.UNDERGROUND_WATER_CREATURE, WHALE, 3, 1, 2);
 		BiomeModifications.addSpawn(BiomeSelectors.tag(ModTags.Biomes.MORAY_TRENCHES), MobCategory.UNDERGROUND_WATER_CREATURE, SPERM_WHALE, 3, 1, 1);
 	}
+
+	private static final ResourceKey<EntityType<?>> CRAB_KEY = ResourceKey.create(Registries.ENTITY_TYPE, Aquamarine.id("crab"));
+	public static final EntityType<CrabEntity> CRAB = Registry.register(BuiltInRegistries.ENTITY_TYPE, CRAB_KEY,
+		EntityType.Builder.of(CrabEntity::new, MobCategory.CREATURE).sized(.85F, .45F).eyeHeight(.35F).clientTrackingRange(8).build(CRAB_KEY));
 
 	private ModEntities() {}
 }

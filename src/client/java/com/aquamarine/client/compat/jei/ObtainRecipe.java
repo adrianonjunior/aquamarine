@@ -26,6 +26,7 @@ public record ObtainRecipe(String key, List<ItemStack> inputs, List<ItemStack> o
 	/** Todas as páginas: têmpera e Coletor do Neutrônio, minérios, Kraken, Moréia, baleias, Porto e o que ainda é só do criativo. */
 	public static List<ObtainRecipe> all() {
 		return List.of(
+			of("crab", List.of(), List.of(ModItems.CRAB_SHELL), 2),
 			of("tempering", List.of(ModItems.UNSTABLE_NEUTRONIUM_INGOT), List.of(ModItems.NEUTRONIUM_INGOT), 2),
 			of("neutronium_ore", List.of(), List.of(ModItems.NEUTRONIUM_ORE, ModItems.RAW_NEUTRONIUM), 2),
 			of("collector", List.of(ModEnergy.NEUTRONIUM_COLLECTOR), List.of(ModItems.NEUTRONIUM_STARDUST), 2),
