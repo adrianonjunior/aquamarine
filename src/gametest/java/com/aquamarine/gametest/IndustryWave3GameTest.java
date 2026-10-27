@@ -61,12 +61,15 @@ final class IndustryWave3GameTest {
                 if(p.getX()==pump.getX()-4 || p.getZ()==pump.getZ()-2 || p.getZ()==pump.getZ()+2 || p.getX()==pump.getX()) place(l,p,Blocks.GLASS);
             place(l,pump,ModHydraulics.TIDE_PUMP); tank(l,pump).energy.amount=16000;
             place(l,pump.east(),ModNetworks.FLUID_PIPE); place(l,pump.east(2),ModNetworks.FLUID_PIPE); place(l,dest,ModHydraulics.WATER_TANK);
-            // Duas garrafas e uma boia separadas por cordas, na água limpa.
-            for(BlockPos p:BlockPos.betweenClosed(jar.offset(-1,0,-1),jar.offset(5,2,1))) place(l,p,Blocks.WATER);
-            for(BlockPos p:BlockPos.betweenClosed(jar.offset(-2,0,-2),jar.offset(6,3,2)))
-                if(p.getX()==jar.getX()-2 || p.getX()==jar.getX()+6 || p.getZ()==jar.getZ()-2 || p.getZ()==jar.getZ()+2) place(l,p,Blocks.GLASS);
-            Block[] line={ModCultivation.CULTIVATION_JAR,ModCultivation.CULTIVATION_ROPE,ModCultivation.CULTIVATION_JAR,ModCultivation.CULTIVATION_ROPE,ModCultivation.CULTIVATION_BUOY};
-            for(int i=0;i<line.length;i++) l.setBlockAndUpdate(jar.east(i),line[i].defaultBlockState().setValue(com.aquamarine.block.Waterlogging.WATERLOGGED,true));
+            // Linha visual pedida: um Garrafão, duas Cordas e uma Boia, na água limpa.
+            for(BlockPos p:BlockPos.betweenClosed(jar.offset(-1,0,-3),jar.offset(5,2,1))) place(l,p,Blocks.WATER);
+            for(BlockPos p:BlockPos.betweenClosed(jar.offset(-2,0,-4),jar.offset(6,3,2)))
+                if(p.getX()==jar.getX()-2 || p.getX()==jar.getX()+6 || p.getZ()==jar.getZ()-4 || p.getZ()==jar.getZ()+2)
+                    place(l,p,p.getZ()==jar.getZ()-4 ? Blocks.BARRIER : Blocks.GLASS);
+            Block[] line={ModCultivation.CULTIVATION_JAR,ModCultivation.CULTIVATION_ROPE,ModCultivation.CULTIVATION_ROPE,ModCultivation.CULTIVATION_BUOY};
+            for(int i=0;i<line.length;i++) l.setBlockAndUpdate(jar.east(i),line[i].defaultBlockState()
+                .setValue(com.aquamarine.block.FacingShapeBlock.FACING,Direction.SOUTH)
+                .setValue(com.aquamarine.block.Waterlogging.WATERLOGGED,true));
             var j=(CultivationJarBlockEntity)l.getBlockEntity(jar); j.setProgressUnits(CultivationJarBlockEntity.CYCLE-11);
             reload(l,jar); check(((CultivationJarBlockEntity)l.getBlockEntity(jar)).progressUnits()==CultivationJarBlockEntity.CYCLE-11,"Cultivo perdeu progresso ao recarregar");
             var oyster=ModCultivation.OYSTER.create(l,EntitySpawnReason.COMMAND); oyster.setPos(jar.getX()-.3,jar.getY(),jar.getZ()+.5); oyster.setPersistenceRequired(); l.addFreshEntity(oyster);
@@ -83,12 +86,16 @@ final class IndustryWave3GameTest {
             var j=(CultivationJarBlockEntity)l.getBlockEntity(jar);
             check(j.working() && j.pearls()==1,"Linha ligada não produziu pérola"); reload(l,jar);
             check(((CultivationJarBlockEntity)l.getBlockEntity(jar)).pearls()==1,"Pérola desapareceu ao recarregar");
+            var buoy=(CultivationBuoyBlockEntity)l.getBlockEntity(jar.east(3)); buoy.refreshState();
+            check(buoy.machineState()==com.aquamarine.machine.MachineState.FULL,"Boia não sinalizou linha cheia");
         });
         shot(c,world,server,o.offset(1,0,0),"onda3_hidraulica_run",3,2.7,-4);
         shot(c,world,server,stack,"onda3_tanque_meio",1.8,1.9,-2.5);
         check(c.computeOnClient(mc->mc.level.getBlockEntity(stack) instanceof HydraulicBlockEntity b && b.amount()==32*B && b.fill(1)>.45F),"Cliente não recebeu nível de meio tanque");
-        // Dentro da água, de perto: a linha de cultivo e a ostra no fundo.
-        shotAt(c,world,server,"onda3_cultivo",jar.getX()+2.5,jar.getY()+1.55,jar.getZ()-0.65,jar.getX()+2.5,jar.getY()+0.45,jar.getZ()+0.5);
+        // Linha completa de lado e dentro da água, seguida do sinal cheio visto de perto.
+        shotAt(c,world,server,"cultivo_linha_lado",jar.getX()+1.5,jar.getY()+1.2,jar.getZ()-5.2,jar.getX()+1.5,jar.getY()+0.65,jar.getZ()+0.5);
+        shotAt(c,world,server,"cultivo_linha_agua",jar.getX()+1.5,jar.getY()+1.45,jar.getZ()-3.2,jar.getX()+1.5,jar.getY()+0.55,jar.getZ()+0.5);
+        shotAt(c,world,server,"cultivo_boia_full",jar.getX()+3.5,jar.getY()+1.35,jar.getZ()-0.8,jar.getX()+3.5,jar.getY()+0.7,jar.getZ()+0.5);
         shot(c,world,server,crabPos,"onda3_caranguejo",1.8,1.4,-2.1);
         shotAt(c,world,server,"onda3_ostra",jar.getX()-0.3,jar.getY()+0.95,jar.getZ()-0.55,jar.getX()-0.3,jar.getY()+0.1,jar.getZ()+0.5);
         shotAt(c,world,server,"onda3_bomba",pump.getX()+1.9,pump.getY()+1.25,pump.getZ()-1.55,pump.getX()+0.5,pump.getY()+0.45,pump.getZ()+0.5);
@@ -101,10 +108,26 @@ final class IndustryWave3GameTest {
         server.runOnServer(s->{
             var l=s.overworld(); var j=(CultivationJarBlockEntity)l.getBlockEntity(jar);
             check(j.takePearls()==1 && j.takePearls()==0,"Coleta duplicou pérola");
+            var buoy=(CultivationBuoyBlockEntity)l.getBlockEntity(jar.east(3)); buoy.refreshState();
+            check(buoy.machineState()==com.aquamarine.machine.MachineState.RUNNING,"Boia não voltou ao sinal de cultivo");
+        });
+        c.waitTicks(20);
+        shotAt(c,world,server,"cultivo_boia_run",jar.getX()+3.5,jar.getY()+1.35,jar.getZ()-0.8,jar.getX()+3.5,jar.getY()+0.7,jar.getZ()+0.5);
+        server.runOnServer(s->{
+            var l=s.overworld(); var j=(CultivationJarBlockEntity)l.getBlockEntity(jar);
             place(l,jar.east(),Blocks.WATER);
             CultivationJarBlockEntity.tick(l,jar,l.getBlockState(jar),j);
             check(!j.working(),"Corda quebrada manteve produção");
-            l.setBlockAndUpdate(jar.east(),ModCultivation.CULTIVATION_ROPE.defaultBlockState().setValue(com.aquamarine.block.Waterlogging.WATERLOGGED,true));
+            var buoy=(CultivationBuoyBlockEntity)l.getBlockEntity(jar.east(3)); buoy.refreshState();
+            check(buoy.machineState()==com.aquamarine.machine.MachineState.IDLE,"Boia não apagou com a linha rompida");
+        });
+        c.waitTicks(25);
+        shotAt(c,world,server,"cultivo_boia_idle",jar.getX()+3.5,jar.getY()+1.35,jar.getZ()-0.8,jar.getX()+3.5,jar.getY()+0.7,jar.getZ()+0.5);
+        server.runOnServer(s->{
+            var l=s.overworld(); var j=(CultivationJarBlockEntity)l.getBlockEntity(jar);
+            l.setBlockAndUpdate(jar.east(),ModCultivation.CULTIVATION_ROPE.defaultBlockState()
+                .setValue(com.aquamarine.block.FacingShapeBlock.FACING,Direction.SOUTH)
+                .setValue(com.aquamarine.block.Waterlogging.WATERLOGGED,true));
             place(l,jar.below(),Blocks.MAGMA_BLOCK);
             CultivationJarBlockEntity.tick(l,jar,l.getBlockState(jar),j); check(!j.working(),"Água com magma permitiu cultivo");
             var crab=l.getEntitiesOfClass(CrabEntity.class,new AABB(crabPos).inflate(10)).getFirst();
