@@ -33,6 +33,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 | Publicar e verificar link ngrok do Atlas de amostra | Codex | Servidor Atlas 8767 e túnel ngrok | 25/10/2026 |
+| Manual do Aquamarine: livro customizado com passo a passo e prints, entregue por `/aquamarine help` (pedido do Adriano em 27/10/2026); worktree `.worktrees/claude-manual`, branch `claude/manual` | Claude Opus 5.5 | Gradle e jogo de teste da worktree (o `runClient` aberto na pasta principal é do Adriano) | 27/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
