@@ -1,5 +1,6 @@
 package com.aquamarine.energy;
 
+import com.aquamarine.block.Waterlogging;
 import java.util.EnumMap;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
@@ -12,12 +13,14 @@ import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -27,7 +30,7 @@ import net.minecraft.util.RandomSource;
  * Cabo Aquático (6E): leva a energia dos geradores até as máquinas. Liga sozinho nos vizinhos que guardam energia
  * (cabos, geradores, o Coletor ou máquinas de outros mods com a Team Reborn Energy) e iguala a carga com eles.
  */
-public class AquaticCableBlock extends Block implements EntityBlock {
+public class AquaticCableBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 	private static final Map<Direction, BooleanProperty> SIDES = PipeBlock.PROPERTY_BY_DIRECTION;
 	private static final VoxelShape CORE = Block.box(5, 5, 5, 11, 11, 11);
 	private static final Map<Direction, VoxelShape> ARMS = new EnumMap<>(Direction.class);
@@ -43,7 +46,7 @@ public class AquaticCableBlock extends Block implements EntityBlock {
 
 	public AquaticCableBlock(Properties properties) {
 		super(properties);
-		BlockState state = stateDefinition.any();
+		BlockState state = stateDefinition.any().setValue(Waterlogging.WATERLOGGED, false);
 		for (BooleanProperty side : SIDES.values()) {
 			state = state.setValue(side, false);
 		}
@@ -53,6 +56,7 @@ public class AquaticCableBlock extends Block implements EntityBlock {
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		SIDES.values().forEach(builder::add);
+		builder.add(Waterlogging.WATERLOGGED);
 	}
 
 	private static boolean connects(LevelReader level, BlockPos pos, Direction side) {
@@ -71,13 +75,19 @@ public class AquaticCableBlock extends Block implements EntityBlock {
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return connected(context.getLevel(), context.getClickedPos(), defaultBlockState());
+		return Waterlogging.placed(connected(context.getLevel(), context.getClickedPos(), defaultBlockState()), context);
 	}
 
 	@Override
 	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction direction,
 		BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+		Waterlogging.tick(state, level, ticks, pos);
 		return state.setValue(SIDES.get(direction), connects(level, pos, direction));
+	}
+
+	@Override
+	protected FluidState getFluidState(BlockState state) {
+		return Waterlogging.fluid(state);
 	}
 
 	@Override

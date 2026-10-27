@@ -146,6 +146,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			if (enabled("energy")) {
 				EnergyGameTest.run(context, world, server, base);
 			}
+			if (enabled("waterlog")) {
+				WaterlogGameTest.run(context, world, server, base);
+			}
 			if (enabled("harbor")) {
 				HarborGameTest.run(context, world, server, base);
 			}
