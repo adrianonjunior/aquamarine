@@ -89,6 +89,7 @@ public class AquamarineClient implements ClientModInitializer {
 		KrakenEffects.register();
 		KrakenMusic.register();
 		AquamarineKeys.register();
+		SyncedRecipes.register();
 		// Renderizadores e HUD do Kraken entram aqui.
 	}
 }

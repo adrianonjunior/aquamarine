@@ -47,6 +47,15 @@ final class MultiplayerGameTest {
 			check(context.computeOnClient(mc -> mc.level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENTITY_TYPE)
 				.containsKey(net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(ModEntities.KRAKEN))),
 				"Multiplayer: os registros do mod não sincronizaram");
+			// Convidado num servidor: o JEI só vê as receitas do mod porque o servidor as manda ao entrar.
+			boolean forge = false;
+			for (int i = 0; i < 30 && !forge; i++) {
+				context.waitTicks(10);
+				forge = context.computeOnClient(mc -> com.aquamarine.client.compat.jei.AquamarineJeiPlugin.runtime()
+					.map(runtime -> runtime.getRecipeManager().createRecipeLookup(com.aquamarine.client.compat.jei.AquamarineJeiPlugin.ABYSSAL_FORGING)
+						.get().findAny().isPresent()).orElse(false));
+			}
+			check(forge, "Multiplayer: o JEI do convidado devia ver as receitas da Forja");
 			String name = context.computeOnClient(mc -> mc.player.getGameProfile().name());
 			server.runCommand("op " + name);
 			server.runCommand("gamemode survival " + name);
