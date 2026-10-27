@@ -32,6 +32,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| Exigir Garrafão ou Boia ao colocar Corda de Cultivo | Codex | Lógica e testes de cultivo | 27/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
