@@ -35,4 +35,5 @@ A janela de cinco horas é uma cota de uso compartilhada da conta, não o tamanh
 |---|---|---|
 | Base antes das ondas 3 a 6 | `505691f` | main limpa; 7C registrada no handoff |
 | Preparação documental | commit que introduz este arquivo | documentos por onda; implementação não iniciada |
+| Ondas 3 e 4 integradas (7D, 7E, 7F, 7G, 7H) | `371c357` (merge na main) | `build` e partes `industry3`, `industry4`, `networks`, `machines`, `energy`, `waterlog`, `jei` verdes; Atlas com 6 máquinas |
 
