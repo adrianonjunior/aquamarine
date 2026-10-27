@@ -348,3 +348,21 @@ bíblia de arte); a primeira é o Gerador de Fenda (26/10/2026).
 - **Clipes que o código conhece:** `idle`, `start`, `run`, `stop`, `overload`, `full`. Constantes de tempo usadas no
   código comum (ex.: `WaterGeneratorBlockEntity.VENT_START` e `VENT_STROKE`) batem com os clipes, e a parte `machines`
   do `runClientGameTest` confere.
+
+## Redes de energia, fluido e gás (0.6.1, 7C)
+Dono desta regra: aqui. Regras de jogo e valores em [12-industria.md](12-industria.md), 7C.
+- **Código:** `com.aquamarine.network`. `ConduitBlock` (cano: seis lados `none`/`pipe`/`port`) e `InlineConduitBlock`
+  (válvula e visor, por eixo) implementam `ConduitPiece`; um block entity só (`aquamarine:conduit`, `ConduitBlockEntity`)
+  guarda os modos dos lados e a parte de cada pedaço no estoque. `ConduitNetwork` monta a rede por busca nos vizinhos,
+  soma as partes e se refaz quando um pedaço entra, sai, muda de modo ou uma válvula fecha (partes devolvidas antes).
+  O estoque aparece às máquinas por `FluidStorage.SIDED` e `EnergyStorage.SIDED` em qualquer pedaço (lado desligado não).
+- **Ar Comprimido:** um `Fluid` registrado só para a API de transferência da Fabric (sem bloco nem balde); o estado padrão
+  conta como fonte porque `FluidVariant` não aceita fluido correndo; nome e "mais leve que o ar" vêm do
+  `FluidVariantAttributes`. Máquina de gás implementa `GasPort` (o Tubo só liga nela).
+- **Arte:** `tools/gen_industry_networks.py`; texturas de 32 px desenhadas como uma face de bloco inteira, e os modelos usam
+  a UV automática do JSON (mesma densidade das máquinas). Vidro com `"force_translucent": true` no JSON (no 26.3 a camada
+  translúcida vem da textura, sem registro no cliente). O conteúdo é do `ConduitRenderer`: os sprites de água e lava vêm
+  direto do atlas de blocos (a Fabric do 26.3 não expõe mais os sprites de fluido).
+- **Receitas no JEI para convidados:** desde a 0.6.1 o servidor manda as receitas `aquamarine:` na configuração da conexão
+  (`RecipeSyncPayload`) e o plugin do JEI as registra quando não há servidor integrado (`SyncedRecipes`). Receita nova do
+  mod entra sozinha. O que não tem receita ganha uma página em `ObtainRecipe.all()` (categoria "Como obter").

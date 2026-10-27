@@ -22,7 +22,7 @@
 |---|---|---|---|
 | 7A | Água dentro dos blocos (waterlogged) em todo bloco do mod | **feita** (26/10/2026) | nada |
 | 7B | Pipeline de máquinas animadas, bíblia de arte e aba "Máquinas" do Atlas | **feita** (aval da Fenda em 26/10/2026) | nada |
-| 7C | Redes: Cano de fluido, Tubo de Ar, cabos novos, Chave de Maré, conteúdo visível | em andamento | 7A, 7B |
+| 7C | Redes: Cano de fluido, Tubo de Ar, cabos novos, Chave de Maré, conteúdo visível | **feita** (27/10/2026) | 7A, 7B |
 | 7D | Bomba de Maré, Tanque d'Água e exceção dos geradores | planejada | 7C |
 | 7E | Gerador de Fenda refeito (animado) e geradores com fluido | planejada | 7B, 7C, 7D |
 | 7F | Compressor de Ar e Pulmão de Ferro (gás + regulação) | planejada | 7C, 7E |
@@ -151,6 +151,21 @@ se for vento. **Decidido:** energia, fluidos e gás (itens saem por funil e baú
   explodir.
 - **Aceite:** testes de rede (fluido e gás andam, não vazam, não misturam); capturas com água, magma e ar; a Chave muda os
   lados e o visual acompanha.
+- **Como ficou (27/10/2026; valores iniciais a testar):**
+  - **Peças:** Cabo Aquático (256 E/t) e Cabo Reforçado (fio de Aurium, 2048 E/t); Cano (1 balde/s) e Cano Reforçado
+    (luvas de Aurium, 4 baldes/s); Tubo de Ar (2 baldes de ar/s); Válvula e Visor de cada rede (Interruptor e Visor no
+    Cabo). Vazão é por conector de saída; o comprimento da rede não atrasa (a rede tem um estoque só, a soma dos pedaços:
+    1 balde por Cano, 4 por Reforçado).
+  - **"Magma" do Cano é a lava do jogo** (sem fluido novo); o Tanque e a Fenda no modo fluido usam lava.
+  - **Distribuição:** cada tick a rede puxa dos conectores em "entra" e reparte em partes iguais entre os em "sai",
+    começando por um diferente a cada tick. Caldeirão (que só aceita balde inteiro) recebe um balde e o conector
+    descansa o tempo da vazão.
+  - **Chave de Maré:** num conector cicla sai (padrão), entra e desligado; entre dois canos, ligado e desligado; agachado
+    gira a máquina. Marca no anel: seta âmbar (sai), seta ciano (entra), X vermelho no miolo (desligado).
+  - **Válvula fechada** corta a rede em duas (o que já passou segue até a saída). **Cano com água** que sai do mundo
+    (quebrado de qualquer jeito) solta uma fonte; lava e gás somem.
+  - **Lingote de Latão:** 3 lingotes de cobre + 1 pepita de ouro = 3 lingotes (sem forma). Receitas das peças no JEI.
+  - O Cano não liga em Tubo de Ar nem em máquina de gás; o Tubo só liga em máquinas de gás (`GasPort`, 7F).
 
 ## 7D. Bomba de Maré e Tanque d'Água
 **Pedido.** Tanque que dá água em grandes quantidades por tubos (puxa e entrega), com exceção à regra de profundidade.
