@@ -11,6 +11,8 @@ import net.minecraft.world.inventory.MenuType;
 public final class ModMenus {
 	public static final MenuType<AbyssalForgeMenu> ABYSSAL_FORGE = Registry.register(
 		BuiltInRegistries.MENU, Aquamarine.id("abyssal_forge"), new MenuType<>(AbyssalForgeMenu::new, FeatureFlags.VANILLA_SET));
+	public static final MenuType<NeutroniumCollectorMenu> NEUTRONIUM_COLLECTOR = Registry.register(
+		BuiltInRegistries.MENU, Aquamarine.id("neutronium_collector"), new MenuType<>(NeutroniumCollectorMenu::new, FeatureFlags.VANILLA_SET));
 
 	public static void register() {
 		// Carrega a classe; os campos estáticos fazem o registro.

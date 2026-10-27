@@ -12,7 +12,9 @@ public enum MachineState {
 	/** Sobrecarga: produz, mas não tem para onde mandar (a carga ficou cheia). */
 	OVERLOAD,
 	/** Cheia (tanques e coletores). */
-	FULL;
+	FULL,
+	/** Pulso curto de uma máquina que acabou de produzir uma unidade. */
+	COLLECTING;
 
 	public static MachineState byId(int id) {
 		MachineState[] all = values();

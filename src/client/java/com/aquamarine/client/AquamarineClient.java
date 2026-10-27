@@ -18,6 +18,8 @@ import com.aquamarine.client.entity.sperm_whale.SpermWhaleRenderer;
 import com.aquamarine.client.entity.whale.WhaleModel;
 import com.aquamarine.client.entity.whale.WhaleRenderer;
 import com.aquamarine.client.machine.MachineRenderer;
+import com.aquamarine.client.machine.NeutroniumCollectorAnimations;
+import com.aquamarine.client.machine.NeutroniumCollectorModel;
 import com.aquamarine.client.machine.VentGeneratorAnimations;
 import com.aquamarine.client.machine.VentGeneratorModel;
 import com.aquamarine.energy.ModEnergy;
@@ -25,6 +27,7 @@ import com.aquamarine.energy.WaterGeneratorBlock;
 import com.aquamarine.energy.WaterGeneratorBlockEntity;
 import com.aquamarine.client.pressure.PressureHud;
 import com.aquamarine.client.screen.AbyssalForgeScreen;
+import com.aquamarine.client.screen.NeutroniumCollectorScreen;
 import com.aquamarine.client.music.KrakenMusic;
 import com.aquamarine.entity.ModEntities;
 import com.aquamarine.menu.ModMenus;
@@ -41,6 +44,7 @@ public class AquamarineClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		MenuScreens.register(ModMenus.ABYSSAL_FORGE, AbyssalForgeScreen::new);
+		MenuScreens.register(ModMenus.NEUTRONIUM_COLLECTOR, NeutroniumCollectorScreen::new);
 		EntityRendererRegistry.register(ModEntities.BOSS_DUMMY, NoopRenderer::new);
 		ModelLayerRegistry.registerModelLayer(KrakenModel.LAYER, KrakenModel::createBodyLayer);
 		// Fase 6: a v3a é o Kraken; a v3b e a v3c têm IDs próprios (KrakenRenderer.Variant).
@@ -80,6 +84,12 @@ public class AquamarineClient implements ClientModInitializer {
 			MachineRenderer.Machine vent = MachineRenderer.Machine.of(VentGeneratorModel::create, VentGeneratorAnimations.CLIPS,
 				VentGeneratorModel.GLASS, VentGeneratorModel.TEXTURE, VentGeneratorModel.GLOW);
 			return new MachineRenderer<WaterGeneratorBlockEntity>(be -> be.kind() == WaterGeneratorBlock.Kind.VENT ? vent : null);
+		});
+		BlockEntityRendererRegistry.register(ModEnergy.COLLECTOR_ENTITY, ctx -> {
+			MachineRenderer.Machine collector = MachineRenderer.Machine.of(NeutroniumCollectorModel::create,
+				NeutroniumCollectorAnimations.CLIPS, NeutroniumCollectorModel.GLASS,
+				NeutroniumCollectorModel.TEXTURE, NeutroniumCollectorModel.GLOW);
+			return new MachineRenderer<com.aquamarine.energy.NeutroniumCollectorBlockEntity>(be -> collector, true);
 		});
 		AquamarineParticles.register();
 		com.aquamarine.client.IndustryClient.register();

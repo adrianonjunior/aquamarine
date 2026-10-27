@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "aquamarine:block/neutronium_collector"
+    "model": "aquamarine:block/neutronium_collector_item"
   }
 }

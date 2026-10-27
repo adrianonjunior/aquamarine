@@ -118,8 +118,12 @@ class Box:
 
 
 class Machine:
-    def __init__(self, key, java_class, name, description):
+    def __init__(self, key, java_class, name, description, *, sheet=SHEET, item_scale=1.0, preview_scale=None):
+        assert sheet >= SHEET and sheet & (sheet - 1) == 0, "a folha deve ser potência de dois e ter pelo menos 128 px"
         self.key, self.java_class, self.name, self.description = key, java_class, name, description
+        self.sheet = sheet
+        self.item_scale = float(item_scale)
+        self.preview_scale = preview_scale
         self.bones: dict[str, Bone] = {}
         self.boxes: list[Box] = []
         self.clips: dict[str, Clip] = {}
@@ -180,10 +184,10 @@ def pack(m):
     x = y = shelf = 0
     for b, f in owners:
         w, h = b.texels(f)
-        if x + w > SHEET:
+        if x + w > m.sheet:
             x, y, shelf = 0, y + shelf + GUTTER, 0
-        if y + h > SHEET:
-            raise SystemExit(f"{m.key}: as faces não cabem em {SHEET}x{SHEET} (parou em {b.name}/{f})")
+        if y + h > m.sheet:
+            raise SystemExit(f"{m.key}: as faces não cabem em {m.sheet}x{m.sheet} (parou em {b.name}/{f})")
         b.uv[f] = (x, y, w, h)
         x += w + GUTTER
         shelf = max(shelf, h)
@@ -413,8 +417,8 @@ def text(c, x, y, s, color, font=None):
 # ================================================================ folha final
 
 def paint(m):
-    img = Image.new("RGBA", (SHEET, SHEET), CLEAR)
-    glow = Image.new("RGBA", (SHEET, SHEET), CLEAR)
+    img = Image.new("RGBA", (m.sheet, m.sheet), CLEAR)
+    glow = Image.new("RGBA", (m.sheet, m.sheet), CLEAR)
     owned = []
     for b in m.boxes:
         if b.uv_from:
@@ -438,18 +442,18 @@ def extrude(img, rects):
     for x0, y0, w, h in rects:
         for x in range(x0, x0 + w):
             for y_src, y_dst in ((y0, y0 - 1), (y0 + h - 1, y0 + h)):
-                if 0 <= y_dst < SHEET and px[x, y_dst][3] == 0:
+                if 0 <= y_dst < img.height and px[x, y_dst][3] == 0:
                     px[x, y_dst] = px[x, y_src]
         for y in range(y0, y0 + h):
             for x_src, x_dst in ((x0, x0 - 1), (x0 + w - 1, x0 + w)):
-                if 0 <= x_dst < SHEET and px[x_dst, y][3] == 0:
+                if 0 <= x_dst < img.width and px[x_dst, y][3] == 0:
                     px[x_dst, y] = px[x_src, y]
 
 
 def uv_guide(m):
     colors = {"top": (210, 190, 90, 255), "bottom": (120, 110, 70, 255), "front": (90, 190, 210, 255),
               "back": (60, 110, 130, 255), "left": (170, 120, 200, 255), "right": (120, 90, 150, 255)}
-    img = Image.new("RGBA", (SHEET, SHEET), (16, 28, 40, 255))
+    img = Image.new("RGBA", (m.sheet, m.sheet), (16, 28, 40, 255))
     px = img.load()
     for b in m.boxes:
         if b.uv_from:
@@ -503,7 +507,7 @@ public final class {m.java_class}Model {{
 	public static final Set<String> GLASS = Set.of({glass});
 
 	public static ModelPart create() {{
-		MachineParts p = new MachineParts({SHEET}, {SHEET});
+		MachineParts p = new MachineParts({m.sheet}, {m.sheet});
 {body}
 		return p.bake();
 	}}
@@ -579,7 +583,7 @@ def rig_json(m):
         cubes.append({"name": b.name, "bone": b.part, "position": list(m.box_local(b)), "size": list(b.size), "faces": faces,
                       "glass": b.glass})
     return {"id": m.key, "name": m.name, "kind": "machine", "description": m.description, "bones": bones, "cubes": cubes,
-            "resolution": [SHEET, SHEET], "clips": clips_data(m), "states": m.states, "clipDescriptions": m.descriptions}
+            "resolution": [m.sheet, m.sheet], "clips": clips_data(m), "states": m.states, "clipDescriptions": m.descriptions}
 
 
 def to_block(p):
@@ -602,14 +606,21 @@ def item_json(m, texture, particle):
         faces = {}
         for f in b.faces:
             u0, v0, fw, fh = b.uv[f]
-            k = 16 / SHEET
+            k = 16 / m.sheet
             uv = [u0 * k, v0 * k, (u0 + fw) * k, (v0 + fh) * k]
             face = {"uv": [round(v, 4) for v in uv], "texture": "#machine"}
             if f in ("top", "bottom"):
                 face["rotation"] = 180
             faces[JSON_FACE[f]] = face
         elements.append({"name": b.name, "from": [round(v, 4) for v in frm], "to": [round(v, 4) for v in to], "faces": faces})
-    return {"parent": "minecraft:block/block", "textures": {"machine": texture, "particle": particle}, "elements": elements}
+    out = {"parent": "minecraft:block/block", "textures": {"machine": texture, "particle": particle}, "elements": elements}
+    if m.item_scale != 1.0:
+        scale = [m.item_scale] * 3
+        out["display"] = {place: {"rotation": rotation, "scale": scale} for place, rotation in {
+            "gui": [30, 225, 0], "ground": [0, 0, 0], "fixed": [0, 180, 0],
+            "thirdperson_righthand": [75, 45, 0], "thirdperson_lefthand": [75, 225, 0],
+            "firstperson_righthand": [0, 45, 0], "firstperson_lefthand": [0, 225, 0]}.items()}
+    return out
 
 
 def bbmodel(m):
@@ -657,9 +668,9 @@ def bbmodel(m):
         animations.append({"name": name, "uuid": uid(), "loop": "loop" if clip.loop else "once", "length": clip.length,
                            "override": False, "animators": animators})
     return {"meta": {"format_version": "4.10", "model_format": "free", "box_uv": False}, "name": m.java_class,
-            "model_identifier": m.key, "resolution": {"width": SHEET, "height": SHEET}, "elements": elements, "outliner": roots,
-            "textures": [{"name": f"{m.key}.png", "id": "0", "path": f"{m.key}.png", "width": SHEET, "height": SHEET,
-                          "uv_width": SHEET, "uv_height": SHEET}], "animations": animations}
+            "model_identifier": m.key, "resolution": {"width": m.sheet, "height": m.sheet}, "elements": elements, "outliner": roots,
+            "textures": [{"name": f"{m.key}.png", "id": "0", "path": f"{m.key}.png", "width": m.sheet, "height": m.sheet,
+                          "uv_width": m.sheet, "uv_height": m.sheet}], "animations": animations}
 
 
 # ================================================================ prévia em software (só para quem desenha; não vai ao jogo)
@@ -722,7 +733,7 @@ def render_view(m, img, glow, layers, yaw, pitch, size=360, scale=None, tint=(1,
     right = np.array([cy_, 0, -sy_])
     up = np.array([-sy_ * sp, cp, -cy_ * sp])
     fwd = np.array([sy_ * cp, sp, cy_ * cp])
-    scale = scale or size / 26.0
+    scale = scale or m.preview_scale or size / 26.0
     color = np.zeros((size, size, 3), np.float32) + np.array([0.035, 0.1, 0.12])
     depth = np.full((size, size), 1e9, np.float32)
     light_dir = np.array([-0.45, 0.8, -0.4])
@@ -758,8 +769,8 @@ def render_view(m, img, glow, layers, yaw, pitch, size=360, scale=None, tint=(1,
             z = w0 * a[2] + w1 * b[2] + w2 * c[2]
             u = w0 * ta[0] + w1 * tb[0] + w2 * tc[0]
             v = w0 * ta[1] + w1 * tb[1] + w2 * tc[1]
-            iu = np.clip((u * SHEET).astype(int), 0, SHEET - 1)
-            iv = np.clip((v * SHEET).astype(int), 0, SHEET - 1)
+            iu = np.clip((u * m.sheet).astype(int), 0, m.sheet - 1)
+            iv = np.clip((v * m.sheet).astype(int), 0, m.sheet - 1)
             texel = tex[iv, iu]
             gl = gtex[iv, iu]
             shade = 0.55 + 0.45 * max(0.0, float(normal @ light_dir))
@@ -791,7 +802,7 @@ def render_view(m, img, glow, layers, yaw, pitch, size=360, scale=None, tint=(1,
             if n_world @ fwd <= 0:
                 continue  # face de costas para a câmera
             u0, v0, fw, fh = b.uv[f]
-            u1, v1, u2, v2 = u0 / SHEET, v0 / SHEET, (u0 + fw) / SHEET, (v0 + fh) / SHEET
+            u1, v1, u2, v2 = u0 / m.sheet, v0 / m.sheet, (u0 + fw) / m.sheet, (v0 + fh) / m.sheet
             uv = [(u2, v1), (u1, v1), (u1, v2), (u2, v2)]
             if b.glass:
                 glass_quads.append((sum(p[2] for p in P) / 4, P, uv, n_world))
@@ -838,7 +849,7 @@ def write(m, base, *, preview_shots=None, register=None, particle=None):
     (ASSETS / "models/block").mkdir(parents=True, exist_ok=True)
     (ASSETS / f"models/block/{m.key}_item.json").write_text(json.dumps(item, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(f"{m.key}: {len(m.bones)} ossos, {len(m.boxes)} cubos, {len(m.clips)} clipes, "
-          f"folha {SHEET}x{SHEET} com {used} px de faces ({100 * used / SHEET ** 2:.0f}%), até a linha {height}")
+          f"folha {m.sheet}x{m.sheet} com {used} px de faces ({100 * used / m.sheet ** 2:.0f}%), até a linha {height}")
     if preview_shots:
         out = preview(m, img, glow, ROOT / "build/machines" / f"{m.key}_preview.png", preview_shots)
         print(f"prévia: {out}")

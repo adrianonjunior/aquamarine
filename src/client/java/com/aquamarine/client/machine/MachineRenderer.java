@@ -31,9 +31,15 @@ import net.minecraft.world.phys.Vec3;
 public final class MachineRenderer<T extends BlockEntity & MachineView> implements BlockEntityRenderer<T, MachineRenderState> {
 	private static final int FULL_BRIGHT = 0xF000F0;
 	private final Function<T, Machine> machines;
+	private final boolean renderOffScreen;
 
 	public MachineRenderer(Function<T, Machine> machines) {
+		this(machines, false);
+	}
+
+	public MachineRenderer(Function<T, Machine> machines, boolean renderOffScreen) {
 		this.machines = machines;
+		this.renderOffScreen = renderOffScreen;
 	}
 
 	/** Uma máquina pronta para desenhar: três cópias do esqueleto (uma por passada), clipes e texturas. */
@@ -63,7 +69,12 @@ public final class MachineRenderer<T extends BlockEntity & MachineView> implemen
 		BlockState block = be.getBlockState();
 		state.yRot = block.hasProperty(HorizontalDirectionalBlock.FACING) ? block.getValue(HorizontalDirectionalBlock.FACING).toYRot() : 0.0F;
 		double now = (be.getLevel().getGameTime() + partialTick) / 20.0;
-		MachineAnimator.animate(be.motion(), now, state.machine.clips(), state);
+		MachineAnimator.animate(be.motion(), now, state.machine.clips(), state, be.visualProgress(), be.visualStock(), be.visualInvalid());
+	}
+
+	@Override
+	public boolean shouldRenderOffScreen() {
+		return renderOffScreen;
 	}
 
 	@Override

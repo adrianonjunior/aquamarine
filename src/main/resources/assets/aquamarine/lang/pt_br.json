@@ -656,5 +656,19 @@
   "manual.aquamarine.shapeless": ", em qualquer ordem",
   "commands.aquamarine.help.given": "Você recebeu o Manual do Aquamarine. Botão direito com ele na mão abre de novo.",
   "commands.aquamarine.help.open": "Manual do Aquamarine aberto (ele já está no seu inventário).",
-  "commands.aquamarine.help.player": "Só um jogador pode abrir o Manual."
+  "commands.aquamarine.help.player": "Só um jogador pode abrir o Manual.",
+  "container.aquamarine.neutronium_collector": "Coletor de Neutrônio",
+  "gui.aquamarine.collector.energy": "Energia",
+  "gui.aquamarine.collector.progress": "Compressão",
+  "gui.aquamarine.collector.stock": "Pó guardado",
+  "gui.aquamarine.collector.remaining": "Falta %s",
+  "gui.aquamarine.collector.status.running": "Funcionando · 64 E/t",
+  "gui.aquamarine.collector.status.no_energy": "Sem energia · precisa de 64 E/t",
+  "gui.aquamarine.collector.status.deep_ocean": "Local inválido: precisa de oceano profundo",
+  "gui.aquamarine.collector.status.water": "Local inválido: precisa de água em cima",
+  "gui.aquamarine.collector.status.depth": "Local inválido: 20 blocos abaixo do nível do mar · desça %s",
+  "gui.aquamarine.collector.status.full": "Cheio · retire o Pó Estelar da bandeja",
+  "gui.aquamarine.collector.tooltip.energy": "Energia: %s / %s E · consumo: %s E/t",
+  "gui.aquamarine.collector.tooltip.progress": "Próximo Pó Estelar: %s%% · tempo restante: %s",
+  "gui.aquamarine.collector.tooltip.stock": "Pó Estelar guardado: %s / %s · retire pelo slot"
 }

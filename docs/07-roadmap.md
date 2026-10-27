@@ -234,5 +234,6 @@ Especificação e ondas: [12-industria.md](12-industria.md). Liberada inteira em
 - [x] **7D** Bomba de Maré e Tanque d'Água · [x] **7E** Gerador de Fenda refeito (modo fluido) · [x] **7F** Compressor e
   Pulmão de Ferro (27/10/2026)
 - [x] **7G** Ostra, pérolas e Fazenda · [x] **7H** Caranguejo e Escudo de Concha (27/10/2026) · [ ] **7I** Fornalha, Prensa e todas as máquinas animadas
+- [x] **Coletor de Neutrônio 3×2×3**: multibloco, animação, tela própria, migração e Atlas v1–v3 (27/10/2026; entrega transversal de 7I/7J)
 - [x] **Manual do Aquamarine** com passo a passo e prints, `/aquamarine help` (27/10/2026, pedido do Adriano)
 - [ ] **7J** Telas das máquinas · [ ] **7Q** QA e release (portão de aprovação visual do Gerador de Fenda antes da 7C)

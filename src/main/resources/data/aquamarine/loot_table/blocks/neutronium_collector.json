@@ -1,18 +1,4 @@
 {
   "type": "minecraft:block",
-  "pools": [
-    {
-      "condition": {
-        "type": "minecraft:survives_explosion"
-      },
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "aquamarine:neutronium_collector"
-        }
-      ],
-      "rolls": 1
-    }
-  ],
-  "random_sequence": "aquamarine:blocks/neutronium_collector"
+  "pools": []
 }

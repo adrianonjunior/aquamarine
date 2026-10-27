@@ -656,5 +656,19 @@
   "manual.aquamarine.shapeless": ", in any order",
   "commands.aquamarine.help.given": "You got the Aquamarine Manual. Right-click it to open it again.",
   "commands.aquamarine.help.open": "Aquamarine Manual opened (it is already in your inventory).",
-  "commands.aquamarine.help.player": "Only a player can open the Manual."
+  "commands.aquamarine.help.player": "Only a player can open the Manual.",
+  "container.aquamarine.neutronium_collector": "Neutronium Collector",
+  "gui.aquamarine.collector.energy": "Energy",
+  "gui.aquamarine.collector.progress": "Compression",
+  "gui.aquamarine.collector.stock": "Stored dust",
+  "gui.aquamarine.collector.remaining": "%s left",
+  "gui.aquamarine.collector.status.running": "Running · 64 E/t",
+  "gui.aquamarine.collector.status.no_energy": "No energy · needs 64 E/t",
+  "gui.aquamarine.collector.status.deep_ocean": "Invalid site: must be in a deep ocean",
+  "gui.aquamarine.collector.status.water": "Invalid site: needs water above",
+  "gui.aquamarine.collector.status.depth": "Invalid site: must be 20 blocks below sea level · descend %s",
+  "gui.aquamarine.collector.status.full": "Full · take the Stardust from the tray",
+  "gui.aquamarine.collector.tooltip.energy": "Energy: %s / %s E · consumption: %s E/t",
+  "gui.aquamarine.collector.tooltip.progress": "Next Stardust: %s%% · time remaining: %s",
+  "gui.aquamarine.collector.tooltip.stock": "Stored Stardust: %s / %s · take it from the slot"
 }

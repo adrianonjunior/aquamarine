@@ -201,5 +201,26 @@
     "label": "No jogo · Boia de Cultivo animada",
     "date": "2026-10-27",
     "file": "cultivation_buoy-v1.json"
+  },
+  {
+    "id": "neutronium_collector",
+    "version": "v1",
+    "label": "No jogo · Coletor de Neutrônio 3×2×3",
+    "date": "2026-10-27",
+    "file": "neutronium_collector-v1.json"
+  },
+  {
+    "id": "neutronium_collector",
+    "version": "v2",
+    "label": "No jogo · Coletor 3×2×3, progresso em osso separado",
+    "date": "2026-10-27",
+    "file": "neutronium_collector-v2.json"
+  },
+  {
+    "id": "neutronium_collector",
+    "version": "v3",
+    "label": "No jogo · Coletor 3×2×3, progresso separado e alerta pulsante",
+    "date": "2026-10-27",
+    "file": "neutronium_collector-v3.json"
   }
 ]
