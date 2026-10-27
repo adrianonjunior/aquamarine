@@ -20,13 +20,18 @@ public final class MachineAnimator {
 	public static void animate(MachineMotion motion, double now, Map<String, AnimationDefinition> clips, MachineRenderState out) {
 		out.layers = 0;
 		double el = now - motion.since();
+		double localNow = now + motion.phaseOffset();
 		MachineState state = motion.state(), previous = motion.previous();
 		double start = length(clips, "start"), stop = length(clips, "stop");
 		float glow;
 		float red = 0.0F;
 		switch (state) {
 			case RUNNING -> {
-				if (previous == MachineState.IDLE && el < start) {
+				double harvest = length(clips, "harvest");
+				if (previous == MachineState.FULL && el < harvest) {
+					add(out, clips, "harvest", el, 1.0F);
+					glow = 1.25F;
+				} else if (previous == MachineState.IDLE && el < start) {
 					add(out, clips, "start", el, 1.0F);
 					glow = lerp(IDLE_GLOW, 1.0F, (float) (el / start));
 				} else {
@@ -40,7 +45,7 @@ public final class MachineAnimator {
 			case OVERLOAD -> {
 				float in = fade(el);
 				add(out, clips, "overload", el, in);
-				add(out, clips, previous == MachineState.IDLE ? "idle" : "run", previous == MachineState.IDLE ? now : motion.runPhase(now), 1.0F - in);
+					add(out, clips, previous == MachineState.IDLE ? "idle" : "run", previous == MachineState.IDLE ? localNow : motion.runPhase(now), 1.0F - in);
 				red = in;
 				glow = previous == MachineState.IDLE ? lerp(IDLE_GLOW, 1.0F, in) : 1.0F;
 			}
@@ -51,16 +56,18 @@ public final class MachineAnimator {
 				glow = lerp(1.0F, 0.8F, in);
 			}
 			default -> {
-				boolean stopping = previous != MachineState.IDLE && el < stop;
+				String leaving = previous == MachineState.FULL && clips.containsKey("harvest") ? "harvest" : "stop";
+				double leavingLength = length(clips, leaving);
+				boolean stopping = previous != MachineState.IDLE && el < leavingLength;
 				if (stopping) {
 					float in = fade(el);
-					add(out, clips, "stop", el, in);
-					add(out, clips, previous == MachineState.OVERLOAD ? "overload" : "run",
-						previous == MachineState.OVERLOAD ? el : motion.runPhase(now), 1.0F - in);
+					add(out, clips, leaving, el, in);
+					String source = previous == MachineState.FULL ? "full" : previous == MachineState.OVERLOAD ? "overload" : "run";
+					add(out, clips, source, previous == MachineState.OVERLOAD ? el : motion.runPhase(now), 1.0F - in);
 					red = previous == MachineState.OVERLOAD ? 1.0F - in : 0.0F;
-					glow = lerp(1.0F, IDLE_GLOW, (float) (el / stop));
+					glow = previous == MachineState.FULL ? 1.25F : lerp(1.0F, IDLE_GLOW, (float) (el / stop));
 				} else {
-					add(out, clips, "idle", previous != MachineState.IDLE && Double.isFinite(el) ? el - stop : now, 1.0F);
+					add(out, clips, "idle", previous != MachineState.IDLE && Double.isFinite(el) ? el - leavingLength : localNow, 1.0F);
 					glow = IDLE_GLOW;
 				}
 			}

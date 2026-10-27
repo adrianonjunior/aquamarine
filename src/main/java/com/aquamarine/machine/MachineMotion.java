@@ -12,6 +12,7 @@ public final class MachineMotion {
 	private float speed = 1.0F;
 	private double anchorTime;
 	private double anchorPhase;
+	private double phaseOffset;
 	private boolean seen;
 
 	/**
@@ -64,5 +65,14 @@ public final class MachineMotion {
 
 	public float speed() {
 		return speed;
+	}
+
+	/** Deslocamento determinístico do clipe em segundos; usado por módulos vizinhos para formar uma onda contínua. */
+	public void setPhaseOffset(double seconds) {
+		phaseOffset = seconds;
+	}
+
+	public double phaseOffset() {
+		return phaseOffset;
 	}
 }

@@ -34,28 +34,13 @@ def main():
     lang={}
     for name,pair in names.items():
         lang['block.aquamarine.'+name]=pair; lang['tooltip.aquamarine.'+name]=tips[name]
-        animated=name not in ('cultivation_rope','cultivation_buoy')
+        animated=True
         if animated:
             write(A/f'models/block/{name}.json',{'textures':{'particle':f'aquamarine:block/machine/{name}'}})
         variants={f'facing={f}':{'model':f'aquamarine:block/{name}','y':angle} for f,angle in [('north',0),('east',90),('south',180),('west',270)]}
         write(A/f'blockstates/{name}.json',{'variants':variants})
         write(A/f'items/{name}.json',{'model':{'type':'minecraft:model','model':f'aquamarine:block/{name}'+('_item' if animated else '')}})
         write(D/f'loot_table/blocks/{name}.json',b.self_drop(name))
-    # Corda trançada e boia de latão: textura 32 px, anéis e juntas com desgaste controlado.
-    for name in ['cultivation_rope','cultivation_buoy']:
-        im=Image.new('RGBA',(32,32)); p=im.load()
-        for y in range(32):
-            for x in range(32):
-                if name=='cultivation_rope':
-                    pal=['#49362a','#72533a','#987247','#b99261','#ddbc85']; n=2+((x+y)%6<2)-((x-y)%6<2)
-                else:
-                    pal=['#303d45','#685839','#a08048','#c9a762','#f4d69a']; n=2+(y%8==0)-(x%8==7)
-                p[x,y]=tuple(bytes.fromhex(pal[n][1:]))+(255,)
-        im.save(A/f'textures/block/{name}.png')
-        elements=[cube([0,11,7],[16,13,9])]
-        if name=='cultivation_buoy':
-            elements=[cube([2,1,2],[14,3,14]),cube([1,3,3],[15,6,13]),cube([3,6,3],[13,8,13]),cube([7,8,7],[9,15,9]),cube([5,13,6],[11,16,10])]
-        write(A/f'models/block/{name}.json',{'textures':{'all':f'aquamarine:block/{name}','particle':f'aquamarine:block/{name}'},'elements':elements})
     for name,pair in {'oyster_pearl':('Pérola de Ostra','Oyster Pearl'),'crab_shell':('Concha de Caranguejo','Crab Shell'),'shell_shield':('Escudo de Concha','Shell Shield')}.items():
         im=icon('crab_shell' if name=='shell_shield' else name); im.save(A/f'textures/item/{name}.png')
         write(A/f'models/item/{name}.json',{'parent':'minecraft:item/generated','textures':{'layer0':f'aquamarine:item/{name}'}})

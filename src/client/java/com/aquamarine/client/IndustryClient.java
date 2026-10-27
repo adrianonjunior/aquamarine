@@ -22,6 +22,16 @@ public final class IndustryClient {
                 CultivationJarModel.GLASS,CultivationJarModel.TEXTURE,CultivationJarModel.GLOW);
             return new MachineRenderer<>(be->jar);
         });
+        BlockEntityRendererRegistry.register(ModCultivation.ROPE_ENTITY,ctx->{
+            var rope=MachineRenderer.Machine.of(CultivationRopeModel::create,CultivationRopeAnimations.CLIPS,
+                CultivationRopeModel.GLASS,CultivationRopeModel.TEXTURE,CultivationRopeModel.GLOW);
+            return new MachineRenderer<>(be->rope);
+        });
+        BlockEntityRendererRegistry.register(ModCultivation.BUOY_ENTITY,ctx->{
+            var buoy=MachineRenderer.Machine.of(CultivationBuoyModel::create,CultivationBuoyAnimations.CLIPS,
+                CultivationBuoyModel.GLASS,CultivationBuoyModel.TEXTURE,CultivationBuoyModel.GLOW);
+            return new MachineRenderer<>(be->buoy);
+        });
     }
     private IndustryClient() {}
 }
