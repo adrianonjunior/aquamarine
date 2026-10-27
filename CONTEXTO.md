@@ -32,6 +32,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| Coletor de Neutrônio 3×2×3: multibloco, modelo animado, tela e Atlas | Codex | Gradle na worktree `codex-coletor-neutronio` | 27/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
