@@ -22,8 +22,10 @@ assumindo que outro agente está editando arquivos agora.
 1. **Uma tarefa, um dono.** Registre a tarefa na tabela "Em andamento" de
    `CONTEXTO.md` antes de começar; não pegue tarefa que já tem dono.
 2. **Branch e worktree próprios** para trabalho de código. Iniciado pelo Orca (`worker-start`), a worktree já vem pronta: use-a. Sem Orca:
-   `git worktree add ../aquamarine-<agente>-<tarefa> -b <agente>/<tarefa>`.
-   Isso evita disputar `build/` e `.gradle/`. Docs pequenos podem ir direto na `main`.
+   `git worktree add .worktrees/<agente>-<tarefa> -b <agente>/<tarefa>` (dentro da pasta do projeto, ignorada pelo git:
+   o Adriano quer tudo do Aquamarine só em `Documents/AQUAMARINE`, pedido de 26/10/2026). Isso evita disputar `build/`
+   e `.gradle/`. Ao terminar e integrar, remova a worktree (`git worktree remove`) e a branch (`git branch -d`).
+   Docs pequenos podem ir direto na `main`.
 3. **Só edite os arquivos da sua tarefa.** Arquivos compartilhados (registro de
    itens, `lang/*.json`, `fabric.mod.json`, mixins, `CONTEXTO.md`): mudanças
    pequenas, só acrescentando linhas; nunca reformate ou reordene.

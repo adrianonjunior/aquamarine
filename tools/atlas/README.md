@@ -14,8 +14,8 @@ Na raiz do projeto, em PowerShell:
 
 O atalho gera o catálogo, inicia o servidor local em segundo plano (sem janelas de terminal) e abre
 `http://127.0.0.1:8766`. O botão **Atualizar catálogo**, na biblioteca sonora, relê os recursos.
-O atalho encontra a worktree irmã `aquamarine-claude-audio` enquanto ela existir; para escolher outra,
-use `-AudioRoot caminho`. Outra porta: `-Port 8767`. Sem abrir navegador: `-SemAbrir`.
+O áudio gerado (`build/audio`: prévias, espectrogramas e comparações) fica na própria pasta do projeto; para
+ler outra pasta de áudio, use `-AudioRoot caminho`. Outra porta: `-Port 8767`. Sem abrir navegador: `-SemAbrir`.
 
 Também funciona abrindo **`build/atlas/index.html` diretamente**, sem internet ou servidor. Esse é
 um snapshot: para atualizar, rode o atalho de novo. Pode copiar a pasta `build/atlas` inteira.
@@ -76,7 +76,7 @@ v3b v3c` grava vistas de frente, lado, topo e costas em `build/atlas-qa/` (`ATLA
 
 ```powershell
 npm ci --prefix tools/atlas --no-audit --no-fund
-python tools/atlas/build.py --audio-root ../aquamarine-claude-audio
+python tools/atlas/build.py
 python tools/atlas/tests/test_catalog.py
 node tools/atlas/tests/browser.mjs
 ```

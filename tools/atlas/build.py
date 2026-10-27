@@ -1,6 +1,6 @@
 """Gera build/atlas, portátil e offline. Não modifica nenhum asset ou Java do mod.
 
-python tools/atlas/build.py --audio-root ../aquamarine-claude-audio
+python tools/atlas/build.py            # o áudio gerado fica em build/audio da própria pasta
 Instalação única da dependência de build: npm ci --prefix tools/atlas
 """
 from __future__ import annotations

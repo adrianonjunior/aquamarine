@@ -7,11 +7,7 @@ if (!(Test-Path (Join-Path $PSScriptRoot 'node_modules/three/package.json'))) {
     & npm ci --prefix $atlasScriptDirectory --no-audit --no-fund
     if ($LASTEXITCODE -ne 0) { throw 'Não foi possível instalar as dependências do Atlas.' }
 }
-# Importação explícita da worktree de áudio conhecida, quando ela ainda está em produção.
-if (!$AudioRoot) {
-    $audioCandidate = Join-Path (Split-Path $atlasRoot) 'aquamarine-claude-audio'
-    if (Test-Path (Join-Path $audioCandidate 'tools/audio/manifest.json')) { $AudioRoot = $audioCandidate }
-}
+# O áudio gerado (build/audio) mora na própria pasta do projeto desde 26/10/2026; -AudioRoot lê outra pasta de áudio.
 $atlasBuildArgs = @((Join-Path $PSScriptRoot 'build.py'))
 if ($AudioRoot) { $atlasBuildArgs += @('--audio-root', (Resolve-Path $AudioRoot).Path) }
 & $atlasPython @atlasBuildArgs
