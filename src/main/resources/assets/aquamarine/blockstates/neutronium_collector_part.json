@@ -1,0 +1,5 @@
+{
+  "multipart": [
+    { "apply": { "model": "aquamarine:block/neutronium_collector_part" } }
+  ]
+}

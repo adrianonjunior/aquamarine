@@ -6,4 +6,13 @@ package com.aquamarine.machine;
  */
 public interface MachineView {
 	MachineMotion motion();
+
+	/** Progresso visual contínuo, de 0 a 1; máquinas sem medidor mantêm o padrão zero. */
+	default float visualProgress() { return 0.0F; }
+
+	/** Estoque visível, de 0 a 1; usado por bandejas e reservatórios modelados. */
+	default float visualStock() { return 0.0F; }
+
+	/** Acende o diagnóstico vermelho quando o ambiente da máquina não serve. */
+	default boolean visualInvalid() { return false; }
 }

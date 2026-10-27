@@ -17,7 +17,8 @@ public final class MachineAnimator {
 
 	private MachineAnimator() {}
 
-	public static void animate(MachineMotion motion, double now, Map<String, AnimationDefinition> clips, MachineRenderState out) {
+	public static void animate(MachineMotion motion, double now, Map<String, AnimationDefinition> clips, MachineRenderState out,
+		float progress, float stock, boolean invalid) {
 		out.layers = 0;
 		double el = now - motion.since();
 		double localNow = now + motion.phaseOffset();
@@ -26,6 +27,10 @@ public final class MachineAnimator {
 		float glow;
 		float red = 0.0F;
 		switch (state) {
+			case COLLECTING -> {
+				add(out, clips, "collect", el, 1.0F);
+				glow = 1.25F;
+			}
 			case RUNNING -> {
 				double harvest = length(clips, "harvest");
 				if (previous == MachineState.FULL && el < harvest) {
@@ -71,6 +76,11 @@ public final class MachineAnimator {
 					glow = IDLE_GLOW;
 				}
 			}
+		}
+		add(out, clips, "progress", Math.max(0.0F, Math.min(1.0F, progress)), 1.0F);
+		add(out, clips, "stock", Math.max(0.0F, Math.min(1.0F, stock)), 1.0F);
+		if (invalid) {
+			add(out, clips, "invalid", 1.0, 1.0F);
 		}
 		if (state == MachineState.RUNNING && red == 0.0F && clips.containsKey("run")) {
 			double run = clips.get("run").lengthInSeconds();
