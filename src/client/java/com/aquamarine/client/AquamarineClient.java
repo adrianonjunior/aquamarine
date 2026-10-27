@@ -17,6 +17,12 @@ import com.aquamarine.client.entity.sperm_whale.SpermWhaleModel;
 import com.aquamarine.client.entity.sperm_whale.SpermWhaleRenderer;
 import com.aquamarine.client.entity.whale.WhaleModel;
 import com.aquamarine.client.entity.whale.WhaleRenderer;
+import com.aquamarine.client.machine.MachineRenderer;
+import com.aquamarine.client.machine.VentGeneratorAnimations;
+import com.aquamarine.client.machine.VentGeneratorModel;
+import com.aquamarine.energy.ModEnergy;
+import com.aquamarine.energy.WaterGeneratorBlock;
+import com.aquamarine.energy.WaterGeneratorBlockEntity;
 import com.aquamarine.client.pressure.PressureHud;
 import com.aquamarine.client.screen.AbyssalForgeScreen;
 import com.aquamarine.client.music.KrakenMusic;
@@ -24,6 +30,7 @@ import com.aquamarine.entity.ModEntities;
 import com.aquamarine.menu.ModMenus;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 
@@ -65,6 +72,12 @@ public class AquamarineClient implements ClientModInitializer {
 		ModelLayerRegistry.registerModelLayer(SpermWhaleModel.LAYER, SpermWhaleModel::createBodyLayer);
 		EntityRendererRegistry.register(ModEntities.SPERM_WHALE, SpermWhaleRenderer::new);
 		NeutroniumArmorRenderer.register();
+		// 0.6.1 (7B): máquinas animadas desenhadas pelo block entity; o Gerador de Fenda é a primeira.
+		BlockEntityRendererRegistry.register(ModEnergy.WATER_GENERATOR_ENTITY, ctx -> {
+			MachineRenderer.Machine vent = MachineRenderer.Machine.of(VentGeneratorModel::create, VentGeneratorAnimations.CLIPS,
+				VentGeneratorModel.GLASS, VentGeneratorModel.TEXTURE, VentGeneratorModel.GLOW);
+			return new MachineRenderer<WaterGeneratorBlockEntity>(be -> be.kind() == WaterGeneratorBlock.Kind.VENT ? vent : null);
+		});
 		AquamarineParticles.register();
 		EntityRendererRegistry.register(ModEntities.CAVITATION_PULSE, NoopRenderer::new);
 		AquamarineBossBarHud.register();

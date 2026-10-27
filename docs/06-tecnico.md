@@ -324,3 +324,27 @@ só os nomes novos e as lições abaixo são específicos. Em execução desde 2
   dentro de uma peça com ar (algas, que são blocos de água) vaza: plantas aquáticas só em tanque fechado.
 - **Texturas das criaturas da Fase 3:** `tools/gen_creature_textures.py` pinta sobre o layout de UV
   lido do próprio `build_model.py` (rode depois dele); o da Moréia já chama o de textura no fim.
+
+## Contrato das máquinas animadas (0.6.1, 7B)
+Dono desta regra: aqui. Vale para toda máquina com modelo e animação próprios ([12-industria.md](12-industria.md), 7B e
+bíblia de arte); a primeira é o Gerador de Fenda (26/10/2026).
+- **Gerador:** `tools/models/machines/<máquina>/build_model.py` descreve ossos, caixas, pintura e clipes com o kit
+  `tools/models/machines/machine_kit.py` e grava tudo de uma vez: `textures/block/machine/<máquina>.png` e `_glow.png`
+  (128 x 128, **32 px por face**), `com.aquamarine.client.machine.<Máquina>Model` e `<Máquina>Animations`,
+  `<máquina>.bbmodel`, `rig.json` (Atlas), `uv.png` e `models/block/<máquina>_item.json`. `--preview` faz uma prévia em
+  software em `build/machines/`; `--register` grava a versão no Atlas (nunca sobrescreve: versão nova = nome novo).
+- **UV por face:** o box-UV das criaturas gasta 128 x 64 px num cubo inteiro a 32 px por face e não cabe na folha de 128;
+  cada face visível ganha o seu retângulo (faces iguais podem dividir) e `MachineParts` monta cubos comuns do
+  `ModelPart` com essa UV. Coordenadas de projeto do kit: x da esquerda para a direita de quem olha a frente, y do chão,
+  z da frente para trás, em pixels do bloco; o kit converte para o modelo Java (y para baixo, frente em -z).
+- **No jogo:** o bloco usa `RenderShape.INVISIBLE` e o `MachineRenderer` desenha a máquina inteira (como o baú), virada
+  para o `FACING`, em três passadas: corpo (recorte), vidro (partes `<osso>_glass`, translúcido) e brilho (`_glow`, luz
+  própria). O modelo do bloco só dá a partícula; o item usa o JSON gerado na pose parada.
+- **Estados:** o block entity implementa `MachineView` e decide `MachineState` (parada, funcionando, sobrecarga, cheia)
+  no servidor; manda ao cliente só quando muda (`getUpdateTag` com estado e velocidade). No cliente, o tique do block
+  entity acerta o `MachineMotion` e o `MachineAnimator` toca `idle`, `start` + `run`, `overload` e `stop`, misturando 0,3 s
+  em cada troca; o `run` anda na velocidade da produção (0,5x a 2x) sem pular. O cliente só roda block entities perto do
+  jogador: nos testes, leve a câmera antes de esperar.
+- **Clipes que o código conhece:** `idle`, `start`, `run`, `stop`, `overload`, `full`. Constantes de tempo usadas no
+  código comum (ex.: `WaterGeneratorBlockEntity.VENT_START` e `VENT_STROKE`) batem com os clipes, e a parte `machines`
+  do `runClientGameTest` confere.

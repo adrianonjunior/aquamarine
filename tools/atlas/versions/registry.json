@@ -117,5 +117,12 @@
     "label": "No jogo · v3c Amonita-colosso (aquamarine:kraken_ammonite), 16 clipes",
     "date": "2026-10-26",
     "file": "kraken-v3c-jogo.json"
+  },
+  {
+    "id": "vent_generator",
+    "version": "v1",
+    "label": "No jogo · v1, Gerador de Fenda animado (0.6.1)",
+    "date": "2026-10-26",
+    "file": "vent_generator-v1.json"
   }
 ]

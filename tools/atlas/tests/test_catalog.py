@@ -70,7 +70,11 @@ class CatalogTest(unittest.TestCase):
 
     def test_registry_preserves_originals_and_proposal(self):
         registry=json.loads((BASE/"versions/registry.json").read_text(encoding="utf-8"))
-        self.assertEqual(len(registry),17)
+        self.assertEqual(len(registry),18)
+        # 0.6.1 (7B): a primeira máquina animada, com a camada de brilho e o gabarito de UV.
+        vent=json.loads((BASE/"versions/vent_generator-v1.json").read_text(encoding="utf-8"))
+        self.assertTrue(vent["glow"].startswith("data:image/png") and vent["uv"].startswith("data:image/png"))
+        self.assertTrue({"idle","start","run","stop","overload"}<=set(vent["clips"]))
         # Fase 6 (6A1): três candidatos do Kraken só no site, com camada de brilho e gabarito de UV próprios.
         for v in ("v3a","v3b","v3c"):
             cand=json.loads((BASE/"versions"/f"kraken-{v}.json").read_text(encoding="utf-8"))
@@ -96,6 +100,36 @@ class CatalogTest(unittest.TestCase):
         self.assertEqual({b["name"] for b in new["bones"]},{b["name"] for b in self.kraken["bones"]})
         self.assertEqual({n:(c["length"],c["loop"]) for n,c in new["clips"].items()},
                          {n:(c["length"],c["loop"]) for n,c in self.kraken["clips"].items()})
+
+    def test_machines_tab(self):
+        # 0.6.1 (7B): aba "Máquinas" com o Gerador de Fenda; rig, UV por face e clipes iguais aos do Java gerado.
+        from catalog import machines
+        vent = {m["id"]: m for m in machines()}["vent_generator"]
+        self.assertEqual(vent["kind"], "machine")
+        self.assertTrue({"idle", "start", "run", "stop", "overload"} <= set(vent["clips"]))
+        self.assertEqual(set(vent["states"]), {"idle", "run", "overload"})
+        width, height = vent["resolution"]
+        names = {"root"} | {b["name"] for b in vent["bones"]}
+        dims = {"front": (0, 1), "back": (0, 1), "left": (2, 1), "right": (2, 1), "top": (0, 2), "bottom": (0, 2)}
+        for c in vent["cubes"]:
+            self.assertIn(c["bone"], names)
+            self.assertEqual(c["glass"], c["bone"].endswith("_glass"), c["name"])
+            for face, (u1, v1, u2, v2) in c["faces"].items():
+                self.assertTrue(0 <= u1 < u2 <= width and 0 <= v1 < v2 <= height, (c["name"], face))
+                a, b = dims[face]
+                self.assertEqual((u2 - u1, v2 - v1), (2 * c["size"][a], 2 * c["size"][b]), (c["name"], face))  # 32 px por face
+        for name, clip in vent["clips"].items():
+            for track in clip["tracks"]:
+                times = [k[0] for k in track["keys"]]
+                self.assertEqual(times, sorted(set(times)), (name, track["bone"]))
+                self.assertEqual((times[0], times[-1]), (0, clip["length"]), (name, track["bone"]))
+                if clip["loop"]:
+                    for x, y in zip(track["keys"][0][1], track["keys"][-1][1]):
+                        self.assertAlmostEqual(x, y, places=5, msg=(name, track["bone"]))
+        java = BASE.parents[1] / "src/client/java/com/aquamarine/client/machine"
+        self.assertEqual((java / "VentGeneratorModel.java").read_text(encoding="utf-8").count("p.box("), len(vent["cubes"]))
+        anims = (java / "VentGeneratorAnimations.java").read_text(encoding="utf-8")
+        self.assertTrue(all(f'clips.put("{n}"' in anims for n in vent["clips"]))
 
     def test_adaptive_audio_manifest_without_single_file(self):
         import build
