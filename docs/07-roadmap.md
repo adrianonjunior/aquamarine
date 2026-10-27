@@ -231,6 +231,7 @@ alvo: `0.6.0`.
 Especificação e ondas: [12-industria.md](12-industria.md). Liberada inteira em 26/10/2026, com o aval do Adriano sobre o Gerador de Fenda.
 - [x] **7A** Água dentro dos blocos (waterlogged) (26/10/2026) · [x] **7B** Máquinas animadas e aba do Atlas (Fenda aprovada
   pelo Adriano em 26/10/2026) · [x] **7C** Cano, Tubo de Ar e cabos (27/10/2026)
-- [ ] **7D** Bomba de Maré e Tanque d'Água · [ ] **7E** Gerador de Fenda refeito · [ ] **7F** Compressor e Pulmão de Ferro
-- [ ] **7G** Ostra, pérolas e Fazenda · [ ] **7H** Caranguejo e Escudo de Concha · [ ] **7I** Fornalha, Prensa e todas as máquinas animadas
+- [x] **7D** Bomba de Maré e Tanque d'Água · [x] **7E** Gerador de Fenda refeito (modo fluido) · [x] **7F** Compressor e
+  Pulmão de Ferro (27/10/2026)
+- [x] **7G** Ostra, pérolas e Fazenda · [x] **7H** Caranguejo e Escudo de Concha (27/10/2026) · [ ] **7I** Fornalha, Prensa e todas as máquinas animadas
 - [ ] **7J** Telas das máquinas · [ ] **7Q** QA e release (portão de aprovação visual do Gerador de Fenda antes da 7C)

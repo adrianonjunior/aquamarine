@@ -137,8 +137,9 @@ public class SpermWhaleEntity extends AbstractWhaleEntity implements SpermWhaleV
 		for (LivingEntity target : level.getEntitiesOfClass(LivingEntity.class, new AABB(mouth, mouth).inflate(SONIC_RANGE),
 			e -> e != this && e.isAlive() && inCone(mouth, front, e))) {
 			target.hurtServer(level, damageSources().mobAttack(this), SONIC_DAMAGE);
-			Vec3 push = target.position().subtract(mouth).normalize().scale(1.4);
-			target.push(push.x, push.y * 0.5 + 0.2, push.z);
+			double resistance = com.aquamarine.item.ShellShield.whalePushScale(target);
+			Vec3 push = target.position().subtract(mouth).normalize().scale(1.4 * resistance);
+			target.push(push.x, push.y * 0.5 + 0.2 * resistance, push.z);
 			target.needsSync = true;
 		}
 		for (int i = 1; i <= 8; i++) {

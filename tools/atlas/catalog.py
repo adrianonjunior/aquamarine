@@ -19,12 +19,12 @@ CLIENT = ROOT / "src/client/java/com/aquamarine/client/entity"
 ASSETS = ROOT / "src/main/resources/assets/aquamarine"
 NAMES = {"kraken": "Kraken", "tentacle": "Tentáculo", "young_kraken": "Cria de Kraken",
          "kraken_egg": "Ovo de Kraken", "moray": "Moréia Tempestuosa", "whale": "Baleia-de-Nereia",
-         "sperm_whale": "Cachalote"}
+         "sperm_whale": "Cachalote", "crab": "Caranguejo", "oyster": "Ostra"}
 # Tentáculo, Cria e Ovo saem de tools/models/spawnlings/build_model.py, que grava o Java do jogo e um rig.json
 # com as mesmas caixas, UV e clipes: o site lê esse arquivo em vez de copiar o modelo à mão.
 SPAWNLINGS = ("tentacle", "young_kraken", "kraken_egg")
 CLASSES = {"kraken": "Kraken", "tentacle": "Tentacle", "young_kraken": "YoungKraken",
-           "kraken_egg": "KrakenEgg", "moray": "Moray", "whale": "Whale", "sperm_whale": "SpermWhale"}
+           "kraken_egg": "KrakenEgg", "moray": "Moray", "whale": "Whale", "sperm_whale": "SpermWhale", "crab": "Crab", "oyster": "Oyster"}
 
 
 def module(path):
@@ -193,8 +193,10 @@ def models():
     result = []
     for kind, name in NAMES.items():
         rig = json.loads((MODELS/"spawnlings"/kind/"rig.json").read_text(encoding="utf-8")) if kind in SPAWNLINGS else None
+        if kind in ("crab", "oyster"):
+            rig = json.loads((MODELS/kind/"rig.json").read_text(encoding="utf-8"))
         bones, cubes, size = (rig["bones"], rig["cubes"], rig["resolution"]) if rig else             kraken_rig() if kind == "kraken" else large_rig(kind)
-        folder = MODELS / kind if kind in ("kraken","moray","whale","sperm_whale") else MODELS / "spawnlings" / kind
+        folder = MODELS / kind if kind in ("kraken","moray","whale","sperm_whale","crab","oyster") else MODELS / "spawnlings" / kind
         # A v2 entrou no jogo em 25/10/2026: com o rig de produção já articulado, ele e os clipes de produção
         # são o Kraken atual, e a proposta separada deixa de existir (a v1 segue no histórico de versões).
         integrated = kind == "kraken" and any(b["name"] == "jaw_hinge" for b in bones)

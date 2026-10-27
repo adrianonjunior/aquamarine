@@ -182,7 +182,7 @@ public final class ConduitRenderer implements BlockEntityRenderer<ConduitBlockEn
 	// ================================================================ geometria
 
 	/** Caixa em pixels do bloco; a textura repete a cada 16 px e, com fluxo, o v anda no eixo do fluxo (sinal = sentido). */
-	private static void box(VertexConsumer out, PoseStack.Pose pose, float[] a, float[] b, int flowAxis, int sign,
+	public static void box(VertexConsumer out, PoseStack.Pose pose, float[] a, float[] b, int flowAxis, int sign,
 		TextureAtlasSprite sprite, int color, int light) {
 		for (Direction face : Direction.values()) {
 			int n = face.getAxis().ordinal();

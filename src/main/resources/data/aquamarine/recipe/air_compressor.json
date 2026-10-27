@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": "aquamarine:brass_ingot",
+    "T": "aquamarine:air_tube",
+    "R": "minecraft:piston",
+    "P": "aquamarine:oyster_pearl",
+    "C": "minecraft:copper_block"
+  },
+  "pattern": [
+    "BTB",
+    "RPR",
+    "BCB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:air_compressor"
+  }
+}

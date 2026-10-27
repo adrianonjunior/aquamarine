@@ -114,8 +114,9 @@ public final class ConduitNetwork {
 		}
 		return switch (kind) {
 			case ENERGY -> EnergyStorage.SIDED.find(level, pos, side) != null;
-			case FLUID -> !(level.getBlockEntity(pos) instanceof GasPort) && FluidStorage.SIDED.find(level, pos, side) != null;
-			case GAS -> level.getBlockEntity(pos) instanceof GasPort && FluidStorage.SIDED.find(level, pos, side) != null;
+			case FLUID -> !(level.getBlockEntity(pos) instanceof GasPort gas && !gas.liquidSide(side))
+				&& FluidStorage.SIDED.find(level, pos, side) != null;
+			case GAS -> level.getBlockEntity(pos) instanceof GasPort gas && gas.gasSide(side) && FluidStorage.SIDED.find(level, pos, side) != null;
 		};
 	}
 

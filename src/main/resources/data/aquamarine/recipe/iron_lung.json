@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "T": "aquamarine:air_tube",
+    "L": "minecraft:leather",
+    "P": "aquamarine:oyster_pearl",
+    "B": "minecraft:iron_block"
+  },
+  "pattern": [
+    "ITI",
+    "LPL",
+    "IBI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:iron_lung"
+  }
+}
