@@ -199,7 +199,7 @@ def draw_panel(image):
     bevel(d, INVENTORY, k.BRASS, 2)
     inset(d, (9, 134, 210, 217), k.STEEL, 2)
     ribs(d, (9, 134, 210, 217), k.STEEL)
-    plaque(d, (10, 133, 85, 143))
+    plaque(d, (10, 129, 85, 143))
     inv_x = java_constant("PLAYER_INVENTORY_X")
     inv_y = java_constant("PLAYER_INVENTORY_Y")
     for row in range(3):

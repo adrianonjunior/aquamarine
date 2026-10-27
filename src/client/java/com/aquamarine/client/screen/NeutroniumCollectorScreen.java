@@ -118,7 +118,7 @@ public final class NeutroniumCollectorScreen extends AbstractContainerScreen<Neu
 
 		graphics.text(font, statusTitle(), STATUS_X + 25, STATUS_Y + 4, statusColor(), false);
 		graphics.text(font, statusDetail(), STATUS_X + 25, STATUS_Y + 14, 0xffe8f4f2, false);
-		centered(graphics, playerInventoryTitle, 12, 84, INVENTORY_Y + 3, 0xff2a1b0c);
+		centered(graphics, playerInventoryTitle, 12, 84, INVENTORY_Y + 1, 0xff2a1b0c);
 	}
 
 	private void centered(GuiGraphicsExtractor graphics, Component text, int x0, int x1, int y, int color) {
