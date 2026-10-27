@@ -158,6 +158,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			if (enabled("industry3")) {
 				IndustryWave3GameTest.run(context, world, server, base);
 			}
+			if (enabled("industry4")) {
+				IndustryWave4GameTest.run(context, world, server, base);
+			}
 			if (enabled("jei")) {
 				JeiGameTest.run(context);
 			}
