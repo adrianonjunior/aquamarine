@@ -44,9 +44,9 @@ public final class KrakenCommand {
 	}
 
 	private static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+		// Operador em cada subcomando, não na raiz: /aquamarine help (ModManual) vale para qualquer jogador.
 		dispatcher.register(Commands.literal("aquamarine")
-			.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
-			.then(Commands.literal("kraken")
+			.then(Commands.literal("kraken").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 				.executes(ctx -> spawn(ctx.getSource()))
 				.then(Commands.literal("arena").executes(ctx -> arena(ctx.getSource())))
 				.then(Commands.literal("anim")

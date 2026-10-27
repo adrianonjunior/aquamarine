@@ -77,6 +77,7 @@ public class Aquamarine implements ModInitializer {
 		KrakenCommand.register();
 		CreatureCommand.register();
 		HarborCommand.register();
+		com.aquamarine.guide.ModManual.register();
 		LOGGER.info("Aquamarine carregado.");
 	}
 

@@ -642,5 +642,19 @@
   "tooltip.aquamarine.wave_buoy.2": "Com Ar Comprimido pelo Tubo de Ar: +25%.",
   "message.aquamarine.pneumatic.compressor": "Ar: %s / %s baldes · %s E",
   "message.aquamarine.pneumatic.lung": "Ar: %s / %s baldes",
-  "message.aquamarine.energy.generator.tanks": "%s · água %s · lava %s · ar %s baldes"
+  "message.aquamarine.energy.generator.tanks": "%s · água %s · lava %s · ar %s baldes",
+  "item.aquamarine.manual": "Manual do Aquamarine",
+  "tooltip.aquamarine.manual": "Passo a passo de tudo da indústria aquática, com prints.",
+  "tooltip.aquamarine.manual.2": "Botão direito para abrir. Perdeu? Digite /aquamarine help.",
+  "manual.aquamarine.index": "Sumário",
+  "manual.aquamarine.chapter": "Capítulo %s",
+  "manual.aquamarine.zoom": "Clique para ampliar",
+  "manual.aquamarine.no_image": "(imagem em breve)",
+  "manual.aquamarine.no_recipe": "Receita no JEI: passe o mouse no item e aperte R.",
+  "manual.aquamarine.crafting": "Na bancada de trabalho",
+  "manual.aquamarine.station": "Em: %s",
+  "manual.aquamarine.shapeless": ", em qualquer ordem",
+  "commands.aquamarine.help.given": "Você recebeu o Manual do Aquamarine. Botão direito com ele na mão abre de novo.",
+  "commands.aquamarine.help.open": "Manual do Aquamarine aberto (ele já está no seu inventário).",
+  "commands.aquamarine.help.player": "Só um jogador pode abrir o Manual."
 }

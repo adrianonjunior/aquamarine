@@ -79,12 +79,13 @@ public final class MachineRenderer<T extends BlockEntity & MachineView> implemen
 		poseStack.scale(-1.0F, -1.0F, 1.0F);
 		collector.submitModel(machine.body(), state, poseStack, RenderTypes.entityCutout(machine.texture()), state.lightCoords,
 			OverlayTexture.NO_OVERLAY, state.bodyColor, null, 0);
-		collector.submitModel(machine.glass(), state, poseStack, RenderTypes.entityTranslucent(machine.texture()), state.lightCoords,
+		// O vidro vai depois de tudo o que fica dentro dele (o líquido do Tanque é desenhado à parte, na ordem 0).
+		collector.order(1).submitModel(machine.glass(), state, poseStack, RenderTypes.entityTranslucent(machine.texture()), state.lightCoords,
 			OverlayTexture.NO_OVERLAY, state.bodyColor, null, 0);
-		collector.order(1).submitModel(machine.glow(), state, poseStack, RenderTypes.eyes(machine.glowTexture()), FULL_BRIGHT,
+		collector.order(2).submitModel(machine.glow(), state, poseStack, RenderTypes.eyes(machine.glowTexture()), FULL_BRIGHT,
 			OverlayTexture.NO_OVERLAY, state.glowColor, null, 0);
 		if (state.breakProgress != null) {
-			collector.order(2).submitCrumblingOverlay(machine.body(), state, poseStack, RenderTypes.entityCutout(machine.texture()),
+			collector.order(3).submitCrumblingOverlay(machine.body(), state, poseStack, RenderTypes.entityCutout(machine.texture()),
 				state.lightCoords, OverlayTexture.NO_OVERLAY, -1, state.breakProgress);
 		}
 		poseStack.popPose();

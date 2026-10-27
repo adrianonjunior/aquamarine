@@ -172,11 +172,34 @@ public final class ConduitRenderer implements BlockEntityRenderer<ConduitBlockEn
 		for (Direction d : Direction.values()) {
 			int i = d.ordinal();
 			if (s.arms[i] == 2) {
-				face(out, pose, d, -0.02F, 2.2F, s.modes[i] == PortMode.IN ? 1 : 0, s.lightCoords);
+				int icon = s.modes[i] == PortMode.IN ? 1 : 0;
+				face(out, pose, d, -0.02F, 2.2F, icon, s.lightCoords);
+				// A de cima do braço é a que se vê de pé: a seta aponta para a máquina (sai) ou para o cano (entra).
+				if (d.getAxis().isHorizontal()) {
+					top(out, pose, d, s.kind == ConduitKind.ENERGY ? 2.5F : 3.0F, icon, s.lightCoords);
+				}
 			} else if (s.modes[i] == PortMode.OFF) {
 				face(out, pose, d, 4.48F, 2.0F, 2, s.lightCoords);
 			}
 		}
+	}
+
+	/** Marca deitada em cima do braço {@code d}, entre o anel e o miolo; o alto da textura fica do lado da máquina. */
+	private static void top(VertexConsumer out, PoseStack.Pose pose, Direction d, float sheath, int icon, int light) {
+		int along = d.getAxis() == Direction.Axis.X ? 0 : 2, across = 2 - along;
+		boolean positive = d.getAxisDirection() == Direction.AxisDirection.POSITIVE;
+		float outer = positive ? 15.0F : 1.0F, inner = positive ? 11.6F : 4.4F, y = 8 + sheath + 0.03F;
+		float[][] c = new float[4][], uv = new float[4][];
+		float[] side = {6.3F, 9.7F, 9.7F, 6.3F}, end = {outer, outer, inner, inner};
+		for (int k = 0; k < 4; k++) {
+			float[] v = new float[3];
+			v[1] = y;
+			v[along] = end[k];
+			v[across] = side[k];
+			c[k] = v;
+			uv[k] = new float[] {(icon + (k == 1 || k == 2 ? 1 : 0)) / 3.0F, k >= 2 ? 1 : 0};
+		}
+		quad(out, pose, c, uv, Direction.UP, -1, light);
 	}
 
 	// ================================================================ geometria

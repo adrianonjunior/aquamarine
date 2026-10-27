@@ -379,3 +379,17 @@ Dono desta regra: aqui. Regras de jogo e valores em [12-industria.md](12-industr
 - **Animação ligada a um valor:** `MachineRenderState` tem 4 camadas; o renderizador pode somar um clipe parado num tempo
   (o `level` do Pulmão: tempo = nível, de 0 a 1 s; `PneumaticRenderer`). Arte em `tools/models/machines/air_compressor` e
   `iron_lung` (com `hydraulic_art.py`); dados em `tools/gen_industry_wave4.py`. Teste: parte `industry4`.
+
+## Manual do Aquamarine (livro com passo a passo)
+Dono desta regra: aqui. O que o livro faz e como se obtém: [12-industria.md](12-industria.md), "Manual do Aquamarine".
+- **Código:** item e comando em `com.aquamarine.guide` (`ModManual`, `ManualItem`, `OpenManualPayload`); tela em
+  `com.aquamarine.client.manual` (`ManualScreen`, `ManualContent`, `ManualRecipes`). As receitas vêm do servidor integrado ou
+  de `SyncedRecipes` (convidados), pelo `display()` de cada receita.
+- **Texto:** `assets/aquamarine/manual/<idioma>.json` (pt_br e en_us), capítulos com elementos `title`, `text`, `step`,
+  `image` (+ `caption`), `recipe` (+ `station`), `items`, `tip` e `break`; `**assim**` sai em negrito. A tela distribui tudo
+  pelas páginas sozinha (texto comprido continua na próxima; título não fica sozinho no pé).
+- **Arte e prints:** `tools/gen_manual.py` (livro, ícone, receita e textos da interface). Prints: parte `manualshots` do
+  `runClientGameTest` (cenas montadas em mundo plano: aquários ficam acima do chão porque o mundo de teste começa logo abaixo da
+  grama; lente de 40 graus) e depois `python tools/gen_manual_shots.py`, que corta em 16:9, reduz para 320 x 180 e grava
+  `build/manual_prints.png` para conferência. A parte `manual` testa o `/aquamarine help` e fotografa o livro em inglês e
+  português.

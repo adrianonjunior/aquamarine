@@ -83,6 +83,7 @@ public class AquamarineClient implements ClientModInitializer {
 		});
 		AquamarineParticles.register();
 		com.aquamarine.client.IndustryClient.register();
+		com.aquamarine.client.manual.ManualClient.register();
 		EntityRendererRegistry.register(ModEntities.CAVITATION_PULSE, NoopRenderer::new);
 		AquamarineBossBarHud.register();
 		PressureHud.register();

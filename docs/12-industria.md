@@ -308,6 +308,11 @@ se for vento. **Decidido:** energia, fluidos e gás (itens saem por funil e baú
 1. **7A e 7B** em paralelo; **portão do Gerador de Fenda** (aval do Adriano). 2. **7C**. 3. **7D, 7G e 7H** em paralelo.
 4. **7E e 7F**. 5. **7I e 7J**. 6. **7Q**. Jogo e Gradle são recursos exclusivos; uma worktree por faixa.
 
+## Manual do Aquamarine (pedido de 27/10/2026)
+- **O que é:** o item **Manual do Aquamarine** abre um livro próprio (capa de couro azul-petróleo, cantos de latão, páginas de pergaminho, fita marcadora e abas coloridas por capítulo). Sete capítulos: Primeiros passos, Energia e cabos, Canos e Tanques, Gerador de Fenda, Ar Comprimido, Ostras e pérolas, Caranguejo e Escudo. Passos numerados, dicas, receitas desenhadas com os itens do jogo e 12 prints que ampliam no clique.
+- **Como obter:** `/aquamarine help` (qualquer jogador) entrega o Manual se ele não estiver no inventário e o abre na hora; também sai na bancada (livro + fragmento de prismarinho). O botão direito abre; o livro lembra a página.
+- **Escolhas (minhas):** o `/aquamarine` deixou de exigir operador na raiz; cada subcomando de teste (kraken, moray, whale, sperm_whale, harbor) continua exigindo. As marcas de sai e entra da Chave ganharam uma cópia em cima do braço do cano (antes só existia na face encostada na máquina, onde ninguém via). O vidro das máquinas animadas passou a ser desenhado por último (o líquido do Tanque sumia atrás dele).
+
 ## Em aberto (nada trava o plano)
 - Receita do Lingote de Latão, da Pérola de Ostra como núcleo e do Escudo de Concha: **o agente decide** (liberdade criativa);
   só pergunta se mudar a progressão.

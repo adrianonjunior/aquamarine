@@ -44,9 +44,9 @@ public final class CreatureCommand {
 	}
 
 	private static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+		// Operador em cada subcomando, não na raiz: /aquamarine help (ModManual) vale para qualquer jogador.
 		dispatcher.register(Commands.literal("aquamarine")
-			.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
-			.then(Commands.literal("moray")
+			.then(Commands.literal("moray").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 				.executes(ctx -> spawn(ctx.getSource(), ModEntities.MORAY, "commands.aquamarine.moray.spawned"))
 				.then(anim(ModEntities.MORAY, MorayEntity.ANIMATION_NAMES))
 				.then(Commands.literal("attack")
@@ -56,11 +56,11 @@ public final class CreatureCommand {
 				.then(Commands.literal("ai")
 					.then(Commands.literal("on").executes(ctx -> morayAi(ctx.getSource(), true)))
 					.then(Commands.literal("off").executes(ctx -> morayAi(ctx.getSource(), false)))))
-			.then(Commands.literal("whale")
+			.then(Commands.literal("whale").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 				.executes(ctx -> spawn(ctx.getSource(), ModEntities.WHALE, "commands.aquamarine.whale.spawned"))
 				.then(anim(ModEntities.WHALE, WhaleEntity.ANIMATION_NAMES))
 				.then(Commands.literal("tame").executes(ctx -> tameWhale(ctx.getSource()))))
-			.then(Commands.literal("sperm_whale")
+			.then(Commands.literal("sperm_whale").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 				.executes(ctx -> spawn(ctx.getSource(), ModEntities.SPERM_WHALE, "commands.aquamarine.whale.spawned"))
 				.then(anim(ModEntities.SPERM_WHALE, SpermWhaleEntity.ANIMATION_NAMES))));
 	}
