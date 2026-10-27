@@ -25,6 +25,10 @@ são locais. O build usa Python com Pillow, Node e as dependências fixadas no l
 ## Usar
 
 - Escolha criatura à esquerda e movimento à direita. O Kraken abre no rig de produção (a v2 integrada).
+- **Máquinas** (0.6.1): blocos com modelo e animação próprios (o Gerador de Fenda é o primeiro), com o mesmo rig do
+  jogo, UV por face, vidro translúcido e os botões **Parada**, **Funcionando** e **Sobrecarga**, que tocam a sequência
+  do jogo (ligar, trabalhar, desligar) com a mesma mistura de clipes. Dados: `catalog.machines()` lê o `rig.json` de
+  `tools/models/machines/<máquina>/`.
 - **Modelo + animações** alterna versões preservadas. Nenhuma seleção altera o mod.
 - Arraste para girar, use a roda para zoom e o botão direito para mover. No celular: um dedo gira,
   pinça aproxima, dois dedos movem. Com foco no canvas: setas giram, `+`/`-` aproximam, `F` enquadra,

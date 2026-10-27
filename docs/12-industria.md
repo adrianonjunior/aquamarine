@@ -21,8 +21,8 @@
 ## Painel
 | Faixa | O que | Estado | Depende de |
 |---|---|---|---|
-| 7A | Água dentro dos blocos (waterlogged) em todo bloco do mod | em andamento | nada |
-| 7B | Pipeline de máquinas animadas, bíblia de arte e aba "Máquinas" do Atlas | em andamento | nada |
+| 7A | Água dentro dos blocos (waterlogged) em todo bloco do mod | **feita** (26/10/2026) | nada |
+| 7B | Pipeline de máquinas animadas, bíblia de arte e aba "Máquinas" do Atlas | **no portão**: Fenda entregue, espera o aval | nada |
 | 7C | Redes: Cano de fluido, Tubo de Ar, cabos novos, Chave de Maré, conteúdo visível | planejada | 7A, 7B |
 | 7D | Bomba de Maré, Tanque d'Água e exceção dos geradores | planejada | 7C |
 | 7E | Gerador de Fenda refeito (animado) e geradores com fluido | planejada | 7B, 7C, 7D |
@@ -66,6 +66,9 @@ Os rótulos 7A a 7Q só organizam as faixas: **a fase se chama 0.6.1** e não ex
 - Em água **fonte** ao colocar, o bloco nasce `waterlogged=true`; água corrente passa pelos vizinhos; quebrar devolve a fonte.
 - Os blockstates dos scripts aceitam a propriedade nova; mundos antigos abrem com `waterlogged=false`.
 - **Aceite:** teste que coloca cada bloco numa fonte (a fonte continua e o fluxo passa); parte `waterlog` e `build` verdes.
+- **Feito (26/10/2026):** `com.aquamarine.block.Waterlogging` ligado no `FacingShapeBlock` (Forja, mesas, troféus,
+  decoração, geradores e Coletor), no Altar do Abismo e no Cabo; escadas, lajes, muros, vidraças e lanterna do mod já
+  eram do jogo. A água não atravessa face cheia (o fundo de uma escada), como no jogo.
 
 ## 7B. Pipeline de máquinas animadas, bíblia de arte e Atlas
 **Pedido.** Modelo estilizado e animação própria para tudo de fabricação e geração; **aba no site só para blocos customizados
@@ -83,6 +86,11 @@ com animações próprias**; o Gerador de Fenda refeito aparece lá.
 - **Portão de aprovação visual (como o A0 do áudio):** a **primeira máquina é o Gerador de Fenda**. O agente entrega capturas,
   a aba do Atlas e o `.bbmodel`, **para e espera o aval do Adriano** antes de produzir as outras. O aval vira a referência de
   nível das demais.
+- **Como ficou (26/10/2026):** contrato técnico em [06-tecnico.md](06-tecnico.md), "Contrato das máquinas animadas". Regras
+  de jogo do estado: **sobrecarga** = carga cheia por 2 s sem saída (volta a funcionar depois de 0,5 s escoando); a
+  animação anda na velocidade da produção sobre a normal da máquina (Fenda 32 E/t), de 0,5x a 2x; o brilho fica a 45%
+  parado, 100% funcionando (pulsa a cada golpe) e avermelha pulsando na sobrecarga. Partículas: 2 por golpe (a Fenda dá
+  um golpe a cada 0,6 s a 1x), bolhas na água e fumaça branca em terra; na sobrecarga, a cada 3 ticks.
 
 ## Bíblia de arte das máquinas (vale para texturas, modelos e animações)
 **Tema decidido: latão, vidro e vapor submarino** (steampunk náutico). Combina com a Forja Abissal, o Cano de vidro e latão e o
@@ -164,6 +172,12 @@ se for vento. **Decidido:** energia, fluidos e gás (itens saem por funil e baú
   visíveis). Mantém ID, receita e 32 E/t como base.
 - Turbina de Correnteza e Boia de Ondas: tratamento da 7I (fichas abaixo); a Fenda sai antes.
 - **Aceite:** captura da Fenda em cada estado; a aba "Máquinas" mostra a Fenda animada; parte `energy` verde.
+- **Visual entregue no portão da 7B (26/10/2026):** `tools/models/machines/vent_generator/build_model.py` (50 cubos, 15 ossos,
+  5 clipes). Base de pedra em cantaria com rachaduras de magma acesas e grade de ventilação; convés de aço com friso de
+  latão; câmara de vidro com magma (crostas e bolhas que estouram) numa gaiola de latão com gaxeta de couro e tampa com
+  alça; pistões de aço com cintas de latão balançando um balancim; volante de cobre; mostrador marfim de 0 a 8 com faixa
+  âmbar; chaminé de cobre com tampa de dobradiça; anéis de ligação já visíveis: azul atrás (energia), verde-água à
+  esquerda (água, centro ciano) e à direita (magma, centro âmbar). Falta o modo fluido (depende de 7C e 7D).
 
 ## 7F. Compressor de Ar e Pulmão de Ferro
 **Pedido.** Regulador de pressão em bloco ("iron lung") que regula geradores e armazena pressão.

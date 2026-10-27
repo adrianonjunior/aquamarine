@@ -229,7 +229,8 @@ alvo: `0.6.0`.
 
 ## 0.6.1: indústria aquática (**7A e 7B liberadas**)
 Especificação e ondas: [12-industria.md](12-industria.md). 7A e 7B liberadas em 26/10/2026; as outras faixas esperam o aval do Adriano sobre o Gerador de Fenda.
-- [ ] **7A** Água dentro dos blocos (waterlogged) · [ ] **7B** Máquinas animadas e aba do Atlas · [ ] **7C** Cano, Tubo de Ar e cabos
+- [x] **7A** Água dentro dos blocos (waterlogged) (26/10/2026) · [ ] **7B** Máquinas animadas e aba do Atlas (Fenda entregue
+  em 26/10/2026; espera o aval do Adriano) · [ ] **7C** Cano, Tubo de Ar e cabos
 - [ ] **7D** Bomba de Maré e Tanque d'Água · [ ] **7E** Gerador de Fenda refeito · [ ] **7F** Compressor e Pulmão de Ferro
 - [ ] **7G** Ostra, pérolas e Fazenda · [ ] **7H** Caranguejo e Escudo de Concha · [ ] **7I** Fornalha, Prensa e todas as máquinas animadas
 - [ ] **7J** Telas das máquinas · [ ] **7Q** QA e release (portão de aprovação visual do Gerador de Fenda antes da 7C)
