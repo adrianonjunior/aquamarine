@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "axis=x,open=true": {
+      "model": "aquamarine:block/conduit/cable_switch_open",
+      "y": 90
+    },
+    "axis=x,open=false": {
+      "model": "aquamarine:block/conduit/cable_switch_closed",
+      "y": 90
+    },
+    "axis=y,open=true": {
+      "model": "aquamarine:block/conduit/cable_switch_open",
+      "x": 90
+    },
+    "axis=y,open=false": {
+      "model": "aquamarine:block/conduit/cable_switch_closed",
+      "x": 90
+    },
+    "axis=z,open=true": {
+      "model": "aquamarine:block/conduit/cable_switch_open"
+    },
+    "axis=z,open=false": {
+      "model": "aquamarine:block/conduit/cable_switch_closed"
+    }
+  }
+}

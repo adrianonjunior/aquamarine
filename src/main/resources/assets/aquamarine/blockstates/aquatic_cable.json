@@ -2,59 +2,112 @@
   "multipart": [
     {
       "apply": {
-        "model": "aquamarine:block/aquatic_cable_core"
+        "model": "aquamarine:block/conduit/aquatic_cable_core"
       }
     },
     {
       "when": {
-        "north": "true"
+        "north": "pipe"
       },
       "apply": {
-        "model": "aquamarine:block/aquatic_cable_arm"
+        "model": "aquamarine:block/conduit/aquatic_cable_arm"
       }
     },
     {
       "when": {
-        "east": "true"
+        "north": "port"
       },
       "apply": {
-        "model": "aquamarine:block/aquatic_cable_arm",
+        "model": "aquamarine:block/conduit/aquatic_cable_port"
+      }
+    },
+    {
+      "when": {
+        "east": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/aquatic_cable_arm",
         "y": 90
       }
     },
     {
       "when": {
-        "south": "true"
+        "east": "port"
       },
       "apply": {
-        "model": "aquamarine:block/aquatic_cable_arm",
+        "model": "aquamarine:block/conduit/aquatic_cable_port",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/aquatic_cable_arm",
         "y": 180
       }
     },
     {
       "when": {
-        "west": "true"
+        "south": "port"
       },
       "apply": {
-        "model": "aquamarine:block/aquatic_cable_arm",
+        "model": "aquamarine:block/conduit/aquatic_cable_port",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "west": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/aquatic_cable_arm",
         "y": 270
       }
     },
     {
       "when": {
-        "up": "true"
+        "west": "port"
       },
       "apply": {
-        "model": "aquamarine:block/aquatic_cable_arm",
+        "model": "aquamarine:block/conduit/aquatic_cable_port",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "up": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/aquatic_cable_arm",
         "x": 270
       }
     },
     {
       "when": {
-        "down": "true"
+        "up": "port"
       },
       "apply": {
-        "model": "aquamarine:block/aquatic_cable_arm",
+        "model": "aquamarine:block/conduit/aquatic_cable_port",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "down": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/aquatic_cable_arm",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "down": "port"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/aquatic_cable_port",
         "x": 90
       }
     }

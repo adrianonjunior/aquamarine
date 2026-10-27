@@ -1,0 +1,115 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "aquamarine:block/conduit/air_tube_core"
+      }
+    },
+    {
+      "when": {
+        "north": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/air_tube_arm"
+      }
+    },
+    {
+      "when": {
+        "north": "port"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/air_tube_port"
+      }
+    },
+    {
+      "when": {
+        "east": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/air_tube_arm",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": "port"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/air_tube_port",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/air_tube_arm",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "south": "port"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/air_tube_port",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "west": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/air_tube_arm",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "west": "port"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/air_tube_port",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "up": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/air_tube_arm",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "up": "port"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/air_tube_port",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "down": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/air_tube_arm",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "down": "port"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/air_tube_port",
+        "x": 90
+      }
+    }
+  ]
+}

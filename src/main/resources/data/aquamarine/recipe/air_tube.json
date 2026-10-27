@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": "aquamarine:brass_ingot",
+    "P": "minecraft:glass_pane"
+  },
+  "pattern": [
+    "BPB"
+  ],
+  "result": {
+    "count": 4,
+    "id": "aquamarine:air_tube"
+  }
+}

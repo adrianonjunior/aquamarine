@@ -72,6 +72,9 @@ public class AquamarineClient implements ClientModInitializer {
 		ModelLayerRegistry.registerModelLayer(SpermWhaleModel.LAYER, SpermWhaleModel::createBodyLayer);
 		EntityRendererRegistry.register(ModEntities.SPERM_WHALE, SpermWhaleRenderer::new);
 		NeutroniumArmorRenderer.register();
+		// 0.6.1 (7C): o que passa dentro de Cabos, Canos e Tubos de Ar.
+		BlockEntityRendererRegistry.register(com.aquamarine.network.ModNetworks.CONDUIT_ENTITY,
+			ctx -> new com.aquamarine.client.network.ConduitRenderer());
 		// 0.6.1 (7B): máquinas animadas desenhadas pelo block entity; o Gerador de Fenda é a primeira.
 		BlockEntityRendererRegistry.register(ModEnergy.WATER_GENERATOR_ENTITY, ctx -> {
 			MachineRenderer.Machine vent = MachineRenderer.Machine.of(VentGeneratorModel::create, VentGeneratorAnimations.CLIPS,

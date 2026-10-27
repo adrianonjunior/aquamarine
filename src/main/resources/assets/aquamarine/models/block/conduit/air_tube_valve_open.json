@@ -1,0 +1,227 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "coupling": "aquamarine:block/conduit/steel_coupling",
+    "glass": {
+      "sprite": "aquamarine:block/conduit/tube_glass",
+      "force_translucent": true
+    },
+    "ring": "aquamarine:block/conduit/ring_gas",
+    "particle": "aquamarine:block/conduit/steel_coupling",
+    "lever": "aquamarine:block/conduit/valve_lever"
+  },
+  "elements": [
+    {
+      "from": [
+        5,
+        5,
+        0
+      ],
+      "to": [
+        11,
+        11,
+        3.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#glass"
+        },
+        "west": {
+          "texture": "#glass"
+        },
+        "up": {
+          "texture": "#glass"
+        },
+        "down": {
+          "texture": "#glass"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        5,
+        12.5
+      ],
+      "to": [
+        11,
+        11,
+        16
+      ],
+      "faces": {
+        "east": {
+          "texture": "#glass"
+        },
+        "west": {
+          "texture": "#glass"
+        },
+        "up": {
+          "texture": "#glass"
+        },
+        "down": {
+          "texture": "#glass"
+        }
+      }
+    },
+    {
+      "from": [
+        3.5,
+        3.5,
+        2.5
+      ],
+      "to": [
+        12.5,
+        12.5,
+        3.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#ring"
+        },
+        "south": {
+          "texture": "#ring"
+        },
+        "east": {
+          "texture": "#ring"
+        },
+        "west": {
+          "texture": "#ring"
+        },
+        "up": {
+          "texture": "#ring"
+        },
+        "down": {
+          "texture": "#ring"
+        }
+      }
+    },
+    {
+      "from": [
+        3.5,
+        3.5,
+        12.5
+      ],
+      "to": [
+        12.5,
+        12.5,
+        13.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#ring"
+        },
+        "south": {
+          "texture": "#ring"
+        },
+        "east": {
+          "texture": "#ring"
+        },
+        "west": {
+          "texture": "#ring"
+        },
+        "up": {
+          "texture": "#ring"
+        },
+        "down": {
+          "texture": "#ring"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        4,
+        3.5
+      ],
+      "to": [
+        12,
+        12,
+        12.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#coupling"
+        },
+        "south": {
+          "texture": "#coupling"
+        },
+        "east": {
+          "texture": "#coupling"
+        },
+        "west": {
+          "texture": "#coupling"
+        },
+        "up": {
+          "texture": "#coupling"
+        },
+        "down": {
+          "texture": "#coupling"
+        }
+      }
+    },
+    {
+      "from": [
+        7.5,
+        12,
+        7.5
+      ],
+      "to": [
+        8.5,
+        14,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#coupling"
+        },
+        "south": {
+          "texture": "#coupling"
+        },
+        "east": {
+          "texture": "#coupling"
+        },
+        "west": {
+          "texture": "#coupling"
+        },
+        "up": {
+          "texture": "#coupling"
+        },
+        "down": {
+          "texture": "#coupling"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        14,
+        3.5
+      ],
+      "to": [
+        9,
+        15,
+        12.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#lever"
+        },
+        "south": {
+          "texture": "#lever"
+        },
+        "east": {
+          "texture": "#lever"
+        },
+        "west": {
+          "texture": "#lever"
+        },
+        "up": {
+          "texture": "#lever"
+        },
+        "down": {
+          "texture": "#lever"
+        }
+      }
+    }
+  ]
+}

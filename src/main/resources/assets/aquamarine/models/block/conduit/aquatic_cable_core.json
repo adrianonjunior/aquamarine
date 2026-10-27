@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "coupling": "aquamarine:block/conduit/cable_coupling",
+    "glass": {
+      "sprite": "aquamarine:block/conduit/cable_sheath",
+      "force_translucent": true
+    },
+    "ring": "aquamarine:block/conduit/ring_energy",
+    "particle": "aquamarine:block/conduit/cable_coupling",
+    "wire": "aquamarine:block/conduit/copper_wire"
+  },
+  "elements": [
+    {
+      "from": [
+        4.5,
+        4.5,
+        4.5
+      ],
+      "to": [
+        11.5,
+        11.5,
+        11.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#coupling"
+        },
+        "south": {
+          "texture": "#coupling"
+        },
+        "east": {
+          "texture": "#coupling"
+        },
+        "west": {
+          "texture": "#coupling"
+        },
+        "up": {
+          "texture": "#coupling"
+        },
+        "down": {
+          "texture": "#coupling"
+        }
+      }
+    }
+  ]
+}

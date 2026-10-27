@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:copper_ingot",
+    "minecraft:copper_ingot",
+    "minecraft:copper_ingot",
+    "minecraft:gold_nugget"
+  ],
+  "result": {
+    "count": 3,
+    "id": "aquamarine:brass_ingot"
+  }
+}

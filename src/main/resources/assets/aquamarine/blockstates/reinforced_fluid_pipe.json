@@ -1,0 +1,115 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "aquamarine:block/conduit/reinforced_fluid_pipe_core"
+      }
+    },
+    {
+      "when": {
+        "north": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/reinforced_fluid_pipe_arm"
+      }
+    },
+    {
+      "when": {
+        "north": "port"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/reinforced_fluid_pipe_port"
+      }
+    },
+    {
+      "when": {
+        "east": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/reinforced_fluid_pipe_arm",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": "port"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/reinforced_fluid_pipe_port",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/reinforced_fluid_pipe_arm",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "south": "port"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/reinforced_fluid_pipe_port",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "west": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/reinforced_fluid_pipe_arm",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "west": "port"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/reinforced_fluid_pipe_port",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "up": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/reinforced_fluid_pipe_arm",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "up": "port"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/reinforced_fluid_pipe_port",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "down": "pipe"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/reinforced_fluid_pipe_arm",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "down": "port"
+      },
+      "apply": {
+        "model": "aquamarine:block/conduit/reinforced_fluid_pipe_port",
+        "x": 90
+      }
+    }
+  ]
+}

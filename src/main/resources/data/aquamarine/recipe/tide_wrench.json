@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "aquamarine:brass_ingot",
+    "L": "minecraft:leather"
+  },
+  "pattern": [
+    "B B",
+    " B ",
+    " L "
+  ],
+  "result": {
+    "count": 1,
+    "id": "aquamarine:tide_wrench"
+  }
+}

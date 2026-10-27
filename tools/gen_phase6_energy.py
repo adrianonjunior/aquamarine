@@ -176,21 +176,7 @@ def main():
                 variants[f"facing={d},lit={lit}"] = {"model": bid(name + ("_on" if lit == "true" else "")), **({"y": y} if y else {})}
         w({"variants": variants}, f"blockstates/{name}.json")
         w(bld.item_def(bid(name)), f"items/{name}.json")
-    # Cabo: núcleo e um braço por lado ligado (multipart).
-    w({"parent": "minecraft:block/block", "textures": {"c": bid("aquatic_cable"), "particle": bid("aquatic_cable")},
-       "elements": [{"from": [5, 5, 5], "to": [11, 11, 11], "faces": {f: {"texture": "#c"} for f in ("north", "south", "east", "west", "up", "down")}}]},
-      "models/block/aquatic_cable_core.json")
-    w({"parent": "minecraft:block/block", "textures": {"c": bid("aquatic_cable"), "particle": bid("aquatic_cable")},
-       "elements": [{"from": [6, 6, 0], "to": [10, 10, 5], "faces": {f: {"texture": "#c"} for f in ("north", "east", "west", "up", "down")}}]},
-      "models/block/aquatic_cable_arm.json")
-    parts = [{"apply": {"model": bid("aquatic_cable_core")}}]
-    for side, rot in (("north", {}), ("east", {"y": 90}), ("south", {"y": 180}), ("west", {"y": 270}), ("up", {"x": 270}), ("down", {"x": 90})):
-        parts.append({"when": {side: "true"}, "apply": {"model": bid("aquatic_cable_arm"), **rot}})
-    w({"multipart": parts}, "blockstates/aquatic_cable.json")
-    w({"parent": "minecraft:block/block", "textures": {"c": bid("aquatic_cable"), "particle": bid("aquatic_cable")},
-       "elements": [{"from": [5, 5, 0], "to": [11, 11, 16], "faces": {f: {"texture": "#c"} for f in ("north", "south", "east", "west", "up", "down")}}],
-       "display": {"gui": {"rotation": [30, 45, 0], "scale": [0.8, 0.8, 0.8]}}}, "models/block/aquatic_cable_item.json")
-    w(bld.item_def(bid("aquatic_cable_item")), "items/aquatic_cable.json")
+    # O Cabo Aquático (modelo, estado e item) é das redes da 0.6.1: tools/gen_industry_networks.py.
     w({"parent": "minecraft:item/generated", "textures": {"layer0": f"{NS}:item/neutronium_stardust"}}, "models/item/neutronium_stardust.json")
     w(bld.item_def(f"{NS}:item/neutronium_stardust"), "items/neutronium_stardust.json")
 

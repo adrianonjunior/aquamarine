@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "C": "aquamarine:aquatic_cable",
+    "A": "aquamarine:aurium_ingot"
+  },
+  "pattern": [
+    " C ",
+    "CAC",
+    " C "
+  ],
+  "result": {
+    "count": 4,
+    "id": "aquamarine:reinforced_aquatic_cable"
+  }
+}

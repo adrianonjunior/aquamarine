@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -110,6 +111,15 @@ public class ConduitBlockEntity extends BlockEntity {
 		ConduitNetwork network = be.network();
 		if (network != null) {
 			network.tick((ServerLevel) level);
+		}
+	}
+
+	/** Antes de sair do mundo: Cano com água anota o lugar para o bloco soltar uma fonte ali. */
+	@Override
+	public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+		super.preRemoveSideEffects(pos, state);
+		if (level != null && !level.isClientSide() && kind() == ConduitKind.FLUID && shareVariant().isOf(Fluids.WATER) && share() > 0) {
+			ConduitBlock.SPILL.add(GlobalPos.of(level.dimension(), pos));
 		}
 	}
 

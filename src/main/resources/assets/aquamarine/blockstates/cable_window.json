@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "aquamarine:block/conduit/cable_window",
+      "y": 90
+    },
+    "axis=y": {
+      "model": "aquamarine:block/conduit/cable_window",
+      "x": 90
+    },
+    "axis=z": {
+      "model": "aquamarine:block/conduit/cable_window"
+    }
+  }
+}

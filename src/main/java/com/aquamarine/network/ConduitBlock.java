@@ -3,16 +3,14 @@ package com.aquamarine.network;
 import com.aquamarine.block.Waterlogging;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -29,7 +27,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -179,16 +176,18 @@ public class ConduitBlock extends Block implements EntityBlock, SimpleWaterlogge
 		return Waterlogging.fluid(state);
 	}
 
-	/** Cano de água quebrado solta uma fonte no lugar (com pelo menos um quarto de balde dentro). */
+	/** Pedaços de Cano com água que acabaram de sair (o block entity anota antes de ir embora). */
+	static final Set<GlobalPos> SPILL = ConcurrentHashMap.newKeySet();
+
+	/** Cano com água quebrado solta uma fonte no lugar; lava e gás somem. */
 	@Override
-	public void playerDestroy(ServerLevel level, ServerPlayer player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack tool) {
-		super.playerDestroy(level, player, pos, state, blockEntity, tool);
-		releaseWater(level, pos, blockEntity);
+	protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+		super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+		spill(level, pos);
 	}
 
-	static void releaseWater(Level level, BlockPos pos, BlockEntity blockEntity) {
-		if (!level.isClientSide() && blockEntity instanceof ConduitBlockEntity be && be.kind() == ConduitKind.FLUID
-			&& be.shareVariant().isOf(Fluids.WATER) && be.share() >= FluidConstants.BUCKET / 4 && level.getBlockState(pos).isAir()) {
+	static void spill(ServerLevel level, BlockPos pos) {
+		if (SPILL.remove(GlobalPos.of(level.dimension(), pos)) && level.getBlockState(pos).isAir()) {
 			level.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
 		}
 	}

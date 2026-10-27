@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "P": "aquamarine:fluid_pipe",
+    "A": "aquamarine:aurium_ingot"
+  },
+  "pattern": [
+    " P ",
+    "PAP",
+    " P "
+  ],
+  "result": {
+    "count": 4,
+    "id": "aquamarine:reinforced_fluid_pipe"
+  }
+}
