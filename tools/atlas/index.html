@@ -14,15 +14,16 @@
   <a class="brand" href="#modelos" aria-label="Aquamarine, início"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 36 28 20 37 4 28Z M20 12 28 26 20 31 12 26Z"/></svg><span>AQUAMARINE<small>Atlas técnico</small></span></a>
   <nav aria-label="Seções do atlas">
     <a href="#modelos" data-page="modelos" aria-current="page">Modelos & animações</a>
+    <a href="#maquinas" data-page="maquinas">Máquinas</a>
     <a href="#audio" data-page="audio">Áudio</a><a href="#texturas" data-page="texturas">Texturas</a><a href="#documentacao" data-page="documentacao">Documentação</a>
   </nav>
   <span class="local-status"><i></i> Arquivo do projeto</span>
 </header>
 <main id="main">
   <section id="modelos" class="page">
-    <div class="page-heading"><div><h1>Observatório de criaturas</h1><p>Explore os modelos. Veja cada movimento de perto.</p></div><span class="proposal">Kraken v2 · proposta só no site</span></div>
+    <div class="page-heading"><div><h1 id="page-title">Observatório de criaturas</h1><p id="page-lead">Explore os modelos. Veja cada movimento de perto.</p></div><span class="proposal" id="proposal-pill">Kraken v2 · proposta só no site</span></div>
     <div class="workspace">
-      <aside class="creatures" aria-label="Catálogo de criaturas"><h2>Criaturas <span id="mob-count"></span></h2><div id="mob-list"></div><p class="aside-note">Todos os rigs próprios do mod.<br>O Kraken abre com a proposta v2.</p></aside>
+      <aside class="creatures" aria-label="Catálogo de criaturas"><h2><span id="list-title">Criaturas</span> <span id="mob-count"></span></h2><div id="mob-list"></div><p class="aside-note" id="list-note">Todos os rigs próprios do mod.<br>O Kraken abre com a proposta v2.</p></aside>
       <div class="viewer-column">
         <div class="stage-top"><div><h2 id="model-name">Kraken</h2><span id="model-kind">O terror das profundezas</span></div><label id="version-label">Modelo + animações<select id="version"><option value="v2">Proposta v2 · só no site</option><option value="v1">Atual no mod · v1</option></select></label></div>
         <div id="viewport" role="region" aria-label="Visualizador 3D. Arraste para girar e use a roda para aproximar.">
@@ -33,6 +34,7 @@
           <p class="orbit-hint"><span class="mouse-hint">Arraste para girar · roda para aproximar · botão direito para mover</span><span class="touch-hint">Um dedo gira · dois dedos movem · pinça aproxima</span></p>
         </div>
         <div class="transport">
+          <div id="machine-states" class="machine-states" role="group" aria-label="Estado da máquina" hidden></div>
           <div class="timeline-row"><label for="timeline" class="sr-only">Posição na animação</label><div class="timeline-track"><input id="timeline" type="range" min="0" max="4" step="0.001" value="0"><span id="impact-marker" hidden></span></div><output id="time">0,00 / 4,00 s</output></div>
           <div class="transport-controls"><button id="play" class="primary">Pausar</button><button id="restart" title="Voltar ao início">Reiniciar</button><label>Velocidade<select id="speed"><option value="0.25">0,25×</option><option value="0.5">0,5×</option><option value="1" selected>1×</option><option value="1.5">1,5×</option><option value="2">2×</option></select></label><label class="check"><input id="repeat" type="checkbox" checked> Repetir</label><span id="motion-state">Laço contínuo</span></div>
         </div>

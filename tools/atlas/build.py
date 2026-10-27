@@ -11,7 +11,7 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
-from catalog import ROOT, ASSETS, models, image_data
+from catalog import ROOT, ASSETS, models, machines, image_data
 
 BASE = Path(__file__).resolve().parent
 OUT = ROOT / "build/atlas"
@@ -111,16 +111,20 @@ def texture_catalog():
 
 def build(audio_root=None, bundle=True):
     OUT.mkdir(parents=True, exist_ok=True)
-    data = {"models":models(),"audio":audio_catalog(audio_root),"textures":texture_catalog(),
+    data = {"models":models(),"machines":machines(),"audio":audio_catalog(audio_root),"textures":texture_catalog(),
             "generated":datetime.now(timezone.utc).isoformat(),"docs":[]}
     registry = json.loads((BASE/"versions/registry.json").read_text(encoding="utf-8"))
-    for m in data["models"]:
+    for m in data["models"]+data["machines"]:
         m["versions"] = []
         for record in registry:
             if record["id"] == m["id"]:
                 version = json.loads((BASE/"versions"/record["file"]).read_text(encoding="utf-8"))
                 version.update(label=record["label"],date=record["date"])
                 m["versions"].append(version)
+        if not m["versions"]:
+            # Máquina ainda sem versão registrada: o rig atual do gerador, como está no jogo.
+            m["versions"].append({k:m[k] for k in ("bones","cubes","clips","texture","resolution","glow")}
+                                 |{"version":"atual","label":"No jogo · atual","date":datetime.now().date().isoformat()})
     for path in sorted((ROOT/"docs").glob("*.md")):
         text = path.read_text(encoding="utf-8")
         data["docs"].append({"name":text.splitlines()[0].lstrip("# "),"file":path.name,"text":text})
@@ -134,7 +138,7 @@ def build(audio_root=None, bundle=True):
         command = [str(exe)] if exe.exists() else ["node",str(BASE/"node_modules/esbuild/bin/esbuild")]
         subprocess.run(command+[str(BASE/"app.js"),"--bundle","--format=iife","--minify",f"--outfile={OUT/'app.js'}"],check=True,cwd=BASE)
         copy_asset(BASE/"node_modules/three/LICENSE","licenses/three.txt")
-    print(f"Atlas: {len(data['models'])} rigs, {sum(len(m['clips']) for m in data['models'])} clipes, "
+    print(f"Atlas: {len(data['models'])} rigs, {len(data['machines'])} máquinas, {sum(len(m['clips']) for m in data['models'])} clipes, "
           f"{len(data['audio'])} áudios, {len(data['textures'])} texturas. {OUT/'index.html'}")
     return data
 

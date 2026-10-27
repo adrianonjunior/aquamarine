@@ -22,6 +22,12 @@ const descriptions = {
  bolts:'Quatro braços formam antenas. As pontas tremem antes da descarga e relaxam em sequência.',
  ambush:'O corpo se comprime para baixo e os tentáculos mergulham em um golpe curto e violento.'
 };
+const machineLabels={idle:'Parada',start:'Ligando',run:'Funcionando',stop:'Desligando',overload:'Sobrecarga',full:'Cheia',empty:'Vazia'};
+let machineMode=false, stateKey=null, pending=[], fadeFrom=null, machineMats=[];
+const catalog=()=>machineMode?(data.machines||[]):data.models;
+const isMachine=()=>model.kind==='machine';
+const label=n=>(isMachine()?machineLabels[n]:labels[n])||n;
+const FADE=.3;
 const fmt = (n, digits=2) => Number(n).toLocaleString('pt-BR',{minimumFractionDigits:digits,maximumFractionDigits:digits});
 const audioClock = seconds => {seconds=Number.isFinite(seconds)?Math.floor(seconds):0;return `${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`;};
 const el = (tag, className, text) => { const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node; };
@@ -42,8 +48,9 @@ function boxGeometry(cube, resolution) {
   const [x,y,z]=cube.position;
   const v=[[x-f,y-f,z-f],[x+w+f,y-f,z-f],[x+w+f,y+h+f,z-f],[x-f,y+h+f,z-f],
     [x-f,y-f,z+d+f],[x+w+f,y-f,z+d+f],[x+w+f,y+h+f,z+d+f],[x-f,y+h+f,z+d+f]];
-  const [u,q]=cube.uv;
-  const faces=[[[5,4,0,1],[u+d,q,u+d+w,q+d]],[[2,3,7,6],[u+d+w,q+d,u+d+2*w,q]],
+  const [u,q]=cube.uv||[0,0];
+  const faces=cube.faces?[[[5,4,0,1],cube.faces.top],[[2,3,7,6],cube.faces.bottom],[[0,4,7,3],cube.faces.left],
+    [[1,0,3,2],cube.faces.front],[[5,1,2,6],cube.faces.right],[[4,5,6,7],cube.faces.back]].filter(f=>f[1]):[[[5,4,0,1],[u+d,q,u+d+w,q+d]],[[2,3,7,6],[u+d+w,q+d,u+d+2*w,q]],
     [[0,4,7,3],[u,q+d,u+d,q+d+h]],[[1,0,3,2],[u+d,q+d,u+d+w,q+d+h]],
     [[5,1,2,6],[u+d+w,q+d,u+2*d+w,q+d+h]],[[4,5,6,7],[u+2*d+w,q+d,u+2*d+2*w,q+d+h]]];
   const pos=[],uv=[];
@@ -63,13 +70,13 @@ function texture(src){
   }
   return textures.get(src);
 }
-function material(){
+function material(glass=false){
   const mode=$('material').value;
   const v=selectedVersion(),glow=mode==='texture'&&v.glow;
   return new THREE.MeshStandardMaterial({map:mode==='texture'?texture(v.texture):mode==='uv'?texture(v.uv||model.uvTexture):null,
     ...(glow?{emissiveMap:texture(v.glow),emissive:0xffffff}:{}),
     color:mode==='clay'?0x97c1c3:mode==='wire'?0x6ee4cf:0xffffff,roughness:.88,metalness:0,side:THREE.DoubleSide,wireframe:mode==='wire',
-    ...(model.translucent&&mode==='texture'?{transparent:true,alphaTest:.02}:{alphaTest:.15})});
+    ...(glass&&mode==='texture'?{transparent:true,depthWrite:false,alphaTest:.01}:isMachine()?{alphaTest:.5}:model.translucent&&mode==='texture'?{transparent:true,alphaTest:.02}:{alphaTest:.15})});
 }
 function disposeGroup(group){
   if(!group)return;
@@ -79,16 +86,16 @@ function disposeGroup(group){
 function makeRig(){
   if(!scene)return;
   disposeGroup(root);disposeGroup(helpers);boneMap=new Map();baseRot=new Map();basePos=new Map();
-  root=new THREE.Group();root.scale.y=-1;boneMap.set('root',root);scene.add(root);
+  root=new THREE.Group();root.scale.set(isMachine()?-1:1,-1,1);boneMap.set('root',root);scene.add(root);
   for(const b of geometry().bones){
     const group=new THREE.Group();group.name=b.name;group.position.fromArray(b.position);
     group.rotation.set(...b.rotation.map(THREE.MathUtils.degToRad),'ZYX');
     boneMap.get(b.parent).add(group);boneMap.set(b.name,group);
     baseRot.set(b.name,group.rotation.clone());basePos.set(b.name,group.position.clone());
   }
-  const mat=material();
+  const mat=material(),glassMat=isMachine()?material(true):mat;machineMats=isMachine()?[mat,glassMat]:[];
   for(const c of geometry().cubes){
-    const mesh=new THREE.Mesh(boxGeometry(c,selectedVersion().resolution),mat);mesh.name=c.name;
+    const mesh=new THREE.Mesh(boxGeometry(c,selectedVersion().resolution),c.glass?glassMat:mat);mesh.name=c.name;if(c.glass)mesh.renderOrder=1;
     // Escudo intacto na prévia; as cascas transparentes são camadas de dano do jogo.
     mesh.visible=!c.name.startsWith('crack_');boneMap.get(c.bone).add(mesh);
   }
@@ -115,13 +122,18 @@ export function sample(keys,t){
 function applyPose(at=time){
   if(!root)return;
   for(const [name,b] of boneMap){if(name==='root')continue;b.position.copy(basePos.get(name));b.rotation.copy(baseRot.get(name));b.scale.set(1,1,1);}
-  for(const tr of clip().tracks){
+  let red=0;
+  for(const layer of layers(at)){
+   const w=layer.weight;if(layer.name==='overload')red+=w;
+   for(const tr of layer.clip.tracks){
     const b=boneMap.get(tr.bone);if(!b)continue;
-    const v=sample(tr.keys,at);
-    if(tr.channel==='rotation'){b.rotation.x+=THREE.MathUtils.degToRad(v[0]);b.rotation.y+=THREE.MathUtils.degToRad(v[1]);b.rotation.z+=THREE.MathUtils.degToRad(v[2]);}
-    else if(tr.channel==='position'){b.position.x+=v[0];b.position.y-=v[1];b.position.z+=v[2];}
-    else if(tr.channel==='scale')b.scale.fromArray(v);
+    const v=sample(tr.keys,layer.time);
+    if(tr.channel==='rotation'){b.rotation.x+=w*THREE.MathUtils.degToRad(v[0]);b.rotation.y+=w*THREE.MathUtils.degToRad(v[1]);b.rotation.z+=w*THREE.MathUtils.degToRad(v[2]);}
+    else if(tr.channel==='position'){b.position.x+=w*v[0];b.position.y-=w*v[1];b.position.z+=w*v[2];}
+    else if(tr.channel==='scale'){b.scale.x+=w*(v[0]-1);b.scale.y+=w*(v[1]-1);b.scale.z+=w*(v[2]-1);}
+   }
   }
+  machineTint(red);
   if(model.id==='kraken' && $('alive').checked)alive(at);
   if(boneMap.has('saddle'))boneMap.get('saddle').visible=$('saddle').checked;
   root.updateMatrixWorld(true);
@@ -161,7 +173,7 @@ function frameModel(direction){
   if(!root)return;
   currentBounds=bounds();const size=currentBounds.getSize(new THREE.Vector3()),center=currentBounds.getCenter(new THREE.Vector3());
   const radius=size.length()/2;
-  const dir=direction||((model.id==='whale'||model.id==='sperm_whale'||model.id==='moray')?new THREE.Vector3(1,.55,-1.1):new THREE.Vector3(.9,.65,1.3));
+  const dir=direction||(isMachine()?new THREE.Vector3(.85,.62,-1.15):(model.id==='whale'||model.id==='sperm_whale'||model.id==='moray')?new THREE.Vector3(1,.55,-1.1):new THREE.Vector3(.9,.65,1.3));
   dir.normalize();
   const right=new THREE.Vector3().crossVectors(new THREE.Vector3(0,1,0),dir).normalize();
   const up=new THREE.Vector3().crossVectors(dir,right).normalize();
@@ -204,18 +216,20 @@ function initScene(){
 }
 
 function mobList(){
-  $('mob-count').textContent=data.models.length;
-  $('mob-list').replaceChildren(...data.models.map(m=>{
+  $('mob-count').textContent=catalog().length;
+  $('mob-list').replaceChildren(...catalog().map(m=>{
     const b=el('button','mob');b.dataset.id=m.id;b.setAttribute('aria-pressed',String(m.id===model.id));
     const img=el('img','mob-icon');img.src=m.texture;img.alt='';const text=el('span');text.append(el('strong','',m.name),el('small','',`${Object.keys(m.clips).length} animações${m.versions.length>1?` · ${m.versions.length} versões`:''}`));
     b.append(img,text);b.onclick=()=>selectModel(m.id);return b;
   }));
 }
 function selectModel(id){
-  model=data.models.find(m=>m.id===id);versionOptions();clipName=Object.keys(clips())[0];time=0;$('clip-search').value='';
+  model=catalog().find(m=>m.id===id)||catalog()[0];versionOptions();clipName=Object.keys(clips())[0];time=0;$('clip-search').value='';
+  stateKey=null;pending=[];fadeFrom=null;
   $('alive-label').hidden=model.id!=='kraken';$('saddle-label').hidden=model.id!=='whale';
   $('model-name').textContent=model.name;
-  $('model-kind').textContent=model.id==='kraken'?'O terror das profundezas':model.id==='kraken_egg'?'Entidade de invocação':'Criatura do oceano';
+  $('model-kind').textContent=isMachine()?'Máquina animada · bloco':model.id==='kraken'?'O terror das profundezas':model.id==='kraken_egg'?'Entidade de invocação':'Criatura do oceano';
+  stateButtons();if(isMachine()&&model.states?.idle)playState('idle',true);
   mobList();clipList();clipInfo();makeRig();
 }
 function versionOptions(){
@@ -224,20 +238,20 @@ function versionOptions(){
 }
 function clipList(){
   const query=$('clip-search').value.toLocaleLowerCase('pt-BR');
-  const entries=Object.entries(clips()).filter(([n])=>`${labels[n]||n} ${n}`.toLocaleLowerCase('pt-BR').includes(query));
+  const entries=Object.entries(clips()).filter(([n])=>`${label(n)} ${n}`.toLocaleLowerCase('pt-BR').includes(query));
   $('clip-count').textContent=Object.keys(clips()).length;
   $('clip-list').replaceChildren(...entries.map(([name,c])=>{
     const b=el('button','clip');b.dataset.clip=name;b.setAttribute('aria-pressed',String(name===clipName));
-    b.append(el('span','',labels[name]||name),el('small','',`${c.loop?'↻ ':''}${fmt(c.length,1)} s`));
-    b.onclick=()=>{clipName=name;time=0;clipList();clipInfo();frameModel();};return b;
+    b.append(el('span','',label(name)),el('small','',`${c.loop?'↻ ':''}${fmt(c.length,1)} s`));
+    b.onclick=()=>{clipName=name;time=0;stateKey=null;pending=[];fadeFrom=null;stateButtons();clipList();clipInfo();frameModel();};return b;
   }));
   if(!entries.length)$('clip-list').append(el('p','empty','Nenhum movimento encontrado.'));
 }
 function clipInfo(){
   const c=clip(),warning=model.warnings[clipName],live=inGame(selectedVersion()),proposed=!live&&selectedVersion().version!=='v1';
-  $('clip-title').textContent=labels[clipName]||clipName;$('stage-clip').textContent=labels[clipName]||clipName;
+  $('clip-title').textContent=label(clipName);$('stage-clip').textContent=label(clipName);
   $('stage-version').textContent=live?`NO JOGO · ${selectedVersion().version.toUpperCase()}`:proposed?`PROPOSTA ${selectedVersion().version.toUpperCase()} · SÓ NO SITE`:'REFERÊNCIA V1 DO MOD';
-  $('clip-description').textContent=proposed?(model.id==='kraken'&&selectedVersion().version==='v2'?descriptions[clipName]:'Estudo do movimento; consulte o histórico da versão.'):`Keyframes preservados de ${model.name}. ${c.loop?'Este movimento é um laço.':'Este movimento é executado uma vez no jogo.'}`;
+  $('clip-description').textContent=isMachine()?(model.clipDescriptions?.[clipName]||''):proposed?(model.id==='kraken'&&selectedVersion().version==='v2'?descriptions[clipName]:'Estudo do movimento; consulte o histórico da versão.'):`Keyframes preservados de ${model.name}. ${c.loop?'Este movimento é um laço.':'Este movimento é executado uma vez no jogo.'}`;
   dl($('clip-info'),[['Identificador',clipName],['Duração',`${fmt(c.length)} s`],['Canais',c.tracks.length],...(warning?[['Aviso preservado',`${fmt(warning)} s`]]:[])]);
   $('timeline').max=c.length;$('impact-marker').hidden=!warning;$('jump-impact').hidden=!warning;
   if(warning)$('impact-marker').style.left=`${100*warning/c.length}%`;
@@ -258,7 +272,8 @@ function syncTransport(){
 function animate(now){
   const dt=Math.min((now-lastFrame)/1000,.1);lastFrame=now;
   if(!$('modelos').hidden&&renderer&&root){
-    if(playing){time+=dt*Number($('speed').value);if(time>=clip().length){if($('repeat').checked)time%=clip().length;else{time=clip().length;playing=false;}}}
+    if(playing){time+=dt*Number($('speed').value);if(time>=clip().length){if(pending.length&&!clip().loop){time-=clip().length;clipName=pending.shift();clipList();clipInfo();}
+      else if($('repeat').checked)time%=clip().length;else{time=clip().length;playing=false;}}}
     applyPose();controls.update();renderer.render(scene,camera);syncTransport();
   }
   frameHandle=requestAnimationFrame(animate);
@@ -310,11 +325,13 @@ function documentation(){
   const doc=data.docs[Number($('doc-select').value)||0];$('doc-content').replaceChildren(el('pre','',doc.text));
 }
 function route(){
-  let name=location.hash.slice(1)||'modelos';if(!['modelos','audio','texturas','documentacao'].includes(name))name='modelos';
-  document.querySelectorAll('.page').forEach(p=>p.hidden=p.id!==name);
+  let name=location.hash.slice(1)||'modelos';if(!['modelos','maquinas','audio','texturas','documentacao'].includes(name))name='modelos';
+  const page=name==='maquinas'?'modelos':name;
+  document.querySelectorAll('.page').forEach(p=>p.hidden=p.id!==page);
+  if((name==='maquinas')!==machineMode&&(name==='maquinas'||name==='modelos')){machineMode=name==='maquinas';headings();selectModel(catalog()[0].id);}
   document.querySelectorAll('nav a').forEach(a=>{if(a.dataset.page===name)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
   if(name!=='audio')document.querySelectorAll('audio').forEach(a=>a.pause());
-  if(name==='modelos')requestAnimationFrame(resize);
+  if(page==='modelos')requestAnimationFrame(resize);
 }
 
 $('play').onclick=()=>{if(time>=clip().length)time=0;playing=!playing;syncTransport();};
@@ -328,7 +345,7 @@ $('top').onclick=()=>frameModel(new THREE.Vector3(0,1,.001));
 $('grid').onchange=()=>{if(grid)grid.visible=$('grid').checked;renderOnce();};
 $('rig').onchange=renderOnce;$('alive').onchange=()=>frameModel();$('saddle').onchange=()=>frameModel();
 $('version').onchange=()=>{if(!clips()[clipName])clipName=Object.keys(clips())[0];time=0;clipList();clipInfo();makeRig();};
-$('material').onchange=()=>{if(!root)return;const mat=material(),old=new Set();root.traverse(o=>{if(o.isMesh){old.add(o.material);o.material=mat;}});old.forEach(m=>m.dispose());renderOnce();};
+$('material').onchange=()=>{if(!root)return;if(isMachine()){makeRig();return;}const mat=material(),old=new Set();root.traverse(o=>{if(o.isMesh){old.add(o.material);o.material=mat;}});old.forEach(m=>m.dispose());renderOnce();};
 $('clip-search').oninput=clipList;
 $('audio-search').oninput=audioList;$('audio-kind').onchange=audioList;
 $('texture-search').oninput=textureList;$('texture-group').onchange=textureList;
@@ -362,8 +379,46 @@ window.addEventListener('hashchange',route);
 versionOptions();mobList();clipList();clipInfo();audioList();textureList();documentation();route();initScene();
 frameHandle=requestAnimationFrame(animate);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frameHandle);document.querySelectorAll('audio').forEach(a=>a.pause());}else{lastFrame=performance.now();frameHandle=requestAnimationFrame(animate);}});
+// Máquinas (0.6.1, 7B): estados como no jogo. Parada = stop e idle; Funcionando = start e run; Sobrecarga = overload.
+function layers(at){
+  const out=[{name:clipName,clip:clip(),time:at,weight:1}];
+  if(fadeFrom&&isMachine()){
+    const age=(performance.now()-fadeFrom.at)/1000;
+    if(age<FADE){const f=age/FADE,w=f*f*(3-2*f),c=clips()[fadeFrom.name];
+      if(c){const t=c.loop?(fadeFrom.time+age)%c.length:Math.min(c.length,fadeFrom.time+age);out[0].weight=w;out.push({name:fadeFrom.name,clip:c,time:t,weight:1-w});}}
+    else fadeFrom=null;
+  }
+  return out;
+}
+function playState(key,instant=false){
+  const st=model.states?.[key];if(!st)return;
+  if(!instant&&clipName)fadeFrom={name:clipName,time,at:performance.now()};
+  stateKey=key;pending=[];
+  const enter=st.enter&&clips()[st.enter]&&!instant?st.enter:null;
+  clipName=enter||st.loop;if(enter)pending=[st.loop];time=0;playing=true;
+  stateButtons();clipList();clipInfo();syncTransport();
+}
+function stateButtons(){
+  const box=$('machine-states');box.hidden=!isMachine()||!model.states;
+  if(box.hidden){box.replaceChildren();return;}
+  box.replaceChildren(el('span','','Estado no jogo:'),...Object.entries(model.states).map(([key,st])=>{
+    const b=el('button',st.tint?'hot':'',st.label);b.dataset.state=key;b.setAttribute('aria-pressed',String(key===stateKey));b.onclick=()=>playState(key);return b;}));
+}
+function machineTint(red){
+  if(!machineMats.length)return;
+  const beat=.5+.5*Math.sin(performance.now()/1000*Math.PI*8),flush=red*(.55+.45*beat);
+  for(const m of machineMats){if(m.color)m.color.setRGB(1,1-.18*flush,1-.24*flush);if(m.emissiveMap)m.emissive.setRGB(1,1-.55*red,1-.7*red);}
+}
+function headings(){
+  $('page-title').textContent=machineMode?'Sala de máquinas':'Observatório de criaturas';
+  $('page-lead').textContent=machineMode?'Blocos com modelo e animações próprios. Troque o estado e veja a máquina ligar, trabalhar e sobrecarregar.':'Explore os modelos. Veja cada movimento de perto.';
+  $('proposal-pill').hidden=machineMode;
+  $('list-title').textContent=machineMode?'Máquinas':'Criaturas';
+  $('list-note').textContent=machineMode?'Máquinas da 0.6.1 com modelo e animação próprios. Mesmo rig do jogo.':'Todos os rigs próprios do mod. O Kraken abre com a proposta v2.';
+}
 // Superfície de diagnóstico para os testes locais, sem controles extras na interface.
-window.atlas={selectModel,selectClip(name){clipName=name;time=0;clipList();clipInfo();frameModel();},sample,
+window.atlas={selectModel,selectClip(name){clipName=name;time=0;stateKey=null;pending=[];fadeFrom=null;clipList();clipInfo();frameModel();},sample,
+  playState(key){playState(key);},machine:()=>isMachine()?{state:stateKey,clip:clipName,pending:[...pending],layers:layers(time).map(l=>[l.name,l.weight])}:null,
   view(x,y,z){frameModel(new THREE.Vector3(x,y,z));},
   inspect(){return {model:model.id,clip:clipName,time,playing,bones:boneMap.size,cubes:geometry().cubes.length,
     bounds:currentBounds?.getSize(new THREE.Vector3()).toArray(),renderer:!!renderer,textureLoaded:[...textures.values()].every(t=>!!t.image?.complete)};},

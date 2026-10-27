@@ -212,3 +212,21 @@ def models():
                        "warnings":anim.WARN if kind == "kraken" else {},
                        "baseline":json.loads((MODELS/"kraken/reference_v1.json").read_text()) if kind == "kraken" else None})
     return result
+
+
+def machines():
+    """Máquinas animadas da 0.6.1 (aba "Máquinas"): o rig.json que tools/models/machines/<máquina>/build_model.py grava
+    junto com o Java do jogo (mesmos ossos, cubos com UV por face e clipes), a folha de 32 px por face e a _glow."""
+    result = []
+    for rig_path in sorted((MODELS / "machines").glob("*/rig.json")):
+        rig = json.loads(rig_path.read_text(encoding="utf-8"))
+        key = rig["id"]
+        ids = {b["name"] for b in rig["bones"]} | {"root"}
+        for name, clip in rig["clips"].items():
+            assert all(t["bone"] in ids for t in clip["tracks"]), (key, name)
+        sheet = ASSETS / "textures/block/machine"
+        result.append(rig | {"kind": "machine", "translucent": True, "proposal": None, "warnings": {}, "baseline": None,
+                             "texture": image_data(sheet / f"{key}.png"), "glow": image_data(sheet / f"{key}_glow.png"),
+                             "uvTexture": image_data(rig_path.parent / "uv.png"),
+                             "source": f"tools/models/machines/{key}/build_model.py"})
+    return result
