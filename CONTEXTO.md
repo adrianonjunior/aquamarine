@@ -32,6 +32,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
+| Corrigir exclusivamente a tela do Coletor de Neutrônio (grade, textura, textos, slots e estados) | Codex | worktree própria; jogo/Gradle somente na validação | 27/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
