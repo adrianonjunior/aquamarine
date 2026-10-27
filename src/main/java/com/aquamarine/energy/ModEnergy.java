@@ -21,8 +21,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import team.reborn.energy.api.EnergyStorage;
 
 /**
- * Energia aquática (Fase 6, 6E; docs/11-fase6.md): três geradores, o Cabo Aquático e o Coletor de Neutrônio, com a
- * energia da Team Reborn Energy. Modelos, texturas e dados saem de tools/gen_phase6_energy.py.
+ * Energia aquática (Fase 6, 6E; docs/11-fase6.md): três geradores e o Coletor de Neutrônio, com a
+ * energia da Team Reborn Energy (o Cabo Aquático foi para as redes da 0.6.1, {@code com.aquamarine.network.ModNetworks}).
+ * Modelos, texturas e dados saem de tools/gen_phase6_energy.py.
  */
 public final class ModEnergy {
 	private static final List<Block> BLOCKS = new ArrayList<>();
@@ -42,8 +43,6 @@ public final class ModEnergy {
 		p -> new WaterGeneratorBlock(p, Block.box(3, 0, 3, 13, 16, 13), WaterGeneratorBlock.Kind.BUOY),
 		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).noOcclusion()
 			.lightLevel(state -> state.getValue(WaterGeneratorBlock.ACTIVE) ? 8 : 0));
-	public static final Block AQUATIC_CABLE = add("aquatic_cable", AquaticCableBlock::new,
-		BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS).strength(1.0F, 6.0F).noOcclusion());
 	public static final Block NEUTRONIUM_COLLECTOR = add("neutronium_collector",
 		p -> new NeutroniumCollectorBlock(p, Block.box(0, 0, 0, 16, 16, 16)),
 		BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERITE_BLOCK).noOcclusion()
@@ -52,9 +51,6 @@ public final class ModEnergy {
 	public static final BlockEntityType<WaterGeneratorBlockEntity> WATER_GENERATOR_ENTITY = Registry.register(
 		BuiltInRegistries.BLOCK_ENTITY_TYPE, Aquamarine.id("water_generator"),
 		new BlockEntityType<>(WaterGeneratorBlockEntity::new, Set.of(CURRENT_TURBINE, VENT_GENERATOR, WAVE_BUOY)));
-	public static final BlockEntityType<AquaticCableBlockEntity> CABLE_ENTITY = Registry.register(
-		BuiltInRegistries.BLOCK_ENTITY_TYPE, Aquamarine.id("aquatic_cable"),
-		new BlockEntityType<>(AquaticCableBlockEntity::new, Set.of(AQUATIC_CABLE)));
 	public static final BlockEntityType<NeutroniumCollectorBlockEntity> COLLECTOR_ENTITY = Registry.register(
 		BuiltInRegistries.BLOCK_ENTITY_TYPE, Aquamarine.id("neutronium_collector"),
 		new BlockEntityType<>(NeutroniumCollectorBlockEntity::new, Set.of(NEUTRONIUM_COLLECTOR)));
@@ -74,7 +70,6 @@ public final class ModEnergy {
 	public static void register() {
 		BLOCKS.forEach(block -> ModItems.registerBlock(block, new Item.Properties()));
 		EnergyStorage.SIDED.registerForBlockEntity((be, side) -> be.energy, WATER_GENERATOR_ENTITY);
-		EnergyStorage.SIDED.registerForBlockEntity((be, side) -> be.energy, CABLE_ENTITY);
 		EnergyStorage.SIDED.registerForBlockEntity((be, side) -> be.energy, COLLECTOR_ENTITY);
 	}
 

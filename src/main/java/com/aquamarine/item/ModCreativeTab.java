@@ -64,6 +64,10 @@ public final class ModCreativeTab {
 		// Fase 6 (6E): geradores, cabo e Coletor de Neutrônio nos blocos de redstone; o Pó Estelar nos ingredientes.
 		addToVanilla(CreativeModeTabs.REDSTONE_BLOCKS, com.aquamarine.energy.ModEnergy.blocks().stream().map(b -> b.asItem()).toArray(Item[]::new));
 		addToVanilla(CreativeModeTabs.INGREDIENTS, ModItems.NEUTRONIUM_STARDUST);
+		// 0.6.1 (7C): redes de energia, fluido e gás nos blocos de redstone; Latão e Chave de Maré.
+		addToVanilla(CreativeModeTabs.REDSTONE_BLOCKS, com.aquamarine.network.ModNetworks.blocks().stream().map(b -> b.asItem()).toArray(Item[]::new));
+		addToVanilla(CreativeModeTabs.INGREDIENTS, com.aquamarine.network.ModNetworks.BRASS_INGOT);
+		addToVanilla(CreativeModeTabs.TOOLS_AND_UTILITIES, com.aquamarine.network.ModNetworks.TIDE_WRENCH);
 		addToVanilla(CreativeModeTabs.FUNCTIONAL_BLOCKS, ModItems.AQUATIC_ENCHANTING_TABLE);
 		addToVanilla(CreativeModeTabs.TOOLS_AND_UTILITIES, ModItems.AQUATIC_RADAR);
 		addToVanilla(CreativeModeTabs.FOOD_AND_DRINKS, ModItems.RAW_WHALE_MEAT, ModItems.COOKED_WHALE_MEAT);

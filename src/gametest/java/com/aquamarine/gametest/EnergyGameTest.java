@@ -35,7 +35,7 @@ final class EnergyGameTest {
 			level.setBlockAndUpdate(new BlockPos(x, y + 1, z), Blocks.MAGMA_BLOCK.defaultBlockState());
 			level.setBlockAndUpdate(new BlockPos(x, y + 2, z), ModEnergy.VENT_GENERATOR.defaultBlockState());
 			for (int i = 1; i <= 3; i++) {
-				level.setBlockAndUpdate(new BlockPos(x + i, y + 2, z), ModEnergy.AQUATIC_CABLE.defaultBlockState());
+				level.setBlockAndUpdate(new BlockPos(x + i, y + 2, z), com.aquamarine.network.ModNetworks.AQUATIC_CABLE.defaultBlockState());
 			}
 			level.setBlockAndUpdate(new BlockPos(x + 4, y + 2, z), ModEnergy.NEUTRONIUM_COLLECTOR.defaultBlockState());
 			// Turbina com água corrente caindo ao lado; Boia com água embaixo e céu aberto.
