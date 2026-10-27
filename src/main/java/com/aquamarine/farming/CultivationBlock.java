@@ -25,15 +25,24 @@ public final class CultivationBlock extends FacingShapeBlock implements EntityBl
         this.kind = kind;
     }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return kind == Kind.JAR ? new CultivationJarBlockEntity(pos, state) : null;
+        return switch (kind) {
+            case JAR -> new CultivationJarBlockEntity(pos, state);
+            case ROPE -> new CultivationRopeBlockEntity(pos, state);
+            case BUOY -> new CultivationBuoyBlockEntity(pos, state);
+        };
     }
     @Override protected RenderShape getRenderShape(BlockState state) {
-        return kind == Kind.JAR ? RenderShape.INVISIBLE : RenderShape.MODEL;
+        return RenderShape.INVISIBLE;
     }
     @Override @SuppressWarnings("unchecked")
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return type == ModCultivation.JAR_ENTITY
-            ? (BlockEntityTicker<T>) (BlockEntityTicker<CultivationJarBlockEntity>) CultivationJarBlockEntity::tick : null;
+        if (type == ModCultivation.JAR_ENTITY)
+            return (BlockEntityTicker<T>) (BlockEntityTicker<CultivationJarBlockEntity>) CultivationJarBlockEntity::tick;
+        if (type == ModCultivation.ROPE_ENTITY && level.isClientSide())
+            return (BlockEntityTicker<T>) (BlockEntityTicker<CultivationRopeBlockEntity>) CultivationRopeBlockEntity::clientTick;
+        if (type == ModCultivation.BUOY_ENTITY)
+            return (BlockEntityTicker<T>) (BlockEntityTicker<CultivationBuoyBlockEntity>) CultivationBuoyBlockEntity::tick;
+        return null;
     }
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (kind == Kind.ROPE) return InteractionResult.PASS;
@@ -52,6 +61,7 @@ public final class CultivationBlock extends FacingShapeBlock implements EntityBl
                     } else pearls += jar.pearls();
                 }
             }
+            if (kind == Kind.BUOY && level.getBlockEntity(pos) instanceof CultivationBuoyBlockEntity buoy) buoy.refreshState();
             player.sendOverlayMessage(Component.translatable("message.aquamarine.cultivation", line.jars().size(), active, pearls, progress,
                 Component.translatable(line.anchored() ? "message.aquamarine.cultivation.connected" : "message.aquamarine.cultivation.disconnected")));
         }

@@ -39,6 +39,10 @@ public final class ModCultivation {
         Shapes.or(Block.box(2, 1, 2, 14, 8, 14), Block.box(7, 8, 7, 9, 16, 9)));
     public static final BlockEntityType<CultivationJarBlockEntity> JAR_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
         Aquamarine.id("cultivation_jar"), new BlockEntityType<>(CultivationJarBlockEntity::new, Set.of(CULTIVATION_JAR)));
+    public static final BlockEntityType<CultivationRopeBlockEntity> ROPE_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
+        Aquamarine.id("cultivation_rope"), new BlockEntityType<>(CultivationRopeBlockEntity::new, Set.of(CULTIVATION_ROPE)));
+    public static final BlockEntityType<CultivationBuoyBlockEntity> BUOY_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
+        Aquamarine.id("cultivation_buoy"), new BlockEntityType<>(CultivationBuoyBlockEntity::new, Set.of(CULTIVATION_BUOY)));
 
     private static Block block(String id, CultivationBlock.Kind kind, net.minecraft.world.phys.shapes.VoxelShape shape) {
         var key = ResourceKey.create(Registries.BLOCK, Aquamarine.id(id));
