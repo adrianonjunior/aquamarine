@@ -3,8 +3,17 @@ package com.aquamarine.energy;
 import com.aquamarine.machine.MachineMotion;
 import com.aquamarine.machine.MachineState;
 import com.aquamarine.machine.MachineView;
+import com.aquamarine.network.ModNetworks;
+import com.aquamarine.network.GasPort;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +33,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
@@ -36,8 +47,10 @@ import team.reborn.energy.api.base.SimpleEnergyStorage;
  * Gerador aquático (6E): produz conforme o lugar e empurra a energia para os vizinhos (cabos ou máquinas). Desde a 0.6.1
  * (7B) também é uma máquina animada: o servidor decide parada, funcionando ou sobrecarga e manda ao cliente só quando
  * muda; o cliente guarda o relógio ({@link MachineMotion}) e solta vapor ou bolhas a cada golpe dos pistões da Fenda.
+ * Na 7E a Fenda ganhou o modo fluido (água e lava pelo Cano, em qualquer lugar) e na 7F todo gerador pode ser regulado:
+ * com Ar Comprimido chegando pelo Tubo de Ar rende 25% a mais (docs/12-industria.md, 7E e 7F).
  */
-public class WaterGeneratorBlockEntity extends BlockEntity implements MachineView {
+public class WaterGeneratorBlockEntity extends BlockEntity implements MachineView, GasPort {
 	/** Duração do clipe {@code start} da Fenda (tools/models/machines/vent_generator/build_model.py). */
 	public static final double VENT_START = 1.6;
 	/** Meio ciclo do clipe {@code run} da Fenda: um golpe de pistão a 1x (o run tem 1,2 s). */
@@ -49,6 +62,13 @@ public class WaterGeneratorBlockEntity extends BlockEntity implements MachineVie
 	private static final int RELAX_AFTER = 10;
 	/** Só para os testes de jogo: geradores que produzem como se o lugar fosse bom (vitrine em terra firme). */
 	public static final Set<BlockPos> FORCED = ConcurrentHashMap.newKeySet();
+	/** Modo fluido da Fenda: um balde de água a cada 30 s e um de lava a cada 2,5 min (valores iniciais). */
+	public static final long WATER_USE = FluidConstants.BUCKET / 600;
+	public static final long LAVA_USE = FluidConstants.BUCKET / 3000;
+	/** Regulação: um balde de Ar Comprimido a cada 30 s; rende 5/4 da produção. */
+	public static final long AIR_USE = FluidConstants.BUCKET / 600;
+	public static final long TANK = 4 * FluidConstants.BUCKET;
+	public static final long AIR_TANK = 2 * FluidConstants.BUCKET;
 
 	public final SimpleEnergyStorage energy = new SimpleEnergyStorage(WaterEnergy.GENERATOR_CAPACITY, 0, WaterEnergy.GENERATOR_PUSH) {
 		@Override
@@ -63,6 +83,60 @@ public class WaterGeneratorBlockEntity extends BlockEntity implements MachineVie
 	private int drainTicks;
 	private final MachineMotion motion = new MachineMotion();
 	private long lastStroke = Long.MIN_VALUE;
+	private final Tank water = new Tank(Fluids.WATER, TANK);
+	private final Tank lava = new Tank(Fluids.LAVA, TANK);
+	private final Tank air = new Tank(ModNetworks.COMPRESSED_AIR, AIR_TANK);
+	/** O que entra pelos anéis: cada fluido vai para o seu tanque; nada sai. */
+	private final Storage<FluidVariant> inlet = FilteringStorage.insertOnlyOf(new CombinedStorage<>(List.of(water, lava, air)));
+	private boolean regulated;
+
+	/** Tanque de um fluido só, que avisa o bloco quando muda. */
+	private final class Tank extends SingleVariantStorage<FluidVariant> {
+		private final Fluid fluid;
+		private final long capacity;
+
+		Tank(Fluid fluid, long capacity) {
+			this.fluid = fluid;
+			this.capacity = capacity;
+		}
+
+		@Override
+		protected FluidVariant getBlankVariant() {
+			return FluidVariant.blank();
+		}
+
+		@Override
+		protected long getCapacity(FluidVariant variant) {
+			return capacity;
+		}
+
+		@Override
+		protected boolean canInsert(FluidVariant variant) {
+			return variant.isOf(fluid) && (fluid == ModNetworks.COMPRESSED_AIR || kind() == WaterGeneratorBlock.Kind.VENT);
+		}
+
+		@Override
+		protected void onFinalCommit() {
+			setChanged();
+		}
+
+		boolean has(long use) {
+			return amount >= use;
+		}
+
+		void use(long use) {
+			amount -= use;
+			if (amount <= 0) {
+				amount = 0;
+				variant = FluidVariant.blank();
+			}
+		}
+
+		void load(long stored) {
+			amount = Math.clamp(stored, 0, capacity);
+			variant = amount > 0 ? FluidVariant.of(fluid) : FluidVariant.blank();
+		}
+	}
 
 	public WaterGeneratorBlockEntity(BlockPos pos, BlockState state) {
 		super(ModEnergy.WATER_GENERATOR_ENTITY, pos, state);
@@ -110,6 +184,46 @@ public class WaterGeneratorBlockEntity extends BlockEntity implements MachineVie
 		return lastRate;
 	}
 
+	/** Água, lava e ar guardados (em gotas da Fabric). */
+	public long water() {
+		return water.amount;
+	}
+
+	public long lava() {
+		return lava.amount;
+	}
+
+	public long air() {
+		return air.amount;
+	}
+
+	/** Recebeu Ar Comprimido no último tick em que produziu. */
+	public boolean regulated() {
+		return regulated;
+	}
+
+	private Direction front() {
+		BlockState state = getBlockState();
+		return state.hasProperty(HorizontalDirectionalBlock.FACING) ? state.getValue(HorizontalDirectionalBlock.FACING) : null;
+	}
+
+	/** O Tubo de Ar liga em qualquer lado; na Fenda, menos na frente (a do mostrador). */
+	@Override
+	public boolean gasSide(Direction side) {
+		return kind() != WaterGeneratorBlock.Kind.VENT || side != front();
+	}
+
+	/** Só a Fenda recebe água e lava pelo Cano, pelos mesmos lados do ar. */
+	@Override
+	public boolean liquidSide(Direction side) {
+		return kind() == WaterGeneratorBlock.Kind.VENT && side != front();
+	}
+
+	/** API de fluidos: a entrada dos anéis, pelos lados em que o Cano ou o Tubo ligam. */
+	public Storage<FluidVariant> fluidPort(Direction side) {
+		return side == null || gasSide(side) ? inlet : null;
+	}
+
 	public MachineState machineState() {
 		return machine;
 	}
@@ -124,9 +238,26 @@ public class WaterGeneratorBlockEntity extends BlockEntity implements MachineVie
 			return;
 		}
 		long rate = rate(level, pos, be.kind());
+		// Modo fluido (7E): sem fenda no lugar, a Fenda gera com água e lava dos tanques, em qualquer lugar.
+		boolean fluid = rate == 0 && be.kind() == WaterGeneratorBlock.Kind.VENT && be.water.has(WATER_USE) && be.lava.has(LAVA_USE);
+		if (fluid) {
+			rate = WaterEnergy.VENT_RATE;
+		}
+		be.regulated = rate > 0 && be.air.has(AIR_USE);
+		if (be.regulated) {
+			rate = rate * 5 / 4;
+		}
 		be.lastRate = rate;
+		// Carga cheia: a máquina segue no estado (sobrecarga), mas não gasta água, lava nem ar.
 		if (rate > 0 && be.energy.amount < be.energy.capacity) {
 			be.energy.amount = Math.min(be.energy.capacity, be.energy.amount + rate);
+			if (fluid) {
+				be.water.use(WATER_USE);
+				be.lava.use(LAVA_USE);
+			}
+			if (be.regulated) {
+				be.air.use(AIR_USE);
+			}
 			be.setChanged();
 		}
 		WaterGeneratorBlock.setActive(level, pos, state, rate > 0);
@@ -222,6 +353,9 @@ public class WaterGeneratorBlockEntity extends BlockEntity implements MachineVie
 	protected void loadAdditional(ValueInput input) {
 		super.loadAdditional(input);
 		energy.amount = input.getLongOr("energy", 0L);
+		water.load(input.getLongOr("water", 0L));
+		lava.load(input.getLongOr("lava", 0L));
+		air.load(input.getLongOr("air", 0L));
 		machine = MachineState.byId(input.getByteOr("machine", (byte) 0));
 		speed = input.getFloatOr("speed", 1.0F);
 	}
@@ -230,6 +364,9 @@ public class WaterGeneratorBlockEntity extends BlockEntity implements MachineVie
 	protected void saveAdditional(ValueOutput output) {
 		super.saveAdditional(output);
 		output.putLong("energy", energy.amount);
+		output.putLong("water", water.amount);
+		output.putLong("lava", lava.amount);
+		output.putLong("air", air.amount);
 	}
 
 	@Override

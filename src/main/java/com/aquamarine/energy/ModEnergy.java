@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import team.reborn.energy.api.EnergyStorage;
 
 /**
@@ -70,6 +71,7 @@ public final class ModEnergy {
 	public static void register() {
 		BLOCKS.forEach(block -> ModItems.registerBlock(block, new Item.Properties()));
 		EnergyStorage.SIDED.registerForBlockEntity((be, side) -> be.energy, WATER_GENERATOR_ENTITY);
+		FluidStorage.SIDED.registerForBlockEntity(WaterGeneratorBlockEntity::fluidPort, WATER_GENERATOR_ENTITY);
 		EnergyStorage.SIDED.registerForBlockEntity((be, side) -> be.energy, COLLECTOR_ENTITY);
 	}
 

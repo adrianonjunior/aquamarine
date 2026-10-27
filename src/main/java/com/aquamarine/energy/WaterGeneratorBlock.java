@@ -1,6 +1,7 @@
 package com.aquamarine.energy;
 
 import com.aquamarine.block.FacingShapeBlock;
+import java.util.Locale;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -76,11 +77,21 @@ public class WaterGeneratorBlock extends FacingShapeBlock implements EntityBlock
 		return kind == Kind.VENT ? RenderShape.INVISIBLE : RenderShape.MODEL;
 	}
 
+	private static String bucket(long droplets) {
+		return String.format(Locale.ROOT, "%.1f", droplets / 81000.0);
+	}
+
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
 		if (!level.isClientSide() && level.getBlockEntity(pos) instanceof WaterGeneratorBlockEntity be) {
-			player.sendOverlayMessage(Component.translatable("message.aquamarine.energy.generator", be.energy.amount, be.energy.capacity,
-				WaterGeneratorBlockEntity.rate(level, pos, kind)));
+			Component line = Component.translatable("message.aquamarine.energy.generator", be.energy.amount, be.energy.capacity,
+				be.lastRate());
+			// Fenda com tanques ou gerador com ar: mostra também o que guarda (em baldes, com uma casa).
+			if (kind == Kind.VENT && be.water() + be.lava() > 0 || be.air() > 0) {
+				line = Component.translatable("message.aquamarine.energy.generator.tanks", line, bucket(be.water()), bucket(be.lava()),
+					bucket(be.air()));
+			}
+			player.sendOverlayMessage(line);
 		}
 		return InteractionResult.SUCCESS;
 	}
