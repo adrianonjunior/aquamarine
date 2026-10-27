@@ -1,11 +1,12 @@
-# Fase 0.6.1: Indústria aquática (ideia, planejada)
+# Fase 0.6.1: Indústria aquática
 
 > **Dono de:** a especificação da `0.6.1` (fazendas, mobs, redes de transporte, máquinas, arte e animação das máquinas, aba
 > "Máquinas" do Atlas). **Decisões** em [00-decisoes.md](00-decisoes.md) (linhas "0.6.1"); **faixas e ondas** em
 > [07-roadmap.md](07-roadmap.md), "0.6.1"; regras de agentes em [../AGENTS.md](../AGENTS.md). Números são valores iniciais a testar.
 
-> **ESTADO: PLANEJADA, NÃO LIBERADA.** Nenhum agente escreve código, texturas ou modelos daqui até o Adriano liberar a fase
-> ou uma faixa explicitamente.
+> **ESTADO: 7A E 7B LIBERADAS (26/10/2026).** O agente da 0.6.1 faz a 7A e a 7B e entrega o Gerador de Fenda (modelo,
+> textura, animações, aba "Máquinas" e capturas); **para aí e espera o aval do Adriano** antes das outras máquinas. As
+> outras faixas seguem planejadas: ninguém escreve código, texturas ou modelos delas antes desse aval.
 
 > **FOCO DO AGENTE (pedido do Adriano).** Quem trabalhar nesta fase foca **só nesta etapa**: leia este arquivo e a faixa que
 > recebeu, use o próprio mod como **referência** (por exemplo `AnchorBuoyBlock`, `tools/gen_phase6_energy.py`, `tools/models/`),
@@ -20,8 +21,8 @@
 ## Painel
 | Faixa | O que | Estado | Depende de |
 |---|---|---|---|
-| 7A | Água dentro dos blocos (waterlogged) em todo bloco do mod | planejada | nada |
-| 7B | Pipeline de máquinas animadas, bíblia de arte e aba "Máquinas" do Atlas | planejada | nada |
+| 7A | Água dentro dos blocos (waterlogged) em todo bloco do mod | em andamento | nada |
+| 7B | Pipeline de máquinas animadas, bíblia de arte e aba "Máquinas" do Atlas | em andamento | nada |
 | 7C | Redes: Cano de fluido, Tubo de Ar, cabos novos, Chave de Maré, conteúdo visível | planejada | 7A, 7B |
 | 7D | Bomba de Maré, Tanque d'Água e exceção dos geradores | planejada | 7C |
 | 7E | Gerador de Fenda refeito (animado) e geradores com fluido | planejada | 7B, 7C, 7D |
