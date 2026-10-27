@@ -13,11 +13,15 @@ import net.minecraft.core.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 /** Onda 3: conservação transacional, coluna/persistência, bombeamento real, cultivo e fauna. */
 final class IndustryWave3GameTest {
@@ -37,7 +41,35 @@ final class IndustryWave3GameTest {
         server.runCommand(String.format("forceload add %d %d %d %d",o.getX()-5,o.getZ()-3,o.getX()+17,o.getZ()+18));
         server.runOnServer(s->{
             var l=s.overworld();
-            s.getPlayerList().getPlayers().getFirst().setGameMode(GameType.SPECTATOR);
+            var player=s.getPlayerList().getPlayers().getFirst();
+            player.setGameMode(GameType.SPECTATOR);
+            // A Corda só nasce ligada a uma linha que já alcance Garrafão ou Boia.
+            BlockPos rule=o.offset(12,0,-2);
+            BlockPlaceContext isolated=new BlockPlaceContext(player,net.minecraft.world.InteractionHand.MAIN_HAND,
+                new ItemStack(ModCultivation.CULTIVATION_ROPE),new BlockHitResult(Vec3.atCenterOf(rule),Direction.UP,rule,false));
+            check(ModCultivation.CULTIVATION_ROPE.getStateForPlacement(isolated)==null,"Corda isolada pôde ser colocada");
+            Direction facing=player.getDirection().getOpposite();
+            Direction.Axis lineAxis=facing.getClockWise().getAxis();
+            Direction towardAnchor=lineAxis==Direction.Axis.X?Direction.WEST:Direction.NORTH;
+            BlockState anchorState=ModCultivation.CULTIVATION_JAR.defaultBlockState()
+                .setValue(com.aquamarine.block.FacingShapeBlock.FACING,facing);
+            l.setBlockAndUpdate(rule.relative(towardAnchor),anchorState);
+            BlockState first=ModCultivation.CULTIVATION_ROPE.getStateForPlacement(isolated);
+            check(first!=null,"Corda recusou Garrafão alinhado");
+            l.setBlockAndUpdate(rule,first);
+            BlockPos extension=rule.relative(towardAnchor.getOpposite());
+            BlockPlaceContext extended=new BlockPlaceContext(player,net.minecraft.world.InteractionHand.MAIN_HAND,
+                new ItemStack(ModCultivation.CULTIVATION_ROPE),new BlockHitResult(Vec3.atCenterOf(extension),Direction.UP,extension,false));
+            check(ModCultivation.CULTIVATION_ROPE.getStateForPlacement(extended)!=null,"Corda não prolongou linha ancorada");
+            place(l,rule,Blocks.AIR); place(l,rule.relative(towardAnchor),Blocks.AIR);
+            Direction perpendicular=lineAxis==Direction.Axis.X?Direction.NORTH:Direction.WEST;
+            l.setBlockAndUpdate(rule.relative(perpendicular),anchorState);
+            check(ModCultivation.CULTIVATION_ROPE.getStateForPlacement(isolated)==null,"Corda aceitou Garrafão fora do eixo");
+            place(l,rule.relative(perpendicular),Blocks.AIR);
+            l.setBlockAndUpdate(rule.relative(towardAnchor),ModCultivation.CULTIVATION_BUOY.defaultBlockState()
+                .setValue(com.aquamarine.block.FacingShapeBlock.FACING,facing));
+            check(ModCultivation.CULTIVATION_ROPE.getStateForPlacement(isolated)!=null,"Corda recusou Boia alinhada");
+            place(l,rule.relative(towardAnchor),Blocks.AIR);
             for(BlockPos p:BlockPos.betweenClosed(o.offset(-5,-1,-3),o.offset(17,-1,18))) place(l,p,Blocks.SMOOTH_STONE);
             for(BlockPos p:BlockPos.betweenClosed(o.offset(-5,0,-3),o.offset(17,5,18))) place(l,p,Blocks.AIR);
             place(l,stack,ModHydraulics.WATER_TANK); place(l,stack.above(),ModHydraulics.WATER_TANK);
