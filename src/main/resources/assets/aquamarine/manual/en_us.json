@@ -1,0 +1,160 @@
+{
+  "title": "Aquamarine",
+  "subtitle": "Aquatic industry",
+  "intro": [
+    {"text": "New machines, pipes and creatures, **step by step**, with pictures from the game."},
+    {"tip": "Click a picture to enlarge it. Lost the book? Type **/aquamarine help**."}
+  ],
+  "chapters": [
+    {
+      "title": "First steps",
+      "icon": "aquamarine:brass_ingot",
+      "color": "#c2a255",
+      "content": [
+        {"title": "Recipes in JEI"},
+        {"text": "Hover an item and press **R** to see its recipe, or **U** to see what it is used for."},
+        {"title": "Brass Ingot", "icon": "aquamarine:brass_ingot"},
+        {"text": "The metal behind almost all of the industry. Combine copper and gold at a crafting table:"},
+        {"recipe": "aquamarine:brass_ingot", "caption": "3 copper ingots + 1 gold nugget make 3 brass."},
+        {"title": "Oyster Pearl", "icon": "aquamarine:oyster_pearl"},
+        {"text": "The **core** of the machines: the Pump, Tank, Compressor and Lung each need one. It comes from oysters (chapter 6)."},
+        {"title": "Tide Wrench", "icon": "aquamarine:tide_wrench"},
+        {"recipe": "aquamarine:tide_wrench"},
+        {"step": "Click the **end of a pipe** that touches a machine with the Wrench."},
+        {"step": "Each click switches that side: **out** (amber arrow), **in** (cyan arrow) and **off** (red X)."},
+        {"image": "chave_lados", "caption": "The amber arrow on top of the pipe points at the machine: the pipe delivers (out)."},
+        {"text": "**Out**: the pipe delivers to the machine. **In**: the pipe pulls from the machine. Machines push on their own, so the default (out) almost always works."},
+        {"text": "Clicking the **face of a machine** (Tank, Pump, Compressor, Lung) switches that side of the machine itself. The message on screen shows the mode."},
+        {"tip": "Click between two pipes to cut or rejoin them. Sneaking, the Wrench rotates the machine."}
+      ]
+    },
+    {
+      "title": "Energy and cables",
+      "icon": "aquamarine:aquatic_cable",
+      "color": "#3f7ff0",
+      "content": [
+        {"title": "Generators"},
+        {"items": ["aquamarine:vent_generator", "aquamarine:current_turbine", "aquamarine:wave_buoy"], "caption": "Vent, Turbine and Wave Buoy."},
+        {"text": "**Vent Generator**: 32 E/t with a magma block below and water above (or with Tanks, chapter 4)."},
+        {"image": "energia_fenda", "caption": "A Vent underwater, on top of a magma block."},
+        {"text": "**Current Turbine**: 4 E/t per side with flowing water. **Wave Buoy**: on the surface, 4 E/t; double in rain."},
+        {"title": "Moving the energy", "icon": "aquamarine:aquatic_cable"},
+        {"step": "Place the generator."},
+        {"step": "Run **Aquatic Cable** from the generator to the machine. It connects by itself and shows a blue ring on it."},
+        {"step": "Done: the generator pushes energy through the cable."},
+        {"image": "bomba_2", "caption": "Vent, Aquatic Cable and Tide Pump."},
+        {"recipe": "aquamarine:aquatic_cable"},
+        {"text": "**Reinforced Cable**: 2048 E/t (the plain one carries 256). **Switch**: click to cut the energy. **Window**: shows the charge passing."},
+        {"tip": "Click a generator with an empty hand to see its charge and what it makes right now."}
+      ]
+    },
+    {
+      "title": "Pipes and Tanks",
+      "icon": "aquamarine:water_tank",
+      "color": "#2a8c9c",
+      "content": [
+        {"title": "Pipe", "icon": "aquamarine:fluid_pipe"},
+        {"text": "Carries **water** or **lava**, one at a time: 1 bucket per second at each output (the Reinforced Pipe carries 4)."},
+        {"recipe": "aquamarine:fluid_pipe"},
+        {"title": "Tide Pump", "icon": "aquamarine:tide_pump"},
+        {"step": "Place the Pump **touching a water source**. In a lake or the sea the source never runs out (2 neighbor sources and ground below)."},
+        {"image": "bomba_1", "caption": "A Pump at the edge of a lake."},
+        {"step": "Power it with a **Cable** from a generator. Each bucket costs 160 E."},
+        {"image": "bomba_2", "caption": "A Vent Generator powering the Pump through a cable."},
+        {"step": "Run a **Pipe** from the Pump to a **Water Tank**. The water flows by itself, 1 bucket per second."},
+        {"image": "bomba_3", "caption": "Water reaches the Tank and the level rises."},
+        {"recipe": "aquamarine:tide_pump"},
+        {"title": "Water Tank", "icon": "aquamarine:water_tank"},
+        {"text": "Holds **64 buckets**. Stack them to add up: the top one drains into the one below. Each column holds one liquid (water or lava)."},
+        {"image": "tanque_coluna", "caption": "A column of three Tanks: 192 buckets."},
+        {"step": "A full bucket on the Tank empties it in; an empty bucket fills up."},
+        {"step": "The Tank **takes from every side and outputs at the bottom**. To output on a side, click it with the Wrench until the message says **out**."},
+        {"recipe": "aquamarine:water_tank"},
+        {"tip": "**Valve**: click to open or close the pipe. **Window**: shows the liquid passing. A broken pipe with water leaves a source."}
+      ]
+    },
+    {
+      "title": "Vent Generator",
+      "icon": "aquamarine:vent_generator",
+      "color": "#ec7117",
+      "content": [
+        {"text": "The Vent makes **32 E/t** in two ways."},
+        {"title": "World mode (free)"},
+        {"step": "Place a **magma block** on the sea floor."},
+        {"step": "Put the Vent on top of it, with **water above** it."},
+        {"image": "energia_fenda", "caption": "Bubbles from the chimney: the Vent is running."},
+        {"title": "Fluid mode (anywhere)"},
+        {"step": "Place the Vent anywhere, even on dry land."},
+        {"step": "Fill one **Tank with water** and another **with lava** (bucket or Pump)."},
+        {"step": "Set each Tank **on top of a Pipe** (it outputs at the bottom) and run the Pipe to a side of the Vent, **except the front** (the one with the dial)."},
+        {"image": "fenda_fluido", "caption": "Lava on one side, water on the other: the Vent works on land."},
+        {"text": "It uses 1 bucket of water every 30 s and 1 of lava every 2.5 min. The Vent sorts water and lava by itself."},
+        {"tip": "With a full charge it uses nothing. World mode comes first, since it is free."},
+        {"recipe": "aquamarine:vent_generator"}
+      ]
+    },
+    {
+      "title": "Compressed Air",
+      "icon": "aquamarine:iron_lung",
+      "color": "#8e97a1",
+      "content": [
+        {"text": "A generator fed **Compressed Air** through an Air Tube makes **25% more** (the Vent goes to 40 E/t)."},
+        {"title": "Air Compressor", "icon": "aquamarine:air_compressor"},
+        {"text": "Uses 8 E/t and makes 1 bucket of air every 10 s. It pushes the air into the Tubes connected to it."},
+        {"recipe": "aquamarine:air_compressor"},
+        {"title": "Iron Lung", "icon": "aquamarine:iron_lung"},
+        {"text": "Holds **256 buckets** of air. **Takes from the sides and releases from the back**, 1 bucket per second. When full it only vents: it never explodes."},
+        {"recipe": "aquamarine:iron_lung"},
+        {"title": "Building the air line", "icon": "aquamarine:air_tube"},
+        {"step": "Power the Compressor with a **Cable**."},
+        {"step": "Run an **Air Tube** from the Compressor to one side of the Lung."},
+        {"image": "ar_1", "caption": "Compressor, Air Tube and Iron Lung."},
+        {"step": "From the **back** of the Lung, run another Tube to the generators."},
+        {"image": "ar_2", "caption": "Lung, Air Tube and a regulated Vent."},
+        {"step": "Each generator with air uses 1 bucket every 30 s. Without air it goes back to normal."},
+        {"recipe": "aquamarine:air_tube"},
+        {"tip": "The Air Tube does not connect to Pipes or liquid machines. On the Vent it connects on any side except the front."}
+      ]
+    },
+    {
+      "title": "Oysters and pearls",
+      "icon": "aquamarine:oyster_pearl",
+      "color": "#7fb7c4",
+      "content": [
+        {"title": "Oyster"},
+        {"text": "Lives on the floor of **warm oceans**. Closes its shell when someone gets close. **15%** carry a Pearl, dropped when the oyster dies."},
+        {"image": "ostra", "caption": "Oysters on a warm ocean floor."},
+        {"title": "Pearl farm", "icon": "aquamarine:cultivation_jar"},
+        {"step": "Underwater, place a **Cultivation Jar**."},
+        {"step": "Next to it, a **Cultivation Rope**; keep alternating Jar and Rope in a **straight line**."},
+        {"step": "End the line with a **Cultivation Buoy**. All facing the same way."},
+        {"image": "cultivo", "caption": "Jar, Rope, Jar, Rope and Buoy."},
+        {"step": "Wait: each Jar makes **1 pearl every 8 min** (+10% per neighbor Jar, up to +50%)."},
+        {"step": "Click the **Buoy** to see the production and collect the pearls."},
+        {"tip": "The water must be clean: no magma block near the Jars."},
+        {"recipe": "aquamarine:cultivation_jar"},
+        {"recipe": "aquamarine:cultivation_rope"},
+        {"recipe": "aquamarine:cultivation_buoy"},
+        {"title": "Aurium refining", "icon": "aquamarine:aurium_ingot"},
+        {"text": "In the **Abyssal Forge**, Raw Aurium + Pearl make 2 Aurium ingots."},
+        {"recipe": "aquamarine:aurium_refining", "station": "aquamarine:abyssal_forge"}
+      ]
+    },
+    {
+      "title": "Crab and Shield",
+      "icon": "aquamarine:shell_shield",
+      "color": "#c4553a",
+      "content": [
+        {"title": "Crab", "icon": "aquamarine:crab_shell"},
+        {"text": "Rare, on **beaches**. Walks sideways, burrows into the sand when scared and comes back later. Cornered, it pinches. More active at night."},
+        {"image": "caranguejo", "caption": "A crab on the beach."},
+        {"step": "Give it **raw fish** (cod, salmon or tropical): it waves, gains hearts, stays tame for a minute and no longer despawns."},
+        {"step": "When it dies it drops the **Crab Shell**."},
+        {"title": "Shell Shield", "icon": "aquamarine:shell_shield"},
+        {"recipe": "aquamarine:shell_shield"},
+        {"text": "A stronger shield: **672 durability** (double), recovers faster when an axe disables it and whales push you less."},
+        {"tip": "Use it like any shield: hold right-click to block."}
+      ]
+    }
+  ]
+}

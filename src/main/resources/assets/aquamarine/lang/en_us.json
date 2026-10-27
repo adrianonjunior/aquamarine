@@ -642,5 +642,19 @@
   "tooltip.aquamarine.wave_buoy.2": "With Compressed Air through an Air Tube: +25%.",
   "message.aquamarine.pneumatic.compressor": "Air: %s / %s buckets · %s E",
   "message.aquamarine.pneumatic.lung": "Air: %s / %s buckets",
-  "message.aquamarine.energy.generator.tanks": "%s · water %s · lava %s · air %s buckets"
+  "message.aquamarine.energy.generator.tanks": "%s · water %s · lava %s · air %s buckets",
+  "item.aquamarine.manual": "Aquamarine Manual",
+  "tooltip.aquamarine.manual": "Step-by-step guide to the aquatic industry, with pictures.",
+  "tooltip.aquamarine.manual.2": "Right-click to open. Lost it? Type /aquamarine help.",
+  "manual.aquamarine.index": "Contents",
+  "manual.aquamarine.chapter": "Chapter %s",
+  "manual.aquamarine.zoom": "Click to enlarge",
+  "manual.aquamarine.no_image": "(picture coming soon)",
+  "manual.aquamarine.no_recipe": "Recipe in JEI: hover the item and press R.",
+  "manual.aquamarine.crafting": "At a crafting table",
+  "manual.aquamarine.station": "At: %s",
+  "manual.aquamarine.shapeless": ", in any order",
+  "commands.aquamarine.help.given": "You got the Aquamarine Manual. Right-click it to open it again.",
+  "commands.aquamarine.help.open": "Aquamarine Manual opened (it is already in your inventory).",
+  "commands.aquamarine.help.player": "Only a player can open the Manual."
 }

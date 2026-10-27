@@ -1,0 +1,160 @@
+{
+  "title": "Aquamarine",
+  "subtitle": "Indústria aquática",
+  "intro": [
+    {"text": "Máquinas, canos e criaturas novas, **passo a passo**, com prints do jogo."},
+    {"tip": "Clique num print para ampliar. Perdeu o livro? Digite **/aquamarine help**."}
+  ],
+  "chapters": [
+    {
+      "title": "Primeiros passos",
+      "icon": "aquamarine:brass_ingot",
+      "color": "#c2a255",
+      "content": [
+        {"title": "Receitas no JEI"},
+        {"text": "Passe o mouse num item e aperte **R** para ver a receita ou **U** para ver para que ele serve."},
+        {"title": "Lingote de Latão", "icon": "aquamarine:brass_ingot"},
+        {"text": "O metal de quase tudo da indústria. Junte cobre e ouro na bancada:"},
+        {"recipe": "aquamarine:brass_ingot", "caption": "3 lingotes de cobre + 1 pepita de ouro dão 3 de latão."},
+        {"title": "Pérola de Ostra", "icon": "aquamarine:oyster_pearl"},
+        {"text": "É o **núcleo** das máquinas: Bomba, Tanque, Compressor e Pulmão levam uma. Ela vem das ostras (capítulo 6)."},
+        {"title": "Chave de Maré", "icon": "aquamarine:tide_wrench"},
+        {"recipe": "aquamarine:tide_wrench"},
+        {"step": "Clique com a Chave na **ponta de um cano** que encosta numa máquina."},
+        {"step": "Cada clique troca o lado: **sai** (seta âmbar), **entra** (seta ciano) e **desligado** (X vermelho)."},
+        {"image": "chave_lados", "caption": "A seta âmbar em cima do cano aponta para a máquina: o cano entrega (sai)."},
+        {"text": "**Sai**: o cano entrega para a máquina. **Entra**: o cano puxa da máquina. As máquinas já empurram sozinhas, então o padrão (sai) quase sempre serve."},
+        {"text": "Clicando direto na **face de uma máquina** (Tanque, Bomba, Compressor, Pulmão), a Chave troca aquele lado da própria máquina. A mensagem na tela diz o modo."},
+        {"tip": "Clique entre dois canos para cortar ou religar. Agachado, a Chave gira a máquina."}
+      ]
+    },
+    {
+      "title": "Energia e cabos",
+      "icon": "aquamarine:aquatic_cable",
+      "color": "#3f7ff0",
+      "content": [
+        {"title": "Geradores"},
+        {"items": ["aquamarine:vent_generator", "aquamarine:current_turbine", "aquamarine:wave_buoy"], "caption": "Fenda, Turbina e Boia de Ondas."},
+        {"text": "**Gerador de Fenda**: 32 E/t com bloco de magma embaixo e água em cima (ou com Tanques, capítulo 4)."},
+        {"image": "energia_fenda", "caption": "Fenda no fundo d'água, em cima de um bloco de magma."},
+        {"text": "**Turbina de Correnteza**: 4 E/t por lado com água corrente. **Boia de Ondas**: na superfície, 4 E/t; o dobro na chuva."},
+        {"title": "Levar a energia", "icon": "aquamarine:aquatic_cable"},
+        {"step": "Coloque o gerador."},
+        {"step": "Puxe **Cabo Aquático** do gerador até a máquina. O cabo liga sozinho e mostra um anel azul nela."},
+        {"step": "Pronto: o gerador empurra a energia pelo cabo."},
+        {"image": "bomba_2", "caption": "Fenda, Cabo Aquático e Bomba de Maré."},
+        {"recipe": "aquamarine:aquatic_cable"},
+        {"text": "**Cabo Reforçado**: 2048 E/t (o comum leva 256). **Interruptor**: clique para cortar a energia. **Visor**: mostra a carga passando."},
+        {"tip": "Clique num gerador com a mão vazia para ver a carga e quanto ele gera agora."}
+      ]
+    },
+    {
+      "title": "Canos e Tanques",
+      "icon": "aquamarine:water_tank",
+      "color": "#2a8c9c",
+      "content": [
+        {"title": "Cano", "icon": "aquamarine:fluid_pipe"},
+        {"text": "Leva **água** ou **lava**, uma de cada vez: 1 balde por segundo em cada saída (o Cano Reforçado leva 4)."},
+        {"recipe": "aquamarine:fluid_pipe"},
+        {"title": "Bomba de Maré", "icon": "aquamarine:tide_pump"},
+        {"step": "Coloque a Bomba **encostada numa fonte de água**. Num lago ou no mar a fonte nunca acaba (2 fontes vizinhas e chão embaixo)."},
+        {"image": "bomba_1", "caption": "Bomba na beira de um lago."},
+        {"step": "Dê energia com um **Cabo** vindo de um gerador. Cada balde gasta 160 E."},
+        {"image": "bomba_2", "caption": "Gerador de Fenda ligado à Bomba pelo cabo."},
+        {"step": "Puxe um **Cano** da Bomba até um **Tanque d'Água**. A água vai sozinha, 1 balde por segundo."},
+        {"image": "bomba_3", "caption": "A água chega ao Tanque e o nível sobe."},
+        {"recipe": "aquamarine:tide_pump"},
+        {"title": "Tanque d'Água", "icon": "aquamarine:water_tank"},
+        {"text": "Guarda **64 baldes**. Empilhe para somar: o de cima escoa para o de baixo. Cada coluna guarda um líquido só (água ou lava)."},
+        {"image": "tanque_coluna", "caption": "Coluna de três Tanques: 192 baldes."},
+        {"step": "Balde cheio no Tanque despeja; balde vazio enche."},
+        {"step": "O Tanque **recebe por todos os lados e solta por baixo**. Para soltar por um lado, clique nele com a Chave até a mensagem dizer **sai**."},
+        {"recipe": "aquamarine:water_tank"},
+        {"tip": "**Válvula**: clique para abrir ou fechar o cano. **Visor**: mostra o líquido passando. Cano com água quebrado solta uma fonte."}
+      ]
+    },
+    {
+      "title": "Gerador de Fenda",
+      "icon": "aquamarine:vent_generator",
+      "color": "#ec7117",
+      "content": [
+        {"text": "A Fenda gera **32 E/t** de dois jeitos."},
+        {"title": "Modo mundo (de graça)"},
+        {"step": "Coloque um **bloco de magma** no fundo d'água."},
+        {"step": "Ponha a Fenda em cima dele, com **água em cima** dela."},
+        {"image": "energia_fenda", "caption": "Bolhas na chaminé: a Fenda está gerando."},
+        {"title": "Modo fluido (em qualquer lugar)"},
+        {"step": "Coloque a Fenda onde quiser, até em terra firme."},
+        {"step": "Encha um **Tanque com água** e outro **com lava** (balde ou Bomba)."},
+        {"step": "Ponha cada Tanque **em cima de um Cano** (ele solta por baixo) e leve o Cano até um lado da Fenda, **menos a frente** (a do mostrador)."},
+        {"image": "fenda_fluido", "caption": "Lava de um lado, água do outro: a Fenda funciona em terra."},
+        {"text": "Gasta 1 balde de água a cada 30 s e 1 de lava a cada 2,5 min. A Fenda separa a água da lava sozinha."},
+        {"tip": "Com a carga cheia ela não gasta nada. O modo mundo vem primeiro, porque é de graça."},
+        {"recipe": "aquamarine:vent_generator"}
+      ]
+    },
+    {
+      "title": "Ar Comprimido",
+      "icon": "aquamarine:iron_lung",
+      "color": "#8e97a1",
+      "content": [
+        {"text": "Gerador que recebe **Ar Comprimido** pelo Tubo de Ar rende **25% a mais** (a Fenda vai a 40 E/t)."},
+        {"title": "Compressor de Ar", "icon": "aquamarine:air_compressor"},
+        {"text": "Gasta 8 E/t e faz 1 balde de ar a cada 10 s. Empurra o ar para os Tubos ligados nele."},
+        {"recipe": "aquamarine:air_compressor"},
+        {"title": "Pulmão de Ferro", "icon": "aquamarine:iron_lung"},
+        {"text": "Guarda **256 baldes** de ar. **Recebe pelos lados e solta por trás**, 1 balde por segundo. Cheio, só abre a válvula: nunca explode."},
+        {"recipe": "aquamarine:iron_lung"},
+        {"title": "Montando a linha de ar", "icon": "aquamarine:air_tube"},
+        {"step": "Dê energia ao Compressor com um **Cabo**."},
+        {"step": "Puxe um **Tubo de Ar** do Compressor até um lado do Pulmão."},
+        {"image": "ar_1", "caption": "Compressor, Tubo de Ar e Pulmão de Ferro."},
+        {"step": "Da **parte de trás** do Pulmão, puxe outro Tubo até os geradores."},
+        {"image": "ar_2", "caption": "Pulmão, Tubo de Ar e uma Fenda regulada."},
+        {"step": "Cada gerador com ar gasta 1 balde a cada 30 s. Sem ar, volta ao normal."},
+        {"recipe": "aquamarine:air_tube"},
+        {"tip": "O Tubo de Ar não liga em Cano nem em máquina de líquido. Na Fenda, liga em qualquer lado menos a frente."}
+      ]
+    },
+    {
+      "title": "Ostras e pérolas",
+      "icon": "aquamarine:oyster_pearl",
+      "color": "#7fb7c4",
+      "content": [
+        {"title": "Ostra"},
+        {"text": "Vive no fundo de **oceanos mornos**. Fecha a concha quando alguém chega perto. **15%** carregam uma Pérola, que cai quando a ostra morre."},
+        {"image": "ostra", "caption": "Ostras no fundo de um oceano morno."},
+        {"title": "Fazenda de pérolas", "icon": "aquamarine:cultivation_jar"},
+        {"step": "Debaixo d'água, coloque um **Garrafão de Cultivo**."},
+        {"step": "Ao lado, uma **Corda de Cultivo**; siga alternando Garrafão e Corda em **linha reta**."},
+        {"step": "Feche a linha com uma **Boia de Cultivo**. Todos virados para o mesmo lado."},
+        {"image": "cultivo", "caption": "Garrafão, Corda, Garrafão, Corda e Boia."},
+        {"step": "Espere: cada Garrafão faz **1 pérola a cada 8 min** (+10% por Garrafão vizinho, até +50%)."},
+        {"step": "Clique na **Boia** para ver a produção e recolher as pérolas."},
+        {"tip": "A água precisa ser limpa: nenhum bloco de magma perto dos Garrafões."},
+        {"recipe": "aquamarine:cultivation_jar"},
+        {"recipe": "aquamarine:cultivation_rope"},
+        {"recipe": "aquamarine:cultivation_buoy"},
+        {"title": "Refino do Aurium", "icon": "aquamarine:aurium_ingot"},
+        {"text": "Na **Forja Abissal**, Aurium Bruto + Pérola dão 2 lingotes de Aurium."},
+        {"recipe": "aquamarine:aurium_refining", "station": "aquamarine:abyssal_forge"}
+      ]
+    },
+    {
+      "title": "Caranguejo e Escudo",
+      "icon": "aquamarine:shell_shield",
+      "color": "#c4553a",
+      "content": [
+        {"title": "Caranguejo", "icon": "aquamarine:crab_shell"},
+        {"text": "Raro, nas **praias**. Anda de lado, se enterra na areia quando assustado e volta depois. Encurralado, belisca. À noite fica mais ativo."},
+        {"image": "caranguejo", "caption": "Caranguejo na praia."},
+        {"step": "Dê **peixe cru** (bacalhau, salmão ou tropical): ele acena, ganha corações, fica manso por um minuto e não some mais."},
+        {"step": "Ao morrer, ele solta a **Concha de Caranguejo**."},
+        {"title": "Escudo de Concha", "icon": "aquamarine:shell_shield"},
+        {"recipe": "aquamarine:shell_shield"},
+        {"text": "Um escudo mais forte: **672 de durabilidade** (o dobro), volta mais rápido quando um machado o desarma e baleias empurram menos."},
+        {"tip": "Use como qualquer escudo: segure o botão direito para bloquear."}
+      ]
+    }
+  ]
+}
