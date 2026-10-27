@@ -626,7 +626,7 @@
   "message.aquamarine.cultivation": "%s garrafões · %s produzindo · %s pérolas · %s%% · %s",
   "message.aquamarine.cultivation.connected": "linha ligada",
   "message.aquamarine.cultivation.disconnected": "falta ligar à Boia",
-  "jei.aquamarine.obtain.crab.1": "Caranguejos raros nas praias arenosas carregam a Concha.",
+  "jei.aquamarine.obtain.crab.1": "Caranguejos vivem nas praias, raros e mais ativos à noite: cada um solta uma Concha de Caranguejo.",
   "jei.aquamarine.obtain.crab.2": "Aceitam peixe cru; fogem para a areia quando ameaçados.",
   "jei.aquamarine.obtain.oyster.1": "Ostras vivem no fundo de oceanos mornos, até 20 blocos de profundidade. 15% carregam uma pérola.",
   "jei.aquamarine.obtain.oyster.2": "Garrafões ligados por Corda à Boia, em água limpa: 8 min por pérola, até +50% por vizinhos."

@@ -27,6 +27,7 @@ public record ObtainRecipe(String key, List<ItemStack> inputs, List<ItemStack> o
 	public static List<ObtainRecipe> all() {
 		return List.of(
 			of("oyster", List.of(com.aquamarine.farming.ModCultivation.CULTIVATION_JAR), List.of(com.aquamarine.farming.ModCultivation.OYSTER_PEARL), 2),
+			of("crab", List.of(), List.of(ModItems.CRAB_SHELL), 1),
 			of("crab", List.of(), List.of(ModItems.CRAB_SHELL), 2),
 			of("tempering", List.of(ModItems.UNSTABLE_NEUTRONIUM_INGOT), List.of(ModItems.NEUTRONIUM_INGOT), 2),
 			of("neutronium_ore", List.of(), List.of(ModItems.NEUTRONIUM_ORE, ModItems.RAW_NEUTRONIUM), 2),

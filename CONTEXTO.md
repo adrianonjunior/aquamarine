@@ -33,7 +33,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 | Tarefa | Agente | Recurso | Desde |
 |---|---|---|---|
 | Publicar e verificar link ngrok do Atlas de amostra | Codex | Servidor Atlas 8767 e túnel ngrok | 25/10/2026 |
-| 0.6.1: ondas 3 e 4 (7D, 7G, 7H, 7E e 7F), transferidas por Adriano; worktree `.worktrees/codex-industria`, branch `codex/industria` | Codex | Gradle e jogo de teste da worktree; coordenação das faixas | 27/10/2026 |
+| 0.6.1: ondas 3 e 4 (7D, 7G, 7H, 7E e 7F), retomadas do Codex a pedido do Adriano em 27/10/2026; worktree `.worktrees/codex-industria`, branch `codex/industria` | Claude Opus 5.5 | Gradle e jogo de teste da worktree; coordenação das faixas | 27/10/2026 |
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.

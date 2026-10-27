@@ -87,9 +87,11 @@ final class IndustryWave3GameTest {
         shot(c,world,server,o.offset(1,0,0),"onda3_hidraulica_run",3,2.7,-4);
         shot(c,world,server,stack,"onda3_tanque_meio",1.8,1.9,-2.5);
         check(c.computeOnClient(mc->mc.level.getBlockEntity(stack) instanceof HydraulicBlockEntity b && b.amount()==32*B && b.fill(1)>.45F),"Cliente não recebeu nível de meio tanque");
-        shot(c,world,server,jar.east(2),"onda3_cultivo",3,2,-4);
+        // Dentro da água, de perto: a linha de cultivo e a ostra no fundo.
+        shotAt(c,world,server,"onda3_cultivo",jar.getX()+2.5,jar.getY()+1.55,jar.getZ()-0.65,jar.getX()+2.5,jar.getY()+0.45,jar.getZ()+0.5);
         shot(c,world,server,crabPos,"onda3_caranguejo",1.8,1.4,-2.1);
-        shot(c,world,server,jar.west(),"onda3_ostra",-.8,.85,-1.4);
+        shotAt(c,world,server,"onda3_ostra",jar.getX()-0.3,jar.getY()+0.95,jar.getZ()-0.55,jar.getX()-0.3,jar.getY()+0.1,jar.getZ()+0.5);
+        shotAt(c,world,server,"onda3_bomba",pump.getX()+1.9,pump.getY()+1.25,pump.getZ()-1.55,pump.getX()+0.5,pump.getY()+0.45,pump.getZ()+0.5);
         server.runOnServer(s->{
             try(var tx=Transaction.openOuter()) { tank(s.overworld(),stack).inventory().insert(FluidVariant.of(Fluids.WATER),32*B,tx); tx.commit(); }
         });
@@ -125,6 +127,14 @@ final class IndustryWave3GameTest {
     static void look(TestServerContext s,BlockPos p,double dx,double dy,double dz) {
         double yaw=Math.toDegrees(Math.atan2(dx,-dz)),pitch=Math.toDegrees(Math.atan2(dy-.5,Math.sqrt(dx*dx+dz*dz)));
         s.runCommand(String.format(Locale.ROOT,"tp @p %.2f %.2f %.2f %.2f %.2f",p.getX()+.5+dx,p.getY()+dy-1.62,p.getZ()+.5+dz,yaw,pitch));
+    }
+    /** Olho em (ex, ey, ez) mirando o alvo (o jogador está em espectador e atravessa blocos). */
+    static void shotAt(ClientGameTestContext c,TestSingleplayerContext w,TestServerContext s,String name,double ex,double ey,double ez,double tx,double ty,double tz) {
+        double dx=tx-ex,dy=ty-ey,dz=tz-ez;
+        float yaw=(float)Math.toDegrees(Math.atan2(-dx,dz)),pitch=(float)Math.toDegrees(-Math.atan2(dy,Math.sqrt(dx*dx+dz*dz)));
+        s.runCommand(String.format(Locale.ROOT,"tp @p %.2f %.2f %.2f %.1f %.1f",ex,ey-1.62,ez,yaw,pitch));
+        w.getConnection().waitForChunksRender(); c.waitTicks(12);
+        c.runOnClient(mc->mc.gui.hud.getChat().clearMessages(false)); c.takeScreenshot(name);
     }
     static void shot(ClientGameTestContext c,TestSingleplayerContext w,TestServerContext s,BlockPos p,String name,double dx,double dy,double dz) {
         look(s,p,dx,dy,dz); w.getConnection().waitForChunksRender(); c.waitTicks(12);
