@@ -124,5 +124,12 @@
     "label": "No jogo · v1, Gerador de Fenda animado (0.6.1)",
     "date": "2026-10-26",
     "file": "vent_generator-v1.json"
+  },
+  {
+    "id": "cultivation_jar",
+    "version": "v1",
+    "label": "No jogo · Garrafão de Cultivo",
+    "date": "2026-10-27",
+    "file": "cultivation_jar-v1.json"
   }
 ]
