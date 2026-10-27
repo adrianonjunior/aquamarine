@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "aquamarine:block/cultivation_rope"
+    "model": "aquamarine:block/cultivation_rope_item"
   }
 }
