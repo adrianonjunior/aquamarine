@@ -30,9 +30,9 @@ public final class HarborCommand {
 	}
 
 	private static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+		// Operador em cada subcomando, não na raiz: /aquamarine help (ModManual) vale para qualquer jogador.
 		dispatcher.register(Commands.literal("aquamarine")
-			.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
-			.then(Commands.literal("harbor")
+			.then(Commands.literal("harbor").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 				.then(Commands.literal("alert").executes(ctx -> alert(ctx.getSource())))
 				.then(Commands.literal("reputation")
 					.then(Commands.argument("player", EntityArgument.player())
