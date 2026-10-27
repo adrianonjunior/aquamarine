@@ -2,7 +2,9 @@ package com.aquamarine.gametest;
 
 import com.aquamarine.Aquamarine;
 import com.aquamarine.block.Waterlogging;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext;
 import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
@@ -25,11 +27,13 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * 0.6.1, 7A (docs/12-industria.md): todo bloco do mod menor que o cubo, colocado numa fonte de água, nasce com a água
- * dentro; a água corre para o vizinho que se abre e quebrar o bloco devolve a fonte. Cada bloco fica numa bacia de
- * vidro de duas casas: a do bloco (a fonte) e a do lado, fechada até o bloco estar no lugar.
+ * dentro; a água corre para o vizinho que se abre e quebrar o bloco devolve a fonte. Cada bloco fica no meio de uma bacia
+ * de vidro; depois de posto, abre-se o vizinho do primeiro lado que não é face cheia (a água do jogo não atravessa face
+ * cheia, como o fundo de uma escada).
  */
 final class WaterlogGameTest {
 	private static final int PER_ROW = 10;
+	private static final Direction[] SIDES = {Direction.SOUTH, Direction.EAST, Direction.WEST, Direction.NORTH};
 
 	private WaterlogGameTest() {}
 
@@ -42,19 +46,24 @@ final class WaterlogGameTest {
 			.toList());
 		check(blocks.size() >= 20, "Água nos blocos: achei só " + blocks.size() + " blocos menores que o cubo");
 		int rows = (blocks.size() + PER_ROW - 1) / PER_ROW;
-		server.runCommand(String.format("forceload add %d %d %d %d", o.getX() - 2, o.getZ() - 2, o.getX() + 3 * PER_ROW, o.getZ() + 4 * rows));
+		server.runCommand(String.format("forceload add %d %d %d %d", o.getX() - 2, o.getZ() - 2, o.getX() + 4 * PER_ROW, o.getZ() + 4 * rows));
+		Map<Integer, Direction> open = new HashMap<>();
 		server.runOnServer(s -> {
 			ServerLevel level = s.overworld();
 			ServerPlayer player = s.getPlayerList().getPlayers().get(0);
 			for (int i = 0; i < blocks.size(); i++) {
 				Block block = blocks.get(i);
-				BlockPos cell = cell(o, i), side = cell.south();
+				BlockPos cell = cell(o, i);
 				check(block.defaultBlockState().hasProperty(Waterlogging.WATERLOGGED),
 					"Água nos blocos: " + name(block) + " não guarda água");
 				check(!block.defaultBlockState().getValue(Waterlogging.WATERLOGGED), "Água nos blocos: " + name(block) + " nasce cheio");
-				for (BlockPos p : new BlockPos[] {cell.below(), side.below(), cell.west(), cell.east(), side.west(), side.east(), cell.north(),
-					side.south(), side}) {
-					level.setBlockAndUpdate(p, Blocks.GLASS.defaultBlockState());
+				for (int dx = -1; dx <= 1; dx++) {
+					for (int dz = -1; dz <= 1; dz++) {
+						level.setBlockAndUpdate(cell.offset(dx, -1, dz), Blocks.GLASS.defaultBlockState());
+						if (dx != 0 || dz != 0) {
+							level.setBlockAndUpdate(cell.offset(dx, 0, dz), Blocks.GLASS.defaultBlockState());
+						}
+					}
 				}
 				level.setBlockAndUpdate(cell, Blocks.WATER.defaultBlockState());
 				BlockPlaceContext place = new BlockPlaceContext(player, InteractionHand.MAIN_HAND, new ItemStack(block),
@@ -64,20 +73,24 @@ final class WaterlogGameTest {
 				check(state.getValue(Waterlogging.WATERLOGGED), "Água nos blocos: " + name(block) + " posto na fonte não ficou com água");
 				level.setBlockAndUpdate(cell, state);
 				check(level.getFluidState(cell).isSource(), "Água nos blocos: " + name(block) + " apagou a fonte");
+				BlockState placed = level.getBlockState(cell);
+				for (Direction side : SIDES) {
+					if (!Block.isFaceFull(placed.getCollisionShape(level, cell), side)) {
+						open.put(i, side);
+						break;
+					}
+				}
 			}
-			// Abre a casa do lado: a água de dentro do bloco tem de correr para ela.
-			for (int i = 0; i < blocks.size(); i++) {
-				level.setBlockAndUpdate(cell(o, i).south(), Blocks.AIR.defaultBlockState());
-			}
+			// Abre o vizinho de um lado sem face cheia: a água de dentro do bloco tem de correr para ele.
+			open.forEach((i, side) -> level.setBlockAndUpdate(cell(o, i).relative(side), Blocks.AIR.defaultBlockState()));
 		});
 		context.waitTicks(20);
 		server.runOnServer(s -> {
 			ServerLevel level = s.overworld();
-			for (int i = 0; i < blocks.size(); i++) {
-				check(level.getFluidState(cell(o, i).south()).is(FluidTags.WATER),
-					"Água nos blocos: a água de dentro de " + name(blocks.get(i)) + " não correu para o lado");
-			}
+			open.forEach((i, side) -> check(level.getFluidState(cell(o, i).relative(side)).is(FluidTags.WATER),
+				"Água nos blocos: a água de dentro de " + name(blocks.get(i)) + " não correu para " + side));
 		});
+		check(open.size() == blocks.size(), "Água nos blocos: algum bloco tem os quatro lados cheios");
 		BlockPos view = cell(o, Math.min(4, blocks.size() - 1));
 		server.runCommand(String.format(java.util.Locale.ROOT, "tp @p %.2f %.2f %.2f 0 35", view.getX() + 0.5, view.getY() + 3.0, view.getZ() - 4.5));
 		world.getConnection().waitForChunksRender();
@@ -96,7 +109,7 @@ final class WaterlogGameTest {
 	}
 
 	private static BlockPos cell(BlockPos o, int i) {
-		return o.offset(3 * (i % PER_ROW), 0, 4 * (i / PER_ROW));
+		return o.offset(4 * (i % PER_ROW), 0, 4 * (i / PER_ROW));
 	}
 
 	private static String name(Block block) {
