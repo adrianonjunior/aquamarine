@@ -173,5 +173,19 @@
     "label": "No jogo · Tanque d'Água · nível e pressão",
     "date": "2026-10-27",
     "file": "water_tank-v2.json"
+  },
+  {
+    "id": "air_compressor",
+    "version": "v1",
+    "label": "No jogo · Compressor de Ar · motor, cilindro e reservatório",
+    "date": "2026-10-27",
+    "file": "air_compressor-v1.json"
+  },
+  {
+    "id": "iron_lung",
+    "version": "v1",
+    "label": "No jogo · Pulmão de Ferro · nível, respiração e alívio",
+    "date": "2026-10-27",
+    "file": "iron_lung-v1.json"
   }
 ]

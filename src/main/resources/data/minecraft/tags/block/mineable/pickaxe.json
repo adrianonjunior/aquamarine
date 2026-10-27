@@ -73,6 +73,8 @@
     "aquamarine:water_tank",
     "aquamarine:cultivation_jar",
     "aquamarine:cultivation_rope",
-    "aquamarine:cultivation_buoy"
+    "aquamarine:cultivation_buoy",
+    "aquamarine:air_compressor",
+    "aquamarine:iron_lung"
   ]
 }

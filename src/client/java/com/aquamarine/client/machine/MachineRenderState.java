@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
  * que está saindo), a direção da frente e as cores do corpo e do brilho (a sobrecarga avermelha e pulsa).
  */
 public class MachineRenderState extends BlockEntityRenderState {
-	public static final int LAYERS = 3;
+	public static final int LAYERS = 4;
 
 	public MachineRenderer.Machine machine;
 	public float yRot;

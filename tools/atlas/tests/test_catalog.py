@@ -70,7 +70,11 @@ class CatalogTest(unittest.TestCase):
 
     def test_registry_preserves_originals_and_proposal(self):
         registry=json.loads((BASE/"versions/registry.json").read_text(encoding="utf-8"))
-        self.assertEqual(len(registry),25)
+        self.assertEqual(len(registry),27)
+        # 0.6.1 (7F): Compressor e Pulmão com o clipe de nível do Pulmão.
+        lung=json.loads((BASE/"versions/iron_lung-v1.json").read_text(encoding="utf-8"))
+        self.assertTrue({"idle","run","full","level"}<=set(lung["clips"]))
+        self.assertTrue((BASE/"versions/air_compressor-v1.json").exists())
         # 0.6.1 (7B): a primeira máquina animada, com a camada de brilho e o gabarito de UV.
         vent=json.loads((BASE/"versions/vent_generator-v1.json").read_text(encoding="utf-8"))
         self.assertTrue(vent["glow"].startswith("data:image/png") and vent["uv"].startswith("data:image/png"))

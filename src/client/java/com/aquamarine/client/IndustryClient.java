@@ -4,6 +4,7 @@ import com.aquamarine.client.entity.crab.*;
 import com.aquamarine.client.entity.oyster.*;
 import com.aquamarine.entity.ModEntities;
 import com.aquamarine.industry.ModHydraulics;
+import com.aquamarine.industry.ModPneumatics;
 import com.aquamarine.farming.ModCultivation;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
@@ -15,6 +16,7 @@ public final class IndustryClient {
         ModelLayerRegistry.registerModelLayer(OysterModel.LAYER,OysterModel::createBodyLayer);
         EntityRendererRegistry.register(ModCultivation.OYSTER,OysterRenderer::new);
         BlockEntityRendererRegistry.register(ModHydraulics.ENTITY,ctx->new HydraulicRenderer());
+        BlockEntityRendererRegistry.register(ModPneumatics.ENTITY,ctx->new PneumaticRenderer());
         BlockEntityRendererRegistry.register(ModCultivation.JAR_ENTITY,ctx->{
             var jar=MachineRenderer.Machine.of(CultivationJarModel::create,CultivationJarAnimations.CLIPS,
                 CultivationJarModel.GLASS,CultivationJarModel.TEXTURE,CultivationJarModel.GLOW);
