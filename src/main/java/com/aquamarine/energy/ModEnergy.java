@@ -16,6 +16,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import team.reborn.energy.api.EnergyStorage;
 
 /**
@@ -24,12 +26,16 @@ import team.reborn.energy.api.EnergyStorage;
  */
 public final class ModEnergy {
 	private static final List<Block> BLOCKS = new ArrayList<>();
+	/** Gerador de Fenda animado (0.6.1, 7B), frente ao norte: base, câmara, pistões, balancim, chaminé, mostrador e válvula. */
+	private static final VoxelShape VENT_SHAPE = Shapes.or(Block.box(0.5, 0, 0.5, 15.5, 6, 15.5), Block.box(3.5, 6, 2.5, 12.5, 13.5, 11.5),
+		Block.box(12, 6, 5, 15.5, 14.5, 8.5), Block.box(0.5, 6, 5, 4, 14.5, 8.5), Block.box(1.5, 12.5, 6, 14.5, 15.5, 7.5),
+		Block.box(12, 6, 11, 15.5, 15.5, 14.5), Block.box(10.75, 6, 0.75, 15.75, 12, 1.75), Block.box(0, 6, 0, 4, 8, 4));
 
 	public static final Block CURRENT_TURBINE = add("current_turbine",
 		p -> new WaterGeneratorBlock(p, Block.box(1, 0, 1, 15, 16, 15), WaterGeneratorBlock.Kind.TURBINE),
 		BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion());
 	public static final Block VENT_GENERATOR = add("vent_generator",
-		p -> new WaterGeneratorBlock(p, Block.box(1, 0, 1, 15, 16, 15), WaterGeneratorBlock.Kind.VENT),
+		p -> new WaterGeneratorBlock(p, VENT_SHAPE, WaterGeneratorBlock.Kind.VENT),
 		BlockBehaviour.Properties.ofFullCopy(Blocks.POLISHED_BLACKSTONE).noOcclusion()
 			.lightLevel(state -> state.getValue(WaterGeneratorBlock.ACTIVE) ? 10 : 0));
 	public static final Block WAVE_BUOY = add("wave_buoy",

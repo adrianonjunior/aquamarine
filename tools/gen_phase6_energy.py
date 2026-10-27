@@ -135,6 +135,8 @@ def collector(on):
 
 
 GENERATORS = {"current_turbine": turbine, "vent_generator": vent, "wave_buoy": buoy, "neutronium_collector": collector}
+# Máquinas animadas da 0.6.1 (7B): modelo, estado e item saem de tools/models/machines/<máquina>/build_model.py.
+ANIMATED = {"vent_generator"}
 NAMES = {
     "current_turbine": ("Turbina de Correnteza", "Current Turbine", "Gera 4 E/t por lado com água corrente (até 24).",
                         "Makes 4 E/t per side touching flowing water (up to 24)."),
@@ -164,6 +166,8 @@ def main():
     for rel, img in images.items():
         p4.write_png(img, rel)
     for name, builder in GENERATORS.items():
+        if name in ANIMATED:
+            continue
         for on in (False, True):
             w(builder(on).json(), f"models/block/{name}{'_on' if on else ''}.json")
         variants = {}

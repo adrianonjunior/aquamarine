@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -60,8 +61,19 @@ public class WaterGeneratorBlock extends FacingShapeBlock implements EntityBlock
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-		return level.isClientSide() || type != ModEnergy.WATER_GENERATOR_ENTITY ? null
-			: (BlockEntityTicker<T>) (BlockEntityTicker<WaterGeneratorBlockEntity>) WaterGeneratorBlockEntity::tick;
+		if (type != ModEnergy.WATER_GENERATOR_ENTITY) {
+			return null;
+		}
+		if (level.isClientSide()) {
+			return kind == Kind.VENT ? (BlockEntityTicker<T>) (BlockEntityTicker<WaterGeneratorBlockEntity>) WaterGeneratorBlockEntity::clientTick : null;
+		}
+		return (BlockEntityTicker<T>) (BlockEntityTicker<WaterGeneratorBlockEntity>) WaterGeneratorBlockEntity::tick;
+	}
+
+	/** A Fenda é uma máquina animada (0.6.1, 7B): quem a desenha é o renderizador do block entity, não o chunk. */
+	@Override
+	protected RenderShape getRenderShape(BlockState state) {
+		return kind == Kind.VENT ? RenderShape.INVISIBLE : RenderShape.MODEL;
 	}
 
 	@Override
@@ -80,7 +92,7 @@ public class WaterGeneratorBlock extends FacingShapeBlock implements EntityBlock
 		}
 		double x = pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 0.6, z = pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 0.6;
 		switch (kind) {
-			case VENT -> level.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, x, pos.getY() + 1.05, z, 0, 0.05, 0);
+			case VENT -> { } // vapor e bolhas saem da chaminé a cada golpe (WaterGeneratorBlockEntity.clientTick)
 			case TURBINE -> level.addParticle(ParticleTypes.BUBBLE, x, pos.getY() + 0.5, z, 0, 0.02, 0);
 			case BUOY -> level.addParticle(ParticleTypes.ELECTRIC_SPARK, pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 0, 0.02, 0);
 		}
