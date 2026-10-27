@@ -23,11 +23,11 @@
 | 7A | Água dentro dos blocos (waterlogged) em todo bloco do mod | **feita** (26/10/2026) | nada |
 | 7B | Pipeline de máquinas animadas, bíblia de arte e aba "Máquinas" do Atlas | **feita** (aval da Fenda em 26/10/2026) | nada |
 | 7C | Redes: Cano de fluido, Tubo de Ar, cabos novos, Chave de Maré, conteúdo visível | **feita** (27/10/2026) | 7A, 7B |
-| 7D | Bomba de Maré, Tanque d'Água e exceção dos geradores | planejada | 7C |
-| 7E | Gerador de Fenda refeito (animado) e geradores com fluido | planejada | 7B, 7C, 7D |
-| 7F | Compressor de Ar e Pulmão de Ferro (gás + regulação) | planejada | 7C, 7E |
-| 7G | Ostra, pérolas e Fazenda de Ostras | planejada | 7A, 7B |
-| 7H | Caranguejo e Escudo de Concha | planejada | 7B |
+| 7D | Bomba de Maré, Tanque d'Água e exceção dos geradores | **feita** (27/10/2026) | 7C |
+| 7E | Gerador de Fenda refeito (animado) e geradores com fluido | **feita** (27/10/2026) | 7B, 7C, 7D |
+| 7F | Compressor de Ar e Pulmão de Ferro (gás + regulação) | **feita** (27/10/2026) | 7C, 7E |
+| 7G | Ostra, pérolas e Fazenda de Ostras | **feita** (27/10/2026) | 7A, 7B |
+| 7H | Caranguejo e Escudo de Concha | **feita** (27/10/2026) | 7B |
 | 7I | Fornalha a Vapor, Prensa de Maré e todas as máquinas de fabricação e geração animadas | planejada | 7B, 7E |
 | 7J | Telas das máquinas (medidores animados e lados) | planejada | 7C, 7D |
 | 7Q | QA e release `0.6.1` | planejada | todas |
@@ -177,6 +177,15 @@ se for vento. **Decidido:** energia, fluidos e gás (itens saem por funil e baú
 - **Exceção (decidida):** os **geradores** funcionam em qualquer lugar com água e magma vindos do Tanque; o **Coletor de
   Neutrônio segue exigindo** oceano profundo e 20 blocos abaixo do nível do mar.
 - **Aceite:** Gerador de Fenda gerando em terra firme só com Tanque e Cano; Coletor recusando a terra com o mesmo Tanque.
+- **Como ficou (27/10/2026; valores iniciais a testar; feito pelo Codex e fechado pelo Claude):**
+  - **Bomba de Maré:** 160 E por balde, um balde por segundo de uma fonte de água encostada. A fonte com duas fontes
+    vizinhas e chão firme (ou água) embaixo não se esgota (regra da fonte infinita); a isolada vira ar. Guarda 4 baldes
+    e empurra pelos lados em "sai" (todos, de início).
+  - **Tanque d'Água:** 64 baldes por bloco e um fluido por coluna (água ou lava; o "magma" é a lava, 7C). Empilhado,
+    soma a capacidade e o de cima escoa para o de baixo. Entra por todos os lados e sai por baixo (a Chave muda); o balde
+    enche e esvazia; o nível e o líquido aparecem por fora.
+  - **Receitas (Pérola como núcleo):** Bomba = latão, 2 Canos, Pérola e pistão; Tanque = 6 latão, 2 vidros e Pérola.
+  - O aceite da Fenda em terra e do Coletor fechou na 7E (teste `industry4`).
 
 ## 7E. Geradores renovados
 **Pedido.** Refazer o modelo do gerador de magma (Gerador de Fenda) com animações próprias e colocar no site.
@@ -192,6 +201,12 @@ se for vento. **Decidido:** energia, fluidos e gás (itens saem por funil e baú
   alça; pistões de aço com cintas de latão balançando um balancim; volante de cobre; mostrador marfim de 0 a 8 com faixa
   âmbar; chaminé de cobre com tampa de dobradiça; anéis de ligação já visíveis: azul atrás (energia), verde-água à
   esquerda (água, centro ciano) e à direita (magma, centro âmbar). Falta o modo fluido (depende de 7C e 7D).
+- **Modo fluido (27/10/2026; valores iniciais a testar):** sem magma embaixo e água em cima, a Fenda gera os mesmos
+  32 E/t com água e lava que chegam pelo Cano, em qualquer lugar: um balde de água a cada 30 s e um de lava a cada
+  2,5 min, em tanques internos de 4 baldes. O Cano e o Tubo de Ar ligam em todos os lados menos a frente (a do
+  mostrador) e cada fluido vai para o seu tanque (os anéis coloridos são só dica); nada sai. Com a carga cheia ela não
+  gasta. O modo mundo tem prioridade (é de graça). O clique mostra a carga, o que gera agora e os tanques.
+  O Coletor não tem entrada de fluido e segue exigindo o oceano fundo.
 
 ## 7F. Compressor de Ar e Pulmão de Ferro
 **Pedido.** Regulador de pressão em bloco ("iron lung") que regula geradores e armazena pressão.
@@ -201,6 +216,20 @@ se for vento. **Decidido:** energia, fluidos e gás (itens saem por funil e baú
   água, rendem mais e estáveis, +25% como valor inicial; sem pressão perdem potência); nunca explode nem destrói bloco.
 - **Fora da 0.6.1:** proteger o jogador da Pressão numa área.
 - **Aceite:** o gás enche e esvazia pelo Tubo de Ar; a regulação muda a saída do gerador; capturas e aba "Máquinas".
+- **Como ficou (27/10/2026; valores iniciais a testar):**
+  - **Compressor de Ar:** 8 E/t fazem um balde de Ar Comprimido a cada 10 s; guarda 8 baldes e empurra pelos lados em
+    "sai" (todos) a 2 baldes/s. Modelo: motor de aço com aletas e anel de energia, volante de cobre, cilindro de latão com
+    cruzeta e biela, reservatório com válvula de alívio. Clipes `idle`, `start`, `run` (0,8 s por curso), `stop`, `full`.
+  - **Pulmão de Ferro:** guarda 256 baldes; entra por todos os lados e solta por trás a 1 balde/s (a Chave muda). Cheio,
+    só abre a válvula de alívio em rajadas; nunca explode. Modelo: vaso de ferro deitado com cintas de latão, visor com
+    boia acesa que sobe com o nível, mostrador de pressão, válvula de alívio e fole de couro que abre com o nível.
+    Clipes `idle`, `start`, `run` (respira), `stop`, `full` (alívio) e `level` (nível, fora dos estados).
+  - **Regulação (escolha):** quem regula é o gerador que recebe o ar pelo Tubo de Ar. Com ar rende 5/4 (Fenda 40 E/t,
+    Turbina 5 por lado, Boia 5) e gasta um balde de ar a cada 30 s; sem ar volta ao normal ("perder potência" = perder o
+    bônus, nunca abaixo da base). Todo gerador aceita o Tubo (a Fenda menos na frente). O Pulmão é o fôlego da linha
+    (Compressor, Tubo, Pulmão, Tubo, geradores); um Compressor ligado direto também regula.
+  - **Receitas:** Compressor = 4 latão, Tubo de Ar, 2 pistões, Pérola e bloco de cobre; Pulmão = 4 ferro, Tubo de Ar,
+    2 couros, Pérola e bloco de ferro.
 
 ## 7G. Ostra, pérolas e Fazenda de Ostras
 **Pedido.** Mob "ostra"; algumas dropam pérola, úteis em crafts; fazenda estilo vida real com grandes garrafas conectadas nos oceanos.
@@ -215,6 +244,11 @@ se for vento. **Decidido:** energia, fluidos e gás (itens saem por funil e baú
   as pérolas. Precisa só de água limpa (sem bloco de magma em volta). Arte: vidro grosso com rolha de latão, bolhas subindo,
   ostra abrindo e fechando dentro, brilho quando a pérola está pronta.
 - **Aceite:** ostras nascem no bioma certo; a linha com N garrafões produz; funciona com o save recarregado.
+- **Como ficou (27/10/2026; feito pelo Codex e fechado pelo Claude):** a Ostra nasce no fundo dos oceanos mornos e amenos,
+  fecha a concha com alguém a 3 blocos e 15% dropam a Pérola. Garrafões, Corda e Boia em linha reta, todos virados para
+  o mesmo lado, em água limpa (sem bloco de magma em volta): 8 min por pérola, +10% por garrafão vizinho até +50%; a
+  Boia mostra a produção e recolhe. Receitas: Garrafão = latão, 5 vidros e Pérola; Corda = 3 linhas dão 8; Boia = tocha,
+  2 latão, cobre e Corda. Refino: Aurium Bruto + Pérola na Forja Abissal dá 2 lingotes. JEI: "Como obter" da Ostra.
 
 ## 7H. Caranguejo e Escudo de Concha
 **Pedido.** Mob encontrado de vez em quando nas praias, com mecânica de vida real; a concha serve de base para um escudo mais forte.
@@ -226,6 +260,10 @@ se for vento. **Decidido:** energia, fluidos e gás (itens saem por funil e baú
   quando o machado o desativa e **menos empurrão** de baleia, sem poder novo. Receita: Concha de Caranguejo + Pérola de Ostra + Escudo.
   Item 16 px, com a concha pintada no centro.
 - **Aceite:** nasce só em praia, foge para a toca, belisca encurralado; o escudo bloqueia como o vanilla com os números acima.
+- **Como ficou (27/10/2026; feito pelo Codex e fechado pelo Claude):** nasce raro em praias (peso 3, de 1 a 2); anda de
+  lado, se enterra quando ameaçado e volta depois, belisca encurralado, dorme e come peixe cru; dropa 1 Concha. Escudo de
+  Concha: 672 de durabilidade, recarga 40% menor quando o machado o desativa e metade do empurrão de baleia; receita sem
+  forma: Concha + Pérola + Escudo. JEI: "Como obter" da Concha.
 
 ## 7I. Todas as máquinas de fabricação e geração, animadas
 **Pedido.** Tudo ligado a fabricação e geração com animações e modelos estilizados.

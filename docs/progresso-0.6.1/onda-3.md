@@ -1,6 +1,8 @@
 # Onda 3: Bomba, Tanque e fauna
 
-**Estado em 27/10/2026:** retomada pelo Codex, com autorização para assumir as quatro worktrees anteriores. Faixas: 7D, 7G e 7H. Coordenação e base Git: [LEIA-ME.md](LEIA-ME.md). Especificação: [12-industria.md](../12-industria.md).
+**Estado em 27/10/2026: fechada.** Código e arte do Codex; o Claude assumiu a pedido do Adriano, auditou, completou JEI e capturas e integrou. Resultado em [12-industria.md](../12-industria.md), 7D, 7G e 7H ("Como ficou").
+
+Histórico: retomada pelo Codex, com autorização para assumir as quatro worktrees anteriores. Faixas: 7D, 7G e 7H. Coordenação e base Git: [LEIA-ME.md](LEIA-ME.md). Especificação: [12-industria.md](../12-industria.md).
 
 ## Retomada às 12h15
 
@@ -12,12 +14,12 @@ Estado herdado: 7D lógica sem recursos/renderizador/testes; 7G lógica compila 
 
 ## Critérios de fechamento
 
-- [ ] 7D: Bomba e Tanque, persistência, baldes, capacidade de 64 baldes por bloco e empilhamento vertical sem perda ou duplicação.
-- [ ] 7G: Ostra, Pérola e cultivo em linha com Corda e Boia; produção e coleta persistentes após recarregar o save.
-- [ ] 7H: Caranguejo com comportamento completo e Escudo de Concha com 672 de durabilidade.
-- [ ] Receitas, tradução pt/en, obtenção no JEI e modelos no Atlas.
-- [ ] Build, testes direcionados e capturas inspecionadas.
-- [ ] Integração validada e checkpoint da onda.
+- [x] 7D: Bomba e Tanque, persistência, baldes, capacidade de 64 baldes por bloco e empilhamento vertical sem perda ou duplicação.
+- [x] 7G: Ostra, Pérola e cultivo em linha com Corda e Boia; produção e coleta persistentes após recarregar o save.
+- [x] 7H: Caranguejo com comportamento completo e Escudo de Concha com 672 de durabilidade.
+- [x] Receitas, tradução pt/en, obtenção no JEI e modelos no Atlas.
+- [x] Build, testes direcionados e capturas inspecionadas.
+- [x] Integração validada e checkpoint da onda.
 
 ## Retomada
 
@@ -30,8 +32,10 @@ Transferência confirmada pelo Adriano; sessão anterior encerrada, autonomia re
 | Data | Faixa / arquivos | Mudança e commit | Verificação / evidência | Próximo passo |
 |---|---|---|---|---|
 | 27/10/2026 | Preparação documental | Nenhum código alterado | Especificação e estado atual consultados | Confirmar transferência e escopo |
+| 27/10/2026 | 7D, 7G, 7H (Codex) | `4ae57fd`, `01ad9c9`, `1df9063`, `aa6f150`, `3074cdd` (WIP preservado) | parte `industry3` escrita | entregar ao Claude |
+| 27/10/2026 | JEI e capturas (Claude) | `e853221`: Concha no "Como obter", capturas de perto | `industry3` e `jei` verdes | onda 4 |
 
 ## Pendências e limites
 
-Sem build ou teste executado por Codex nesta onda. Sem capturas produzidas. Não considerar os checkboxes como entrega até haver evidência registrada.
+Evidência: `./gradlew build` e as partes `industry3`, `industry4`, `networks`, `machines`, `energy`, `waterlog` e `jei` verdes; capturas `onda3_*` em `build/run/clientGameTest/screenshots/`. Não testado: geração natural da Ostra e do Caranguejo num mundo novo (só por spawn de teste).
 

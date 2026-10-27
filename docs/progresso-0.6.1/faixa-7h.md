@@ -6,7 +6,7 @@ Iniciada em 27/10/2026. Dono: Codex (7H), branch `codex/caranguejo`. Orçamento 
 
 - Especificação lida; implementação em andamento.
 - Base: `98e7e68`; referência de arte: criaturas e Gerador de Fenda do Claude.
-- Testes e capturas ainda não executados. Não considerar esta faixa concluída.
+- **Feita** em 27/10/2026; fechamento em [onda-3.md](onda-3.md).
 
 ## Escolhas e evidências
 

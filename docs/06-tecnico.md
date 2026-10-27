@@ -366,3 +366,16 @@ Dono desta regra: aqui. Regras de jogo e valores em [12-industria.md](12-industr
 - **Receitas no JEI para convidados:** desde a 0.6.1 o servidor manda as receitas `aquamarine:` na configuração da conexão
   (`RecipeSyncPayload`) e o plugin do JEI as registra quando não há servidor integrado (`SyncedRecipes`). Receita nova do
   mod entra sozinha. O que não tem receita ganha uma página em `ObtainRecipe.all()` (categoria "Como obter").
+
+## Máquinas de fluido e gás (0.6.1, 7D a 7F)
+Dono desta regra: aqui. Regras de jogo e valores em [12-industria.md](12-industria.md), 7D a 7F.
+- **Código:** `com.aquamarine.industry`. Bomba e Tanque: `HydraulicBlockEntity` (`ModHydraulics`); Compressor e Pulmão:
+  `PneumaticBlockEntity` (`ModPneumatics`). Lados por `PortConfigurable` (sai, entra, desligado); lado desligado não expõe API.
+  A energia e o produto andam na mesma transação (`MachineEnergy.consume`); a rede só insere energia.
+- **`GasPort`:** `gasSide(lado)` diz onde o Tubo de Ar liga e `liquidSide(lado)` onde o Cano também liga. Máquina só de gás
+  não liga no Cano; a Fenda liga nos dois por todos os lados menos a frente.
+- **Geradores:** `WaterGeneratorBlockEntity` tem tanques de água, lava (só a Fenda) e ar, expostos só para inserção
+  (`FilteringStorage.insertOnlyOf`) e salvos como quantidades (`water`, `lava`, `air`).
+- **Animação ligada a um valor:** `MachineRenderState` tem 4 camadas; o renderizador pode somar um clipe parado num tempo
+  (o `level` do Pulmão: tempo = nível, de 0 a 1 s; `PneumaticRenderer`). Arte em `tools/models/machines/air_compressor` e
+  `iron_lung` (com `hydraulic_art.py`); dados em `tools/gen_industry_wave4.py`. Teste: parte `industry4`.
