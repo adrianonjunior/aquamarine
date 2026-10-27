@@ -39,6 +39,7 @@ public final class ModRecipes {
 
 	public static void register() {
 		// Carrega a classe; os campos estáticos fazem o registro.
+		RecipeSyncPayload.register();
 	}
 
 	private ModRecipes() {}

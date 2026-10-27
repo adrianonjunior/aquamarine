@@ -152,6 +152,9 @@ public class AquamarineClientGameTest implements FabricClientGameTest {
 			if (enabled("machines")) {
 				MachineGameTest.run(context, world, server, base);
 			}
+			if (enabled("jei")) {
+				JeiGameTest.run(context);
+			}
 			if (enabled("harbor")) {
 				HarborGameTest.run(context, world, server, base);
 			}
