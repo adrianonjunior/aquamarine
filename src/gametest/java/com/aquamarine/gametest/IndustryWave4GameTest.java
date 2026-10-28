@@ -101,10 +101,10 @@ final class IndustryWave4GameTest {
 			check(!ConduitNetwork.isPort(l, vent, Direction.NORTH, ConduitKind.FLUID), "O Cano não liga na frente da Fenda");
 			check(ConduitNetwork.isPort(l, vent, Direction.SOUTH, ConduitKind.GAS), "O Tubo de Ar deve ligar atrás da Fenda");
 			check(!ConduitNetwork.isPort(l, vent, Direction.NORTH, ConduitKind.GAS), "O Tubo de Ar não liga na frente da Fenda");
-			// Coletor ao lado do mesmo Tanque: segue recusando a terra e não tem entrada de fluido.
+			// Coletor ao lado do mesmo Tanque: segue recusando a terra e não tem entrada de fluido. O Coletor é 3x2x3: o Tanque fica fora da estrutura (a 2 blocos do controlador).
 			place(l, collector, ModEnergy.NEUTRONIUM_COLLECTOR);
-			place(l, collector.west(), ModHydraulics.WATER_TANK);
-			fill(l, collector.west(), FluidVariant.of(Fluids.WATER), 8 * B);
+			place(l, collector.west(2), ModHydraulics.WATER_TANK);
+			fill(l, collector.west(2), FluidVariant.of(Fluids.WATER), 8 * B);
 			((NeutroniumCollectorBlockEntity) l.getBlockEntity(collector)).energy.amount = WaterEnergy.COLLECTOR_CAPACITY;
 			check(!NeutroniumCollectorBlockEntity.validSpot(l, collector), "O Coletor não pode aceitar terra firme");
 			check(FluidStorage.SIDED.find(l, collector, Direction.WEST) == null, "O Coletor não recebe fluido");

@@ -216,13 +216,16 @@ final class AttackGameTest {
 		reset(server);
 		server.runOnServer(s -> kraken(s).attacks().setEnabled(false));
 		int tentacles = server.computeOnServer(s -> s.overworld().getEntities(ModEntities.TENTACLE, e -> true).size());
+		// Contagem por diferença: partes anteriores da suíte inteira podem deixar Crias e ovos no mundo de teste.
+		int youngs = server.computeOnServer(s -> s.overworld().getEntities(ModEntities.YOUNG_KRAKEN, e -> true).size());
+		int eggs = server.computeOnServer(s -> s.overworld().getEntities(ModEntities.KRAKEN_EGG, e -> true).size());
 		server.runCommand("execute as @p at @p rotated ~ 0 positioned ^-3 ^ ^6 run aquamarine kraken egg");
 		server.runCommand("execute as @p at @p rotated ~ 0 positioned ^ ^ ^6 run aquamarine kraken young");
 		server.runCommand("execute as @p at @p rotated ~ 0 positioned ^3 ^ ^6 run aquamarine kraken tentacle");
 		context.waitTicks(5);
 		check(server.computeOnServer(s -> s.overworld().getEntities(ModEntities.TENTACLE, e -> true).size()) == tentacles + 1, "Comando: tentáculo");
-		check(server.computeOnServer(s -> s.overworld().getEntities(ModEntities.YOUNG_KRAKEN, e -> true).size()) == 1, "Comando: Cria");
-		check(server.computeOnServer(s -> s.overworld().getEntities(ModEntities.KRAKEN_EGG, e -> true).size()) == 1, "Comando: ovo");
+		check(server.computeOnServer(s -> s.overworld().getEntities(ModEntities.YOUNG_KRAKEN, e -> true).size()) == youngs + 1, "Comando: Cria");
+		check(server.computeOnServer(s -> s.overworld().getEntities(ModEntities.KRAKEN_EGG, e -> true).size()) == eggs + 1, "Comando: ovo");
 		server.runCommand("aquamarine kraken tentacle anim rise");
 		server.runCommand("aquamarine kraken young anim attack");
 		context.waitTicks(10);

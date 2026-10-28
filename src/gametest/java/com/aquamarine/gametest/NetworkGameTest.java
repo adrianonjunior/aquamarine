@@ -79,7 +79,7 @@ final class NetworkGameTest {
 			place(level, new BlockPos(x + 4, y, z + 10), inline(ModNetworks.CABLE_WINDOW, Direction.Axis.X));
 			place(level, new BlockPos(x + 5, y, z + 10), ModNetworks.REINFORCED_AQUATIC_CABLE.defaultBlockState());
 			place(level, new BlockPos(x + 6, y, z + 10), inline(ModNetworks.CABLE_SWITCH, Direction.Axis.X));
-			place(level, new BlockPos(x + 7, y, z + 10), ModEnergy.NEUTRONIUM_COLLECTOR.defaultBlockState());
+			place(level, new BlockPos(x + 8, y, z + 10), ModEnergy.NEUTRONIUM_COLLECTOR.defaultBlockState()); // multibloco 3x2x3: o controlador fica no centro e as partes encostam no interruptor
 		});
 		look(server, x + 4.5, y + 3.2, z - 3.5, x + 4.5, y + 0.5, z + 2.0);
 		context.waitTicks(5);
@@ -105,7 +105,7 @@ final class NetworkGameTest {
 			check(level.getBlockState(new BlockPos(x + 8, y, z)).is(Blocks.WATER_CAULDRON), "Cano: a água devia chegar ao caldeirão do fim");
 			check(level.getBlockState(new BlockPos(x + 3, y, z + 2)).is(Blocks.WATER_CAULDRON), "Cano: o ramo do T também devia receber");
 			check(level.getBlockState(new BlockPos(x + 6, y, z + 4)).is(Blocks.LAVA_CAULDRON), "Cano: a lava devia chegar ao caldeirão");
-			NeutroniumCollectorBlockEntity collector = (NeutroniumCollectorBlockEntity) level.getBlockEntity(new BlockPos(x + 7, y, z + 10));
+			NeutroniumCollectorBlockEntity collector = (NeutroniumCollectorBlockEntity) level.getBlockEntity(new BlockPos(x + 8, y, z + 10));
 			check(collector != null && collector.energy.amount > 0, "Cabo: a energia da Fenda devia chegar ao Coletor");
 			// Chave de Maré no conector do caldeirão: sai, entra, desligado (sem ligação) e de volta a sai.
 			ConduitBlockEntity end = (ConduitBlockEntity) level.getBlockEntity(new BlockPos(x + 7, y, z));

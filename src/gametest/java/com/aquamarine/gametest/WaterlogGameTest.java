@@ -42,6 +42,8 @@ final class WaterlogGameTest {
 		List<Block> blocks = server.computeOnServer(s -> BuiltInRegistries.BLOCK.stream()
 			.filter(b -> BuiltInRegistries.BLOCK.getKey(b).getNamespace().equals(Aquamarine.MOD_ID))
 			.filter(b -> b.asItem() != Items.AIR)
+			// O Coletor de Neutrônio é multibloco 3x2x3: não cabe na bacia de 1 bloco; as partes usam a base comum de água (ainda sem teste próprio).
+			.filter(b -> b != com.aquamarine.energy.ModEnergy.NEUTRONIUM_COLLECTOR)
 			.filter(b -> !Block.isShapeFullBlock(b.defaultBlockState().getShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO)))
 			.toList());
 		check(blocks.size() >= 20, "Água nos blocos: achei só " + blocks.size() + " blocos menores que o cubo");
