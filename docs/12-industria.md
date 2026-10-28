@@ -4,7 +4,7 @@
 > "Máquinas" do Atlas). **Decisões** em [00-decisoes.md](00-decisoes.md) (linhas "0.6.1"); **faixas e ondas** em
 > [07-roadmap.md](07-roadmap.md), "0.6.1"; regras de agentes em [../AGENTS.md](../AGENTS.md). Números são valores iniciais a testar.
 
-> **ESTADO: LIBERADA (26/10/2026).** 7A feita; 7B feita com o **aval do Adriano** sobre o Gerador de Fenda, que vira a
+> **ESTADO: PUBLICADA na `0.6.1` (27/10/2026); 7I e 7J ficam para a `0.6.2`.** Liberada em 26/10/2026. 7A feita; 7B feita com o **aval do Adriano** sobre o Gerador de Fenda, que vira a
 > referência de nível das outras máquinas. As outras faixas seguem as ondas abaixo, uma por vez.
 
 > **FOCO DO AGENTE (pedido do Adriano).** Quem trabalhar nesta fase foca **só nesta etapa**: leia este arquivo e a faixa que
@@ -30,7 +30,7 @@
 | 7H | Caranguejo e Escudo de Concha | **feita** (27/10/2026) | 7B |
 | 7I | Fornalha a Vapor, Prensa de Maré e todas as máquinas de fabricação e geração animadas | planejada | 7B, 7E |
 | 7J | Telas das máquinas (medidores animados e lados) | planejada | 7C, 7D |
-| 7Q | QA e release `0.6.1` | planejada | todas |
+| 7Q | QA e release `0.6.1` | **feita** (27/10/2026) | todas |
 
 Os rótulos 7A a 7Q só organizam as faixas: **a fase se chama 0.6.1** e não existe Fase 7.
 

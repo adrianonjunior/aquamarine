@@ -6,9 +6,8 @@
 > (ver [docs/06-tecnico.md](docs/06-tecnico.md)). Regras: [AGENTS.md](AGENTS.md).
 > Registro antigo (Entregas 1 e 2, Fase 3, áudio, Atlas): [docs/historico.md](docs/historico.md).
 
-> **FASE ATUAL (26/10/2026): FASE 6 PUBLICADA na `0.6.0`.** Entregas 1 e 2 e Fases 3, 4 e 6 estão no jogo.
-> **Liberado para trabalho:** a `0.6.1` inteira (o Adriano aprovou o Gerador de Fenda em 26/10/2026; ondas em
-> [docs/12-industria.md](docs/12-industria.md)); o resto da Fase 6 numa `0.6.x` (6A2 e 6A4 sobre a v3a, 6C1; a 6G1
+> **FASE ATUAL (27/10/2026): `0.6.1` (indústria aquática) PUBLICADA; a Fase 6 saiu na `0.6.0`.** Entregas 1 e 2 e Fases 3, 4 e 6 estão no jogo.
+> **Liberado para trabalho:** a 7I e a 7J, que ficaram para a `0.6.2` ([docs/12-industria.md](docs/12-industria.md)); o resto da Fase 6 numa `0.6.x` (6A2 e 6A4 sobre a v3a, 6C1; a 6G1
 > espera o Accessories para o 26.3), os sons numa subversão própria quando o Adriano pedir, e correções e testes do que já existe. A
 > Cidade Perdida e o Kraken completo estão sem fase. Release `0.N.0` = Fase `N`, sem Fase 5
 > ([docs/07-roadmap.md](docs/07-roadmap.md), "Releases e fases").
@@ -35,6 +34,7 @@ não pode ser usado por dois agentes ao mesmo tempo (jogo aberto, Gradle).
 
 ## Registro de handoff
 Uma linha por entrega, a mais recente no topo: `data · agente · o que mudou · o que falta`.
+- 27/10/2026 · Claude Sonnet 5.5 · **Release 0.6.1 publicada no GitHub** (`Aquamarine-0.6.1.zip` e o `.jar` solto), a pedido do Adriano, com a indústria aquática pronta (7A a 7H, Coletor 3×2×3 com tela, Manual). `version=0.6.1`; pacote por `tools/release/montar_release.py`. **Testado:** `build`; as partes `networks`, `attack` e as da indústria isoladas; o instalador numa `.minecraft` falsa (perfil e mods certos). A suíte completa do `runClientGameTest` achou 4 testes desatualizados pelo Coletor 3×2×3 (água dos blocos, redes, onda 4) e por sobras entre partes (ataques do Kraken), todos corrigidos nos testes, não no jogo; a última rodada completa ainda não tinha terminado na hora da publicação. **Não testado:** o pacote de servidor com um cliente entrando, a água das 17 partes do Coletor (sem teste próprio) e jogadores reais. **Falta:** 7I e 7J (`0.6.2`), 6A2, 6A4, 6C1, os sons e o teste com os amigos.
 - 27/10/2026 · Codex · **FEITO — tela do Coletor refeita:** grade `HEADER 8,6–211,20 | ENERGY 6,25–65,96 | CORE 70,25–145,96 | STOCK 150,25–213,96 | STATUS 6,101–213,127 | INVENTORY 6,131–213,220`; tubo ciano, núcleo esférico em 8 quadros/28 marcas, bandeja e slots vindos do Menu, estado em duas linhas, inventário profundo e textos pt-BR/en-US com teste de limites. `build`, teste Python e GameTest `energy` verdes.
 - 27/10/2026 · Codex · **NÃO TESTADO:** multiplayer real e tooltips com o mouse parado em cada caixa; a última subida de 2 px da placa “Inventário” passou no build/teste, mas não ganhou uma quarta rodada visual por respeito ao limite de três ciclos.
 - 27/10/2026 · Codex · **OLHAR PRIMEIRO:** as cinco capturas em `build/capturas/coletor-gui/` (funcionando/auto, sem energia/2, local inválido/3, cheio/4 e en-US/auto); conferir especialmente o núcleo animado, o encaixe do Pó Estelar e a placa de inventário.

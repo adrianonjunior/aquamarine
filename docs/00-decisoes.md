@@ -71,6 +71,7 @@ Decisões do Adriano de 24/10/2026, com as atualizações datadas em cada linha.
 | 0.6.1: aval da Fenda | O Adriano aprovou o Gerador de Fenda do portão da 7B em 26/10/2026 ("ok, pode continuar"): ele é a referência de nível das outras máquinas, e as faixas seguem as ondas de [12-industria.md](12-industria.md). |
 | Manual do Aquamarine | Pedido do Adriano em 27/10/2026: "deixe muito mais claro como utilizar os itens novos". Um livro **customizado** (tela própria, não o livro do jogo) explica passo a passo, com prints do jogo, os itens da 0.6.1; **`/aquamarine help`** (qualquer jogador) entrega e abre. Regras em [12-industria.md](12-industria.md), "Manual do Aquamarine". |
 | Orquestração (no momento) | Decisão do Adriano em 26/10/2026: **no momento, sem o Orca para orquestrar** ("já testei isso e acaba ficando não muito bom o resultado"); a sessão faz as faixas direto. É decisão do momento, não regra do [../AGENTS.md](../AGENTS.md). |
+| Release 0.6.1 | Pedida pelo Adriano em 27/10/2026 com o que estava pronto da indústria aquática (7A a 7H, o Coletor de Neutrônio 3x2x3 e o Manual). **Ficam para a `0.6.2`:** 7I (Fornalha a Vapor, Prensa de Maré e animar a Forja e as mesas) e 7J (telas das demais máquinas), mais as pendências da Fase 6 (6A2, 6A4, 6C1). Pacote `.zip` e `.jar` solto. |
 | Design da v1 | **Fechado em 24/10/2026** em todos os arquivos de `docs/` (Kraken, invocação, cidade, itens, técnico). O andamento da implementação está em [07-roadmap.md](07-roadmap.md). |
 
 Os números das linhas acima são valores iniciais a testar no jogo; ajustes de

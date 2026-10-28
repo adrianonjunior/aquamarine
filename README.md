@@ -20,6 +20,7 @@ conflito, vale [docs/00-decisoes.md](docs/00-decisoes.md)).
 - **Fase 4:** Neutrônio estilo Avaritia e o Cavitador, Oricálcio renomeado para Abissal, 35 blocos aquáticos e 35
   vidros rachados, oficina da Vila e troféus em 3D, Boia nova, Cria, Ovo e Tentáculo refeitos. Resumo de tudo, do que
   falta e do plano: [docs/resumo.md](docs/resumo.md).
+- **Indústria aquática, na `0.6.1` (27/10/2026):** água dentro dos blocos, máquinas animadas (Gerador de Fenda refeito, Bomba, Tanque, Compressor, Pulmão de Ferro), redes de Cabo, Cano e Tubo de Ar, Coletor de Neutrônio 3x2x3 com tela, ostras, fazenda de pérolas, caranguejo, Escudo de Concha e o Manual (`/aquamarine help`) ([docs/12-industria.md](docs/12-industria.md)). Faltam a 7I e a 7J (`0.6.2`).
 - **Fase 6, na `0.6.0` (26/10/2026):** três Krakens novos (Lula-colosso é o principal; Vampiro-abissal e Amonita-colosso
   pelo `/summon`), tentáculos que nascem do fundo, colisão das baleias, Forja 3D, arpão 3D, Aurium, energia aquática com o
   Coletor de Neutrônio, Mesa de Encantamento Aquática, mesas da Vila com função, carne de baleia, Radar e 14 blocos de
@@ -107,7 +108,7 @@ com modelos 3D, animações, áudio, texturas e documentos. O Kraken v2 do site 
 | docs/08-fase3.md | `0.3.0` | Fase 3: fauna, equipamentos de mergulho e Vila |
 | docs/10-fase4.md | `0.5.0` | Fase 4: Kraken vivo, oficina, construção aquática e Neutrônio |
 | docs/11-fase6.md | `0.6.0` (publicada) | Fase 6: Kraken renovado, energia aquática, Aurium, acessórios, radar |
-| docs/12-industria.md | `0.6.1` (em andamento) | Indústria aquática: ostras, caranguejo, redes de fluido e gás, Tanque, Pulmão de Ferro, máquinas animadas |
+| docs/12-industria.md | `0.6.1` (publicada; 7I e 7J na `0.6.2`) | Indústria aquática: ostras, caranguejo, redes de fluido e gás, Tanque, Pulmão de Ferro, máquinas animadas |
 | docs/09-audio.md | transversal | Áudio: direção sonora, ambiência, música, lista de efeitos, método e padrões |
 
 **Design do mod (Entregas 1 e 2 e Cidade Perdida)**
